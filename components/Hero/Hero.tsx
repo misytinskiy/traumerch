@@ -1,0 +1,60 @@
+"use client";
+
+import { useLanguage } from "../../contexts/LanguageContext";
+import Button from "../Button/Button";
+import styles from "./Hero.module.css";
+
+interface HeroProps {
+  onScrollClick?: () => void;
+}
+
+export default function Hero({ onScrollClick }: HeroProps) {
+  const { t } = useLanguage();
+
+  return (
+    <section className={styles.hero}>
+      <h1 className={styles.title}>
+        {t.hero.title}{" "}
+        <span className={styles.highlight}>{t.hero.titleHighlight}</span>
+      </h1>
+
+      <Button
+        variant="solid"
+        padding="31px 41px;"
+        arrow="white"
+        className={styles.ctaButton}
+      >
+        {t.hero.cta}
+      </Button>
+
+      <button
+        className={styles.scrollButton}
+        onClick={onScrollClick}
+        aria-label="Scroll to next section"
+      >
+        <svg
+          width="50"
+          height="50"
+          viewBox="0 0 50 50"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g opacity="0.3">
+            <rect
+              x="0.5"
+              y="0.5"
+              width="49"
+              height="49"
+              rx="24.5"
+              stroke="black"
+            />
+            <path
+              d="M18.6404 21.4646C18.828 21.2771 19.0823 21.1718 19.3474 21.1718C19.6126 21.1718 19.8669 21.2771 20.0544 21.4646L25.0044 26.4146L29.9544 21.4646C30.143 21.2824 30.3956 21.1816 30.6578 21.1839C30.92 21.1862 31.1709 21.2914 31.3563 21.4768C31.5417 21.6622 31.6468 21.913 31.6491 22.1752C31.6514 22.4374 31.5506 22.69 31.3684 22.8786L25.7114 28.5356C25.5239 28.7231 25.2696 28.8284 25.0044 28.8284C24.7393 28.8284 24.485 28.7231 24.2974 28.5356L18.6404 22.8786C18.453 22.6911 18.3477 22.4367 18.3477 22.1716C18.3477 21.9064 18.453 21.6521 18.6404 21.4646Z"
+              fill="black"
+            />
+          </g>
+        </svg>
+      </button>
+    </section>
+  );
+}

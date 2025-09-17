@@ -1,0 +1,115 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Transparent variant (like header) */
+.transparent {
+  background: transparent;
+  color: rgba(0, 0, 0, 1);
+  border: 1px solid rgba(0, 0, 0, 1);
+}
+
+.transparent:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+/* Solid variant (like hero) */
+.solid {
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+}
+
+.solid::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 1px;
+  background: #fff;
+  transition: width 0.3s ease;
+  opacity: 0;
+}
+
+.solid.hasArrow::after {
+  display: none;
+}
+
+.solid:not(.hasArrow)::after {
+  opacity: 1;
+}
+
+.solid:hover:not(:disabled) {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.solid:hover:not(:disabled):not(.hasArrow)::after {
+  width: 30px;
+}
+
+/* Size variants */
+.small {
+  padding: 8px 20px;
+  font-size: 14px;
+  height: 36px;
+}
+
+.medium {
+  padding: 12px 24px;
+  font-size: 14px;
+  height: 40px;
+}
+
+.large {
+  padding: 16px 40px;
+  font-size: 16px;
+  height: 49px;
+}
+
+/* Custom dimensions */
+.customSize {
+  padding: 0;
+}
+
+.arrow {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.button:hover .arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+  .button {
+    font-size: 14px;
+  }
+
+  .large {
+    padding: 14px 32px;
+    font-size: 14px;
+    height: 44px;
+  }
+}

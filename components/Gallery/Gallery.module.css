@@ -1,0 +1,101 @@
+.gallery {
+  padding: 100px 150px;
+  background: rgba(255, 255, 255, 1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 63px;
+}
+
+.navigation {
+  display: flex;
+  gap: 24px;
+  align-self: flex-end;
+}
+
+.navButton {
+  width: 54px;
+  height: 54px;
+  border: none;
+  border-radius: 27px;
+  background: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.navButton:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.imageTrack {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s ease;
+}
+
+.imageItem {
+  flex-shrink: 0;
+  width: 614px;
+  height: 583px;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.imageItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.imageItem:hover img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 1200px) {
+  .gallery {
+    padding: 80px 40px;
+  }
+
+  .imageItem {
+    width: 500px;
+    height: 475px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    padding: 60px 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .imageItem {
+    width: 300px;
+    height: 285px;
+  }
+}
