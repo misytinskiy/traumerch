@@ -80,13 +80,13 @@ export default function Gallery() {
   return (
     <section className={styles.gallery}>
       <div className={styles.header}>
-        <SectionTitle>{t.gallery.title}</SectionTitle>
+        <SectionTitle maxWidth={500}>{t.gallery.title}</SectionTitle>
 
         <div className={styles.navigation}>
           <button
             className={styles.navButton}
             onClick={scrollLeft}
-            disabled={currentIndex === 0}
+            // disabled={currentIndex === 0}
             aria-label="Previous images"
           >
             <LeftArrow />
@@ -94,7 +94,7 @@ export default function Gallery() {
           <button
             className={styles.navButton}
             onClick={scrollRight}
-            disabled={currentIndex >= maxIndex}
+            // disabled={currentIndex >= maxIndex}
             aria-label="Next images"
           >
             <RightArrow />

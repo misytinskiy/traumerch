@@ -16,5 +16,95 @@
     "seeAll": "SEE ALL PRODUCTS",
     "productName": "Heavy Tote Bag",
     "priceFrom": "From €6"
+  },
+  "promise": {
+    "title": "OUR PROMISE. YOUR ADVANTAGE."
+  },
+  "faq": {
+    "title": "ALL YOU NEED TO KNOW",
+    "items": [
+      {
+        "question": "FROM DESIGN TO DELIVERY — HOW DOES IT WORK?",
+        "answer": "Your merchandise journey with TrauMerch begins with a conversation about your mission. Our designers prepare artworks that show exactly how your items will look. After your approval, we create a sample based on our templates and send it to your address for review — or, if time is critical, we can move directly to production. Once confirmed, we handle full production and deliver the entire order to you."
+      },
+      {
+        "question": "WHAT IS THE MINIMUM ORDER QUANTITY (MOQ)?",
+        "answer": "We work with quantities as low as 50 units, making it easy for even small teams to get started. Some product categories begin at 100 or 250 units, which you can confirm in our catalogue or with your design team. Samples are produced as single units — or multiple samples if you want to test different designs."
+      },
+      {
+        "question": "HOW LONG DOES PRODUCTION AND DELIVERY TAKE?",
+        "answer": "One Day, One Week, One Month. Our motto holds for all standard orders — design in one day, samples in one week, delivery in one month. For larger projects or orders with special timelines may extend beyond one month, depending on complexity and volume. We'll provide an exact schedule tailored to your project."
+      },
+      {
+        "question": "CAN WE REQUEST SAMPLES BEFORE PRODUCTION?",
+        "answer": "Samples are not an extra — they are part of understanding your product. We always produce samples before final production. Only in cases of ultra-fast delivery, and if you agree, can we move directly to bulk production based on approved designs."
+      },
+      {
+        "question": "DO YOU OFFER ECO-FRIENDLY PRODUCT OPTIONS?",
+        "answer": "Sustainability is built into the way we work. We carefully select suppliers who hold certifications in eco-friendly production and materials. Every partner is reviewed through a strict internal process to ensure responsibility is present at every stage of production."
+      },
+      {
+        "question": "DO YOU HANDLE INVOICING AND VAT WITHIN THE EU?",
+        "answer": "As an Austrian company, we issue invoices and calculate VAT in full compliance with European legislation. Our invoicing processes are structured for both single-person businesses and large corporations, ensuring correct and transparent documentation."
+      },
+      {
+        "question": "CAN YOU DELIVER MERCHANDISE TO MULTIPLE LOCATIONS?",
+        "answer": "By default, orders are shipped to a single address. We are happy to send to a second address at no additional cost. For three or more delivery locations, we ask to discuss details with your sales manager, as additional fees may apply."
+      }
+    ]
+  },
+  "services": {
+    "items": [
+      {
+        "badge": "MERCH THAT UNITES",
+        "title": "CORPORATE & EVENT MERCHANDISE",
+        "description": "We create branded merchandise for employees and events that brings people together. From welcome kits and team gear to conference giveaways, our solutions ensure every item strengthens connection and brand culture.",
+        "buttonText": "EXPLORE EVENT MERCH"
+      },
+      {
+        "badge": "GIFTS THAT LAST",
+        "title": "BUSINESS GIFTS",
+        "description": "We design and deliver thoughtful gifts for clients, partners, and employees. From premium selections to tailored packaging, every gift leaves a lasting impression and builds stronger business relationships.",
+        "buttonText": "VIEW GIFT IDEAS"
+      },
+      {
+        "badge": "OWN YOUR BRAND",
+        "title": "PRIVATE LABEL COLLECTIONS",
+        "description": "We develop exclusive private label products tailored to your brand. From multi-SKU collections and unique designs to secondary packaging, we bring ideas to life and expand your market presence with distinctive merchandise.",
+        "buttonText": "DISCOVER PRIVATE LABEL"
+      }
+    ]
+  },
+  "cta": {
+    "title": "READY TO CREATE MERCHANDISE FOR YOUR BRAND?",
+    "description": "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable.",
+    "buttonText": "REQUEST QUOTE NOW"
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Explore",
+        "links": ["Products", "Services", "Portfolio", "FAQ"]
+      },
+      {
+        "title": "Legal & Policies",
+        "links": [
+          "Imprint",
+          "Privacy Policy",
+          "Cookie Policy",
+          "Terms & Conditions"
+        ]
+      },
+      {
+        "title": "Stay Connected",
+        "links": ["LinkedIn", "Instagram", "TikTok", "Terms & Conditions"]
+      },
+      {
+        "title": "Get in Touch",
+        "links": ["[Company Address in Austria]", "[address@traumerch.com]"]
+      }
+    ],
+    "copyright": "2025 TrauMerch©",
+    "allRights": "All rights reserved."
   }
 }

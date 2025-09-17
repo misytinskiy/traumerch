@@ -16,5 +16,90 @@
     "seeAll": "ALLE PRODUKTE ANSEHEN",
     "productName": "Heavy Tote Bag",
     "priceFrom": "Ab €6"
+  },
+  "promise": {
+    "title": "UNSER VERSPRECHEN. IHR VORTEIL."
+  },
+  "faq": {
+    "title": "ALLES WAS SIE WISSEN MÜSSEN",
+    "items": [
+      {
+        "question": "VOM DESIGN BIS ZUR LIEFERUNG — WIE FUNKTIONIERT ES?",
+        "answer": "Ihre Merchandise-Reise mit TrauMerch beginnt mit einem Gespräch über Ihre Mission. Unsere Designer erstellen Entwürfe, die genau zeigen, wie Ihre Artikel aussehen werden. Nach Ihrer Freigabe fertigen wir ein Muster auf Basis unserer Vorlagen an und senden es zu Ihnen zur Überprüfung — oder, wenn es besonders schnell gehen muss, starten wir direkt mit der Produktion. Sobald alles bestätigt ist, übernehmen wir die gesamte Bestellung und liefern die gesamte Bestellung an Sie."
+      },
+      {
+        "question": "WIE HOCH IST DIE MINDESTBESTELLMENGE (MOQ)?",
+        "answer": "Wir arbeiten bereits ab 50 Stück, sodass auch kleine Teams problemlos starten können. Einige Produktkategorien beginnen bei 100 oder 250 Stück — diese Details finden Sie in unserem Katalog oder erfahren Sie von Ihrem Sales Manager. Muster werden als Einzelstücke gefertigt — oder auch mehrere, wenn Sie verschiedene Designs testen möchten."
+      },
+      {
+        "question": "WIE LANGE DAUERN PRODUKTION UND LIEFERUNG?",
+        "answer": "Ein Tag, Eine Woche, Ein Monat. Dieses Motto gilt für alle Standardaufträge — Design in einem Tag, Muster in einer Woche, Lieferung in einem Monat. Bei größeren Projekten oder besonderen Aufträgen über 500 Stück kann sich der Zeitrahmen über einen Monat hinaus erstrecken, abhängig von Komplexität und Logistik. Wir erstellen Ihnen einen genauen Zeitplan, zugeschnitten auf Ihr Projekt."
+      },
+      {
+        "question": "KÖNNEN WIR VOR DER PRODUKTION MUSTER ANFORDERN?",
+        "answer": "Muster sind kein Extra — sie sind Teil des Verständnisses Ihres Produkts. Wir fertigen immer Muster vor der Serienproduktion. Nur in Fällen von extrem schneller Lieferung, und wenn Sie zustimmen, überspringen wir direkt zur Serienproduktion auf Basis der freigegebenen Designs."
+      },
+      {
+        "question": "BIETEN SIE UMWELTFREUNDLICHE PRODUKTOPTIONEN AN?",
+        "answer": "Nachhaltigkeit ist in unsere Arbeitsweise integriert. Wir wählen Lieferanten sorgfältig aus, die Zertifizierungen für umweltfreundliche Produktion und Materialien besitzen. Jeder Partner durchläuft einen strengen internen Überprüfungsprozess, um sicherzustellen, dass Verantwortung in jeder Produktionsstufe gewährleistet ist."
+      },
+      {
+        "question": "ÜBERNEHMEN SIE RECHNUNGSSTELLUNG UND MEHRWERTSTEUER INNERHALB DER EU?",
+        "answer": "Als österreichisches Unternehmen stellen wir Rechnungen aus und berechnen die Mehrwertsteuer in voller Übereinstimmung mit der europäischen Gesetzgebung. Unsere Abrechnungsprozesse sind sowohl für Ein-Personen-Unternehmen als auch für große Konzerne ausgelegt und gewährleisten korrekte und transparente Dokumentation."
+      },
+      {
+        "question": "KÖNNEN SIE MERCHANDISE AN MEHRERE STANDORTE LIEFERN?",
+        "answer": "Standardmäßig liefern wir an eine Adresse. Gerne versenden wir auch an eine zweite Adresse ohne zusätzliche Kosten. Bei drei oder mehr Lieferzielen besprechen Sie die Details bitte mit Ihrem Sales Manager, da hierfür zusätzliche Gebühren anfallen können."
+      }
+    ]
+  },
+  "services": {
+    "items": [
+      {
+        "badge": "MERCHANDISE DAS VERBINDET",
+        "title": "CORPORATE & EVENT MERCHANDISE",
+        "description": "Wir erstellen Marken-Merchandise für Mitarbeiter und Events, das Menschen zusammenbringt. Von Willkommenspaketen und Team-Ausrüstung bis hin zu Konferenz-Giveaways sorgen unsere Lösungen dafür, dass jeder Artikel die Verbindung und Markenkultur stärkt.",
+        "buttonText": "EVENT MERCH ENTDECKEN"
+      },
+      {
+        "badge": "GESCHENKE DIE BLEIBEN",
+        "title": "BUSINESS GESCHENKE",
+        "description": "Wir gestalten und liefern durchdachte Geschenke für Kunden, Partner und Mitarbeiter. Von Premium-Auswahl bis hin zu maßgeschneiderter Verpackung hinterlässt jedes Geschenk einen bleibenden Eindruck und baut stärkere Geschäftsbeziehungen auf.",
+        "buttonText": "GESCHENKIDEEN ANSEHEN"
+      },
+      {
+        "badge": "IHRE EIGENE MARKE",
+        "title": "PRIVATE LABEL KOLLEKTIONEN",
+        "description": "Wir entwickeln exklusive Private Label Produkte, die auf Ihre Marke zugeschnitten sind. Von Multi-SKU-Kollektionen und einzigartigen Designs bis hin zu Sekundärverpackungen erwecken wir Ideen zum Leben und erweitern Ihre Marktpräsenz mit unverwechselbarem Merchandise.",
+        "buttonText": "PRIVATE LABEL ENTDECKEN"
+      }
+    ]
+  },
+  "cta": {
+    "title": "BEREIT, MERCHANDISE FÜR IHRE MARKE ZU ERSTELLEN?",
+    "description": "Lassen Sie uns Ihre Ideen zum Leben erwecken — vom ersten Design bis zur Lieferung machen wir den Prozess einfach und zuverlässig.",
+    "buttonText": "JETZT ANGEBOT ANFORDERN"
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Entdecken",
+        "links": ["Produkte", "Dienstleistungen", "Portfolio", "FAQ"]
+      },
+      {
+        "title": "Rechtliches & Richtlinien",
+        "links": ["Impressum", "Datenschutz", "Cookie-Richtlinie", "AGB"]
+      },
+      {
+        "title": "Bleiben Sie verbunden",
+        "links": ["LinkedIn", "Instagram", "TikTok", "AGB"]
+      },
+      {
+        "title": "Kontakt",
+        "links": ["[Firmenadresse in Österreich]", "[address@traumerch.com]"]
+      }
+    ],
+    "copyright": "2025 TrauMerch©",
+    "allRights": "Alle Rechte vorbehalten."
   }
 }

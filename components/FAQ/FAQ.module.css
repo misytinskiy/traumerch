@@ -1,0 +1,133 @@
+.faq {
+  padding: 100px 150px;
+  background: rgba(255, 255, 255, 1);
+}
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 63px;
+}
+
+.faqList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.faqItem {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.faqItem:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.questionButton {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 40px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.questionButton:hover {
+  opacity: 0.7;
+}
+
+.questionText {
+  /* font-family: Inter; */
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 1);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.iconButton {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s ease;
+}
+
+.faqItem.open .iconButton {
+  transform: rotate(180deg);
+}
+
+.answerWrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faqItem.open .answerWrapper {
+  max-height: 200px;
+}
+
+.answer {
+  /* font-family: Inter; */
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 130%;
+  color: rgba(0, 0, 0, 1);
+  padding: 0 0 40px 0;
+  margin: 0;
+  letter-spacing: 0;
+  opacity: 0.7;
+  max-width: 1013px;
+}
+
+@media (max-width: 1200px) {
+  .faq {
+    padding: 80px 40px;
+  }
+
+  .questionText,
+  .answer {
+    font-size: 20px;
+  }
+
+  .questionButton {
+    padding: 30px 0;
+  }
+
+  .answer {
+    padding: 0 0 30px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .faq {
+    padding: 60px 20px;
+  }
+
+  .questionText,
+  .answer {
+    font-size: 18px;
+  }
+
+  .questionButton {
+    padding: 25px 0;
+  }
+
+  .answer {
+    padding: 0 0 25px 0;
+  }
+
+  .iconButton {
+    width: 40px;
+    height: 40px;
+  }
+}

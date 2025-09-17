@@ -23,7 +23,7 @@ export default function Products() {
   return (
     <section className={styles.products}>
       <div className={styles.header}>
-        <SectionTitle>{t.products.title}</SectionTitle>
+        <SectionTitle maxWidth={500}>{t.products.title}</SectionTitle>
       </div>
 
       <div className={styles.grid}>

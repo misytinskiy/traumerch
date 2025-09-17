@@ -14,7 +14,7 @@ export default function Hero({ onScrollClick }: HeroProps) {
   return (
     <section className={styles.hero}>
       <h1 className={styles.title}>
-        {t.hero.title}{" "}
+        {t.hero.title}
         <span className={styles.highlight}>{t.hero.titleHighlight}</span>
       </h1>
 

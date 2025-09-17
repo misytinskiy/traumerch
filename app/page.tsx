@@ -5,6 +5,11 @@ import Header from "../components/Header/Header";
 import Hero from "../components/Hero/Hero";
 import Gallery from "../components/Gallery/Gallery";
 import Products from "../components/Products/Products";
+import Promise from "../components/Promise/Promise";
+import FAQ from "../components/FAQ/FAQ";
+import Services from "../components/Services/Services";
+import CTA from "../components/CTA/CTA";
+import Footer from "../components/Footer/Footer";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -30,7 +35,17 @@ export default function Home() {
         </div>
 
         <Products />
+
+        <Services />
+
+        <Promise />
+
+        <FAQ />
+
+        <CTA />
       </main>
+
+      <Footer />
     </div>
   );
 }
