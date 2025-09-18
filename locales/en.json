@@ -72,8 +72,71 @@
         "title": "PRIVATE LABEL COLLECTIONS",
         "description": "We develop exclusive private label products tailored to your brand. From multi-SKU collections and unique designs to secondary packaging, we bring ideas to life and expand your market presence with distinctive merchandise.",
         "buttonText": "DISCOVER PRIVATE LABEL"
+      },
+      {
+        "badge": "PROGRAMS THAT AMPLIFY",
+        "title": "INFLUENCER ACTIVATION & SEEDING",
+        "description": "We build influencer and brand seeding programs designed for impact. With custom packaging, curated merchandise, and targeted distribution, we help brands spark authentic content and reach the right audiences.",
+        "buttonText": "SEE INFLUENCER PROGRAMS"
+      },
+      {
+        "badge": "MERCH MADE EASY",
+        "title": "SMART PLATFORM",
+        "description": "Our digital platform simplifies every step of merchandise management. From ordering and stock control to distribution, it gives brands the tools to scale their merch programs efficiently and transparently.",
+        "buttonText": "TRY THE PLATFORM"
       }
     ]
+  },
+  "solutions": {
+    "hero": {
+      "title": "SOLUTIONS TAILORED TO YOUR BRAND"
+    }
+  },
+  "design": {
+    "productName": "Heavy Tote Bag",
+    "color": "Color",
+    "quantity": "Quantity",
+    "customisationType": "Customisation type",
+    "designPlacement": "Design placement",
+    "price": "Price: X",
+    "leadTime": "Lead time: Y",
+    "seePromise": "SEE OUR PROMISE",
+    "knowYourProduct": "Know your product",
+    "accordion": [
+      {
+        "question": "Description",
+        "answer": "This t-shirt is made of 100% organic cotton and features a heavy quality for both comfort and durability. It has a casual, unisex medium fit. The t-shirt is certified by GOTS, Oeko-Tex 100, and Peta-Approved Vegan, ensuring that it meets ethical and environmental standards."
+      },
+      {
+        "question": "Specification",
+        "answer": "Material: 100% organic cotton • Size: XXS-3XL • Weight: 215gsm • Fit: Regular, unisex • Details: Single jersey, ring spun combed, fabric washed • Certifications: GOTS, Peta-Vegan Approved, Oeko-tex100, Fairwear"
+      },
+      {
+        "question": "Customization",
+        "answer": "Technique: Embroidery, printing, digital printing • Position: Front, back, sleeve"
+      },
+      {
+        "question": "Production",
+        "answer": "Bangladesh"
+      }
+    ]
+  },
+  "catalog": {
+    "hero": {
+      "title": "YOUR BRAND. OUR COLLECTION."
+    },
+    "tabs": {
+      "allProducts": "All Products",
+      "bags": "Bags",
+      "customProduct": "Custom Product",
+      "drinkware": "Drinkware",
+      "footwear": "Footwear",
+      "headwear": "Headwear",
+      "homewareAppliances": "Homeware & Appliances",
+      "wearableAccessories": "Wearable Accessories",
+      "wearableTextile": "Wearable Textile"
+    },
+    "seeMore": "SEE MORE"
   },
   "cta": {
     "title": "READY TO CREATE MERCHANDISE FOR YOUR BRAND?",

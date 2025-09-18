@@ -1,0 +1,36 @@
+.page {
+  font-family: var(--font-geist-sans);
+  min-height: 100vh;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 40px 40px;
+  position: relative;
+}
+
+.title {
+  font-family: var(--font-eb-garamond);
+  font-size: 80px;
+  font-weight: 300;
+  line-height: 1.2;
+  color: #000;
+  max-width: 900px;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 60px 20px 40px;
+  }
+
+  .title {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+  }
+}

@@ -1,0 +1,151 @@
+.glassBanner {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100vw - 300px);
+  max-width: 1320px;
+  height: 109px;
+  z-index: 1000;
+
+  /* Glass effect */
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+
+  /* Shadow for depth */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  /* Animation */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateX(-50%) translateY(100px);
+}
+
+.glassBanner.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.bannerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 40px;
+  position: relative;
+}
+
+/* Subtle gradient overlay */
+.bannerContent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(0, 0, 0, 0.02) 100%
+  );
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.bannerText {
+  /* font-family: var(--font-geist-sans); */
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.bannerButton {
+  position: relative;
+  z-index: 1;
+}
+
+/* Enhanced glass effect on hover */
+.glassBanner:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .glassBanner {
+    width: calc(100vw - 80px);
+    bottom: 30px;
+  }
+
+  .bannerContent {
+    padding: 0 30px;
+  }
+
+  .bannerText {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .glassBanner {
+    width: calc(100vw - 40px);
+    height: 80px;
+    bottom: 20px;
+    border-radius: 20px;
+  }
+
+  .bannerContent {
+    padding: 0 20px;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .bannerContent::before {
+    border-radius: 20px;
+  }
+
+  .bannerText {
+    font-size: 16px;
+    line-height: 120%;
+  }
+}
+
+@media (max-width: 480px) {
+  .glassBanner {
+    width: calc(100vw - 20px);
+    height: 100px;
+  }
+
+  .bannerContent {
+    padding: 0 16px;
+    gap: 8px;
+  }
+
+  .bannerText {
+    font-size: 14px;
+  }
+}
+
+/* Safari specific enhancements */
+@supports (-webkit-backdrop-filter: blur(20px)) {
+  .glassBanner {
+    background: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+    backdrop-filter: blur(20px) saturate(1.8);
+  }
+}

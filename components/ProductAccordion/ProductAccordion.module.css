@@ -1,0 +1,75 @@
+.accordion {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.accordionItem {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.accordionItem:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.questionButton {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.06em;
+}
+
+.questionButton:hover {
+  opacity: 0.7;
+}
+
+.questionText {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 1);
+  text-align: left;
+  margin: 0;
+}
+
+.iconButton {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s ease;
+}
+
+.accordionItem.open .iconButton {
+  transform: rotate(180deg);
+}
+
+.answerWrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordionItem.open .answerWrapper {
+  max-height: 200px;
+}
+
+.answer {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 130%;
+  color: rgba(0, 0, 0, 1);
+  padding: 0 0 30px 0;
+  margin: 0;
+  letter-spacing: 0;
+  max-width: 533px;
+  opacity: 0.7;
+}

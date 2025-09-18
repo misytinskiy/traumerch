@@ -6,15 +6,21 @@ import styles from "./Hero.module.css";
 
 interface HeroProps {
   onScrollClick?: () => void;
+  showUpArrow?: boolean;
+  isScrolling?: boolean;
 }
 
-export default function Hero({ onScrollClick }: HeroProps) {
+export default function Hero({
+  onScrollClick,
+  showUpArrow = false,
+  isScrolling = false,
+}: HeroProps) {
   const { t } = useLanguage();
 
   return (
     <section className={styles.hero}>
       <h1 className={styles.title}>
-        {t.hero.title}
+        {t.hero.title}{" "}
         <span className={styles.highlight}>{t.hero.titleHighlight}</span>
       </h1>
 
@@ -28,9 +34,12 @@ export default function Hero({ onScrollClick }: HeroProps) {
       </Button>
 
       <button
-        className={styles.scrollButton}
+        className={`${styles.scrollButton} ${
+          showUpArrow ? styles.rotated : ""
+        } ${isScrolling ? styles.scrolling : ""}`}
         onClick={onScrollClick}
         aria-label="Scroll to next section"
+        disabled={isScrolling}
       >
         <svg
           width="50"

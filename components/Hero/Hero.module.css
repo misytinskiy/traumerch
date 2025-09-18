@@ -51,11 +51,29 @@
 }
 
 .scrollButton svg {
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
 }
 
 .scrollButton:hover svg {
   transform: scale(1.1);
+}
+
+.scrollButton.rotated svg {
+  transform: rotate(180deg);
+}
+
+.scrollButton.rotated:hover svg {
+  transform: rotate(180deg) scale(1.1);
+}
+
+.scrollButton.scrolling {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.scrollButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @keyframes bounce {

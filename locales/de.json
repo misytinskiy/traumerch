@@ -72,8 +72,71 @@
         "title": "PRIVATE LABEL KOLLEKTIONEN",
         "description": "Wir entwickeln exklusive Private Label Produkte, die auf Ihre Marke zugeschnitten sind. Von Multi-SKU-Kollektionen und einzigartigen Designs bis hin zu Sekundärverpackungen erwecken wir Ideen zum Leben und erweitern Ihre Marktpräsenz mit unverwechselbarem Merchandise.",
         "buttonText": "PRIVATE LABEL ENTDECKEN"
+      },
+      {
+        "badge": "PROGRAMME DIE VERSTÄRKEN",
+        "title": "INFLUENCER AKTIVIERUNG & SEEDING",
+        "description": "Wir entwickeln Influencer- und Brand-Seeding-Programme für maximale Wirkung. Mit individueller Verpackung, kuratierten Merchandise und gezielter Verteilung helfen wir Marken, authentischen Content zu schaffen und die richtige Zielgruppe zu erreichen.",
+        "buttonText": "INFLUENCER PROGRAMME ANSEHEN"
+      },
+      {
+        "badge": "MERCHANDISE LEICHT GEMACHT",
+        "title": "SMART PLATFORM",
+        "description": "Unsere digitale Plattform vereinfacht jeden Schritt des Merchandise-Managements. Von Bestellung und Lagerverwaltung bis zur Verteilung gibt sie Marken die Tools, um ihre Merch-Programme effizient und transparent zu skalieren.",
+        "buttonText": "PLATTFORM TESTEN"
       }
     ]
+  },
+  "solutions": {
+    "hero": {
+      "title": "LÖSUNGEN MASSGESCHNEIDERT FÜR IHRE MARKE"
+    }
+  },
+  "design": {
+    "productName": "Heavy Tote Bag",
+    "color": "Farbe",
+    "quantity": "Menge",
+    "customisationType": "Art der Personalisierung",
+    "designPlacement": "Design Platzierung",
+    "price": "Preis: X",
+    "leadTime": "Lieferzeit: Y",
+    "seePromise": "UNSER VERSPRECHEN SEHEN",
+    "knowYourProduct": "Ihr Produkt im Überblick",
+    "accordion": [
+      {
+        "question": "Beschreibung",
+        "answer": "Dieses T-Shirt besteht aus 100% Bio-Baumwolle und zeichnet sich durch schwere Qualität für Komfort und Haltbarkeit aus. Es hat eine lässige, unisex mittlere Passform. Das T-Shirt ist GOTS-, Oeko-Tex 100- und Peta-Approved Vegan-zertifiziert und erfüllt ethische und Umweltstandards."
+      },
+      {
+        "question": "Spezifikationen",
+        "answer": "Material: 100% Bio-Baumwolle • Größe: XXS-3XL • Gewicht: 215gsm • Passform: Regular, unisex • Details: Single Jersey, ring spun gekämmt, Stoff gewaschen • Zertifizierungen: GOTS, Peta-Vegan Approved, Oeko-tex100, Fairwear"
+      },
+      {
+        "question": "Personalisierung",
+        "answer": "Technik: Stickerei, Druck, Digitaldruck • Position: Vorne, hinten, Ärmel"
+      },
+      {
+        "question": "Produktion",
+        "answer": "Bangladesch"
+      }
+    ]
+  },
+  "catalog": {
+    "hero": {
+      "title": "IHRE MARKE. UNSERE KOLLEKTION."
+    },
+    "tabs": {
+      "allProducts": "Alle Produkte",
+      "bags": "Taschen",
+      "customProduct": "Individuelle Produkte",
+      "drinkware": "Trinkware",
+      "footwear": "Schuhe",
+      "headwear": "Kopfbedeckungen",
+      "homewareAppliances": "Haushalt & Geräte",
+      "wearableAccessories": "Tragbare Accessoires",
+      "wearableTextile": "Tragbare Textilien"
+    },
+    "seeMore": "MEHR SEHEN"
   },
   "cta": {
     "title": "BEREIT, MERCHANDISE FÜR IHRE MARKE ZU ERSTELLEN?",

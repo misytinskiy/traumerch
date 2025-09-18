@@ -5,12 +5,21 @@ import SectionTitle from "../SectionTitle/SectionTitle";
 import Button from "../Button/Button";
 import styles from "./Services.module.css";
 
-export default function Services() {
+interface ServicesProps {
+  showAll?: boolean;
+}
+
+export default function Services({ showAll = false }: ServicesProps) {
   const { t } = useLanguage();
+
+  // Show either first 3 services or all 5 services
+  const servicesToShow = showAll
+    ? t.services.items
+    : t.services.items.slice(0, 3);
 
   return (
     <section className={styles.services}>
-      {t.services.items.map((service, index) => (
+      {servicesToShow.map((service, index) => (
         <div
           key={index}
           className={`${styles.serviceCard} ${

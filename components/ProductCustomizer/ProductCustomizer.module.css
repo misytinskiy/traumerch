@@ -1,0 +1,249 @@
+.customizer {
+  padding: 280px 150px 100px;
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  gap: 99px;
+  align-items: flex-start;
+}
+
+.imageSection {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.mainImageContainer {
+  flex-shrink: 0;
+}
+
+.mainImage {
+  width: 800px;
+  height: 920px;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.thumbnail {
+  width: 174px;
+  height: 200px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.thumbnail:hover {
+  opacity: 0.8;
+}
+
+.optionsSection {
+  flex: 1;
+  /* max-width: 500px; */
+  margin-left: auto;
+}
+
+.productName {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 1);
+  margin: 0 0 40px 0;
+  letter-spacing: 0.03em;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.2);
+  margin: 24px 0;
+}
+
+.optionGroup {
+  /* margin-bottom: 40px; */
+}
+
+.optionLabel {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 1);
+  margin: 0 0 30px 0;
+  letter-spacing: 0;
+}
+
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.colorOption {
+  width: 40px;
+  height: 40px;
+  border-radius: 1px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.colorOption.selected {
+  border: none;
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  gap: 52px;
+}
+
+.quantityButton {
+  width: 54px;
+  height: 54px;
+  border: none;
+  border-radius: 27px;
+  background: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.quantityButton:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.quantityButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quantityValue {
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  min-width: 40px;
+  text-align: center;
+}
+
+.optionButtons {
+  display: flex;
+  /* grid-template-columns: repeat(3, 1fr); */
+  max-width: 475px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.optionButton {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 1);
+  border-radius: 50px;
+  /* padding: 13px 1px; */
+  width: 113px;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.optionButton:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.optionButton.selected {
+  background: rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.priceSection {
+  margin: 28px 0;
+}
+
+.priceText,
+.leadTimeText {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 1);
+  margin: 0 0 8px 0;
+  opacity: 0.5;
+}
+
+.fullWidthButton {
+  width: 100% !important;
+}
+
+@media (max-width: 1200px) {
+  .customizer {
+    padding: 160px 40px 80px;
+    gap: 60px;
+  }
+
+  .imageSection {
+    max-width: 600px;
+  }
+
+  .mainImage {
+    width: 500px;
+    height: 575px;
+  }
+
+  .thumbnail {
+    width: 130px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .customizer {
+    flex-direction: column;
+    padding: 140px 20px 60px;
+    gap: 40px;
+  }
+
+  .imageSection {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .mainImage {
+    width: 100%;
+    height: 400px;
+  }
+
+  .thumbnails {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .thumbnail {
+    width: calc(25% - 15px);
+    height: 120px;
+  }
+
+  .optionsSection {
+    max-width: 100%;
+  }
+
+  .productName {
+    font-size: 36px;
+  }
+
+  .optionButtons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

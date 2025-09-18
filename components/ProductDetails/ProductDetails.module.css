@@ -1,0 +1,291 @@
+.productDetails {
+  padding: 280px 150px 160px;
+  background: rgba(255, 255, 255, 1);
+}
+
+.customizerSection {
+  display: flex;
+  gap: 99px;
+  align-items: flex-start;
+  /* margin-bottom: 100px; */
+}
+
+.imageSection {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.mainImageContainer {
+  flex-shrink: 0;
+}
+
+.mainImage {
+  width: 800px;
+  height: 920px;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.thumbnail {
+  width: 174px;
+  height: 200px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.thumbnail:hover {
+  opacity: 0.8;
+}
+
+.optionsSection {
+  flex: 1;
+  margin-left: auto;
+}
+
+.productName {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 1);
+  margin: 0 0 40px 0;
+  letter-spacing: 0.03em;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.2);
+  margin: 24px 0;
+}
+
+.optionLabel {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 1);
+  margin: 0 0 30px 0;
+  letter-spacing: 0;
+}
+
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.colorOption {
+  width: 40px;
+  height: 40px;
+  border-radius: 1px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.colorOption.selected {
+  border: 3px solid rgba(0, 0, 0, 1);
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  gap: 52px;
+}
+
+.quantityButton {
+  width: 54px;
+  height: 54px;
+  border: none;
+  border-radius: 27px;
+  background: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.quantityButton:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.quantityButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quantityValue {
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  min-width: 40px;
+  text-align: center;
+}
+
+.optionButtons {
+  display: flex;
+  max-width: 475px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.optionButton {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 1);
+  border-radius: 50px;
+  width: 113px;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.optionButton:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.optionButton.selected {
+  background: rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.priceSection {
+  margin: 28px 0;
+}
+
+.priceText,
+.leadTimeText {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 1);
+  margin: 0 0 8px 0;
+  opacity: 0.5;
+}
+
+.fullWidthButton {
+  width: 100% !important;
+}
+
+.infoSection {
+  display: flex;
+  /* gap: 80px; */
+  /* align-items: flex-start; */
+  flex-direction: column;
+}
+
+.accordionSection {
+  flex: 1;
+  /* max-width: 600px; */
+}
+
+.title {
+  /* font-family: Inter; */
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 100%;
+  color: rgba(0, 0, 0, 1);
+  margin: -36px 0 51px 0;
+  letter-spacing: 0.02em;
+}
+.accordionSliderSection {
+  display: flex;
+  gap: 21px;
+  /* align-items: flex-start; */
+}
+
+.sliderSection {
+  flex: 1;
+  /* max-width: 600px; */
+  /* align-self: flex-end; */
+}
+
+@media (max-width: 1200px) {
+  .productDetails {
+    padding: 160px 40px 0px;
+  }
+
+  .customizerSection {
+    gap: 60px;
+    margin-bottom: 80px;
+  }
+
+  .mainImage {
+    width: 500px;
+    height: 575px;
+  }
+
+  .thumbnail {
+    width: 130px;
+    height: 150px;
+  }
+
+  .infoSection {
+    gap: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .productDetails {
+    padding: 140px 20px 0px;
+  }
+
+  .customizerSection {
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .imageSection {
+    flex-direction: column;
+  }
+
+  .mainImage {
+    width: 100%;
+    height: 400px;
+  }
+
+  .thumbnails {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .thumbnail {
+    width: calc(25% - 15px);
+    height: 120px;
+  }
+
+  .productName {
+    font-size: 36px;
+  }
+
+  .optionButtons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .infoSection {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .sliderSection {
+    align-self: stretch;
+  }
+}
