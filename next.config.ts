@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Ensure proper CSS handling
+  experimental: {
+    optimizeCss: true,
+  },
 };
 
 export default nextConfig;
