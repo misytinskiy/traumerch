@@ -10,8 +10,7 @@ import SectionTitle from "../SectionTitle/SectionTitle";
 import styles from "./Gallery.module.css";
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/swiper-bundle.css";
 
 const LeftArrow = () => (
   <svg

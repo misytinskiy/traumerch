@@ -32,7 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${ebGaramond.variable}`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${ebGaramond.variable}`}
+      >
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
