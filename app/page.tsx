@@ -17,6 +17,7 @@ export default function Home() {
   const nextSectionRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState(false);
   const [showUpArrow, setShowUpArrow] = useState(false);
   const [showGlassBanner, setShowGlassBanner] = useState(false);
@@ -74,6 +75,7 @@ export default function Home() {
       const currentScrollY = window.pageYOffset;
       const heroElement = heroRef.current;
       const productsElement = productsRef.current;
+      const ctaElement = ctaRef.current;
 
       // Track scroll direction for arrow logic
       const isScrollingUp = currentScrollY < lastScrollY;
@@ -89,14 +91,20 @@ export default function Home() {
         setShowUpArrow(isScrollingUp && hasScrolledPastHero && isHeroVisible);
       }
 
-      // Check if we've reached the Products section (3rd section)
-      if (productsElement) {
+      // Glass Banner logic: show from Products section until CTA section
+      if (productsElement && ctaElement) {
         const productsRect = productsElement.getBoundingClientRect();
+        const ctaRect = ctaElement.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
         // Show banner when Products section is 50% visible
         const isProductsVisible = productsRect.top < windowHeight * 0.5;
-        setShowGlassBanner(isProductsVisible);
+
+        // Hide banner when CTA section is 30% visible (before it fully appears)
+        const isCTAVisible = ctaRect.top < windowHeight * 0.7;
+
+        // Show banner only when we're past Products but before CTA
+        setShowGlassBanner(isProductsVisible && !isCTAVisible);
       }
 
       lastScrollY = currentScrollY;
@@ -132,7 +140,9 @@ export default function Home() {
 
         <FAQ />
 
-        <CTA />
+        <div ref={ctaRef}>
+          <CTA />
+        </div>
       </main>
 
       <Footer />
