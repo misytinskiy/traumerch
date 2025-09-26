@@ -274,7 +274,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 480px) {
   .title {
     font-size: 32px;
   }

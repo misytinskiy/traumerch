@@ -177,7 +177,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 480px) {
   .button {
     font-size: 12px;
   }

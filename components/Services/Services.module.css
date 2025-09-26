@@ -190,7 +190,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 480px) {
   .services {
     padding: 0 10px 58px;
   }

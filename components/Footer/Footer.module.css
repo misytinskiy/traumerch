@@ -188,7 +188,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 480px) {
   .footer {
     padding: 121px 10px 70px;
   }

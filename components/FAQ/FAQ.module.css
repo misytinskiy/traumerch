@@ -160,7 +160,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 480px) {
   .faq {
     padding: 134px 10px 32px;
   }
