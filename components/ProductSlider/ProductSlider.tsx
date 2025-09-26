@@ -49,7 +49,7 @@ const RightArrowIcon = () => (
 );
 
 export default function ProductSlider() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [, setCurrentSlide] = useState(0);
   const totalSlides = 5; // Number of slider images
 
   const nextSlide = () => {
