@@ -6,6 +6,16 @@
   "hero": {
     "title": "ENTFESSELN SIE IHRE MARKE DURCH MERCHANDISE, DAS WIRKLICH MIT IHREM",
     "titleHighlight": "PUBLIKUM VERBINDET",
+    "titleLine1": "Entfesseln Sie Ihre Marke",
+    "titleLine2": "durch Merchandise, das",
+    "titleLine3": "wirklich mit Ihrem",
+    "titleLine4": "Publikum verbindet",
+    "titleLine1Small": "ENTFESSELN SIE IHRE MARKE",
+    "titleLine2Small": "DURCH",
+    "titleLine3Small": "MERCHANDISE, DAS WIRKLICH",
+    "titleLine4Small": "MIT IHREM",
+    "titleLine5Small": "PUBLIKUM",
+    "titleLine6Small": "VERBINDET",
     "cta": "UNSER VERSPRECHEN SEHEN"
   },
   "gallery": {
@@ -89,7 +99,10 @@
   },
   "solutions": {
     "hero": {
-      "title": "LÖSUNGEN MASSGESCHNEIDERT FÜR IHRE MARKE"
+      "title": "LÖSUNGEN MASSGESCHNEIDERT FÜR IHRE MARKE",
+      "titleLine1": "LÖSUNGEN",
+      "titleLine2": "MASSGESCHNEIDERT",
+      "titleLine3": "FÜR IHRE MARKE"
     }
   },
   "design": {
@@ -123,7 +136,8 @@
   },
   "catalog": {
     "hero": {
-      "title": "IHRE MARKE. UNSERE KOLLEKTION."
+      "titleLine1": "IHRE MARKE.",
+      "titleLine2": "UNSERE KOLLEKTION."
     },
     "tabs": {
       "allProducts": "Alle Produkte",

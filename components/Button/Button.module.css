@@ -6,12 +6,28 @@
   border-radius: 50px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* transition: background-color 0.4s ease-in-out, border-color 0.4s ease-in-out,
+    transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; */
   text-decoration: none;
   border: none;
   font-family: inherit;
   position: relative;
   overflow: hidden;
+  /* Стабилизация рендеринга текста при скейлинге */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  /* Фиксация позиционирования текста */
+  will-change: transform;
+  transform-origin: center center;
+  -webkit-transform-origin: center center;
 }
 
 .button:disabled {
@@ -24,11 +40,25 @@
   background: transparent;
   color: rgba(0, 0, 0, 1);
   border: 1px solid rgba(0, 0, 0, 1);
+  transition: color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .transparent:hover:not(:disabled) {
-  background: rgba(0, 0, 0, 0.05);
-  transform: translateY(-1px);
+  /* background: rgba(0, 0, 0, 0.05); */
+  border-color: rgba(153, 153, 153, 1);
+  color: rgba(153, 153, 153, 1);
+  /* transform: translateY(-1px); */
+  /* box-shadow: 0 8px 25px rgba(0, 0, 0, 0.11); */
+}
+
+.transparent:hover:not(:disabled) .arrow {
+  stroke: rgba(153, 153, 153, 1);
+}
+
+.transparent:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 /* Solid variant (like hero) */
@@ -36,9 +66,12 @@
   background: #000;
   color: #fff;
   border: 1px solid #000;
+  transition: background-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.solid::after {
+/* .solid::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -49,7 +82,7 @@
   background: #fff;
   transition: width 0.3s ease;
   opacity: 0;
-}
+} */
 
 .solid.hasArrow::after {
   display: none;
@@ -60,13 +93,23 @@
 }
 
 .solid:hover:not(:disabled) {
-  background: #333;
-  transform: translateY(-2px);
+  background: rgba(153, 153, 153, 1);
+  border-color: rgba(153, 153, 153, 1);
+  /* transform: translateY(-2px); */
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.solid:hover:not(:disabled) .arrow {
+  stroke: rgba(255, 255, 255, 1);
 }
 
 .solid:hover:not(:disabled):not(.hasArrow)::after {
   width: 30px;
+}
+
+.solid:active:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Size variants */
@@ -95,21 +138,47 @@
 
 .arrow {
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease,
+    stroke 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.button:hover .arrow {
-  transform: translateX(3px);
+/* Стабилизация текста внутри кнопки */
+.buttonText {
+  display: inline-block;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.button:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.11);
+}
+
+.button:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 1536px) {
+  /* Responsive padding handled via JavaScript in Hero component */
 }
 
 @media (max-width: 768px) {
   .button {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .large {
     padding: 14px 32px;
-    font-size: 14px;
+    /* font-size: 14px; */
     height: 44px;
+  }
+}
+
+@media (max-width: 350px) {
+  .button {
+    font-size: 12px;
   }
 }

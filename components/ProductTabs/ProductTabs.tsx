@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import Button from "../Button/Button";
@@ -16,6 +16,18 @@ interface Product {
 export default function ProductTabs() {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("allProducts");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   const tabs = [
     { key: "allProducts", label: t.catalog.tabs.allProducts, count: 38 },
@@ -40,6 +52,20 @@ export default function ProductTabs() {
       count: 38,
     },
   ];
+
+  // Generate simple products for mobile (all regular size)
+  const generateMobileProducts = (): Product[] => {
+    const products: Product[] = [];
+    for (let i = 1; i <= 20; i++) {
+      products.push({
+        id: i,
+        name: "Heavy Tote Bag",
+        price: "From €6",
+        size: "regular",
+      });
+    }
+    return products;
+  };
 
   // Generate products for complex grid layout
   const generateProducts = (): Product[] => {
@@ -167,9 +193,9 @@ export default function ProductTabs() {
   return (
     <section className={styles.tabs}>
       <div className={styles.header}>
-        <SectionTitle maxWidth={721} fontSize={80}>
-          {t.catalog.hero.title}
-        </SectionTitle>
+        <h2 className={`${styles.title}`}>
+          {t.catalog.hero.titleLine1} <br /> {t.catalog.hero.titleLine2}
+        </h2>
       </div>
 
       <div className={styles.tabList}>
@@ -190,19 +216,55 @@ export default function ProductTabs() {
       </div>
 
       <div className={styles.productGrid}>
-        {renderRow(0, "4regular", "row1")}
-        {renderRow(4, "2regular1large", "row2")}
-        {renderRow(7, "4regular", "row3")}
-        {renderRow(11, "1large2regular", "row4")}
-        {renderRow(14, "4regular", "row5")}
-        {renderRow(18, "2regular1large", "row6")}
-        {renderRow(21, "4regular", "row7")}
-        {renderRow(25, "4regular", "row8")}
-        {renderRow(29, "4regular", "row9")}
+        {isMobile ? (
+          // Mobile: Simple 2-column grid with all regular products
+          (() => {
+            const mobileProducts = generateMobileProducts();
+            const rows = [];
+            for (let i = 0; i < mobileProducts.length; i += 2) {
+              const rowProducts = mobileProducts.slice(i, i + 2);
+              rows.push(
+                <div key={`mobile-row-${i / 2}`} className={styles.mobileRow}>
+                  {rowProducts.map((product) => (
+                    <div key={product.id} className={styles.productCard}>
+                      <div
+                        className={`${styles.productImage} ${
+                          styles[product.size]
+                        }`}
+                      />
+                      <h3 className={styles.productName}>{product.name}</h3>
+                      <p className={styles.productPrice}>{product.price}</p>
+                    </div>
+                  ))}
+                </div>
+              );
+            }
+            return rows;
+          })()
+        ) : (
+          // Desktop: Complex grid layout
+          <>
+            {renderRow(0, "4regular", "row1")}
+            {renderRow(4, "2regular1large", "row2")}
+            {renderRow(7, "4regular", "row3")}
+            {renderRow(11, "1large2regular", "row4")}
+            {renderRow(14, "4regular", "row5")}
+            {renderRow(18, "2regular1large", "row6")}
+            {renderRow(21, "4regular", "row7")}
+            {renderRow(25, "4regular", "row8")}
+            {renderRow(29, "4regular", "row9")}
+          </>
+        )}
       </div>
 
       <div className={styles.seeMoreContainer}>
-        <Button variant="transparent" padding="31px 42px">
+        <Button
+          variant="transparent"
+          padding="31px 42px"
+          padding768="42px 107px"
+          padding350="26px 63px"
+          arrow="black"
+        >
           {t.catalog.seeMore}
         </Button>
       </div>

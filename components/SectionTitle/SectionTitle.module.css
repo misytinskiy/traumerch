@@ -12,12 +12,19 @@
 
 @media (max-width: 1200px) {
   .title {
-    font-size: 40px;
+    font-size: 40px !important;
   }
 }
 
 @media (max-width: 768px) {
   .title {
-    font-size: 32px;
+    font-size: 50px !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .title {
+    font-size: 28px !important;
+    line-height: 36px;
   }
 }

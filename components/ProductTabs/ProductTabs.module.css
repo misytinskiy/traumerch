@@ -9,6 +9,22 @@
   margin-bottom: 81px;
 }
 
+.title {
+  display: flex;
+  flex-direction: column;
+
+  font-family: var(--font-eb-garamond);
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 120%;
+  color: rgba(0, 0, 0, 1);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin: 0;
+
+  max-width: 800px;
+}
+
 .tabList {
   display: flex;
   gap: 32px;
@@ -156,25 +172,57 @@
   justify-content: center;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1536px) {
   .tabs {
-    padding: 160px 40px 60px;
+    padding: 278px 120px 60px;
+  }
+
+  .header {
+    margin-bottom: 74px;
+  }
+
+  .productGrid {
+    gap: 80px;
   }
 
   .row2,
   .row4,
   .row6 {
-    grid-template-columns: 1fr 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr 1fr; */
+  }
+
+  .productImage {
+    height: 344px !important;
+    margin-bottom: 28px;
+    /* height: 344px; */
   }
 
   .productImage.large {
-    height: 452px;
+    /* height: 620px !important; */
+    height: 620px;
+  }
+
+  .productName {
+    letter-spacing: 0.01em;
+    margin: 2px 0 12px 0;
+  }
+
+  .tab {
+    font-size: 16px;
   }
 }
 
 @media (max-width: 768px) {
+  .title {
+    font-size: 64px;
+    line-height: 113%;
+  }
   .tabs {
-    padding: 140px 20px 40px;
+    padding: 275px 29px 162px;
+  }
+
+  .productGrid {
+    margin-bottom: 110px;
   }
 
   .tabList {
@@ -183,8 +231,18 @@
   }
 
   .tab {
-    padding: 10px 20px;
-    font-size: 14px;
+    padding: 10px 11px;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    gap: 16px;
+  }
+
+  .count {
+    font-size: 16px;
+  }
+
+  .header {
+    margin-bottom: 67px;
   }
 
   .row1,
@@ -201,11 +259,62 @@
 
   .productImage.regular,
   .productImage.large {
-    height: 280px;
+    height: 343px;
   }
 
   .productName,
   .productPrice {
-    font-size: 20px;
+    font-size: 24px;
+  }
+
+  .mobileRow {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 350px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .header {
+    margin-bottom: 44px;
+  }
+
+  .tabs {
+    padding: 284px 10px 40px;
+  }
+
+  .tab {
+    font-size: 12px;
+  }
+
+  .count {
+    font-size: 12px;
+  }
+
+  .productImage.regular,
+  .productImage.large {
+    height: 176px;
+  }
+
+  .mobileRow {
+    gap: 10px;
+    margin-bottom: 0;
+  }
+
+  .productName,
+  .productPrice {
+    font-size: 14px;
+  }
+
+  .productGrid {
+    gap: 24px;
+  }
+
+  .tabList {
+    margin-bottom: 44px;
   }
 }

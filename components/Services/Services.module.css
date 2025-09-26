@@ -60,7 +60,40 @@
   border-radius: 30px;
 }
 
-@media (max-width: 1200px) {
+/* Базовые стили для описаний */
+.desktopDescription {
+  display: block;
+}
+
+.mobileDescription {
+  display: none;
+}
+
+@media (max-width: 1536px) {
+  .services {
+    padding: 159px 120px;
+  }
+
+  .serviceImage {
+    /* margin-bottom: 162px; */
+    width: 590px;
+  }
+
+  .title {
+    max-width: 400px;
+  }
+
+  .badge {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .description {
+    margin-bottom: 36px;
+  }
+}
+
+/* @media (max-width: 1200px) {
   .services {
     padding: 80px 40px;
   }
@@ -82,26 +115,42 @@
   .badge {
     font-size: 16px;
   }
+
+  /* Скрываем mobile описание на desktop */
+.mobileDescription {
+  display: none;
+}
+
+/* Показываем desktop описание */
+.desktopDescription {
+  display: block;
 }
 
 @media (max-width: 768px) {
   .services {
-    padding: 60px 20px;
+    padding: 0 29px 118px;
   }
 
   .serviceCard {
     flex-direction: column !important;
-    gap: 40px;
-    margin-bottom: 80px;
-    text-align: center;
+    gap: 0px;
+
+    margin-top: 118px;
+    padding-bottom: 58px;
+    /* text-align: center; */
   }
 
   .serviceCard.reverse {
     flex-direction: column !important;
   }
 
+  .title {
+    max-width: 1000px;
+  }
+
   .textContent {
     max-width: 100%;
+    align-self: start;
   }
 
   .imageContent {
@@ -109,14 +158,75 @@
   }
 
   .serviceImage {
-    height: 400px;
+    height: 536px;
+    width: 100%;
+  }
+
+  .imageContent {
+    width: 100%;
+    height: 536px;
   }
 
   .description {
-    font-size: 18px;
+    font-size: 24px;
+    max-width: 680px;
+    letter-spacing: 0.01em;
   }
 
   .badge {
+    font-size: 16px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Скрываем desktop описание на мобильных */
+  .desktopDescription {
+    display: none;
+  }
+
+  /* Показываем mobile описание под изображением */
+  .mobileDescription {
+    display: block;
+    margin-top: 36px;
+  }
+}
+
+@media (max-width: 350px) {
+  .services {
+    padding: 0 10px 58px;
+  }
+
+  .serviceCard {
+    margin-top: 132px;
+  }
+
+  .badge {
+    font-size: 12px;
+    margin-bottom: 18px;
+    line-height: 24px;
+    letter-spacing: 0.04em;
+  }
+
+  .title {
+    margin: 0;
+  }
+
+  .serviceCard {
+    gap: 20px;
+  }
+  .description {
     font-size: 14px;
+    margin-bottom: 14px;
+    max-width: 294px;
+    letter-spacing: 0.02em;
+    line-height: 123%;
+  }
+
+  .serviceImage {
+    height: 332px;
+  }
+
+  .mobileDescription {
+    margin-top: 14px;
+    line-height: 100%;
   }
 }

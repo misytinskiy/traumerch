@@ -6,6 +6,17 @@
   "hero": {
     "title": "UNLEASHING YOUR BRAND THROUGH MERCHANDISE THAT TRULY CONNECTS WITH YOUR",
     "titleHighlight": "AUDIENCE",
+    "titleLine1": "Unleashing your brand",
+    "titleLine2": "through merchandise that",
+    "titleLine3": "truly connects",
+    "titleLine4": "with your",
+    "titleLine1Small": "UNLEASHING YOUR",
+    "titleLine2Small": "BRAND THROUGH",
+    "titleLine3Small": "MERCHANDISE",
+    "titleLine4Small": "THAT TRULY",
+    "titleLine5Small": "CONNECTS",
+    "titleLine6Small": "WITH YOUR",
+    "titleLine7Small": "AUDIENCE",
     "cta": "SEE OUR PROMISE"
   },
   "gallery": {
@@ -13,7 +24,7 @@
   },
   "products": {
     "title": "Beloved Highlights",
-    "seeAll": "SEE ALL PRODUCTS",
+    "seeAll": "SEE OUR PROMISE",
     "productName": "Heavy Tote Bag",
     "priceFrom": "From €6"
   },
@@ -89,7 +100,10 @@
   },
   "solutions": {
     "hero": {
-      "title": "SOLUTIONS TAILORED TO YOUR BRAND"
+      "title": "SOLUTIONS TAILORED TO YOUR BRAND",
+      "titleLine1": "SOLUTIONS",
+      "titleLine2": "TAILORED",
+      "titleLine3": "TO YOUR BRAND"
     }
   },
   "design": {
@@ -123,7 +137,8 @@
   },
   "catalog": {
     "hero": {
-      "title": "YOUR BRAND. OUR COLLECTION."
+      "titleLine1": "YOUR BRAND.",
+      "titleLine2": "OUR COLLECTION."
     },
     "tabs": {
       "allProducts": "All Products",

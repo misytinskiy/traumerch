@@ -21,8 +21,46 @@
   line-height: 1.2;
   color: #000;
   max-width: 900px;
-  margin: 0;
+  margin: 0 0 60px 0;
   letter-spacing: -0.01em;
+}
+
+.scrollButton {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: bounce 2s infinite;
+}
+
+.scrollButton:hover {
+  opacity: 0.7;
+}
+
+.scrollButton:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
 }
 
 @media (max-width: 768px) {
@@ -31,6 +69,27 @@
   }
 
   .title {
-    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-size: 64px;
+    margin-bottom: 40px;
   }
+
+  .scrollButton {
+    bottom: 40px;
+  }
+}
+
+@media (max-width: 350px) {
+  .title {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+
+  .scrollButton {
+    display: none;
+  }
+
+  /* .scrollButton svg {
+    width: 36px;
+    height: 36px;
+  } */
 }

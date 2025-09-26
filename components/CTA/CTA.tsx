@@ -16,7 +16,13 @@ export default function CTA() {
 
       <p className={styles.description}>{t.cta.description}</p>
 
-      <Button variant="solid" padding="32px 44px" arrow="white">
+      <Button
+        variant="solid"
+        padding="32px 44px"
+        padding768="42px 62px"
+        padding350="26px 38px"
+        arrow="white"
+      >
         {t.cta.buttonText}
       </Button>
     </section>

@@ -14,44 +14,48 @@ import "swiper/swiper-bundle.css";
 
 const LeftArrow = () => (
   <svg
-    width="54"
-    height="54"
-    viewBox="0 0 54 54"
+    width="50"
+    height="50"
+    viewBox="0 0 50 50"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <rect
-      width="54"
-      height="54"
-      rx="27"
-      transform="matrix(-1 0 0 1 54 0)"
-      fill="black"
+      x="-0.5"
+      y="-0.5"
+      width="49"
+      height="49"
+      rx="24.5"
+      transform="matrix(0 -1 -1 0 49 49)"
+      stroke="currentColor"
     />
     <path
-      d="M23.0438 20.1121L16.1558 27.0001M16.1558 27.0001L23.0438 33.8881M16.1558 27.0001H37.8438"
-      stroke="white"
-      strokeWidth="1.378"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      d="M28.5357 31.3578C28.7231 31.1703 28.8284 30.916 28.8284 30.6508C28.8284 30.3857 28.7231 30.1314 28.5357 29.9438L23.5857 24.9938L28.5357 20.0438C28.7178 19.8552 28.8186 19.6026 28.8163 19.3404C28.8141 19.0782 28.7089 18.8274 28.5235 18.642C28.3381 18.4566 28.0873 18.3515 27.8251 18.3492C27.5629 18.3469 27.3103 18.4477 27.1217 18.6298L21.4647 24.2868C21.2772 24.4744 21.1719 24.7287 21.1719 24.9938C21.1719 25.259 21.2772 25.5133 21.4647 25.7008L27.1217 31.3578C27.3092 31.5453 27.5635 31.6506 27.8287 31.6506C28.0938 31.6506 28.3481 31.5453 28.5357 31.3578Z"
+      fill="currentColor"
     />
   </svg>
 );
 
 const RightArrow = () => (
   <svg
-    width="54"
-    height="54"
-    viewBox="0 0 54 54"
+    width="50"
+    height="50"
+    viewBox="0 0 50 50"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect width="54" height="54" rx="27" fill="black" />
+    <rect
+      x="0.5"
+      y="49.5"
+      width="49"
+      height="49"
+      rx="24.5"
+      transform="rotate(-90 0.5 49.5)"
+      stroke="currentColor"
+    />
     <path
-      d="M30.9562 20.1121L37.8442 27.0001M37.8442 27.0001L30.9562 33.8881M37.8442 27.0001H16.1562"
-      stroke="white"
-      strokeWidth="1.378"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      d="M21.4643 31.3578C21.2769 31.1703 21.1716 30.916 21.1716 30.6508C21.1716 30.3857 21.2769 30.1314 21.4643 29.9438L26.4143 24.9938L21.4643 20.0438C21.2822 19.8552 21.1814 19.6026 21.1837 19.3404C21.1859 19.0782 21.2911 18.8274 21.4765 18.642C21.6619 18.4566 21.9127 18.3515 22.1749 18.3492C22.4371 18.3469 22.6897 18.4477 22.8783 18.6298L28.5353 24.2868C28.7228 24.4744 28.8281 24.7287 28.8281 24.9938C28.8281 25.259 28.7228 25.5133 28.5353 25.7008L22.8783 31.3578C22.6908 31.5453 22.4365 31.6506 22.1713 31.6506C21.9062 31.6506 21.6519 31.5453 21.4643 31.3578Z"
+      fill="currentColor"
     />
   </svg>
 );
@@ -62,15 +66,12 @@ export default function Gallery() {
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<SwiperRef | null>(null);
 
-  // Create array of 6 images from squares folder
-  const images = [
-    { id: 1, src: "/squares/1.jpeg", alt: "Gallery image 1" },
-    { id: 2, src: "/squares/2.png", alt: "Gallery image 2" },
-    { id: 3, src: "/squares/3.jpeg", alt: "Gallery image 3" },
-    { id: 4, src: "/squares/4.jpeg", alt: "Gallery image 4" },
-    { id: 5, src: "/squares/5.png", alt: "Gallery image 5" },
-    { id: 6, src: "/squares/6.jpeg", alt: "Gallery image 6" },
-  ];
+  // Create array of 10 frame images
+  const images = Array.from({ length: 10 }, (_, index) => ({
+    id: index + 1,
+    src: "/frame.png",
+    alt: `Gallery image ${index + 1}`,
+  }));
 
   const handlePrevClick = () => {
     if (swiperRef.current) {
@@ -158,6 +159,17 @@ export default function Gallery() {
                   height={583}
                   priority={image.id <= 3}
                 />
+                <div className={styles.overlay}>
+                  <div className={styles.quote}>
+                    <p className={styles.quoteText}>
+                      "They delivered samples in a week — faster than any
+                      supplier we've worked with."
+                    </p>
+                    <p className={styles.quoteAuthor}>
+                      Jonas Müller, Product Lead
+                    </p>
+                  </div>
+                </div>
               </div>
             </SwiperSlide>
           ))}
