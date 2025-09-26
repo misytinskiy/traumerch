@@ -188,7 +188,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 480px) {
   .gallery {
     padding: 135px 10px 80px;
   }
