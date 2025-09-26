@@ -68,7 +68,7 @@ const RightArrowIcon = () => (
 export default function ProductInfo() {
   const { t } = useLanguage();
   const [openedIdx, setOpenedIdx] = useState<number | null>(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [, setCurrentSlide] = useState(0);
 
   const toggleItem = (idx: number) => {
     setOpenedIdx(openedIdx === idx ? null : idx);

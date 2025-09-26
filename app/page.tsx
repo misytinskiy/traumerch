@@ -5,7 +5,6 @@ import Header from "../components/Header/Header";
 import Hero from "../components/Hero/Hero";
 import Gallery from "../components/Gallery/Gallery";
 import Products from "../components/Products/Products";
-import Promise from "../components/Promise/Promise";
 import FAQ from "../components/FAQ/FAQ";
 import Services from "../components/Services/Services";
 import CTA from "../components/CTA/CTA";

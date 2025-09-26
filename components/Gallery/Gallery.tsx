@@ -162,8 +162,8 @@ export default function Gallery() {
                 <div className={styles.overlay}>
                   <div className={styles.quote}>
                     <p className={styles.quoteText}>
-                      "They delivered samples in a week — faster than any
-                      supplier we've worked with."
+                      &ldquo;They delivered samples in a week — faster than any
+                      supplier we&apos;ve worked with.&rdquo;
                     </p>
                     <p className={styles.quoteAuthor}>
                       Jonas Müller, Product Lead

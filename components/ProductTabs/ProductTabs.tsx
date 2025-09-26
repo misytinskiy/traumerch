@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
-import SectionTitle from "../SectionTitle/SectionTitle";
 import Button from "../Button/Button";
 import styles from "./ProductTabs.module.css";
 
