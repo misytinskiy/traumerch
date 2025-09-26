@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Button.module.css";
 
 type ButtonVariant = "transparent" | "solid";
@@ -15,6 +15,9 @@ interface ButtonProps {
   width?: string | number;
   height?: string | number;
   padding?: string | number;
+  padding768?: string | number;
+  padding480?: string | number;
+  padding350?: string | number;
   onClick?: () => void;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
@@ -32,7 +35,7 @@ const WhiteArrow = () => (
   >
     <path
       d="M15.9562 1.61206L22.8442 8.50006M22.8442 8.50006L15.9562 15.3881M22.8442 8.50006H1.15625"
-      stroke="white"
+      stroke="currentColor"
       strokeWidth="1.378"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -51,7 +54,7 @@ const BlackArrow = () => (
   >
     <path
       d="M15.9562 1.61182L22.8442 8.49982M22.8442 8.49982L15.9562 15.3878M22.8442 8.49982H1.15625"
-      stroke="#121212"
+      stroke="currentColor"
       strokeWidth="1.378"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -71,8 +74,32 @@ export default function Button({
   type = "button",
   className = "",
   padding,
+  padding768,
+  padding480,
+  padding350,
 }: ButtonProps) {
+  const [currentPadding, setCurrentPadding] = useState<
+    string | number | undefined
+  >(padding);
   const hasCustomSize = width || height;
+
+  useEffect(() => {
+    const updatePadding = () => {
+      if (window.innerWidth <= 350 && padding350) {
+        setCurrentPadding(padding350);
+      } else if (window.innerWidth <= 480 && padding480) {
+        setCurrentPadding(padding480);
+      } else if (window.innerWidth <= 768 && padding768) {
+        setCurrentPadding(padding768);
+      } else {
+        setCurrentPadding(padding);
+      }
+    };
+
+    updatePadding();
+    window.addEventListener("resize", updatePadding);
+    return () => window.removeEventListener("resize", updatePadding);
+  }, [padding, padding768, padding480, padding350]);
 
   const buttonClasses = [
     styles.button,
@@ -89,9 +116,11 @@ export default function Button({
     buttonStyle.width = typeof width === "number" ? `${width}px` : width;
   if (height)
     buttonStyle.height = typeof height === "number" ? `${height}px` : height;
-  if (padding)
+  if (currentPadding)
     buttonStyle.padding =
-      typeof padding === "number" ? `${padding}px` : padding;
+      typeof currentPadding === "number"
+        ? `${currentPadding}px`
+        : currentPadding;
 
   const renderArrow = () => {
     switch (arrow) {
@@ -112,7 +141,7 @@ export default function Button({
       disabled={disabled}
       type={type}
     >
-      {children}
+      <span className={styles.buttonText}>{children}</span>
       {renderArrow()}
     </button>
   );

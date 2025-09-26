@@ -31,14 +31,33 @@ export default function Services({ showAll = false }: ServicesProps) {
             <div className={styles.title}>
               <SectionTitle maxWidth={610}>{service.title}</SectionTitle>
             </div>
-            <p className={styles.description}>{service.description}</p>
-            <Button variant="transparent" padding="31px 40px">
-              {service.buttonText}
-            </Button>
+            <div className={styles.desktopDescription}>
+              <p className={styles.description}>{service.description}</p>
+              <Button
+                variant="solid"
+                padding="31px 40px"
+                padding768="30px 72px"
+                arrow="white"
+              >
+                SEE MORE
+              </Button>
+            </div>
           </div>
 
           <div className={styles.imageContent}>
             <div className={styles.serviceImage} />
+            <div className={styles.mobileDescription}>
+              <p className={styles.description}>{service.description}</p>
+              <Button
+                variant="solid"
+                padding="31px 40px"
+                padding768="42px 114px"
+                padding350="26px 63px"
+                arrow="white"
+              >
+                SEE MORE
+              </Button>
+            </div>
           </div>
         </div>
       ))}

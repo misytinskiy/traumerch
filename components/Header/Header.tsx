@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
@@ -7,6 +8,7 @@ import styles from "./Header.module.css";
 
 export default function Header() {
   const { language, country, setLanguage, t } = useLanguage();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Determine display labels based on country and language
   const getLanguageLabels = () => {
@@ -18,8 +20,18 @@ export default function Header() {
 
   const labels = getLanguageLabels();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
       <div className={styles.menu}>{t.header.menu}</div>
 
       <Link href="/" className={styles.logo}>
@@ -46,7 +58,7 @@ export default function Header() {
           </button>
         </div>
 
-        <Button variant="transparent" padding="23px 40px">
+        <Button variant="solid" padding="23px 40px">
           {t.header.quote}
         </Button>
       </div>

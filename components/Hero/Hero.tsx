@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import styles from "./Hero.module.css";
@@ -16,17 +17,61 @@ export default function Hero({
   isScrolling = false,
 }: HeroProps) {
   const { t } = useLanguage();
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth <= 1536);
+      setIsSmallScreen(window.innerWidth <= 350);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   return (
     <section className={styles.hero}>
-      <h1 className={styles.title}>
-        {t.hero.title}{" "}
-        <span className={styles.highlight}>{t.hero.titleHighlight}</span>
-      </h1>
+      {isSmallScreen ? (
+        <h1 className={styles.title}>
+          {t.hero.titleLine1Small}
+          <br />
+          {t.hero.titleLine2Small}
+          <br />
+          {t.hero.titleLine3Small}
+          <br />
+          {t.hero.titleLine4Small}
+          <br />
+          {t.hero.titleLine5Small}
+          <br />
+          {t.hero.titleLine6Small}
+          <br />
+          {t.hero.titleLine7Small}
+        </h1>
+      ) : isLargeScreen ? (
+        <h1 className={styles.title}>
+          {t.hero.titleLine1}
+          <br />
+          {t.hero.titleLine2}
+          <br />
+          {t.hero.titleLine3}
+          <br />
+          {t.hero.titleLine4}{" "}
+          <span className={styles.highlight}>{t.hero.titleHighlight}</span>
+        </h1>
+      ) : (
+        <h1 className={styles.title}>
+          {t.hero.title}{" "}
+          <span className={styles.highlight}>{t.hero.titleHighlight}</span>
+        </h1>
+      )}
 
       <Button
         variant="solid"
-        padding="31px 41px;"
+        padding={isLargeScreen ? "31px 53px" : "31px 41px"}
+        padding350="27px 49px"
         arrow="white"
         className={styles.ctaButton}
       >

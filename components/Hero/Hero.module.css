@@ -12,11 +12,13 @@
 .title {
   font-family: var(--font-eb-garamond);
   font-size: 80px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.2;
   color: #000;
   max-width: 1200px;
-  margin: 70px 0 66px 0;
+  margin: 193px 0 66px 0;
+  text-transform: uppercase;
+
   letter-spacing: -0.01em;
 }
 
@@ -25,10 +27,12 @@
   font-weight: 300;
 }
 
+/* Custom line breaks handled via <br> tags */
+
 .ctaButton {
   text-transform: uppercase;
   margin-bottom: 120px;
-  font-size: 16px;
+  /* font-size: 16px; */
   font-weight: 500;
 }
 
@@ -47,7 +51,7 @@
 
 .scrollButton:hover {
   opacity: 1;
-  transform: translateX(-50%) translateY(-5px);
+  /* transform: translateX(-50%) translateY(-5px); */
 }
 
 .scrollButton svg {
@@ -76,7 +80,7 @@
   cursor: not-allowed;
 }
 
-@keyframes bounce {
+/* @keyframes bounce {
   0%,
   20%,
   50%,
@@ -89,6 +93,20 @@
   }
   60% {
     transform: translateX(-50%) translateY(-5px);
+  }
+} */
+
+@media (max-width: 1536px) {
+  .title {
+    font-size: 78px;
+    margin: 69px 0 51px 0;
+    letter-spacing: -0.025em;
+  }
+
+  /* Line breaks handled via <br> tags */
+
+  .scrollButton {
+    bottom: 43px;
   }
 }
 
@@ -104,5 +122,26 @@
 
   .ctaButton {
     margin-bottom: 80px;
+  }
+}
+
+@media (max-width: 350px) {
+  .hero {
+    padding: 60px 10px 40px;
+  }
+
+  .title {
+    font-size: 32px;
+    margin: 50px 0 92px 0;
+    letter-spacing: -0.02em;
+    line-height: 40px;
+  }
+
+  .ctaButton {
+    margin: 0;
+  }
+
+  .scrollButton {
+    display: none;
   }
 }
