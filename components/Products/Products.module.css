@@ -60,7 +60,7 @@
   }
 
   .productImage {
-    height: 346px;
+    height: 346px !important;
   }
 
   .grid {

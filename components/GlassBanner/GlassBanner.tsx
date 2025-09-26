@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import styles from "./GlassBanner.module.css";
 
@@ -10,7 +9,6 @@ interface GlassBannerProps {
 }
 
 export default function GlassBanner({ isVisible }: GlassBannerProps) {
-  const { t } = useLanguage();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -18,6 +16,15 @@ export default function GlassBanner({ isVisible }: GlassBannerProps) {
   }, []);
 
   if (!mounted) {
+    return null;
+  }
+
+  // Check if we're on mobile/tablet - hide glass banner on these devices
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 744;
+  const isTablet = typeof window !== "undefined" && window.innerWidth <= 1536;
+
+  // Don't render glass banner on mobile and tablet devices
+  if (isMobile || isTablet) {
     return null;
   }
 

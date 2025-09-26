@@ -297,7 +297,7 @@
 
   .productImage.regular,
   .productImage.large {
-    height: 176px;
+    height: 176px !important;
   }
 
   .mobileRow {
