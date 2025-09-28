@@ -125,19 +125,23 @@ export default function Home() {
           />
         </div>
 
-        <div ref={nextSectionRef}>
+        <div ref={nextSectionRef} id="gallery">
           <Gallery />
         </div>
 
-        <div ref={productsRef}>
+        <div ref={productsRef} id="products">
           <Products />
         </div>
 
-        <Services />
+        <div id="services">
+          <Services />
+        </div>
 
         {/* <Promise /> */}
 
-        <FAQ />
+        <div id="faq">
+          <FAQ />
+        </div>
 
         <div ref={ctaRef}>
           <CTA />
