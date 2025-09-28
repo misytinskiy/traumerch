@@ -54,6 +54,11 @@
   text-decoration: none;
   transition: opacity 0.2s ease;
   letter-spacing: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
 }
 
 .columnLink:hover {

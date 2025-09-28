@@ -74,6 +74,7 @@ export default function Hero({
         padding350="27px 49px"
         arrow="white"
         className={styles.ctaButton}
+        onClick={onScrollClick}
       >
         {t.hero.cta}
       </Button>

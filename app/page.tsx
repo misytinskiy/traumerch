@@ -53,15 +53,18 @@ export default function Home() {
     requestAnimationFrame(animation);
   };
 
-  const handleScrollToNext = () => {
+  const handleScrollToServices = () => {
     if (!isScrolling) {
       if (showUpArrow && heroRef.current) {
         // Scroll back to hero section
         smoothScrollTo(heroRef.current, 1500);
         setShowUpArrow(false);
-      } else if (nextSectionRef.current) {
-        // Scroll to next section
-        smoothScrollTo(nextSectionRef.current, 1500);
+      } else {
+        // Scroll to services section
+        const servicesElement = document.getElementById("services");
+        if (servicesElement) {
+          smoothScrollTo(servicesElement, 1500);
+        }
       }
     }
   };
@@ -119,7 +122,7 @@ export default function Home() {
       <main>
         <div ref={heroRef}>
           <Hero
-            onScrollClick={handleScrollToNext}
+            onScrollClick={handleScrollToServices}
             showUpArrow={showUpArrow}
             isScrolling={isScrolling}
           />

@@ -17,6 +17,11 @@ export default function ProductTabs() {
   const [activeTab, setActiveTab] = useState("allProducts");
   const [isMobile, setIsMobile] = useState(false);
 
+  const handleProductClick = (productId: number) => {
+    // Navigate to design page for the specific product
+    window.location.href = `/design?product=${productId}`;
+  };
+
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -179,7 +184,12 @@ export default function ProductTabs() {
     return (
       <div key={rowClass} className={styles[rowClass]}>
         {rowProducts.map((product) => (
-          <div key={product.id} className={styles.productCard}>
+          <div
+            key={product.id}
+            className={styles.productCard}
+            onClick={() => handleProductClick(product.id)}
+            style={{ cursor: "pointer" }}
+          >
             <div className={`${styles.productImage} ${styles[product.size]}`} />
             <h3 className={styles.productName}>{product.name}</h3>
             <p className={styles.productPrice}>{product.price}</p>
@@ -225,7 +235,12 @@ export default function ProductTabs() {
               rows.push(
                 <div key={`mobile-row-${i / 2}`} className={styles.mobileRow}>
                   {rowProducts.map((product) => (
-                    <div key={product.id} className={styles.productCard}>
+                    <div
+                      key={product.id}
+                      className={styles.productCard}
+                      onClick={() => handleProductClick(product.id)}
+                      style={{ cursor: "pointer" }}
+                    >
                       <div
                         className={`${styles.productImage} ${
                           styles[product.size]
