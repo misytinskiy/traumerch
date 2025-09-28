@@ -20,6 +20,16 @@ export default function Products() {
     price: t.products.priceFrom,
   }));
 
+  const handleProductClick = (productId: number) => {
+    // Navigate to design page for the specific product
+    window.location.href = `/design?product=${productId}`;
+  };
+
+  const handleSeeAllClick = () => {
+    // Navigate to catalog page
+    window.location.href = "/catalog";
+  };
+
   return (
     <section className={styles.products}>
       <div className={styles.header}>
@@ -28,7 +38,12 @@ export default function Products() {
 
       <div className={styles.grid}>
         {products.map((product) => (
-          <div key={product.id} className={styles.productCard}>
+          <div
+            key={product.id}
+            className={styles.productCard}
+            onClick={() => handleProductClick(product.id)}
+            style={{ cursor: "pointer" }}
+          >
             <div className={styles.productImage} />
             <h3 className={styles.productName}>{product.name}</h3>
             <p className={styles.productPrice}>{product.price}</p>
@@ -43,6 +58,7 @@ export default function Products() {
           padding350="26px 49px"
           padding768="41px 76px"
           arrow="black"
+          onClick={handleSeeAllClick}
         >
           {t.products.seeAll}
         </Button>

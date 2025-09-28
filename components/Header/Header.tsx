@@ -17,6 +17,8 @@ export default function Header() {
   const { language, country, setLanguage, t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
+  const [showLogo, setShowLogo] = useState(true);
+  const [showMenuButton, setShowMenuButton] = useState(true);
 
   // Check if we're on mobile/tablet for responsive values
   const isMobile = typeof window !== "undefined" && window.innerWidth <= 350;
@@ -32,7 +34,40 @@ export default function Header() {
 
   const labels = getLanguageLabels();
 
-  // Scroll functions for menu items
+  // Navigation functions for menu items
+  const handleMenuNavigation = (itemId: string) => {
+    switch (itemId) {
+      case "faq":
+        // FAQ - always scroll to section (main page or navigate with hash)
+        if (window.location.pathname === "/") {
+          scrollToSection("faq");
+        } else {
+          window.location.href = "/#faq";
+        }
+        break;
+      case "products":
+        // Products - go to catalog page
+        window.location.href = "/catalog";
+        break;
+      case "services":
+        // Services - go to solutions page
+        window.location.href = "/solutions";
+        break;
+      case "gallery":
+        // Portfolio - scroll to gallery section (main page or navigate with hash)
+        if (window.location.pathname === "/") {
+          scrollToSection("gallery");
+        } else {
+          window.location.href = "/#gallery";
+        }
+        break;
+      default:
+        break;
+    }
+    // Menu stays open for easy navigation between sections
+  };
+
+  // Scroll functions for sections (used internally)
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -45,13 +80,47 @@ export default function Header() {
       });
       setActiveSection(sectionId);
     }
-    // Menu stays open for easy navigation between sections
   };
 
   const handleMenuClick = () => {
     console.log("Menu clicked, current state:", isMenuOpen);
-    setIsMenuOpen(!isMenuOpen);
+    if (!isMenuOpen) {
+      // Opening menu - hide logo and menu button immediately
+      setShowLogo(false);
+      setShowMenuButton(false);
+      setIsMenuOpen(true);
+    } else {
+      // Closing menu - close menu first, then show elements after delay
+      setIsMenuOpen(false);
+      setTimeout(() => {
+        setShowLogo(true);
+        setShowMenuButton(true);
+      }, 400); // Wait for menu to fully close (duration: 0.4s)
+    }
   };
+
+  // Handle hash navigation on main page
+  useEffect(() => {
+    if (window.location.pathname === "/" && window.location.hash) {
+      const sectionId = window.location.hash.substring(1); // Remove # from hash
+      const element = document.getElementById(sectionId);
+      if (element) {
+        // Small delay to ensure page is fully loaded
+        setTimeout(() => {
+          const headerHeight = 80;
+          const targetPosition =
+            element.getBoundingClientRect().top +
+            window.pageYOffset -
+            headerHeight;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: "smooth",
+          });
+          setActiveSection(sectionId);
+        }, 100);
+      }
+    }
+  }, []);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -62,6 +131,10 @@ export default function Header() {
       if (isMenuOpen && !isClickOnMenu) {
         console.log("Menu closed by outside click");
         setIsMenuOpen(false);
+        setTimeout(() => {
+          setShowLogo(true);
+          setShowMenuButton(true);
+        }, 400); // Wait for menu to fully close
       }
     };
 
@@ -198,19 +271,19 @@ export default function Header() {
         <div className={styles.leftSide}>
           {/* Menu Button */}
           <AnimatePresence>
-            {!isMenuOpen && (
+            {showMenuButton && (
               <motion.div
                 className={styles.menu}
                 initial={{ opacity: 0, x: -20, scale: 0.9 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -20, scale: 0.9 }}
+                whileHover={{ opacity: 0.7 }}
                 transition={{
                   duration: 0.3,
                   ease: "easeOut",
                   type: "spring",
                   stiffness: 200,
                   damping: 20,
-                  delay: 0.2,
                 }}
                 onClick={handleMenuClick}
               >
@@ -237,10 +310,11 @@ export default function Header() {
                   className={`${styles.menuItem} ${
                     activeSection === "faq" ? styles.active : ""
                   }`}
-                  onClick={() => scrollToSection("faq")}
+                  onClick={() => handleMenuNavigation("faq")}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
+                  whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.1, duration: 0.2 }}
                 >
                   {language === "de" ? "WAS WIR TUN" : "WHAT WE DO"}
@@ -249,10 +323,11 @@ export default function Header() {
                   className={`${styles.menuItem} ${
                     activeSection === "products" ? styles.active : ""
                   }`}
-                  onClick={() => scrollToSection("products")}
+                  onClick={() => handleMenuNavigation("products")}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
+                  whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.15, duration: 0.2 }}
                 >
                   {language === "de" ? "UNSER KATALOG" : "OUR CATALOGUE"}
@@ -261,10 +336,11 @@ export default function Header() {
                   className={`${styles.menuItem} ${
                     activeSection === "services" ? styles.active : ""
                   }`}
-                  onClick={() => scrollToSection("services")}
+                  onClick={() => handleMenuNavigation("services")}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
+                  whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.2, duration: 0.2 }}
                 >
                   {language === "de" ? "LEISTUNGEN" : "SERVICES"}
@@ -273,10 +349,11 @@ export default function Header() {
                   className={`${styles.menuItem} ${
                     activeSection === "gallery" ? styles.active : ""
                   }`}
-                  onClick={() => scrollToSection("gallery")}
+                  onClick={() => handleMenuNavigation("gallery")}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
+                  whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.25, duration: 0.2 }}
                 >
                   PORTFOLIO
@@ -288,18 +365,14 @@ export default function Header() {
 
         {/* Logo - only show when menu is closed */}
         <AnimatePresence>
-          {!isMenuOpen && (
+          {showLogo && (
             <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 1, filter: "blur(0px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 0.9, filter: "blur(8px)" }}
               transition={{
                 duration: 0.3,
-                ease: "easeOut",
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                delay: 0.25,
+                ease: "easeInOut" as const,
               }}
             >
               <Link href="/" className={styles.logo}>
