@@ -19,6 +19,7 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [showLogo, setShowLogo] = useState(true);
   const [showMenuButton, setShowMenuButton] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
   // Check if we're on small desktop for responsive values
   const isSmallDesktop =
@@ -33,6 +34,63 @@ export default function Header() {
   };
 
   const labels = getLanguageLabels();
+
+  // Framer Motion scroll animations
+  const { scrollY } = useScroll();
+
+  // Scroll logic with immediate hide/show
+  useEffect(() => {
+    let ticking = false;
+    let lastScrollY = 0;
+    let isHeaderVisible = true;
+
+    const handleScroll = () => {
+      if (ticking) return;
+
+      ticking = true;
+      requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const diff = currentScrollY - lastScrollY;
+
+        // Ignore very small movements to prevent flickering
+        if (Math.abs(diff) < 5) {
+          ticking = false;
+          return;
+        }
+
+        // Always show header at the top
+        if (currentScrollY <= 100) {
+          if (!isHeaderVisible) {
+            isHeaderVisible = true;
+            setIsHeaderVisible(true);
+          }
+        }
+        // Show header if scrolling up (any amount)
+        else if (diff < 0) {
+          if (!isHeaderVisible) {
+            isHeaderVisible = true;
+            setIsHeaderVisible(true);
+          }
+        }
+        // Hide header immediately when scrolling down past threshold
+        else if (diff > 10 && currentScrollY > 200) {
+          if (isHeaderVisible) {
+            isHeaderVisible = false;
+            setIsHeaderVisible(false);
+          }
+        }
+
+        lastScrollY = currentScrollY;
+        ticking = false;
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // Empty dependency array - only run once
 
   // Navigation functions for menu items
   const handleMenuNavigation = (itemId: string) => {
@@ -147,15 +205,12 @@ export default function Header() {
     }
   }, [isMenuOpen]);
 
-  // Framer Motion scroll animations
-  const { scrollY } = useScroll();
-
   // Responsive values based on original CSS
   const initialPadding = isSmallDesktop ? "20px 29px" : "20px 60px";
   const scrolledPadding = isSmallDesktop ? "20px 29px" : "20px 40px";
   const initialWidth = "calc(100% - 60px)";
   const scrolledWidth = "calc(100% - 80px)";
-  const scrolledTop = 20;
+  // scrolledTop is now handled by motion.header animate prop
   const scrolledBorderRadius = 24;
 
   // Initial max-width (wider) and scrolled max-width (current state)
@@ -202,7 +257,7 @@ export default function Header() {
     ],
     { ease: easeOut }
   );
-  const top = useTransform(scrollY, scrollRange, [scrolledTop, scrolledTop]);
+  // top is now animated via motion.header animate prop
   const padding = useTransform(
     scrollY,
     scrollRange,
@@ -227,18 +282,25 @@ export default function Header() {
   return (
     <motion.header
       className={styles.header}
+      animate={{
+        top: isHeaderVisible ? 20 : -100,
+      }}
+      transition={{
+        duration: 0.2,
+        ease: "easeInOut",
+      }}
       style={{
         width,
         borderRadius,
         background,
         backdropFilter,
         boxShadow,
-        top,
         padding,
         left,
         transform,
         maxWidth,
         borderColor,
+        pointerEvents: isHeaderVisible ? "auto" : "none",
       }}
     >
       <div className={`${styles.headerContent} header-menu-container`}>
