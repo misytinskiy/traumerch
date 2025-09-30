@@ -20,9 +20,9 @@ export default function Header() {
   const [showLogo, setShowLogo] = useState(true);
   const [showMenuButton, setShowMenuButton] = useState(true);
 
-  // Check if we're on mobile/tablet for responsive values
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 350;
-  const isTablet = typeof window !== "undefined" && window.innerWidth <= 750;
+  // Check if we're on small desktop for responsive values
+  const isSmallDesktop =
+    typeof window !== "undefined" && window.innerWidth <= 1536;
 
   // Determine display labels based on country and language
   const getLanguageLabels = () => {
@@ -38,12 +38,8 @@ export default function Header() {
   const handleMenuNavigation = (itemId: string) => {
     switch (itemId) {
       case "faq":
-        // FAQ - always scroll to section (main page or navigate with hash)
-        if (window.location.pathname === "/") {
-          scrollToSection("faq");
-        } else {
-          window.location.href = "/#faq";
-        }
+        // FAQ - go to FAQ page
+        window.location.href = "/faq";
         break;
       case "products":
         // Products - go to catalog page
@@ -155,32 +151,16 @@ export default function Header() {
   const { scrollY } = useScroll();
 
   // Responsive values based on original CSS
-  const initialPadding = isMobile
-    ? "15px 20px"
-    : isTablet
-    ? "20px 40px"
-    : "20px 60px";
-  const scrolledPadding = isMobile
-    ? "15px 20px"
-    : isTablet
-    ? "20px 30px"
-    : "20px 40px";
-  const initialWidth = isMobile
-    ? "calc(100% - 20px)"
-    : isTablet
-    ? "calc(100% - 40px)"
-    : "calc(100% - 60px)";
-  const scrolledWidth = isMobile
-    ? "calc(100% - 40px)"
-    : isTablet
-    ? "calc(100% - 60px)"
-    : "calc(100% - 80px)";
-  const scrolledTop = isMobile ? 15 : 20;
-  const scrolledBorderRadius = isMobile ? 20 : 24;
+  const initialPadding = isSmallDesktop ? "20px 29px" : "20px 60px";
+  const scrolledPadding = isSmallDesktop ? "20px 29px" : "20px 40px";
+  const initialWidth = "calc(100% - 60px)";
+  const scrolledWidth = "calc(100% - 80px)";
+  const scrolledTop = 20;
+  const scrolledBorderRadius = 24;
 
   // Initial max-width (wider) and scrolled max-width (current state)
-  const initialMaxWidth = isMobile ? "600px" : isTablet ? "1400px" : "1620px";
-  const scrolledMaxWidth = isMobile ? "600px" : isTablet ? "1200px" : "1320px";
+  const initialMaxWidth = isSmallDesktop ? "1200px" : "1740px";
+  const scrolledMaxWidth = isSmallDesktop ? "1000px" : "1320px";
 
   // More gradual scroll range for smoother transition
   const scrollRange = [0, 200];
@@ -243,11 +223,6 @@ export default function Header() {
     ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.2)"],
     { ease: easeOut }
   );
-
-  // Don't render header on mobile and tablet devices
-  if (isMobile || isTablet) {
-    return null;
-  }
 
   return (
     <motion.header
@@ -363,7 +338,7 @@ export default function Header() {
           </AnimatePresence>
         </div>
 
-        {/* Logo - only show when menu is closed */}
+        {/* Center - Logo */}
         <AnimatePresence>
           {showLogo && (
             <motion.div
@@ -382,7 +357,7 @@ export default function Header() {
           )}
         </AnimatePresence>
 
-        {/* Right Section - always visible */}
+        {/* Right Section - Languages and Quote Button */}
         <motion.div
           className={styles.rightSection}
           animate={{

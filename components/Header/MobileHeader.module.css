@@ -1,0 +1,376 @@
+.mobileHeader {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 30px);
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  border-radius: 24px;
+  padding: 15px 15px;
+  margin-top: 15px;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 50px;
+}
+
+.logo {
+  font-family: var(--font-eb-garamond);
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  text-decoration: none;
+  letter-spacing: 0;
+  margin: 0;
+  line-height: 1;
+  display: inline-block;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.languageSwitcher {
+  display: flex;
+  gap: 17px;
+}
+
+.languageButton {
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  background: none;
+  border: none;
+  cursor: pointer;
+  /* padding: 6px 10px; */
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.languageButton:hover {
+  opacity: 0.7;
+}
+
+.languageButton.active {
+  opacity: 0.4;
+  font-weight: 500;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.burger span {
+  width: 100%;
+  height: 1.5px;
+  background: #000;
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
+.burger:hover span {
+  opacity: 0.7;
+}
+
+/* Tablet styles (744px and below) */
+@media (max-width: 744px) {
+  .mobileHeader {
+    /* width: calc(100% - 40px); */
+    padding: 20px 20px;
+    margin-top: 20px;
+  }
+
+  .logo {
+    font-size: 28px;
+  }
+
+  .rightSection {
+    gap: 42px;
+  }
+
+  .languageButton {
+    font-size: 12px;
+  }
+
+  .burger {
+    width: 28px;
+    height: 23px;
+  }
+
+  .burger span {
+    height: 2px;
+  }
+}
+
+/* Mobile styles (480px and below) */
+@media (max-width: 480px) {
+  .mobileHeader {
+    width: 100%;
+    padding: 15px 13px;
+    margin-top: 0;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .rightSection {
+    gap: 37px;
+  }
+
+  .languageSwitcher {
+    gap: 13px;
+  }
+
+  .languageButton {
+    font-size: 12px;
+    /* padding: 6px 10px; */
+  }
+
+  .burger {
+    width: 20px;
+    height: 20px;
+  }
+
+  .burger span {
+    height: 1.5px;
+  }
+}
+
+/* Fullscreen Menu Overlay */
+.menuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(248, 248, 248, 1);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease-out;
+}
+
+.menuOverlay.open {
+  animation: slideIn 0.3s ease-out;
+}
+
+.menuOverlay.closing {
+  animation: slideOut 0.3s ease-in;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+.menuContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 37px 30px 43px;
+  position: relative;
+}
+
+/* Menu Header */
+.menuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 103px;
+}
+
+.menuLogo {
+  font-family: var(--font-eb-garamond);
+  font-size: 28px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  text-decoration: none;
+  letter-spacing: 0;
+}
+
+.closeButton {
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton span {
+  position: absolute;
+  width: 30px;
+  height: 2px;
+  background: #000;
+  transition: all 0.3s ease;
+}
+
+.closeButton span:first-child {
+  transform: rotate(45deg);
+}
+
+.closeButton span:last-child {
+  transform: rotate(-45deg);
+}
+
+/* Main Menu Navigation */
+.menuNav {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  margin-bottom: 56px;
+}
+
+.menuItem {
+  font-family: var(--font-eb-garamond);
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 120%;
+  color: rgba(0, 0, 0, 1);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  padding: 0;
+}
+
+.menuItem:hover {
+  opacity: 0.7;
+}
+
+/* Secondary Menu */
+.secondaryMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 60px;
+}
+
+.secondaryMenuItem {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  color: rgba(0, 0, 0, 1);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  padding: 0;
+}
+
+.secondaryMenuItem:hover {
+  opacity: 0.7;
+}
+
+/* Menu Footer */
+.menuFooter {
+  margin-top: auto;
+  display: flex;
+}
+
+/* Burger Animation */
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Responsive Menu Styles */
+@media (max-width: 744px) {
+  .menuItem {
+    /* font-size: 40px; */
+  }
+
+  .secondaryMenuItem {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menuContent {
+    padding: 29px 10px 30px;
+  }
+
+  .menuLogo {
+    font-size: 16px;
+  }
+
+  .menuHeader {
+    margin-bottom: 60px;
+  }
+
+  .menuNav {
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+
+  .menuItem {
+    font-size: 28px;
+  }
+
+  .secondaryMenu {
+    gap: 0;
+    margin-bottom: 40px;
+  }
+
+  .secondaryMenuItem {
+    font-size: 14px;
+  }
+}

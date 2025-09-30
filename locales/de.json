@@ -33,6 +33,25 @@
   },
   "faq": {
     "title": "ALLES WAS SIE WISSEN MÜSSEN",
+    "pageTitle": "Alle Fragen. Klare Antworten.",
+    "tabs": [
+      {
+        "id": "why-merch",
+        "title": "Warum Merch? Warum TrauMerch?"
+      },
+      {
+        "id": "process",
+        "title": "Der Prozess. Der Ablauf."
+      },
+      {
+        "id": "payments",
+        "title": "Zahlungen. Dokumente. Sicherheit."
+      },
+      {
+        "id": "materials",
+        "title": "Grüne Materialien. Strenge Standards."
+      }
+    ],
     "items": [
       {
         "question": "VOM DESIGN BIS ZUR LIEFERUNG — WIE FUNKTIONIERT ES?",

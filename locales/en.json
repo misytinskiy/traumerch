@@ -33,6 +33,25 @@
   },
   "faq": {
     "title": "ALL YOU NEED TO KNOW",
+    "pageTitle": "All Questions. Clear Answers.",
+    "tabs": [
+      {
+        "id": "why-merch",
+        "title": "Why Merch? Why TrauMerch?"
+      },
+      {
+        "id": "process",
+        "title": "The Process. The Flow."
+      },
+      {
+        "id": "payments",
+        "title": "Payments. Paperwork. Peace of Mind."
+      },
+      {
+        "id": "materials",
+        "title": "Green Materials. Serious Standards."
+      }
+    ],
     "items": [
       {
         "question": "FROM DESIGN TO DELIVERY — HOW DOES IT WORK?",
