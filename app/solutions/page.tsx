@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import Header from "../../components/Header/Header";
+import ResponsiveHeader from "../../components/Header/ResponsiveHeader";
 import Services from "../../components/Services/Services";
 import CTA from "../../components/CTA/CTA";
 import Footer from "../../components/Footer/Footer";
@@ -35,7 +35,7 @@ export default function Solutions() {
 
   return (
     <div className={styles.page}>
-      <Header />
+      <ResponsiveHeader />
       <main>
         {/* Hero-like section */}
         <section className={styles.hero}>

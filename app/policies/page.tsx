@@ -1,23 +1,19 @@
 "use client";
 
 import ResponsiveHeader from "../../components/Header/ResponsiveHeader";
-import ProductTabs from "../../components/ProductTabs/ProductTabs";
+import Policies from "../../components/Policies/Policies";
 import CTA from "../../components/CTA/CTA";
 import Footer from "../../components/Footer/Footer";
-import styles from "./catalog.module.css";
+import styles from "./policies.module.css";
 
-export default function Catalog() {
+export default function PoliciesPage() {
   return (
     <div className={styles.page}>
       <ResponsiveHeader />
       <main>
-        {/* Product catalog with tabs and title */}
-        <ProductTabs />
-
-        {/* CTA section */}
+        <Policies />
         <CTA />
       </main>
-
       <Footer />
     </div>
   );

@@ -24,11 +24,7 @@ export default function Footer() {
         }
         break;
       case "FAQ":
-        if (window.location.pathname === "/") {
-          scrollToSection("faq");
-        } else {
-          window.location.href = "/#faq";
-        }
+        window.location.href = "/faq";
         break;
       default:
         break;

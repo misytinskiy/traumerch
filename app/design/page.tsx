@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "../../components/Header/Header";
+import ResponsiveHeader from "../../components/Header/ResponsiveHeader";
 import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import PromiseDesign from "../../components/PromiseDesign/PromiseDesign";
 import CTA from "../../components/CTA/CTA";
@@ -11,7 +11,7 @@ import styles from "./design.module.css";
 export default function Design() {
   return (
     <div className={styles.page}>
-      <Header />
+      <ResponsiveHeader />
       <main>
         {/* Unified product details section */}
         <ProductDetails />

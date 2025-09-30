@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import Header from "../components/Header/Header";
+import ResponsiveHeader from "../components/Header/ResponsiveHeader";
 import Hero from "../components/Hero/Hero";
 import Gallery from "../components/Gallery/Gallery";
 import Products from "../components/Products/Products";
@@ -118,7 +118,7 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <Header />
+      <ResponsiveHeader />
       <main>
         <div ref={heroRef}>
           <Hero
