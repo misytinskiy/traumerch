@@ -348,9 +348,9 @@ export default function Header() {
                     activeSection === "faq" ? styles.active : ""
                   }`}
                   onClick={() => handleMenuNavigation("faq")}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
                   whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.1, duration: 0.2 }}
                 >
@@ -361,9 +361,9 @@ export default function Header() {
                     activeSection === "products" ? styles.active : ""
                   }`}
                   onClick={() => handleMenuNavigation("products")}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
                   whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.15, duration: 0.2 }}
                 >
@@ -374,9 +374,9 @@ export default function Header() {
                     activeSection === "services" ? styles.active : ""
                   }`}
                   onClick={() => handleMenuNavigation("services")}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
                   whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.2, duration: 0.2 }}
                 >
@@ -387,9 +387,9 @@ export default function Header() {
                     activeSection === "gallery" ? styles.active : ""
                   }`}
                   onClick={() => handleMenuNavigation("gallery")}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
                   whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.25, duration: 0.2 }}
                 >
