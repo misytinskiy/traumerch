@@ -13,13 +13,10 @@ import GlassBanner from "../components/GlassBanner/GlassBanner";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const nextSectionRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const productsRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState(false);
   const [showUpArrow, setShowUpArrow] = useState(false);
-  const [showGlassBanner, setShowGlassBanner] = useState(false);
+  // GlassBanner now handles its own visibility based on scroll
 
   // Custom smooth scroll function
   const smoothScrollTo = (element: HTMLElement, duration: number = 800) => {
@@ -76,8 +73,6 @@ export default function Home() {
     const handleScroll = () => {
       const currentScrollY = window.pageYOffset;
       const heroElement = heroRef.current;
-      const productsElement = productsRef.current;
-      const ctaElement = ctaRef.current;
 
       // Track scroll direction for arrow logic
       const isScrollingUp = currentScrollY < lastScrollY;
@@ -93,21 +88,7 @@ export default function Home() {
         setShowUpArrow(isScrollingUp && hasScrolledPastHero && isHeroVisible);
       }
 
-      // Glass Banner logic: show from Products section until CTA section
-      if (productsElement && ctaElement) {
-        const productsRect = productsElement.getBoundingClientRect();
-        const ctaRect = ctaElement.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-
-        // Show banner when Products section is 50% visible
-        const isProductsVisible = productsRect.top < windowHeight * 0.5;
-
-        // Hide banner when CTA section is 30% visible (before it fully appears)
-        const isCTAVisible = ctaRect.top < windowHeight * 0.7;
-
-        // Show banner only when we're past Products but before CTA
-        setShowGlassBanner(isProductsVisible && !isCTAVisible);
-      }
+      // GlassBanner now handles its own visibility based on scroll direction
 
       lastScrollY = currentScrollY;
     };
@@ -128,11 +109,11 @@ export default function Home() {
           />
         </div>
 
-        <div ref={nextSectionRef} id="gallery">
+        <div id="gallery">
           <Gallery />
         </div>
 
-        <div ref={productsRef} id="products">
+        <div id="products">
           <Products />
         </div>
 
@@ -146,7 +127,7 @@ export default function Home() {
           <FAQ />
         </div>
 
-        <div ref={ctaRef}>
+        <div>
           <CTA />
         </div>
       </main>
@@ -154,7 +135,7 @@ export default function Home() {
       <Footer />
 
       {/* Glass Banner */}
-      <GlassBanner isVisible={showGlassBanner} />
+      <GlassBanner />
     </div>
   );
 }
