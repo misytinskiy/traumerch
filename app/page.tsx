@@ -7,6 +7,7 @@ import Gallery from "../components/Gallery/Gallery";
 import Products from "../components/Products/Products";
 import FAQ from "../components/FAQ/FAQ";
 import Services from "../components/Services/Services";
+import ResponsiveOurPromises from "../components/OurPromises/ResponsiveOurPromises";
 import CTA from "../components/CTA/CTA";
 import Footer from "../components/Footer/Footer";
 import GlassBanner from "../components/GlassBanner/GlassBanner";
@@ -121,7 +122,9 @@ export default function Home() {
           <Services />
         </div>
 
-        {/* <Promise /> */}
+        <div id="promises">
+          <ResponsiveOurPromises />
+        </div>
 
         <div id="faq">
           <FAQ />

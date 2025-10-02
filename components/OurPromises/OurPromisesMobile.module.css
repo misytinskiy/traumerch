@@ -1,0 +1,196 @@
+.ourPromisesMobile {
+  background-color: rgba(153, 153, 153, 1);
+  padding: 80px 20px 100px 20px;
+  min-height: 100vh;
+  position: relative;
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.sectionTitle {
+  font-family: "EB Garamond", serif;
+  font-weight: 400;
+  font-style: regular;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -1%;
+  text-transform: uppercase;
+  color: rgba(217, 217, 217, 1);
+  margin: 0 0 60px 0;
+  text-align: left;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+
+  gap: 28px;
+}
+
+.promiseHeading {
+  font-family: "EB Garamond", serif;
+  font-weight: 400;
+  font-style: regular;
+  font-size: 32px;
+  line-height: 42px;
+  letter-spacing: 0%;
+  text-transform: uppercase;
+  color: rgba(217, 217, 217, 1);
+  margin: 0;
+  text-align: center;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  /* max-width: 400px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.graySquare {
+  width: 100%;
+  /* max-width: 350px; */
+  height: 200px;
+  background-color: rgba(217, 217, 217, 0.5);
+  border-radius: 20px;
+}
+
+.phrase {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: regular;
+  font-size: 20px;
+  line-height: 32px;
+  letter-spacing: 0.02em;
+  color: rgba(217, 217, 217, 1);
+  margin: 0;
+  max-width: 500px;
+}
+
+.description {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: regular;
+  font-size: 17px;
+  line-height: 21px;
+  letter-spacing: 0.01em;
+  color: rgba(217, 217, 217, 1);
+  margin: 0;
+  line-height: 1.6;
+  max-width: 500px;
+  opacity: 0.7;
+}
+
+.asteriskText {
+  font-style: italic;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.buttonContainer {
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .ourPromisesMobile {
+    padding: 93px 30px 88px;
+  }
+
+  .sectionTitle {
+    font-size: 50px;
+    line-height: 54px;
+
+    align-self: start;
+    letter-spacing: -0.01em;
+    margin-bottom: 69px;
+  }
+
+  .cardsContainer {
+    gap: 133px;
+  }
+
+  .graySquare {
+    width: 684px;
+    height: 500px;
+    /* border-radius: 20px; */
+  }
+
+  .promiseHeading {
+    line-height: 36px;
+    align-self: start;
+  }
+
+  .phrase {
+    line-height: 24px;
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: -10px;
+    letter-spacing: 0.04em;
+    max-width: 526px;
+    line-height: 21px;
+  }
+
+  .buttonContainer {
+    margin-top: -5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ourPromisesMobile {
+    padding: 61px 10px 60px;
+  }
+
+  .sectionTitle {
+    font-size: 28px;
+    line-height: 36px;
+    margin-bottom: 36px;
+  }
+
+  .cardsContainer {
+    gap: 90px;
+  }
+
+  .card {
+    gap: 25px;
+  }
+
+  .graySquare {
+    /* max-width: 250px; */
+    height: 318px;
+  }
+
+  .promiseHeading {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .phrase {
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .buttonContainer {
+    margin-top: -1px;
+  }
+}

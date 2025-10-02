@@ -203,5 +203,40 @@
     ],
     "copyright": "2025 TrauMerch©",
     "allRights": "All rights reserved."
+  },
+  "promises": {
+    "topText": "OUR PROMISE. YOUR ADVANTAGE.",
+    "items": [
+      {
+        "heading": "TOTAL CUSTOMISATION",
+        "phrase": "Nothing standard, everything yours.",
+        "description": "We don't work with off-the-shelf solutions. Every product is adapted to your brand identity, from design details to packaging. You have the freedom to request any element you want—coloured drawstrings on hoodies or a leather strap on caps—everything is possible."
+      },
+      {
+        "heading": "END-TO-END SUPPORT",
+        "phrase": "Idea. Design. Delivery. Together",
+        "description": "We guide you through every step - from idea and design to sampling, production, and delivery. Instead of dealing with multiple suppliers, you work with one reliable partner. That way, things stay simple, and the process runs smoothly without you having to worry about coordination."
+      },
+      {
+        "heading": "LOCAL COMPLIANCE",
+        "phrase": "One founder. One giant. Always correct.",
+        "description": "Whether you are a solo founder or a multinational, we handle invoices, VAT, and legal details according to EU standards. Our experience with different company structures means we know the challenges and solutions. This ensures that compliance is always clear and correct, no matter your size."
+      },
+      {
+        "heading": "QUALITY CONTROL",
+        "phrase": "Nothing ships unchecked. Ever.",
+        "description": "Every production batch is checked before leaving the factory. Our team reviews samples, materials, and finishing to ensure nothing below standard ever reaches you. This consistent quality makes long-term cooperation reliable and predictable."
+      },
+      {
+        "heading": "SUSTAINABLE OPTIONS",
+        "phrase": "Eco isn't extra. It's standard.",
+        "description": "Sustainability isn't an add-on, it's part of how we work. We source eco-friendly materials and provide greener production choices on request. This allows you to align merchandise with your brand values and future expectations."
+      },
+      {
+        "heading": "FAST TRACK",
+        "phrase": "1 Day Quote. 1 Week Samples. 1 Month Delivery.",
+        "description": "We know speed is critical. That's why we commit to quotes in 1 day, samples in 1 week, and deliveries in 1 month. Our streamlined workflows and supplier network make it possible. *Typical lead times under standard conditions. Larger projects may vary."
+      }
+    ]
   }
 }

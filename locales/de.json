@@ -198,5 +198,40 @@
     ],
     "copyright": "2025 TrauMerch©",
     "allRights": "Alle Rechte vorbehalten."
+  },
+  "promises": {
+    "topText": "UNSER VERSPRECHEN. IHR VORTEIL.",
+    "items": [
+      {
+        "heading": "TOTALE INDIVIDUALISIERUNG",
+        "phrase": "Nichts von der Stange, alles deins.",
+        "description": "Wir arbeiten nicht mit Standardlösungen. Jedes Produkt wird an Ihre Markenidentität angepasst - von Designdetails bis zur Verpackung. Sie haben die Freiheit, jedes gewünschte Detail einzubringen - farbige Kordeln an Hoodies oder ein Lederriemen an Caps - alles ist möglich."
+      },
+      {
+        "heading": "RUNDUM-SUPPORT",
+        "phrase": "Idee. Design. Lieferung. Gemeinsam.",
+        "description": "Wir begleiten Sie in jedem Schritt - von Idee und Design bis zu Mustern, Produktion und Lieferung. Anstatt mit vielen Lieferanten zu arbeiten, haben Sie einen zuverlässigen Partner. So bleibt alles übersichtlich und der Ablauf läuft reibungslos, ohne dass Sie sich um Koordination kümmern müssen."
+      },
+      {
+        "heading": "LOKALE KONFORMITÄT",
+        "phrase": "Ein Gründer. Ein Konzern. Immer korrekt.",
+        "description": "Ob Ein-Personen-Unternehmen oder multinationaler Konzern - wir kümmern uns um Rechnungen, Mehrwertsteuer und rechtliche Details nach EU-Standards. Unsere Erfahrung mit unterschiedlichen Unternehmensstrukturen zeigt, dass wir die Herausforderungen und Lösungen kennen. So ist die Einhaltung der Vorschriften immer klar und korrekt - unabhängig von Ihrer Unternehmensgröße."
+      },
+      {
+        "heading": "QUALITÄTSKONTROLLE",
+        "phrase": "Nichts wird ungeprüft versendet. Niemals.",
+        "description": "Jede Produktionscharge wird geprüft, bevor sie das Werk verlässt. Unser Team kontrolliert Muster, Materialien und Verarbeitung, damit nichts unter Standard jemals bei Ihnen ankommt. Diese konsequente Qualität macht eine langfristige Zusammenarbeit verlässlich und planbar."
+      },
+      {
+        "heading": "NACHHALTIGE OPTIONEN",
+        "phrase": "Eco ist kein Extra. Es ist Standard.",
+        "description": "Nachhaltigkeit ist kein Zusatz, sondern Teil unserer Arbeit. Wir beziehen umweltfreundliche Materialien und bieten auf Wunsch umweltfreundlichere Produktionsmöglichkeiten. So können Sie Merchandise an Ihre Markenwerte und zukünftigen Erwartungen anpassen."
+      },
+      {
+        "heading": "FAST TRACK",
+        "phrase": "1 Tag Angebot. 1 Woche Muster. 1 Monat Lieferung.",
+        "description": "Wir wissen, dass Geschwindigkeit entscheidend ist. Deshalb garantieren wir Angebote in 1 Tag, Muster in 1 Woche und Lieferungen in 1 Monat. Unsere optimierten Abläufe und unser Lieferantennetzwerk machen das möglich. *Typische Durchlaufzeiten unter Standardbedingungen. Größere Projekte können abweichen."
+      }
+    ]
   }
 }
