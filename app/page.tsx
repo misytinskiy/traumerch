@@ -137,7 +137,6 @@ export default function Home() {
 
       <Footer />
 
-      {/* Glass Banner */}
       <GlassBanner />
     </div>
   );

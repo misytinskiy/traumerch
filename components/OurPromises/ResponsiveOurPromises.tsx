@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import OurPromises from "./OurPromises";
+import OurPromisesScroll from "./OurPromisesScroll";
 import OurPromisesMobile from "./OurPromisesMobile";
 
 export default function ResponsiveOurPromises() {
@@ -34,5 +34,5 @@ export default function ResponsiveOurPromises() {
   }
 
   // Use desktop version for large screens
-  return <OurPromises />;
+  return <OurPromisesScroll />;
 }
