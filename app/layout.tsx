@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "../contexts/LanguageContext";
+import { QuoteOverlayProvider } from "../contexts/QuoteOverlayContext";
+import QuoteOverlay from "../components/QuoteOverlay/QuoteOverlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +37,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${ebGaramond.variable}`}
       >
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <QuoteOverlayProvider>
+            {children}
+            <QuoteOverlay />
+          </QuoteOverlayProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

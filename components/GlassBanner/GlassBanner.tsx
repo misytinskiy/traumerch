@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Button from "../Button/Button";
 import styles from "./GlassBanner.module.css";
+import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 
 export default function GlassBanner() {
-  const router = useRouter();
+  const { openQuote } = useQuoteOverlay();
   const [mounted, setMounted] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(false);
 
@@ -104,7 +104,7 @@ export default function GlassBanner() {
           <Button
             variant="transparent"
             padding="20px 32px"
-            onClick={() => router.push("/quote")}
+            onClick={openQuote}
           >
             REQUEST QUOTE NOW
           </Button>

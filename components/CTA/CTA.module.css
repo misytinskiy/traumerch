@@ -1,6 +1,13 @@
 .cta {
   padding: 160px 150px;
-  background: rgba(245, 245, 245, 1);
+  background: linear-gradient(
+      180deg,
+      rgba(212, 254, 231, 0) 0%,
+      #dcf3e9 40.5%,
+      #dcf3e8 64%,
+      rgba(212, 254, 251, 0) 100%
+    ),
+    #fff;
   text-align: center;
   display: flex;
   flex-direction: column;

@@ -10,11 +10,13 @@ import {
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import Button from "../Button/Button";
 import styles from "./Header.module.css";
 
 export default function Header() {
   const { language, country, setLanguage, t } = useLanguage();
+  const { openQuote } = useQuoteOverlay();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
   const [showLogo, setShowLogo] = useState(true);
@@ -454,7 +456,7 @@ export default function Header() {
           <Button
             variant="solid"
             padding="23px 40px"
-            onClick={() => (window.location.href = "/quote")}
+            onClick={openQuote}
           >
             {t.header.quote}
           </Button>

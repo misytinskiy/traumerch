@@ -1,0 +1,45 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 950;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.panel {
+  width: 100%;
+  max-width: 1920px;
+  background: #fafafa;
+  border-radius: 0;
+  overflow-y: auto;
+  max-height: 100vh;
+  position: relative;
+  padding-top: 100px;
+}
+
+.contentWrapper {
+}
+
+.closeButton {
+  position: absolute;
+  top: 24px;
+  right: 36px;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding-top: 80px;
+  }
+
+  .contentWrapper {
+    padding: 10px 16px 40px;
+  }
+}
