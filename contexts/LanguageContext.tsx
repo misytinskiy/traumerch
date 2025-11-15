@@ -35,14 +35,16 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 const detectCountry = async (): Promise<Country> => {
   try {
     // Using ipapi.co for geolocation (free service)
-    const response = await fetch("https://ipapi.co/json/");
+    const response = await fetch("https://ipapi.co/json/", {
+      cache: "no-store",
+    });
 
     if (!response.ok) {
       return "EN";
     }
 
     const data = await response.json();
-    const countryCode = data.country_code;
+    const countryCode = (data?.country_code || "").toUpperCase();
 
     if (countryCode === "DE") return "DE";
     if (countryCode === "AT") return "AT";
@@ -57,32 +59,39 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [country, setCountry] = useState<Country>("EN");
 
   useEffect(() => {
+    let isMounted = true;
+
     const initializeLocation = async () => {
-      // Check if we have saved data
-      const savedLanguage = localStorage.getItem("language") as Language;
-      const savedCountry = localStorage.getItem("country") as Country;
+      const savedLanguage = localStorage.getItem("language") as Language | null;
+      const savedCountry = localStorage.getItem("country") as Country | null;
 
-      if (savedLanguage && savedCountry) {
-        // Use saved data
+      if (savedLanguage) {
         setLanguage(savedLanguage);
-        setCountry(savedCountry);
-      } else {
-        // Detect country and set language accordingly
-        const detectedCountry = await detectCountry();
-        setCountry(detectedCountry);
+      }
 
-        // Set language based on country
+      if (savedCountry) {
+        setCountry(savedCountry);
+      }
+
+      const detectedCountry = await detectCountry();
+      if (!isMounted) return;
+
+      setCountry(detectedCountry);
+      localStorage.setItem("country", detectedCountry);
+
+      if (!savedLanguage) {
         const newLanguage: Language =
           detectedCountry === "DE" || detectedCountry === "AT" ? "de" : "en";
         setLanguage(newLanguage);
-
-        // Save to localStorage
-        localStorage.setItem("country", detectedCountry);
         localStorage.setItem("language", newLanguage);
       }
     };
 
     initializeLocation();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleSetLanguage = (lang: Language) => {

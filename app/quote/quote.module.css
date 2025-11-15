@@ -1,0 +1,348 @@
+.page {
+  min-height: 100vh;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding: 120px 150px 160px;
+  max-width: 1920px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.mainTitle {
+  font-family: var(--font-eb-garamond);
+  font-size: 80px;
+  font-weight: 400;
+  line-height: 98px;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: -0.8px;
+  margin: 0 0 80px 0;
+  max-width: 800px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 800px 800px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Left Column - Form */
+.leftColumn {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 48px 20px 40px;
+  min-height: 1134px;
+}
+
+.formTitle {
+  font-family: var(--font-eb-garamond);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 42px;
+  color: #000000;
+  text-transform: uppercase;
+  margin: 0 0 124px 0;
+  max-width: 584px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  font-family: var(--font-geist-sans);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  color: #999999;
+  letter-spacing: -0.2px;
+}
+
+.input,
+.textarea {
+  background: #f6f6f6;
+  border: none;
+  border-radius: 10px;
+  padding: 24px;
+  font-family: var(--font-geist-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #000000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #999999;
+}
+
+.textarea {
+  min-height: 200px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Messenger Buttons */
+.messengerButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.messengerButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #999999;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.messengerButtonActive {
+  background: #000000;
+  opacity: 1;
+}
+
+.messengerButton:hover {
+  opacity: 0.7;
+}
+
+/* Toggle Buttons */
+.toggleButtons {
+  display: flex;
+  gap: 34px;
+}
+
+.toggleButton {
+  flex: 1;
+  max-width: 373px;
+  height: 46px;
+  border-radius: 20px;
+  border: 1px solid #000000;
+  background: #f6f6f6;
+  font-family: var(--font-geist-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #999999;
+  text-transform: uppercase;
+  letter-spacing: 0.14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggleButtonActive {
+  background: #ffffff;
+  color: #000000;
+  border-color: #000000;
+}
+
+.toggleButton:hover {
+  opacity: 0.8;
+}
+
+/* Service Buttons */
+.serviceButtons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.serviceButton {
+  height: 46px;
+  border-radius: 20px;
+  border: 1px solid #e5e5e5;
+  background: #f6f6f6;
+  font-family: var(--font-geist-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #999999;
+  text-transform: uppercase;
+  letter-spacing: 0.14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.serviceButtonActive {
+  background: #ffffff;
+  color: #000000;
+  border-color: #000000;
+}
+
+.serviceButton:hover {
+  opacity: 0.8;
+}
+
+/* File Upload */
+.fileUploadLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.uploadIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.fileUploadText {
+  font-family: var(--font-geist-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #999999;
+  text-transform: uppercase;
+  letter-spacing: 0.14px;
+  text-decoration: underline;
+}
+
+.fileInput {
+  display: none;
+}
+
+.submitButton {
+  margin-top: 20px;
+  align-self: flex-end;
+}
+
+/* Right Column */
+.rightColumn {
+  background: #eeeeee;
+  border-radius: 20px;
+  padding: 48px 20px;
+  min-height: 1134px;
+}
+
+.rightTitle {
+  font-family: var(--font-eb-garamond);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 42px;
+  color: #000000;
+  text-transform: uppercase;
+  margin: 0;
+  max-width: 568px;
+}
+
+/* Responsive */
+@media (max-width: 1920px) {
+  .content {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 1536px) {
+  .main {
+    padding: 100px 60px 120px;
+  }
+
+  .mainTitle {
+    font-size: 64px;
+    line-height: 78px;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 80px 20px 100px;
+  }
+
+  .mainTitle {
+    font-size: 48px;
+    line-height: 58px;
+    margin-bottom: 60px;
+  }
+
+  .formTitle,
+  .rightTitle {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .leftColumn {
+    padding: 32px 16px;
+    min-height: auto;
+  }
+
+  .rightColumn {
+    padding: 32px 16px;
+    min-height: auto;
+  }
+
+  .toggleButtons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .toggleButton {
+    max-width: 100%;
+  }
+
+  .serviceButtons {
+    grid-template-columns: 1fr;
+  }
+
+  .submitButton {
+    align-self: stretch;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 60px 16px 80px;
+  }
+
+  .mainTitle {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .formTitle,
+  .rightTitle {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .label {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

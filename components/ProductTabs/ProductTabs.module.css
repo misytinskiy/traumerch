@@ -78,6 +78,24 @@
   margin-bottom: 80px;
 }
 
+.fetchError {
+  color: #c00;
+  font-size: 16px;
+  margin: 0;
+}
+
+.emptyState {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+}
+
+.extraGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 19px;
+}
+
 /* Row 1: 4 regular cards */
 .row1 {
   display: grid;
@@ -254,6 +272,10 @@
   .row7,
   .row8,
   .row9 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .extraGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 

@@ -193,11 +193,28 @@
       },
       {
         "title": "Kontakt",
-        "links": ["[Firmenadresse in Österreich]", "[address@traumerch.com]"]
+        "links": ["Stephansplatz 8, Wien, Österreich", "info@traumerch.com"]
       }
     ],
     "copyright": "2025 TrauMerch©",
     "allRights": "Alle Rechte vorbehalten."
+  },
+  "quote": {
+    "mainTitle": "Sprechen oder tippen",
+    "mainTitleEnd": "ganz wie Sie möchten",
+    "formTitle": "Vom Messenger zum Angebot — so einfach ist das.",
+    "rightTitle": "Lassen Sie uns darüber sprechen",
+    "preferredMessenger": "Bevorzugter Messenger",
+    "namePlaceholder": "Name",
+    "yourRequest": "Ihre Anfrage",
+    "services": "DIENSTLEISTUNGEN",
+    "merchandise": "MERCHANDISE",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "",
+    "fileUpload": "DATEI HOCHLADEN",
+    "send": "SENDEN",
+    "thankYouTitle": "Vielen Dank",
+    "thankYouDescription": "Lassen Sie uns Ihre Ideen zum Leben erwecken — vom ersten Design bis zur Lieferung machen wir den Prozess einfach und zuverlässig."
   },
   "promises": {
     "topText": "UNSER VERSPRECHEN. IHR VORTEIL.",

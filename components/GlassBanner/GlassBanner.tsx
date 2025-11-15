@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Button from "../Button/Button";
 import styles from "./GlassBanner.module.css";
 
 export default function GlassBanner() {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(false);
 
@@ -99,7 +101,11 @@ export default function GlassBanner() {
         </h2>
 
         <div className={styles.bannerButton}>
-          <Button variant="transparent" padding="20px 32px">
+          <Button
+            variant="transparent"
+            padding="20px 32px"
+            onClick={() => router.push("/quote")}
+          >
             REQUEST QUOTE NOW
           </Button>
         </div>

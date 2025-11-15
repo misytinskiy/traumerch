@@ -1,5 +1,4 @@
 "use client";
-
 import ResponsiveHeader from "../../components/Header/ResponsiveHeader";
 import ProductTabs from "../../components/ProductTabs/ProductTabs";
 import CTA from "../../components/CTA/CTA";

@@ -451,7 +451,11 @@ export default function Header() {
             </button>
           </div>
 
-          <Button variant="solid" padding="23px 40px">
+          <Button
+            variant="solid"
+            padding="23px 40px"
+            onClick={() => (window.location.href = "/quote")}
+          >
             {t.header.quote}
           </Button>
         </motion.div>

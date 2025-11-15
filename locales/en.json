@@ -198,11 +198,28 @@
       },
       {
         "title": "Get in Touch",
-        "links": ["[Company Address in Austria]", "[address@traumerch.com]"]
+        "links": ["Stephansplatz 8, Vienna, Austria", "info@traumerch.com"]
       }
     ],
     "copyright": "2025 TrauMerch©",
     "allRights": "All rights reserved."
+  },
+  "quote": {
+    "mainTitle": "Talk or type",
+    "mainTitleEnd": "it's up to you",
+    "formTitle": "From Messenger to Quote — it's that simple.",
+    "rightTitle": "Let's talk it through",
+    "preferredMessenger": "Preferred Messenger",
+    "namePlaceholder": "Name",
+    "yourRequest": "Your request",
+    "services": "SERVICES",
+    "merchandise": "MERCHANDISE",
+    "description": "Description",
+    "descriptionPlaceholder": "",
+    "fileUpload": "FILE UPLOAD",
+    "send": "SEND",
+    "thankYouTitle": "Thank you",
+    "thankYouDescription": "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable."
   },
   "promises": {
     "topText": "OUR PROMISE. YOUR ADVANTAGE.",
