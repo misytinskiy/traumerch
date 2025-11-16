@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import Button from "../Button/Button";
@@ -35,7 +36,7 @@ export default function Services({ showAll = false }: ServicesProps) {
               <p className={styles.description}>{service.description}</p>
               <Button
                 variant="solid"
-                padding="31px 40px"
+                padding="31px 84px"
                 padding768="30px 72px"
                 arrow="white"
               >
@@ -46,11 +47,13 @@ export default function Services({ showAll = false }: ServicesProps) {
 
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
-              <img
+              <Image
                 src={`/services/${index + 1}.png`}
                 alt={service.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 590px"
+                priority={index === 0}
                 className={styles.serviceImageTag}
-                loading={index === 0 ? "eager" : "lazy"}
               />
             </div>
             <div className={styles.mobileDescription}>

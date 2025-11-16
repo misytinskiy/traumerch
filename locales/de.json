@@ -207,7 +207,7 @@
     "preferredMessenger": "Bevorzugter Messenger",
     "namePlaceholder": "Name",
     "yourRequest": "Ihre Anfrage",
-    "services": "DIENSTLEISTUNGEN",
+    "services": "Dienstleistungen",
     "merchandise": "MERCHANDISE",
     "description": "Beschreibung",
     "descriptionPlaceholder": "",
@@ -240,14 +240,14 @@
         "description": "Jede Produktionscharge wird geprüft, bevor sie das Werk verlässt. Unser Team kontrolliert Muster, Materialien und Verarbeitung, damit nichts unter Standard jemals bei Ihnen ankommt. Diese konsequente Qualität macht eine langfristige Zusammenarbeit verlässlich und planbar."
       },
       {
-        "heading": "NACHHALTIGE OPTIONEN",
-        "phrase": "Eco ist kein Extra. Es ist Standard.",
-        "description": "Nachhaltigkeit ist kein Zusatz, sondern Teil unserer Arbeit. Wir beziehen umweltfreundliche Materialien und bieten auf Wunsch umweltfreundlichere Produktionsmöglichkeiten. So können Sie Merchandise an Ihre Markenwerte und zukünftigen Erwartungen anpassen."
-      },
-      {
         "heading": "FAST TRACK",
         "phrase": "1 Tag Angebot. 1 Woche Muster. 1 Monat Lieferung.",
         "description": "Wir wissen, dass Geschwindigkeit entscheidend ist. Deshalb garantieren wir Angebote in 1 Tag, Muster in 1 Woche und Lieferungen in 1 Monat. Unsere optimierten Abläufe und unser Lieferantennetzwerk machen das möglich. *Typische Durchlaufzeiten unter Standardbedingungen. Größere Projekte können abweichen."
+      },
+      {
+        "heading": "NACHHALTIGE OPTIONEN",
+        "phrase": "Eco ist kein Extra. Es ist Standard.",
+        "description": "Nachhaltigkeit ist kein Zusatz, sondern Teil unserer Arbeit. Wir beziehen umweltfreundliche Materialien und bieten auf Wunsch umweltfreundlichere Produktionsmöglichkeiten. So können Sie Merchandise an Ihre Markenwerte und zukünftigen Erwartungen anpassen."
       }
     ]
   }

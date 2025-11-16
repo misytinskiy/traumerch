@@ -1,5 +1,5 @@
 .services {
-  padding: 100px 150px;
+  padding: 160px 150px 100px;
   background: rgba(255, 255, 255, 1);
 }
 
@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 80px;
-  margin-bottom: 120px;
+  margin-bottom: 157px;
 }
 
 .serviceCard:last-child {
@@ -21,11 +21,11 @@
 
 .textContent {
   flex: 1;
-  max-width: 600px;
+  max-width: 646px;
 }
 
 .badge {
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 100%;
   color: rgba(0, 0, 0, 1);
@@ -44,7 +44,7 @@
   font-weight: 400;
   line-height: 130%;
   color: rgba(0, 0, 0, 1);
-  margin: 0 0 48px 0;
+  margin: 0 0 33px 0;
   letter-spacing: 0;
 }
 
@@ -54,16 +54,14 @@
 }
 
 .serviceImage {
-  width: 41vw;
+  width: 41.6vw;
   height: 680px;
   border-radius: 30px;
   overflow: hidden;
+  position: relative;
 }
 
 .serviceImageTag {
-  width: 100%;
-  height: 100%;
-  display: block;
   object-fit: cover;
 }
 

@@ -347,19 +347,6 @@ export default function Header() {
               >
                 <motion.button
                   className={`${styles.menuItem} ${
-                    activeSection === "faq" ? styles.active : ""
-                  }`}
-                  onClick={() => handleMenuNavigation("faq")}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  whileHover={{ opacity: 0.7 }}
-                  transition={{ delay: 0.1, duration: 0.2 }}
-                >
-                  {language === "de" ? "WAS WIR TUN" : "WHAT WE DO"}
-                </motion.button>
-                <motion.button
-                  className={`${styles.menuItem} ${
                     activeSection === "products" ? styles.active : ""
                   }`}
                   onClick={() => handleMenuNavigation("products")}
@@ -367,7 +354,7 @@ export default function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   whileHover={{ opacity: 0.7 }}
-                  transition={{ delay: 0.15, duration: 0.2 }}
+                  transition={{ delay: 0.1, duration: 0.2 }}
                 >
                   {language === "de" ? "UNSER KATALOG" : "OUR CATALOGUE"}
                 </motion.button>
@@ -380,9 +367,22 @@ export default function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   whileHover={{ opacity: 0.7 }}
-                  transition={{ delay: 0.2, duration: 0.2 }}
+                  transition={{ delay: 0.15, duration: 0.2 }}
                 >
                   {language === "de" ? "LEISTUNGEN" : "SERVICES"}
+                </motion.button>
+                <motion.button
+                  className={`${styles.menuItem} ${
+                    activeSection === "faq" ? styles.active : ""
+                  }`}
+                  onClick={() => handleMenuNavigation("faq")}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  whileHover={{ opacity: 0.7 }}
+                  transition={{ delay: 0.2, duration: 0.2 }}
+                >
+                  FAQ
                 </motion.button>
                 <motion.button
                   className={`${styles.menuItem} ${
@@ -453,11 +453,7 @@ export default function Header() {
             </button>
           </div>
 
-          <Button
-            variant="solid"
-            padding="23px 40px"
-            onClick={openQuote}
-          >
+          <Button variant="solid" padding="23px 40px" onClick={openQuote}>
             {t.header.quote}
           </Button>
         </motion.div>

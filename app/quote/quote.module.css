@@ -21,7 +21,7 @@
   color: #000000;
   text-transform: uppercase;
   letter-spacing: -0.8px;
-  margin: 0 0 80px 0;
+  margin: 0 0 120px 0;
   max-width: 800px;
 }
 
@@ -36,7 +36,7 @@
 .leftColumn {
   background: #ffffff;
   border-radius: 20px;
-  padding: 48px 20px 40px;
+  padding: 48px 20px;
   min-height: 1134px;
 }
 
@@ -47,14 +47,14 @@
   line-height: 42px;
   color: #000000;
   text-transform: uppercase;
-  margin: 0 0 124px 0;
+  margin: 0 0 40px 0;
   max-width: 584px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 36px;
 }
 
 .formGroup {
@@ -77,7 +77,7 @@
   background: #f6f6f6;
   border: none;
   border-radius: 10px;
-  padding: 24px;
+  padding: 15px;
   font-family: var(--font-geist-sans);
   font-size: 16px;
   font-weight: 400;
@@ -87,8 +87,16 @@
   box-sizing: border-box;
 }
 
-.input::placeholder,
+.input::placeholder {
+  color: #999999;
+}
+
 .textarea::placeholder {
+  font-family: var(--font-geist-sans);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
   color: #999999;
 }
 
@@ -135,7 +143,7 @@
   max-width: 373px;
   height: 46px;
   border-radius: 20px;
-  border: 1px solid #000000;
+  border: none;
   background: #f6f6f6;
   font-family: var(--font-geist-sans);
   font-size: 14px;
@@ -149,9 +157,8 @@
 }
 
 .toggleButtonActive {
-  background: #ffffff;
   color: #000000;
-  border-color: #000000;
+  border: 1px solid #000000;
 }
 
 .toggleButton:hover {
@@ -162,13 +169,13 @@
 .serviceButtons {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 8px;
 }
 
 .serviceButton {
   height: 46px;
   border-radius: 20px;
-  border: 1px solid #e5e5e5;
+  border: none;
   background: #f6f6f6;
   font-family: var(--font-geist-sans);
   font-size: 14px;
@@ -182,9 +189,8 @@
 }
 
 .serviceButtonActive {
-  background: #ffffff;
   color: #000000;
-  border-color: #000000;
+  border: 1px solid #000000;
 }
 
 .serviceButton:hover {

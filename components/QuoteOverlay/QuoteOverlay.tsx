@@ -45,7 +45,37 @@ export default function QuoteOverlay() {
               }}
               aria-label="Close quote form"
             >
-              CLOSE
+              <svg
+                width="76"
+                height="76"
+                viewBox="0 0 76 76"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_352_3469)">
+                  <rect
+                    x="16.5059"
+                    y="56.8086"
+                    width="57"
+                    height="3.8"
+                    transform="rotate(-45 16.5059 56.8086)"
+                    fill="black"
+                  />
+                  <rect
+                    x="16.5059"
+                    y="19.1914"
+                    width="3.8"
+                    height="57"
+                    transform="rotate(-45 16.5059 19.1914)"
+                    fill="black"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_352_3469">
+                    <rect width="76" height="76" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
             </button>
             <div className={styles.contentWrapper}>
               <QuoteForm />

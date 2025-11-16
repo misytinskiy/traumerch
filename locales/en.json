@@ -212,7 +212,7 @@
     "preferredMessenger": "Preferred Messenger",
     "namePlaceholder": "Name",
     "yourRequest": "Your request",
-    "services": "SERVICES",
+    "services": "Services",
     "merchandise": "MERCHANDISE",
     "description": "Description",
     "descriptionPlaceholder": "",
@@ -245,14 +245,14 @@
         "description": "Every production batch is checked before leaving the factory. Our team reviews samples, materials, and finishing to ensure nothing below standard ever reaches you. This consistent quality makes long-term cooperation reliable and predictable."
       },
       {
-        "heading": "SUSTAINABLE OPTIONS",
-        "phrase": "Eco isn't extra. It's standard.",
-        "description": "Sustainability isn't an add-on, it's part of how we work. We source eco-friendly materials and provide greener production choices on request. This allows you to align merchandise with your brand values and future expectations."
-      },
-      {
         "heading": "FAST TRACK",
         "phrase": "1 Day Quote. 1 Week Samples. 1 Month Delivery.",
         "description": "We know speed is critical. That's why we commit to quotes in 1 day, samples in 1 week, and deliveries in 1 month. Our streamlined workflows and supplier network make it possible. *Typical lead times under standard conditions. Larger projects may vary."
+      },
+      {
+        "heading": "SUSTAINABLE OPTIONS",
+        "phrase": "Eco isn't extra. It's standard.",
+        "description": "Sustainability isn't an add-on, it's part of how we work. We source eco-friendly materials and provide greener production choices on request. This allows you to align merchandise with your brand values and future expectations."
       }
     ]
   }

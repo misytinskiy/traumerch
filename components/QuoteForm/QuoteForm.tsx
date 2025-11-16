@@ -81,15 +81,15 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
   return (
     <main className={styles.main}>
       <h1 className={styles.mainTitle}>
-        {t.quote?.mainTitle || "Talk or type"} <br />—
-        {" "}
+        {t.quote?.mainTitle || "Talk or type"} <br />—{" "}
         {t.quote?.mainTitleEnd || "it's up to you"}
       </h1>
 
       <div className={styles.content}>
         <div className={styles.leftColumn}>
           <h2 className={styles.formTitle}>
-            {t.quote?.formTitle || "From Messenger to Quote — it's that simple."}
+            {t.quote?.formTitle ||
+              "From Messenger to Quote — it's that simple."}
           </h2>
 
           <form className={styles.form} onSubmit={handleSubmit}>
@@ -146,7 +146,7 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
                     }))
                   }
                 >
-                  {t.quote?.services || "SERVICES"}
+                  {(t.quote?.services || "Services").toUpperCase()}
                 </button>
                 <button
                   type="button"
@@ -192,14 +192,11 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
             )}
 
             <div className={styles.formGroup}>
-              <label className={styles.label}>
-                {t.quote?.description || "Description"}
-              </label>
               <textarea
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                placeholder={t.quote?.descriptionPlaceholder || ""}
+                placeholder={t.quote?.description || "Description"}
                 className={styles.textarea}
                 rows={6}
               />
