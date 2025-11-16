@@ -7,11 +7,9 @@ import CTA from "../CTA/CTA";
 import Footer from "../Footer/Footer";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import styles from "./QuoteOverlay.module.css";
-import { useRouter } from "next/navigation";
 
 export default function QuoteOverlay() {
   const { isOpen, closeQuote } = useQuoteOverlay();
-  const router = useRouter();
 
   useEffect(() => {
     if (isOpen) {
@@ -50,12 +48,7 @@ export default function QuoteOverlay() {
               CLOSE
             </button>
             <div className={styles.contentWrapper}>
-              <QuoteForm
-                onSubmit={() => {
-                  closeQuote();
-                  router.push("/quote/thank-you");
-                }}
-              />
+              <QuoteForm />
               <CTA />
               <Footer />
             </div>

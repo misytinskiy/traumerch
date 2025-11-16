@@ -45,7 +45,14 @@ export default function Services({ showAll = false }: ServicesProps) {
           </div>
 
           <div className={styles.imageContent}>
-            <div className={styles.serviceImage} />
+            <div className={styles.serviceImage}>
+              <img
+                src={`/services/${index + 1}.png`}
+                alt={service.title}
+                className={styles.serviceImageTag}
+                loading={index === 0 ? "eager" : "lazy"}
+              />
+            </div>
             <div className={styles.mobileDescription}>
               <p className={styles.description}>{service.description}</p>
               <Button

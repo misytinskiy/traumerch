@@ -41,6 +41,7 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
     null
   );
   const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -57,9 +58,25 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setShowThankYou(true);
     onSubmit?.(formData);
   };
+
+  if (showThankYou) {
+    return (
+      <main className={styles.main}>
+        <div className={styles.thankYouContent}>
+          <h1 className={styles.thankYouTitle}>
+            {t.quote?.thankYouTitle || "Thank you"}
+          </h1>
+          <p className={styles.thankYouDescription}>
+            {t.quote?.thankYouDescription ||
+              "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable."}
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className={styles.main}>

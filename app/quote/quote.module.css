@@ -226,6 +226,33 @@
   align-self: flex-end;
 }
 
+.thankYouContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 600px;
+  justify-content: center;
+}
+
+.thankYouTitle {
+  font-family: var(--font-eb-garamond);
+  font-size: 80px;
+  font-weight: 400;
+  line-height: 98px;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+
+.thankYouDescription {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 150%;
+  color: rgba(0, 0, 0, 0.8);
+  max-width: 650px;
+}
+
 /* Right Column */
 .rightColumn {
   background: #eeeeee;
