@@ -254,19 +254,25 @@
   }
 
   .productImage {
-    height: 344px !important;
-    margin-bottom: 28px;
+    height: 312px !important;
+    margin-bottom: 18px;
+    width: 303px;
     /* height: 344px; */
   }
 
   .productImage.large {
-    /* height: 620px !important; */
-    height: 620px;
+    height: 576px !important;
+    width: 626px;
   }
 
   .productName {
+    font-size: 20px;
     letter-spacing: 0.01em;
     margin: 2px 0 12px 0;
+  }
+
+  .productPrice {
+    font-size: 20px;
   }
 
   .tab {

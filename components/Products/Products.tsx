@@ -54,7 +54,7 @@ export default function Products() {
       <div className={styles.seeAllContainer}>
         <Button
           variant="transparent"
-          padding="31px 42px"
+          padding="31px 65px"
           padding350="26px 49px"
           padding768="41px 76px"
           arrow="black"

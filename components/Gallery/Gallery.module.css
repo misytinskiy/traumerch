@@ -136,14 +136,14 @@
   margin-top: 36px;
 }
 
-@media (max-width: 1536px) {
+@media (max-width: 1536px) and (max-height: 982px) {
   .gallery {
     padding: 159px 120px 159px;
   }
-
+  /* 
   .imageItem {
-    height: 500px;
-  }
+    height: 451px;
+  } */
 }
 
 /* @media (max-width: 1200px) {

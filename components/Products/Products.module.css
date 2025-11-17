@@ -54,17 +54,26 @@
   justify-content: center;
 }
 
-@media (max-width: 1536px) {
+@media (max-width: 1536px) and (max-height: 982px) {
   .products {
     padding: 159px 120px 160px;
   }
 
   .productImage {
-    height: 346px !important;
+    height: 312px !important;
+    margin-bottom: 24px;
   }
 
   .grid {
-    margin-bottom: 107px;
+    margin-bottom: 80px;
+  }
+
+  .productName {
+    font-size: 20px;
+  }
+
+  .productPrice {
+    font-size: 20px;
   }
 }
 
