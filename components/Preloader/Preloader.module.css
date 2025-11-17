@@ -1,0 +1,148 @@
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Text styles */
+.text1 {
+  position: absolute;
+  color: var(--General-White, #fff);
+  text-align: center;
+  font-family: "EB Garamond", var(--font-eb-garamond);
+  font-size: 100px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140px; /* 140% */
+  text-transform: uppercase;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  mix-blend-mode: difference;
+}
+
+.text2 {
+  position: absolute;
+  color: var(--General-Grey, #999);
+  text-align: center;
+  font-family: Inter, var(--font-geist-sans);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(
+    -50%,
+    calc(-50% + 210.1635px + 40px + 80px)
+  ); /* center plus half image height plus half gap plus 80px */
+  width: 100%;
+  max-width: 545px;
+  padding: 0 20px;
+}
+
+/* Images container */
+.imagesContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.imagesTrack {
+  display: flex;
+  gap: 40px;
+  position: absolute;
+  right: -100%;
+  top: 50%;
+  transform: translateY(-50%);
+  align-items: center;
+  animation: slideLeft 8s linear infinite;
+}
+
+@keyframes slideLeft {
+  0% {
+    right: -100%;
+  }
+  100% {
+    right: 100%;
+  }
+}
+
+.imageWrapper {
+  flex-shrink: 0;
+  width: 652.125px;
+  height: 420.327px;
+  position: relative;
+  border-radius: 18.544px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .text1 {
+    font-size: 48px;
+  }
+
+  .text2 {
+    font-size: 36px;
+  }
+
+  .imageWrapper {
+    width: 300px;
+    height: 225px;
+  }
+
+  .imagesTrack {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .text1 {
+    font-size: 36px;
+  }
+
+  .text2 {
+    font-size: 28px;
+  }
+
+  .imageWrapper {
+    width: 250px;
+    height: 188px;
+  }
+
+  .imagesTrack {
+    gap: 20px;
+  }
+}

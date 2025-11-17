@@ -250,5 +250,9 @@
         "description": "Nachhaltigkeit ist kein Zusatz, sondern Teil unserer Arbeit. Wir beziehen umweltfreundliche Materialien und bieten auf Wunsch umweltfreundlichere Produktionsmöglichkeiten. So können Sie Merchandise an Ihre Markenwerte und zukünftigen Erwartungen anpassen."
       }
     ]
+  },
+  "preloader": {
+    "text1": "TrauMerch",
+    "text2": "Entfesseln Sie Ihre Marke"
   }
 }

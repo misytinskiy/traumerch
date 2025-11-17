@@ -255,5 +255,9 @@
         "description": "Sustainability isn't an add-on, it's part of how we work. We source eco-friendly materials and provide greener production choices on request. This allows you to align merchandise with your brand values and future expectations."
       }
     ]
+  },
+  "preloader": {
+    "text1": "TrauMerch",
+    "text2": "Unleashing your brand"
   }
 }
