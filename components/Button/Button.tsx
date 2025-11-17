@@ -18,6 +18,11 @@ interface ButtonProps {
   padding768?: string | number;
   padding480?: string | number;
   padding350?: string | number;
+  fontSize?: string | number;
+  fontSize1920?: string | number;
+  fontSize768?: string | number;
+  fontSize480?: string | number;
+  fontSize350?: string | number;
   onClick?: () => void;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
@@ -77,10 +82,18 @@ export default function Button({
   padding768,
   padding480,
   padding350,
+  fontSize,
+  fontSize1920,
+  fontSize768,
+  fontSize480,
+  fontSize350,
 }: ButtonProps) {
   const [currentPadding, setCurrentPadding] = useState<
     string | number | undefined
   >(padding);
+  const [currentFontSize, setCurrentFontSize] = useState<
+    string | number | undefined
+  >(fontSize);
   const hasCustomSize = width || height;
 
   useEffect(() => {
@@ -100,6 +113,30 @@ export default function Button({
     window.addEventListener("resize", updatePadding);
     return () => window.removeEventListener("resize", updatePadding);
   }, [padding, padding768, padding480, padding350]);
+
+  useEffect(() => {
+    const updateFontSize = () => {
+      if (window.innerWidth <= 350 && fontSize350) {
+        setCurrentFontSize(fontSize350);
+      } else if (window.innerWidth <= 480 && fontSize480) {
+        setCurrentFontSize(fontSize480);
+      } else if (window.innerWidth <= 768 && fontSize768) {
+        setCurrentFontSize(fontSize768);
+      } else if (
+        window.innerWidth <= 1920 &&
+        window.innerHeight <= 982 &&
+        fontSize1920
+      ) {
+        setCurrentFontSize(fontSize1920);
+      } else {
+        setCurrentFontSize(fontSize);
+      }
+    };
+
+    updateFontSize();
+    window.addEventListener("resize", updateFontSize);
+    return () => window.removeEventListener("resize", updateFontSize);
+  }, [fontSize, fontSize1920, fontSize768, fontSize480, fontSize350]);
 
   const buttonClasses = [
     styles.button,
@@ -121,6 +158,11 @@ export default function Button({
       typeof currentPadding === "number"
         ? `${currentPadding}px`
         : currentPadding;
+  if (currentFontSize)
+    buttonStyle.fontSize =
+      typeof currentFontSize === "number"
+        ? `${currentFontSize}px`
+        : currentFontSize;
 
   const renderArrow = () => {
     switch (arrow) {

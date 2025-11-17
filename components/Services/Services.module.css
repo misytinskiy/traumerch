@@ -77,6 +77,35 @@
   display: none;
 }
 
+@media (max-width: 1920px) and (max-height: 982px) {
+  .serviceImage {
+    height: 640px;
+  }
+
+  .badge {
+    margin: 0 0 15px 0;
+  }
+
+  .title {
+    margin: 0 0 30px 0;
+  }
+
+  .description {
+    font-size: 20px;
+    margin: 0 0 30px 0;
+  }
+
+  .serviceCard:not(:last-child) {
+    margin-bottom: 100px;
+  }
+
+  .serviceCard:not(:first-child) {
+    padding-top: 100px;
+  }
+
+  /* 130px */
+}
+
 @media (max-width: 1536px) and (max-height: 982px) {
   .services {
     padding: 159px 120px;

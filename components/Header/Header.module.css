@@ -61,6 +61,7 @@
   font-size: 16px;
   font-weight: 400;
   color: #000;
+  opacity: 0.4;
   cursor: pointer;
   transition: color 0.2s ease;
   padding: 0;
@@ -71,7 +72,7 @@
 }
 
 .languageButton.active {
-  opacity: 0.4;
+  opacity: 1;
 }
 
 /* Header Content Layout */

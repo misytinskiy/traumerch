@@ -34,51 +34,55 @@ export default function Hero({
 
   return (
     <section className={styles.hero}>
-      {isSmallScreen ? (
-        <h1 className={styles.title}>
-          {t.hero.titleLine1Small}
-          <br />
-          {t.hero.titleLine2Small}
-          <br />
-          {t.hero.titleLine3Small}
-          <br />
-          {t.hero.titleLine4Small}
-          <br />
-          {t.hero.titleLine5Small}
-          <br />
-          {t.hero.titleLine6Small}
-          <br />
-          {t.hero.titleLine7Small}
-        </h1>
-      ) : isLargeScreen ? (
-        <h1 className={styles.title}>
-          {t.hero.titleLine1}
-          <br />
-          {t.hero.titleLine2}
-          <br />
-          {t.hero.titleLine3}
-          <br />
-          {t.hero.titleLine4}{" "}
-          <span className={styles.highlight}>{t.hero.titleHighlight}</span>
-        </h1>
-      ) : (
-        <h1 className={styles.title}>
-          {t.hero.title}{" "}
-          <span className={styles.highlight}>{t.hero.titleHighlight}</span>
-        </h1>
-      )}
+      <div className={styles.heroContainer}>
+        <div className={styles.heroContent}>
+          {isSmallScreen ? (
+            <h1 className={styles.title}>
+              {t.hero.titleLine1Small}
+              <br />
+              {t.hero.titleLine2Small}
+              <br />
+              {t.hero.titleLine3Small}
+              <br />
+              {t.hero.titleLine4Small}
+              <br />
+              {t.hero.titleLine5Small}
+              <br />
+              {t.hero.titleLine6Small}
+              <br />
+              {t.hero.titleLine7Small}
+            </h1>
+          ) : isLargeScreen ? (
+            <h1 className={styles.title}>
+              {t.hero.titleLine1}
+              <br />
+              {t.hero.titleLine2}
+              <br />
+              {t.hero.titleLine3}
+              <br />
+              {t.hero.titleLine4}{" "}
+              <span className={styles.highlight}>{t.hero.titleHighlight}</span>
+            </h1>
+          ) : (
+            <h1 className={styles.title}>
+              {t.hero.title}{" "}
+              <span className={styles.highlight}>{t.hero.titleHighlight}</span>
+            </h1>
+          )}
 
-      <Button
-        variant="solid"
-        padding={isLargeScreen ? "31px 53px" : "31px 41px"}
-        padding350="27px 49px"
-        arrow="white"
-        className={styles.ctaButton}
-        onClick={onScrollClick}
-      >
-        {t.hero.cta}
-      </Button>
-
+          <Button
+            variant="solid"
+            padding={isLargeScreen ? "31px 53px" : "31px 41px"}
+            padding350="27px 49px"
+            arrow="white"
+            className={styles.ctaButton}
+            onClick={onScrollClick}
+            fontSize1920="15px"
+          >
+            {t.hero.cta}
+          </Button>
+        </div>
+      </div>
       <button
         className={`${styles.scrollButton} ${
           showUpArrow ? styles.rotated : ""

@@ -65,6 +65,7 @@ export default function Services({ showAll = false }: ServicesProps) {
                 padding480="26px 72px"
                 padding350="26px 72px"
                 arrow="white"
+                fontSize1920="15px"
               >
                 SEE MORE
               </Button>
