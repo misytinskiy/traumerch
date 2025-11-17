@@ -49,8 +49,7 @@
 }
 
 .imageContent {
-  /* flex: 1;
-  max-width: 800px; */
+  flex-shrink: 0;
 }
 
 .serviceImage {
@@ -141,7 +140,8 @@
     gap: 0px;
 
     margin-top: 118px;
-    padding-bottom: 58px;
+    margin-bottom: 157px;
+    padding-bottom: 0;
     /* text-align: center; */
   }
 
@@ -160,16 +160,15 @@
 
   .imageContent {
     max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .serviceImage {
     height: 536px;
     width: 100%;
-  }
-
-  .imageContent {
-    width: 100%;
-    height: 536px;
+    flex-shrink: 0;
   }
 
   .description {
@@ -192,6 +191,7 @@
   .mobileDescription {
     display: block;
     margin-top: 36px;
+    margin-bottom: 40px;
   }
 }
 
@@ -206,7 +206,7 @@
 
   .badge {
     font-size: 12px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     line-height: 24px;
     letter-spacing: 0.04em;
   }
@@ -216,7 +216,7 @@
   }
 
   .serviceCard {
-    gap: 20px;
+    gap: 16px;
   }
   .description {
     font-size: 14px;
@@ -227,11 +227,13 @@
   }
 
   .serviceImage {
-    height: 332px;
+    height: 232px;
+    border-radius: 20px;
   }
 
   .mobileDescription {
-    margin-top: 14px;
+    margin-top: 16px;
+    margin-bottom: 20px;
     line-height: 100%;
   }
 }

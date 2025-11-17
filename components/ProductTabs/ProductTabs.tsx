@@ -10,6 +10,7 @@ interface Product {
   name: string;
   price: string;
   size: "regular" | "large";
+  isSkeleton?: boolean;
 }
 
 interface AirtableRecord {
@@ -30,6 +31,44 @@ const TAB_KEYS = [
 ] as const;
 
 type TabKey = (typeof TAB_KEYS)[number];
+
+const DESKTOP_LAYOUT_PATTERN: Product["size"][] = [
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "large",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "large",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "large",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+  "regular",
+];
+
+const MOBILE_SKELETON_COUNT = 12;
 
 const normalizeCategoryValue = (value: string) =>
   value.toLowerCase().replace(/[^a-z]/g, "");
@@ -167,8 +206,7 @@ export default function ProductTabs() {
     return counts;
   }, [categorizedRecords]);
 
-  const activeRecords =
-    records.length > 0 ? categorizedRecords[activeTab] ?? [] : [];
+  const activeRecords = categorizedRecords[activeTab] ?? [];
 
   const tabLabels: Record<TabKey, string> = {
     allProducts: t.catalog.tabs.allProducts,
@@ -188,118 +226,31 @@ export default function ProductTabs() {
     count: tabCounts[key] ?? 0,
   }));
 
-  // Generate simple products for mobile (all regular size)
-  const generateMobileProducts = (): Product[] => {
-    const products: Product[] = [];
-    for (let i = 1; i <= 20; i++) {
-      products.push({
-        id: `placeholder-mobile-${i}`,
-        name: "Heavy Tote Bag",
-        price: "From €6",
+  const initialDesktopCapacity = DESKTOP_LAYOUT_PATTERN.length;
+
+  const desktopSkeletonProducts = useMemo(
+    () =>
+      DESKTOP_LAYOUT_PATTERN.map((size, index) => ({
+        id: `skeleton-desktop-${index}`,
+        name: "",
+        price: "",
+        size,
+        isSkeleton: true,
+      })),
+    []
+  );
+
+  const mobileSkeletonProducts = useMemo(
+    () =>
+      Array.from({ length: MOBILE_SKELETON_COUNT }, (_, index) => ({
+        id: `skeleton-mobile-${index}`,
+        name: "",
+        price: "",
         size: "regular",
-      });
-    }
-    return products;
-  };
-
-  // Generate products for complex grid layout
-  const generateProducts = (): Product[] => {
-    const products: Product[] = [];
-    let id = 1;
-
-    // Row 1: 4 regular
-    for (let i = 0; i < 4; i++) {
-      products.push({
-        id: `placeholder-${id++}`,
-        name: "Heavy Tote Bag",
-        price: "From €6",
-        size: "regular",
-      });
-    }
-
-    // Row 2: 2 regular + 1 large
-    for (let i = 0; i < 2; i++) {
-      products.push({
-        id: `placeholder-${id++}`,
-        name: "Heavy Tote Bag",
-        price: "From €6",
-        size: "regular",
-      });
-    }
-    products.push({
-      id: `placeholder-${id++}`,
-      name: "Heavy Tote Bag",
-      price: "From €6",
-      size: "large",
-    });
-
-    // Row 3: 4 regular
-    for (let i = 0; i < 4; i++) {
-      products.push({
-        id: `placeholder-${id++}`,
-        name: "Heavy Tote Bag",
-        price: "From €6",
-        size: "regular",
-      });
-    }
-
-    // Row 4: 1 large + 2 regular
-    products.push({
-      id: `placeholder-${id++}`,
-      name: "Heavy Tote Bag",
-      price: "From €6",
-      size: "large",
-    });
-    for (let i = 0; i < 2; i++) {
-      products.push({
-        id: `placeholder-${id++}`,
-        name: "Heavy Tote Bag",
-        price: "From €6",
-        size: "regular",
-      });
-    }
-
-    // Row 5: 4 regular
-    for (let i = 0; i < 4; i++) {
-      products.push({
-        id: `placeholder-${id++}`,
-        name: "Heavy Tote Bag",
-        price: "From €6",
-        size: "regular",
-      });
-    }
-
-    // Row 6: 2 regular + 1 large
-    for (let i = 0; i < 2; i++) {
-      products.push({
-        id: `placeholder-${id++}`,
-        name: "Heavy Tote Bag",
-        price: "From €6",
-        size: "regular",
-      });
-    }
-    products.push({
-      id: `placeholder-${id++}`,
-      name: "Heavy Tote Bag",
-      price: "From €6",
-      size: "large",
-    });
-
-    // Rows 7-9: 4 regular each (12 total)
-    for (let i = 0; i < 12; i++) {
-      products.push({
-        id: `placeholder-${id++}`,
-        name: "Heavy Tote Bag",
-        price: "From €6",
-        size: "regular",
-      });
-    }
-
-    return products;
-  };
-
-  const layoutPattern = useMemo(() => generateProducts().map((p) => p.size), []);
-  const initialDesktopCapacity = layoutPattern.length;
+        isSkeleton: true,
+      })),
+    []
+  );
 
   const mapRecordToProduct = (
     record: AirtableRecord,
@@ -327,7 +278,7 @@ export default function ProductTabs() {
   };
 
   const buildDesktopProducts = (sourceRecords: AirtableRecord[]) => {
-    const sizes = [...layoutPattern];
+    const sizes = [...DESKTOP_LAYOUT_PATTERN];
     while (sizes.length < sourceRecords.length) {
       sizes.push("regular");
     }
@@ -338,54 +289,47 @@ export default function ProductTabs() {
   };
 
   const desktopProducts = useMemo(() => {
-    if (!records.length) {
-      return generateProducts();
-    }
-
     if (!activeRecords.length) {
       return [];
     }
 
     return buildDesktopProducts(activeRecords);
-  }, [records.length, activeRecords, layoutPattern]);
+  }, [activeRecords]);
 
   const mobileProducts = useMemo(() => {
-    if (!records.length) {
-      return generateMobileProducts();
-    }
-
     if (!activeRecords.length) {
       return [];
     }
 
     return activeRecords.map((record) => mapRecordToProduct(record, "regular"));
-  }, [records.length, activeRecords]);
+  }, [activeRecords]);
 
-  const showEmptyState = records.length > 0 && activeRecords.length === 0;
+  const shouldShowSkeleton = isLoadingRecords;
+
+  const showEmptyState =
+    !shouldShowSkeleton && !fetchError && activeRecords.length === 0;
 
   const extraDesktopProducts = useMemo(() => {
-    if (!records.length || !desktopProducts.length || showEmptyState) {
+    if (!desktopProducts.length || showEmptyState) {
       return [];
     }
     if (desktopProducts.length <= initialDesktopCapacity) {
       return [];
     }
     return desktopProducts.slice(initialDesktopCapacity);
-  }, [desktopProducts, records.length, initialDesktopCapacity, showEmptyState]);
+  }, [desktopProducts, initialDesktopCapacity, showEmptyState]);
 
   const visibleDesktopProducts = useMemo(() => {
-    if (!records.length) {
-      return desktopProducts;
-    }
-    if (showEmptyState) {
+    if (!desktopProducts.length || showEmptyState) {
       return [];
     }
     return desktopProducts.slice(0, initialDesktopCapacity);
-  }, [desktopProducts, records.length, initialDesktopCapacity, showEmptyState]);
+  }, [desktopProducts, initialDesktopCapacity, showEmptyState]);
 
-  const showExtraGrid = showAll && extraDesktopProducts.length > 0;
+  const showExtraGrid =
+    !shouldShowSkeleton && showAll && extraDesktopProducts.length > 0;
   const canShowMore =
-    records.length > 0 &&
+    !shouldShowSkeleton &&
     !isMobile &&
     !showAll &&
     !showEmptyState &&
@@ -395,6 +339,53 @@ export default function ProductTabs() {
     language === "de"
       ? "In dieser Kategorie gibt es noch keine Produkte."
       : "No products in this category yet.";
+
+  const renderProductCard = (product: Product) => {
+    const isSkeleton = Boolean(product.isSkeleton);
+
+    return (
+      <div
+        key={product.id}
+        className={`${styles.productCard} ${
+          isSkeleton ? styles.skeletonCard : ""
+        }`}
+        onClick={
+          isSkeleton ? undefined : () => handleProductClick(product.id)
+        }
+        style={{ cursor: isSkeleton ? "default" : "pointer" }}
+      >
+        <div
+          className={`${styles.productImage} ${styles[product.size]} ${
+            isSkeleton ? styles.skeletonBlock : ""
+          }`}
+        />
+        {isSkeleton ? (
+          <>
+            <div className={`${styles.skeletonText} ${styles.long}`} />
+            <div className={`${styles.skeletonText} ${styles.short}`} />
+          </>
+        ) : (
+          <>
+            <h3 className={styles.productName}>{product.name}</h3>
+            <p className={styles.productPrice}>{product.price}</p>
+          </>
+        )}
+      </div>
+    );
+  };
+
+  const renderMobileGrid = (products: Product[]) => {
+    const rows = [];
+    for (let i = 0; i < products.length; i += 2) {
+      const rowProducts = products.slice(i, i + 2);
+      rows.push(
+        <div key={`mobile-row-${i / 2}`} className={styles.mobileRow}>
+          {rowProducts.map(renderProductCard)}
+        </div>
+      );
+    }
+    return rows;
+  };
 
   const renderRow = (
     sourceProducts: Product[],
@@ -421,18 +412,7 @@ export default function ProductTabs() {
 
     return (
       <div key={rowClass} className={styles[rowClass]}>
-        {rowProducts.map((product) => (
-          <div
-            key={product.id}
-            className={styles.productCard}
-            onClick={() => handleProductClick(product.id)}
-            style={{ cursor: "pointer" }}
-          >
-            <div className={`${styles.productImage} ${styles[product.size]}`} />
-            <h3 className={styles.productName}>{product.name}</h3>
-            <p className={styles.productPrice}>{product.price}</p>
-          </div>
-        ))}
+        {rowProducts.map(renderProductCard)}
       </div>
     );
   };
@@ -466,40 +446,42 @@ export default function ProductTabs() {
         {fetchError && (
           <p className={styles.fetchError}>{fetchError}</p>
         )}
-        {showEmptyState ? (
+        {shouldShowSkeleton ? (
+          isMobile ? (
+            renderMobileGrid(mobileSkeletonProducts)
+          ) : (
+            <>
+              {renderRow(desktopSkeletonProducts, 0, "4regular", "row1")}
+              {renderRow(
+                desktopSkeletonProducts,
+                4,
+                "2regular1large",
+                "row2"
+              )}
+              {renderRow(desktopSkeletonProducts, 7, "4regular", "row3")}
+              {renderRow(
+                desktopSkeletonProducts,
+                11,
+                "1large2regular",
+                "row4"
+              )}
+              {renderRow(desktopSkeletonProducts, 14, "4regular", "row5")}
+              {renderRow(
+                desktopSkeletonProducts,
+                18,
+                "2regular1large",
+                "row6"
+              )}
+              {renderRow(desktopSkeletonProducts, 21, "4regular", "row7")}
+              {renderRow(desktopSkeletonProducts, 25, "4regular", "row8")}
+              {renderRow(desktopSkeletonProducts, 29, "4regular", "row9")}
+            </>
+          )
+        ) : showEmptyState ? (
           <p className={styles.emptyState}>{emptyStateMessage}</p>
         ) : isMobile ? (
-          // Mobile: Simple 2-column grid with all regular products
-          (() => {
-            const mobileRecords = mobileProducts;
-            const rows = [];
-            for (let i = 0; i < mobileRecords.length; i += 2) {
-              const rowProducts = mobileRecords.slice(i, i + 2);
-              rows.push(
-                <div key={`mobile-row-${i / 2}`} className={styles.mobileRow}>
-                  {rowProducts.map((product) => (
-                    <div
-                      key={product.id}
-                      className={styles.productCard}
-                      onClick={() => handleProductClick(product.id)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <div
-                        className={`${styles.productImage} ${
-                          styles[product.size]
-                        }`}
-                      />
-                      <h3 className={styles.productName}>{product.name}</h3>
-                      <p className={styles.productPrice}>{product.price}</p>
-                    </div>
-                  ))}
-                </div>
-              );
-            }
-            return rows;
-          })()
+          renderMobileGrid(mobileProducts)
         ) : (
-          // Desktop: Complex grid layout
           <>
             {renderRow(visibleDesktopProducts, 0, "4regular", "row1")}
             {renderRow(visibleDesktopProducts, 4, "2regular1large", "row2")}
@@ -512,20 +494,7 @@ export default function ProductTabs() {
             {renderRow(visibleDesktopProducts, 29, "4regular", "row9")}
             {showExtraGrid && (
               <div className={styles.extraGrid}>
-                {extraDesktopProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className={styles.productCard}
-                    onClick={() => handleProductClick(product.id)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div
-                      className={`${styles.productImage} ${styles[product.size]}`}
-                    />
-                    <h3 className={styles.productName}>{product.name}</h3>
-                    <p className={styles.productPrice}>{product.price}</p>
-                  </div>
-                ))}
+                {extraDesktopProducts.map(renderProductCard)}
               </div>
             )}
           </>

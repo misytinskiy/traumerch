@@ -1,5 +1,5 @@
 .ourPromisesMobile {
-  background-color: rgba(153, 153, 153, 1);
+  background-color: #fff;
   padding: 80px 20px 100px 20px;
   min-height: 100vh;
   position: relative;
@@ -19,7 +19,7 @@
   line-height: 58px;
   letter-spacing: -1%;
   text-transform: uppercase;
-  color: rgba(217, 217, 217, 1);
+  color: #000;
   margin: 0 0 60px 0;
   text-align: left;
 }
@@ -45,7 +45,7 @@
   line-height: 42px;
   letter-spacing: 0%;
   text-transform: uppercase;
-  color: rgba(217, 217, 217, 1);
+  color: #000;
   margin: 0;
   text-align: center;
 }
@@ -58,12 +58,19 @@
   justify-content: center;
 }
 
-.graySquare {
+.promiseImage {
   width: 100%;
-  /* max-width: 350px; */
   height: 200px;
-  background-color: rgba(217, 217, 217, 0.5);
   border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.promiseImageTag {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 .phrase {
@@ -73,7 +80,7 @@
   font-size: 20px;
   line-height: 32px;
   letter-spacing: 0.02em;
-  color: rgba(217, 217, 217, 1);
+  color: #000;
   margin: 0;
   max-width: 500px;
 }
@@ -85,11 +92,11 @@
   font-size: 17px;
   line-height: 21px;
   letter-spacing: 0.01em;
-  color: rgba(217, 217, 217, 1);
+  color: #000;
   margin: 0;
   line-height: 1.6;
   max-width: 500px;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .asteriskText {
@@ -120,10 +127,10 @@
     gap: 133px;
   }
 
-  .graySquare {
-    width: 684px;
+  .promiseImage {
+    width: 100%;
     height: 500px;
-    /* border-radius: 20px; */
+    border-radius: 20px;
   }
 
   .promiseHeading {
@@ -168,8 +175,7 @@
     gap: 25px;
   }
 
-  .graySquare {
-    /* max-width: 250px; */
+  .promiseImage {
     height: 318px;
   }
 

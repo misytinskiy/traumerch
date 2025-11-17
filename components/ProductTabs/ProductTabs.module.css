@@ -185,6 +185,50 @@
   opacity: 0.5;
 }
 
+.skeletonCard {
+  cursor: default;
+  pointer-events: none;
+}
+
+.skeletonBlock,
+.skeletonText {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.12) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  background-size: 300% 100%;
+  animation: skeletonShimmer 2.4s ease-in-out infinite;
+}
+
+.skeletonBlock {
+  border-radius: 20px;
+}
+
+.skeletonText {
+  border-radius: 999px;
+  height: 24px;
+  margin: 0 0 12px 0;
+}
+
+.long {
+  width: 75%;
+}
+
+.short {
+  width: 40%;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
 .seeMoreContainer {
   display: flex;
   justify-content: center;

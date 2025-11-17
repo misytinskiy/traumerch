@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
-import Button from "../Button/Button";
 import styles from "./OurPromisesMobile.module.css";
 
 export default function OurPromisesMobile() {
@@ -32,9 +31,16 @@ export default function OurPromisesMobile() {
             {/* Promise heading */}
             <h3 className={styles.promiseHeading}>{promise.heading}</h3>
 
-            {/* Gray square */}
+            {/* Image */}
             <div className={styles.imagePlaceholder}>
-              <div className={styles.graySquare}></div>
+              <div className={styles.promiseImage}>
+                <img
+                  src={`/promises/${index + 1}.png`}
+                  alt={promise.heading}
+                  className={styles.promiseImageTag}
+                  loading={index === 0 ? "eager" : "lazy"}
+                />
+              </div>
             </div>
 
             {/* Phrase */}
@@ -51,19 +57,6 @@ export default function OurPromisesMobile() {
                 );
               })}
             </p>
-
-            {/* See More button */}
-            <div className={styles.buttonContainer}>
-              <Button
-                variant="solid"
-                padding="41px 112px"
-                padding350="26px 73px"
-                arrow="white"
-                size="small"
-              >
-                SEE MORE
-              </Button>
-            </div>
           </div>
         ))}
       </div>
