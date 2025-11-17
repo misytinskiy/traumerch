@@ -42,7 +42,7 @@ export default function Preloader() {
           transition={{
             duration: 1,
             ease: [0.25, 0.1, 0.25, 1],
-            delay: 0.5,
+            delay: 1.5,
           }}
         >
           We create branded merchandise for employees and events that brings

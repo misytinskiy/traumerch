@@ -12,6 +12,51 @@
   overflow: hidden;
 }
 
+.preloader::before,
+.preloader::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.preloader::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.2) 15%,
+    rgba(255, 255, 255, 0.12) 30%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.04) 60%,
+    rgba(255, 255, 255, 0.02) 75%,
+    rgba(255, 255, 255, 0.01) 90%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.preloader::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.2) 15%,
+    rgba(255, 255, 255, 0.12) 30%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.04) 60%,
+    rgba(255, 255, 255, 0.02) 75%,
+    rgba(255, 255, 255, 0.01) 90%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
 .content {
   position: relative;
   width: 100%;
@@ -87,7 +132,7 @@
   display: flex;
   gap: 40px;
   position: absolute;
-  right: -100%;
+  right: -150vw;
   top: 50%;
   transform: translateY(-50%);
   align-items: center;
@@ -96,7 +141,7 @@
 
 @keyframes slideLeft {
   0% {
-    right: -100%;
+    right: -150vw;
   }
   100% {
     right: 100%;
