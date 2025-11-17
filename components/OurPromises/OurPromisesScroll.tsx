@@ -89,7 +89,7 @@ export default function OurPromisesScroll() {
               <article
                 key={`${promise.heading}-${index}`}
                 ref={(el) => {
-                  contentRefs.current[index] = el ?? null;
+                  contentRefs.current[index] = el as HTMLDivElement | null;
                 }}
                 data-index={index}
                 className={`${styles.contentBlock} ${
