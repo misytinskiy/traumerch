@@ -23,8 +23,23 @@
 }
 
 /* Text styles */
-.text1 {
+.text1Wrapper {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  overflow: hidden;
+  height: 140px; /* line-height текста */
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  mix-blend-mode: difference;
+  isolation: isolate;
+}
+
+.text1 {
   color: var(--General-White, #fff);
   text-align: center;
   font-family: "EB Garamond", var(--font-eb-garamond);
@@ -33,12 +48,7 @@
   font-weight: 400;
   line-height: 140px; /* 140% */
   text-transform: uppercase;
-  z-index: 3;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   white-space: nowrap;
-  mix-blend-mode: difference;
 }
 
 .text2 {
