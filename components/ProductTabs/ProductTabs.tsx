@@ -228,7 +228,7 @@ export default function ProductTabs() {
 
   const initialDesktopCapacity = DESKTOP_LAYOUT_PATTERN.length;
 
-  const desktopSkeletonProducts = useMemo(
+  const desktopSkeletonProducts = useMemo<Product[]>(
     () =>
       DESKTOP_LAYOUT_PATTERN.map((size, index) => ({
         id: `skeleton-desktop-${index}`,
@@ -240,13 +240,13 @@ export default function ProductTabs() {
     []
   );
 
-  const mobileSkeletonProducts = useMemo(
+  const mobileSkeletonProducts = useMemo<Product[]>(
     () =>
       Array.from({ length: MOBILE_SKELETON_COUNT }, (_, index) => ({
         id: `skeleton-mobile-${index}`,
         name: "",
         price: "",
-        size: "regular",
+        size: "regular" as const,
         isSkeleton: true,
       })),
     []
@@ -349,9 +349,7 @@ export default function ProductTabs() {
         className={`${styles.productCard} ${
           isSkeleton ? styles.skeletonCard : ""
         }`}
-        onClick={
-          isSkeleton ? undefined : () => handleProductClick(product.id)
-        }
+        onClick={isSkeleton ? undefined : () => handleProductClick(product.id)}
         style={{ cursor: isSkeleton ? "default" : "pointer" }}
       >
         <div
@@ -397,17 +395,11 @@ export default function ProductTabs() {
     const rowProducts: Product[] = [];
 
     if (pattern === "4regular") {
-      rowProducts.push(
-        ...sourceProducts.slice(currentIndex, currentIndex + 4)
-      );
+      rowProducts.push(...sourceProducts.slice(currentIndex, currentIndex + 4));
     } else if (pattern === "2regular1large") {
-      rowProducts.push(
-        ...sourceProducts.slice(currentIndex, currentIndex + 3)
-      );
+      rowProducts.push(...sourceProducts.slice(currentIndex, currentIndex + 3));
     } else if (pattern === "1large2regular") {
-      rowProducts.push(
-        ...sourceProducts.slice(currentIndex, currentIndex + 3)
-      );
+      rowProducts.push(...sourceProducts.slice(currentIndex, currentIndex + 3));
     }
 
     return (
@@ -443,35 +435,18 @@ export default function ProductTabs() {
       </div>
 
       <div className={styles.productGrid}>
-        {fetchError && (
-          <p className={styles.fetchError}>{fetchError}</p>
-        )}
+        {fetchError && <p className={styles.fetchError}>{fetchError}</p>}
         {shouldShowSkeleton ? (
           isMobile ? (
             renderMobileGrid(mobileSkeletonProducts)
           ) : (
             <>
               {renderRow(desktopSkeletonProducts, 0, "4regular", "row1")}
-              {renderRow(
-                desktopSkeletonProducts,
-                4,
-                "2regular1large",
-                "row2"
-              )}
+              {renderRow(desktopSkeletonProducts, 4, "2regular1large", "row2")}
               {renderRow(desktopSkeletonProducts, 7, "4regular", "row3")}
-              {renderRow(
-                desktopSkeletonProducts,
-                11,
-                "1large2regular",
-                "row4"
-              )}
+              {renderRow(desktopSkeletonProducts, 11, "1large2regular", "row4")}
               {renderRow(desktopSkeletonProducts, 14, "4regular", "row5")}
-              {renderRow(
-                desktopSkeletonProducts,
-                18,
-                "2regular1large",
-                "row6"
-              )}
+              {renderRow(desktopSkeletonProducts, 18, "2regular1large", "row6")}
               {renderRow(desktopSkeletonProducts, 21, "4regular", "row7")}
               {renderRow(desktopSkeletonProducts, 25, "4regular", "row8")}
               {renderRow(desktopSkeletonProducts, 29, "4regular", "row9")}
