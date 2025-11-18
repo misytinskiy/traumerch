@@ -156,7 +156,11 @@
   top: 50%;
   transform: translateY(-50%);
   align-items: center;
-  animation: slideLeft 5s linear infinite;
+  animation: slideLeft 5s linear forwards;
+}
+
+.imagesTrack.animated {
+  animation: slideLeft 5s linear forwards;
 }
 
 @keyframes slideLeft {
