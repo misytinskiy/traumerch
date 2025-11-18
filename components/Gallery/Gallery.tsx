@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -14,11 +14,10 @@ import "swiper/swiper-bundle.css";
 
 const LeftArrow = () => (
   <svg
-    width="50"
-    height="50"
     viewBox="0 0 50 50"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    style={{ width: "100%", height: "100%" }}
   >
     <rect
       x="-0.5"
@@ -38,11 +37,10 @@ const LeftArrow = () => (
 
 const RightArrow = () => (
   <svg
-    width="50"
-    height="50"
     viewBox="0 0 50 50"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    style={{ width: "100%", height: "100%" }}
   >
     <rect
       x="0.5"
@@ -64,7 +62,10 @@ export default function Gallery() {
   const { t } = useLanguage();
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
+  const mobilePrevRef = useRef<HTMLButtonElement>(null);
+  const mobileNextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<SwiperRef | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Create array of 10 frame images
   const images = Array.from({ length: 10 }, (_, index) => ({
@@ -72,6 +73,35 @@ export default function Gallery() {
     src: "/frame.png",
     alt: `Gallery image ${index + 1}`,
   }));
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 480);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      const navigation = swiperRef.current.params.navigation;
+      if (typeof navigation !== "boolean" && navigation) {
+        const prevEl = isMobile ? mobilePrevRef.current : prevRef.current;
+        const nextEl = isMobile ? mobileNextRef.current : nextRef.current;
+
+        if (prevEl && nextEl) {
+          navigation.prevEl = prevEl;
+          navigation.nextEl = nextEl;
+          swiperRef.current.navigation.destroy();
+          swiperRef.current.navigation.init();
+          swiperRef.current.navigation.update();
+        }
+      }
+    }
+  }, [isMobile]);
 
   const handlePrevClick = () => {
     if (swiperRef.current) {
@@ -114,6 +144,26 @@ export default function Gallery() {
         <Swiper
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
+            // Update navigation after Swiper is initialized
+            setTimeout(() => {
+              const navigation = swiper.params.navigation;
+              if (typeof navigation !== "boolean" && navigation) {
+                const prevEl = isMobile
+                  ? mobilePrevRef.current
+                  : prevRef.current;
+                const nextEl = isMobile
+                  ? mobileNextRef.current
+                  : nextRef.current;
+
+                if (prevEl && nextEl) {
+                  navigation.prevEl = prevEl;
+                  navigation.nextEl = nextEl;
+                  swiper.navigation.destroy();
+                  swiper.navigation.init();
+                  swiper.navigation.update();
+                }
+              }
+            }, 0);
           }}
           modules={[Navigation]}
           spaceBetween={20}
@@ -174,6 +224,25 @@ export default function Gallery() {
             </SwiperSlide>
           ))}
         </Swiper>
+      </div>
+
+      <div className={styles.mobileNavigation}>
+        <button
+          ref={mobilePrevRef}
+          className={styles.navButton}
+          onClick={handlePrevClick}
+          aria-label="Previous images"
+        >
+          <LeftArrow />
+        </button>
+        <button
+          ref={mobileNextRef}
+          className={styles.navButton}
+          onClick={handleNextClick}
+          aria-label="Next images"
+        >
+          <RightArrow />
+        </button>
       </div>
     </section>
   );

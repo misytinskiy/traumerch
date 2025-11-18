@@ -15,7 +15,7 @@ export default function MobileHeader() {
   const getLanguageLabels = () => {
     return {
       german: country === "AT" ? "AT" : "DE",
-      english: "US",
+      english: "EN",
     };
   };
 

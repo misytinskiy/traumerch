@@ -19,7 +19,7 @@ export default function CTA() {
       <Button
         variant="solid"
         padding="32px 44px"
-        padding768="42px 62px"
+        padding768="42px 73px"
         padding350="26px 38px"
         arrow="white"
       >

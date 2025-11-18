@@ -124,7 +124,7 @@
 
 @media (max-width: 768px) {
   .faq {
-    padding: 160px 29px;
+    padding: 123px 29px;
   }
 
   .header {
@@ -162,12 +162,12 @@
 
 @media (max-width: 480px) {
   .faq {
-    padding: 134px 10px 32px;
+    padding: 60px 10px 32px;
   }
 
   .header {
     max-width: 216px;
-    margin-bottom: 50px;
+    margin-bottom: 48px;
   }
 
   .questionText {
