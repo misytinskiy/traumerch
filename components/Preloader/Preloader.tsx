@@ -26,7 +26,7 @@ export default function Preloader() {
             initial={{ y: "100%", opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
-              duration: 1.2,
+              duration: 0.7,
               ease: [0.25, 0.1, 0.25, 1],
             }}
           >
@@ -40,7 +40,7 @@ export default function Preloader() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
-            duration: 1,
+            duration: 0.9,
             ease: [0.25, 0.1, 0.25, 1],
             delay: 1.1,
           }}

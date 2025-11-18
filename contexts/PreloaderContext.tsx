@@ -20,8 +20,8 @@ const PreloaderContext = createContext<PreloaderContextType | undefined>(
 );
 
 export function PreloaderProvider({ children }: { children: ReactNode }) {
-  const [isEnabled, setIsEnabled] = useState(false); // Temporarily disabled
-  const [hasShown, setHasShown] = useState(true); // Temporarily disabled
+  const [isEnabled, setIsEnabled] = useState(true);
+  const [hasShown, setHasShown] = useState(false);
 
   useEffect(() => {
     // Check if preloader has already been shown in this session
