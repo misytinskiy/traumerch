@@ -117,16 +117,22 @@
 
 @media (max-width: 1536px) and (max-height: 1400px) {
   .title {
-    font-size: 76px;
-    margin: 69px 0 52px 0;
+    font-size: 56px;
+    margin: 69px 0 40px 0;
     letter-spacing: -0.025em;
   }
 
   /* Line breaks handled via <br> tags */
 
   .scrollButton {
-    bottom: 43px;
+    bottom: 40px;
   }
+
+  .scrollButton svg {
+    width: 40px;
+    height: 40px;
+  }
+
   .quoteText {
     font-size: 21px;
     line-height: 34px;

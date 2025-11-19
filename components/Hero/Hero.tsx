@@ -77,7 +77,8 @@ export default function Hero({
             arrow="white"
             className={styles.ctaButton}
             onClick={onScrollClick}
-            // fontSize1920="15px"
+            fontSize1920="15px"
+            padding1536="20px 48px"
           >
             {t.hero.cta}
           </Button>

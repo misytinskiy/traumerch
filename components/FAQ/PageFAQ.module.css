@@ -67,12 +67,17 @@
     padding: 0 0 8px 0;
   }
 
+  .tabsContainer {
+    margin: 40px 0 0;
+  }
+
   .title {
-    font-size: 76px;
+    font-size: 56px;
+    max-width: 565px;
   }
 
   .faqSection {
-    padding: 280px 118px 160px;
+    padding: 190px 118px 140px;
   }
 }
 

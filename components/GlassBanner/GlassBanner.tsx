@@ -102,6 +102,7 @@ export default function GlassBanner() {
 
         <div className={styles.bannerButton}>
           <Button
+            size="medium"
             variant="transparent"
             padding="20px 32px"
             onClick={openQuote}

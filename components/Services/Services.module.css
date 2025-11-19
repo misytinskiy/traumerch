@@ -108,17 +108,18 @@
 
 @media (max-width: 1536px) and (max-height: 1400px) {
   .services {
-    padding: 159px 120px;
+    padding: 140px 120px;
   }
 
   .serviceImage {
     /* margin-bottom: 162px; */
-    width: 590px;
-    height: 510px;
+    width: 530px;
+    height: 430px;
   }
 
   .title {
     max-width: 400px;
+    margin-bottom: 24px;
   }
 
   .badge {
@@ -127,8 +128,8 @@
   }
 
   .description {
-    margin-bottom: 36px;
-    font-size: 20px;
+    margin-bottom: 24px;
+    font-size: 16px;
     max-width: 500px;
   }
 }

@@ -11,9 +11,11 @@ export default function Footer() {
   const handleFooterNavigation = (linkText: string) => {
     switch (linkText) {
       case "Products":
+      case "Produkte":
         window.location.href = "/catalog";
         break;
       case "Services":
+      case "Leistungen":
         window.location.href = "/solutions";
         break;
       case "Portfolio":
@@ -25,6 +27,16 @@ export default function Footer() {
         break;
       case "FAQ":
         window.location.href = "/faq";
+        break;
+      case "Privacy Policy":
+      case "Datenschutzerklärung":
+      case "Cookie Policy":
+      case "Cookie-Richtlinie":
+      case "Terms & Conditions":
+      case "AGB (Allgemeine Geschäftsbedingungen)":
+      case "Imprint":
+      case "Impressum":
+        window.location.href = "/policies";
         break;
       default:
         break;

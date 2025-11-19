@@ -55,7 +55,7 @@
     "items": [
       {
         "question": "VOM DESIGN BIS ZUR LIEFERUNG — WIE FUNKTIONIERT ES?",
-        "answer": "Ihre Merchandise-Reise mit TrauMerch beginnt mit einem Gespräch über Ihre Mission. Unsere Designer erstellen Entwürfe, die genau zeigen, wie Ihre Artikel aussehen werden. Nach Ihrer Freigabe fertigen wir ein Muster auf Basis unserer Vorlagen an und senden es zu Ihnen zur Überprüfung — oder, wenn es besonders schnell gehen muss, starten wir direkt mit der Produktion. Sobald alles bestätigt ist, übernehmen wir die gesamte Bestellung und liefern die gesamte Bestellung an Sie."
+        "answer": "Ihre Merchandise-Reise mit TrauMerch beginnt mit einem Gespräch über Ihre Mission. Unsere Designer erstellen Entwürfe, die genau zeigen, wie Ihre Artikel aussehen werden. Nach Ihrer Freigabe fertigen wir ein Muster auf Basis unserer Vorlagen an und senden es zu Ihnen zur Überprüfung — oder, wenn es besonders schnell gehen muss, starten wir direkt mit der Produktion. Sobald alles bestätigt ist, übernehmen wir die Serienproduktion und liefern die gesamte Bestellung an Sie."
       },
       {
         "question": "WIE HOCH IST DIE MINDESTBESTELLMENGE (MOQ)?",
@@ -71,11 +71,11 @@
       },
       {
         "question": "BIETEN SIE UMWELTFREUNDLICHE PRODUKTOPTIONEN AN?",
-        "answer": "Nachhaltigkeit ist in unsere Arbeitsweise integriert. Wir wählen Lieferanten sorgfältig aus, die Zertifizierungen für umweltfreundliche Produktion und Materialien besitzen. Jeder Partner durchläuft einen strengen internen Überprüfungsprozess, um sicherzustellen, dass Verantwortung in jeder Produktionsstufe gewährleistet ist."
+        "answer": "Nachhaltigkeit ist in unsere Arbeitsweise integriert. Wir wählen Lieferanten sorgfältig aus, die Zertifizierungen für umweltfreundliche Produktion und Materialien besitzen. Jeder Partner wird durch einen strengen internen Prüfprozess überprüft, damit ökologische Verantwortung in jeder Produktionsstufe gewährleistet ist."
       },
       {
         "question": "ÜBERNEHMEN SIE RECHNUNGSSTELLUNG UND MEHRWERTSTEUER INNERHALB DER EU?",
-        "answer": "Als österreichisches Unternehmen stellen wir Rechnungen aus und berechnen die Mehrwertsteuer in voller Übereinstimmung mit der europäischen Gesetzgebung. Unsere Abrechnungsprozesse sind sowohl für Ein-Personen-Unternehmen als auch für große Konzerne ausgelegt und gewährleisten korrekte und transparente Dokumentation."
+        "answer": "Als österreichisches Unternehmen stellen wir Rechnungen aus und berechnen die Mehrwertsteuer in voller Übereinstimmung mit der europäischen Gesetzgebung. Unsere Abrechnungsprozesse sind sowohl für Ein-Personen-Unternehmen als auch für große Konzerne geeignet und gewährleisten eine korrekte und transparente Dokumentation."
       },
       {
         "question": "KÖNNEN SIE MERCHANDISE AN MEHRERE STANDORTE LIEFERN?",
@@ -86,34 +86,34 @@
   "services": {
     "items": [
       {
-        "badge": "MERCHANDISE DAS VERBINDET",
-        "title": "CORPORATE & EVENT MERCHANDISE",
-        "description": "Wir erstellen Marken-Merchandise für Mitarbeiter und Events, das Menschen zusammenbringt. Von Willkommenspaketen und Team-Ausrüstung bis hin zu Konferenz-Giveaways sorgen unsere Lösungen dafür, dass jeder Artikel die Verbindung und Markenkultur stärkt.",
-        "buttonText": "EVENT MERCH ENTDECKEN"
+        "badge": "MERCH, DAS VERBINDET",
+        "title": "Unternehmens- & Event-Merchandise",
+        "description": "Wir entwickeln gebrandetes Merchandise für Mitarbeitende und Events, das Menschen verbindet. Von Welcome Kits und Team-Ausstattung bis zu Konferenz-Giveaways – unsere Lösungen stärken Zusammenhalt und Markenkultur mit jedem Produkt.",
+        "buttonText": "Event-Merch entdecken"
       },
       {
-        "badge": "GESCHENKE DIE BLEIBEN",
-        "title": "BUSINESS GESCHENKE",
-        "description": "Wir gestalten und liefern durchdachte Geschenke für Kunden, Partner und Mitarbeiter. Von Premium-Auswahl bis hin zu maßgeschneiderter Verpackung hinterlässt jedes Geschenk einen bleibenden Eindruck und baut stärkere Geschäftsbeziehungen auf.",
-        "buttonText": "GESCHENKIDEEN ANSEHEN"
+        "badge": "GESCHENKE, DIE BLEIBEN",
+        "title": "Geschäftsgeschenke",
+        "description": "Wir gestalten und liefern durchdachte Geschenke für Kunden, Partner und Mitarbeitende. Von hochwertigen Produkten bis zu maßgeschneiderter Verpackung – jedes Geschenk hinterlässt Eindruck und baut stärkere Geschäftsbeziehungen auf.",
+        "buttonText": "Geschenkideen ansehen"
       },
       {
         "badge": "IHRE EIGENE MARKE",
-        "title": "PRIVATE LABEL KOLLEKTIONEN",
-        "description": "Wir entwickeln exklusive Private Label Produkte, die auf Ihre Marke zugeschnitten sind. Von Multi-SKU-Kollektionen und einzigartigen Designs bis hin zu Sekundärverpackungen erwecken wir Ideen zum Leben und erweitern Ihre Marktpräsenz mit unverwechselbarem Merchandise.",
-        "buttonText": "PRIVATE LABEL ENTDECKEN"
+        "title": "Private-Label-Kollektionen",
+        "description": "Wir entwickeln exklusive Private-Label-Produkte, die individuell auf Ihre Marke zugeschnitten sind. Von Multi-SKU-Kollektionen und einzigartigen Designs bis zur Sekundärverpackung bringen wir Ideen zum Leben und erweitern Ihre Marktpräsenz mit unverwechselbarem Merchandise.",
+        "buttonText": "Private Label entdecken"
       },
       {
-        "badge": "PROGRAMME DIE VERSTÄRKEN",
-        "title": "INFLUENCER AKTIVIERUNG & SEEDING",
-        "description": "Wir entwickeln Influencer- und Brand-Seeding-Programme für maximale Wirkung. Mit individueller Verpackung, kuratierten Merchandise und gezielter Verteilung helfen wir Marken, authentischen Content zu schaffen und die richtige Zielgruppe zu erreichen.",
-        "buttonText": "INFLUENCER PROGRAMME ANSEHEN"
+        "badge": "PROGRAMME, DIE VERSTÄRKEN",
+        "title": "Influencer-Aktivierung & Seeding",
+        "description": "Wir entwickeln Influencer- und Brand-Seeding-Programme, die Wirkung erzielen. Mit maßgeschneiderter Verpackung, kuratiertem Merchandise und gezielter Distribution unterstützen wir Marken dabei, authentischen Content zu schaffen und die richtigen Zielgruppen zu erreichen.",
+        "buttonText": "Influencer-Programme ansehen"
       },
       {
-        "badge": "MERCHANDISE LEICHT GEMACHT",
-        "title": "SMART PLATFORM",
-        "description": "Unsere digitale Plattform vereinfacht jeden Schritt des Merchandise-Managements. Von Bestellung und Lagerverwaltung bis zur Verteilung gibt sie Marken die Tools, um ihre Merch-Programme effizient und transparent zu skalieren.",
-        "buttonText": "PLATTFORM TESTEN"
+        "badge": "MERCH LEICHT GEMACHT",
+        "title": "Smarte Plattform",
+        "description": "Unsere digitale Plattform vereinfacht jeden Schritt im Merchandise-Management. Von Bestellung und Lagerverwaltung bis zur Distribution erhalten Marken die Werkzeuge, um ihre Programme effizient und transparent zu skalieren.",
+        "buttonText": "Plattform ausprobieren"
       }
     ]
   },
@@ -181,19 +181,29 @@
     "columns": [
       {
         "title": "Entdecken",
-        "links": ["Produkte", "Dienstleistungen", "Portfolio", "FAQ"]
+        "links": ["Produkte", "Leistungen", "Portfolio", "FAQ"]
       },
       {
-        "title": "Rechtliches & Richtlinien",
-        "links": ["Impressum", "Datenschutz", "Cookie-Richtlinie", "AGB"]
+        "title": "Recht & Dokumente",
+        "links": [
+          "Impressum",
+          "Datenschutzerklärung",
+          "Cookie-Richtlinie",
+          "AGB (Allgemeine Geschäftsbedingungen)"
+        ]
       },
       {
-        "title": "Bleiben Sie verbunden",
-        "links": ["LinkedIn", "Instagram", "TikTok", "AGB"]
+        "title": "Folgen Sie uns",
+        "links": ["LinkedIn", "Instagram", "TikTok", ""]
       },
       {
-        "title": "Kontakt",
-        "links": ["Stephansplatz 8, Wien, Österreich", "info@traumerch.com"]
+        "title": "Kontakt aufnehmen",
+        "links": [
+          "Stephansplatz 8, Wien, Österreich",
+          "info@traumerch.com",
+          "",
+          ""
+        ]
       }
     ],
     "copyright": "2025 TrauMerch©",
@@ -202,8 +212,9 @@
   "quote": {
     "mainTitle": "Sprechen oder tippen",
     "mainTitleEnd": "ganz wie Sie möchten",
-    "formTitle": "Vom Messenger zum Angebot — so einfach ist das.",
+    "formTitle": "Vom Messenger zum Angebot — so einfach ist es.",
     "rightTitle": "Lassen Sie uns darüber sprechen",
+    "nameLabel": "Name",
     "preferredMessenger": "Bevorzugter Messenger",
     "namePlaceholder": "Name",
     "yourRequest": "Ihre Anfrage",

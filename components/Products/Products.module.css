@@ -131,16 +131,16 @@
 
 @media (max-width: 1536px) and (max-height: 1400px) {
   .products {
-    padding: 159px 120px 160px;
+    padding: 140px 120px;
   }
 
   .productImage {
-    height: 312px !important;
+    height: 281px !important;
     margin-bottom: 24px;
   }
 
   .grid {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
   }
 
   .productName {

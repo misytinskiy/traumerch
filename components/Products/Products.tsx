@@ -146,6 +146,7 @@ export default function Products() {
         <Button
           variant="transparent"
           padding="31px 65px"
+          padding1536="20px 48px"
           padding350="26px 49px"
           padding768="41px 76px"
           arrow="black"

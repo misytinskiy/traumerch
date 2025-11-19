@@ -37,6 +37,7 @@ export default function Services({ showAll = false }: ServicesProps) {
               <Button
                 variant="solid"
                 padding="31px 84px"
+                padding1536="20px 48px"
                 padding768="30px 72px"
                 arrow="white"
               >

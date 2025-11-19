@@ -98,6 +98,10 @@
     padding: 33px 0;
   }
 
+  .header {
+    margin-bottom: 48px;
+  }
+
   .questionText {
     letter-spacing: -0.025em;
   }

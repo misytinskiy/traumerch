@@ -134,6 +134,22 @@
 
 @media (max-width: 1536px) {
   .logo {
-    font-size: 36px;
+    font-size: 26px;
+  }
+
+  .menu {
+    font-size: 14px;
+  }
+
+  .languageButton {
+    font-size: 14px;
+  }
+
+  .headerContent {
+    min-height: 30px;
+  }
+
+  .leftSide {
+    min-height: 30px;
   }
 }

@@ -453,7 +453,13 @@ export default function Header() {
             </button>
           </div>
 
-          <Button variant="solid" padding="23px 40px" onClick={openQuote}>
+          <Button
+            variant="solid"
+            size="medium"
+            padding="23px 40px"
+            padding1536="12px 40px"
+            onClick={openQuote}
+          >
             {t.header.quote}
           </Button>
         </motion.div>

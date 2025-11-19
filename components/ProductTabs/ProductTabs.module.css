@@ -259,7 +259,7 @@
 
 @media (max-width: 1536px) {
   .tabs {
-    padding: 278px 120px 60px;
+    padding: 178px 120px 60px;
   }
 
   .header {
@@ -269,23 +269,28 @@
   .productGrid {
     gap: 80px;
   }
-
+  .row1,
   .row2,
+  .row3,
   .row4,
-  .row6 {
-    /* grid-template-columns: 1fr 1fr 1fr; */
+  .row5,
+  .row6,
+  .row7,
+  .row8,
+  .row9 {
+    gap: 0;
   }
 
-  .productImage {
-    height: 312px !important;
+  .productImage.regular {
+    height: 20vw !important;
     margin-bottom: 18px;
-    width: 303px;
+    width: 20vw;
     /* height: 344px; */
   }
 
   .productImage.large {
-    height: 576px !important;
-    width: 626px;
+    height: 40vw !important;
+    width: 41vw;
   }
 
   .productName {
@@ -299,7 +304,19 @@
   }
 
   .tab {
-    font-size: 16px;
+    font-size: 14px;
+    gap: 7px;
+  }
+
+  .tabList {
+    gap: 20px;
+  }
+
+  .count {
+    font-size: 14px;
+    min-width: 20px;
+    height: 21px;
+    padding: 0 7px;
   }
 }
 

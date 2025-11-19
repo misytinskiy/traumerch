@@ -22,7 +22,12 @@
 /* Responsive */
 @media (max-width: 1536px) {
   .policies {
-    padding: 252px 120px 160px;
+    padding: 170px 120px 140px;
+  }
+
+  .title {
+    font-size: 56px;
+    max-width: 545px;
   }
 }
 

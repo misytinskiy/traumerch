@@ -76,6 +76,16 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
+@media (max-width: 1536px) {
+  .glassBanner {
+    height: 86px;
+  }
+
+  .bannerText {
+    font-size: 16px;
+  }
+}
+
 /* Responsive design */
 @media (max-width: 1200px) {
   .glassBanner {

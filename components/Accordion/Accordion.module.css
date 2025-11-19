@@ -119,11 +119,16 @@
 /* Responsive styles for default variant */
 @media (max-width: 1536px) {
   .questionButton {
-    padding: 33px 0;
+    padding: 30px 0;
   }
 
   .questionText {
     letter-spacing: -0.025em;
+    font-size: 19px;
+  }
+
+  .answerText {
+    font-size: 19px;
   }
 }
 

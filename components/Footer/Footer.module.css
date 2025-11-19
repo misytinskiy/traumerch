@@ -94,14 +94,14 @@
 
 @media (max-width: 1536px) {
   .footer {
-    padding: 124px 150px 117px;
+    padding: 120px 150px 40px;
   }
 
   .logo {
     font-size: 36px;
   }
   .content {
-    margin-bottom: 157px;
+    margin-bottom: 100px;
     gap: 151px;
   }
 

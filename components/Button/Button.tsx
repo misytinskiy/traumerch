@@ -15,6 +15,7 @@ interface ButtonProps {
   width?: string | number;
   height?: string | number;
   padding?: string | number;
+  padding1536?: string | number;
   padding768?: string | number;
   padding480?: string | number;
   padding350?: string | number;
@@ -79,6 +80,7 @@ export default function Button({
   type = "button",
   className = "",
   padding,
+  padding1536,
   padding768,
   padding480,
   padding350,
@@ -104,6 +106,8 @@ export default function Button({
         setCurrentPadding(padding480);
       } else if (window.innerWidth <= 768 && padding768) {
         setCurrentPadding(padding768);
+      } else if (window.innerWidth <= 1536 && padding1536) {
+        setCurrentPadding(padding1536);
       } else {
         setCurrentPadding(padding);
       }
@@ -112,7 +116,7 @@ export default function Button({
     updatePadding();
     window.addEventListener("resize", updatePadding);
     return () => window.removeEventListener("resize", updatePadding);
-  }, [padding, padding768, padding480, padding350]);
+  }, [padding, padding1536, padding768, padding480, padding350]);
 
   useEffect(() => {
     const updateFontSize = () => {
