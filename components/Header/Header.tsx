@@ -210,14 +210,19 @@ export default function Header() {
   // Responsive values based on original CSS
   const initialPadding = isSmallDesktop ? "20px 29px" : "20px 60px";
   const scrolledPadding = isSmallDesktop ? "20px 29px" : "20px 40px";
-  const initialWidth = "calc(100% - 60px)";
-  const scrolledWidth = "calc(100% - 80px)";
+  const initialWidth = isSmallDesktop
+    ? "calc(100% - 175px)"
+    : "calc(100% - 180px)";
+  const scrolledWidth = isSmallDesktop
+    ? "calc(100% - 440px)"
+    : "calc(100% - 500px)";
   // scrolledTop is now handled by motion.header animate prop
   const scrolledBorderRadius = 24;
 
   // Initial max-width (wider) and scrolled max-width (current state)
-  const initialMaxWidth = isSmallDesktop ? "1200px" : "1740px";
-  const scrolledMaxWidth = isSmallDesktop ? "1000px" : "1320px";
+  // For small desktop, no max-width restriction to allow header to stretch to section paddings
+  const initialMaxWidth = isSmallDesktop ? "none" : "1740px";
+  const scrolledMaxWidth = isSmallDesktop ? "none" : "1320px";
 
   // More gradual scroll range for smoother transition
   const scrollRange = [0, 200];
