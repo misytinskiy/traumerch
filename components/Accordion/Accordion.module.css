@@ -82,11 +82,11 @@
 
 /* Compact variant for ProductDetails */
 .compact .questionButton {
-  padding: 20px 0;
+  padding: 24px 0;
 }
 
 .compact .questionText {
-  font-size: 18px;
+  font-size: 20px;
   text-transform: none;
   letter-spacing: 0.02em;
 }
@@ -102,10 +102,10 @@
 }
 
 .compact .answerText {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 140%;
   opacity: 0.8;
-  max-width: none;
+  max-width: 700px;
 }
 
 .compact .answerContent {
@@ -129,6 +129,14 @@
 
   .answerText {
     font-size: 19px;
+  }
+
+  .compact .questionText {
+    font-size: 16px;
+  }
+
+  .compact .answerText {
+    font-size: 16px;
   }
 }
 

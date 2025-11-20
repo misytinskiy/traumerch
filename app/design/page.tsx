@@ -16,9 +16,6 @@ export default function Design() {
         {/* Unified product details section */}
         <ProductDetails />
 
-        {/* Promise section with 3 images */}
-        <PromiseDesign />
-
         {/* Services section */}
         <Services />
 
