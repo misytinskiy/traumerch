@@ -26,6 +26,9 @@ export default function Preloader() {
     startColor: string;
     targetColor: string;
   } | null>(null);
+  // Check if mobile immediately (before render)
+  const isMobile =
+    typeof window !== "undefined" && window.innerWidth <= 768;
 
   const finishPreloader = useCallback(() => {
     if (completionHandled.current) return;
@@ -165,8 +168,8 @@ export default function Preloader() {
         (floatingData.sourceRect.top + floatingData.sourceRect.height / 2)
       : 0;
 
-  // Only render if not shown before
-  if (hasShown) {
+  // Don't render on mobile/tablet or if already shown
+  if (hasShown || isMobile) {
     return null;
   }
 

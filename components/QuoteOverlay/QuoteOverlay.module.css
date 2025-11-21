@@ -34,6 +34,18 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+@media (max-width: 1536px) {
+  .closeButton {
+    top: 160px;
+    right: 170px;
+  }
+
+  .closeButton svg {
+    width: 48px;
+    height: 48px;
+  }
+}
+
 @media (max-width: 768px) {
   .panel {
     padding-top: 80px;

@@ -203,6 +203,13 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .preloader {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
   .text1 {
     font-size: 48px;
   }

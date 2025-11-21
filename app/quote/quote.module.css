@@ -325,12 +325,20 @@
 
 @media (max-width: 1536px) {
   .main {
-    padding: 100px 60px 120px;
+    padding: 50px 175px 120px;
   }
 
   .mainTitle {
-    font-size: 64px;
-    line-height: 78px;
+    margin-bottom: 70px;
+  }
+
+  .formTitle {
+    font-size: 26px;
+  }
+
+  .mainTitle {
+    font-size: 42px;
+    line-height: normal;
   }
 
   .content {
@@ -341,6 +349,10 @@
   .leftColumn,
   .rightColumn {
     max-width: 100%;
+  }
+
+  .label {
+    font-size: 16px;
   }
 }
 

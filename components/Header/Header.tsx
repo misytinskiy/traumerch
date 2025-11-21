@@ -213,7 +213,7 @@ export default function Header() {
   const initialPadding = isSmallDesktop ? "20px 29px" : "20px 60px";
   const scrolledPadding = isSmallDesktop ? "20px 29px" : "20px 40px";
   const initialWidth = isSmallDesktop
-    ? "calc(100% - 175px)"
+    ? "calc(100% - 291px)"
     : "calc(100% - 180px)";
   const scrolledWidth = isSmallDesktop
     ? "calc(100% - 440px)"

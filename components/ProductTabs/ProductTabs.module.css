@@ -259,7 +259,7 @@
 
 @media (max-width: 1536px) {
   .tabs {
-    padding: 178px 120px 60px;
+    padding: 178px 175px 60px;
   }
 
   .header {
@@ -284,13 +284,13 @@
   .productImage.regular {
     height: 20vw !important;
     margin-bottom: 18px;
-    width: 20vw;
+    width: 100%;
     /* height: 344px; */
   }
 
   .productImage.large {
     height: 40vw !important;
-    width: 41vw;
+    width: auto;
   }
 
   .productName {
