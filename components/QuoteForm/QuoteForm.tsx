@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { InlineWidget } from "react-calendly";
 import Button from "../Button/Button";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "../../app/quote/quote.module.css";
@@ -249,6 +250,9 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
           <h2 className={styles.rightTitle}>
             {t.quote?.rightTitle || "Let's talk it through"}
           </h2>
+          <div className={styles.calendlyWidget}>
+            <InlineWidget url="https://calendly.com/crocorocky/30min" />
+          </div>
         </div>
       </div>
     </main>
