@@ -11,12 +11,14 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
+import { usePreloader } from "../../contexts/PreloaderContext";
 import Button from "../Button/Button";
 import styles from "./Header.module.css";
 
 export default function Header() {
   const { language, country, setLanguage, t } = useLanguage();
   const { openQuote } = useQuoteOverlay();
+  const { isEnabled: isPreloaderActive } = usePreloader();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
   const [showLogo, setShowLogo] = useState(true);
@@ -409,7 +411,7 @@ export default function Header() {
 
         {/* Center - Logo */}
         <AnimatePresence>
-          {showLogo && (
+          {(showLogo || isPreloaderActive) && (
             <motion.div
               initial={{ opacity: 0, scale: 1, filter: "blur(0px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
@@ -419,7 +421,15 @@ export default function Header() {
                 ease: "easeInOut" as const,
               }}
             >
-              <Link href="/" className={styles.logo}>
+              <Link
+                href="/"
+                className={styles.logo}
+                id="header-logo-anchor"
+                style={{
+                  visibility: isPreloaderActive ? "hidden" : "visible",
+                  pointerEvents: isPreloaderActive ? "none" : "auto",
+                }}
+              >
                 TRAUMERCH
               </Link>
             </motion.div>

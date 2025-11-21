@@ -116,6 +116,20 @@
   white-space: nowrap;
 }
 
+.floatingText {
+  position: fixed;
+  z-index: 10000;
+  font-family: "EB Garamond", var(--font-eb-garamond);
+  font-size: 100px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
 .text2 {
   position: absolute;
   color: var(--General-Grey, #999);

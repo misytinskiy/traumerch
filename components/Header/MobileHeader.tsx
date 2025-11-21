@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { usePreloader } from "../../contexts/PreloaderContext";
 import Link from "next/link";
 import Button from "../Button/Button";
 import styles from "./MobileHeader.module.css";
 
 export default function MobileHeader() {
   const { language, setLanguage, country, t } = useLanguage();
+  const { isEnabled: isPreloaderActive } = usePreloader();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -76,7 +78,15 @@ export default function MobileHeader() {
       <header className={styles.mobileHeader}>
         <div className={styles.headerContent}>
           {/* Left side - Logo */}
-          <Link href="/" className={styles.logo}>
+          <Link
+            href="/"
+            className={styles.logo}
+            id="header-logo-anchor"
+            style={{
+              visibility: isPreloaderActive ? "hidden" : "visible",
+              pointerEvents: isPreloaderActive ? "none" : "auto",
+            }}
+          >
             TRAUMERCH
           </Link>
 
