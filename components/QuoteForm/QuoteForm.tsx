@@ -95,9 +95,7 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
               <label className={styles.label}>
-                {t.quote?.nameLabel ||
-                  t.quote?.namePlaceholder ||
-                  "Name"}
+                {t.quote?.nameLabel || t.quote?.namePlaceholder || "Name"}
               </label>
               <input
                 type="text"
