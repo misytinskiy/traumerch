@@ -201,48 +201,71 @@
   object-fit: cover;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .preloader {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
+@media (max-width: 1536px) {
   .text1 {
-    font-size: 48px;
+    font-size: 56px;
   }
 
   .text2 {
-    font-size: 36px;
-  }
-
-  .imageWrapper {
-    width: 300px;
-    height: 225px;
+    font-size: 16px;
+    transform: translate(-50%, calc(-50% + 210.1635px));
   }
 
   .imagesTrack {
-    gap: 30px;
+    gap: 25px;
+  }
+
+  .imageWrapper {
+    width: 380px;
+    height: 269px;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .text1 {
+    font-size: 64px;
+  }
+
+  .text2 {
+    font-size: 12px;
+    max-width: 390px;
+    transform: translate(-50%, calc(-50% + 210.1635px + 60px));
+  }
+
+  .imageWrapper {
+    width: 409px;
+    height: 370px;
+  }
+
+  .imagesTrack {
+    gap: 27px;
+  }
+
+  .preloader::before,
+  .preloader::after {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
   .text1 {
-    font-size: 36px;
+    font-size: 32px;
   }
 
   .text2 {
-    font-size: 28px;
+    font-size: 12px;
+    transform: translate(-50%, calc(-50% + 189.1635px));
+    padding: 0;
+    max-width: 294px;
   }
 
   .imageWrapper {
-    width: 250px;
-    height: 188px;
+    width: 204.218px;
+    height: 184.534px;
   }
 
   .imagesTrack {
-    gap: 20px;
+    gap: 14px;
   }
 }

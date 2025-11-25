@@ -20,12 +20,9 @@ const PreloaderContext = createContext<PreloaderContextType | undefined>(
 );
 
 export function PreloaderProvider({ children }: { children: ReactNode }) {
-  // Check if device is mobile/tablet immediately (before first render)
-  const isMobileDevice =
-    typeof window !== "undefined" && window.innerWidth <= 768;
-
-  const [isEnabled, setIsEnabled] = useState(!isMobileDevice);
-  const [hasShown, setHasShown] = useState(isMobileDevice);
+  // Preloader enabled for all devices including mobile/tablet
+  const [isEnabled, setIsEnabled] = useState(true);
+  const [hasShown, setHasShown] = useState(false);
 
   useEffect(() => {
     // Check if preloader has already been shown in this session
@@ -35,18 +32,7 @@ export function PreloaderProvider({ children }: { children: ReactNode }) {
     //   setHasShown(true);
     //   setIsEnabled(false);
     // }
-
-    // Also check on resize
-    const checkDevice = () => {
-      if (window.innerWidth <= 768 && !hasShown) {
-        setHasShown(true);
-        setIsEnabled(false);
-      }
-    };
-
-    window.addEventListener("resize", checkDevice);
-    return () => window.removeEventListener("resize", checkDevice);
-  }, [hasShown]);
+  }, []);
 
   const handleSetEnabled = (enabled: boolean) => {
     setIsEnabled(enabled);

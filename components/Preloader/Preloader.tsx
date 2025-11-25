@@ -168,8 +168,8 @@ export default function Preloader() {
         (floatingData.sourceRect.top + floatingData.sourceRect.height / 2)
       : 0;
 
-  // Don't render on mobile/tablet or if already shown
-  if (hasShown || isMobile) {
+  // Don't render if already shown
+  if (hasShown) {
     return null;
   }
 
