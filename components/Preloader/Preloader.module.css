@@ -95,7 +95,7 @@
   transform: translate(-50%, -50%);
   z-index: 3;
   overflow: hidden;
-  height: 140px; /* line-height текста */
+  height: 140px; /* matches line-height for smooth reveal */
   width: 100%;
   display: flex;
   align-items: flex-end;
@@ -202,8 +202,14 @@
 }
 
 @media (max-width: 1536px) {
-  .text1 {
+  .text1Wrapper {
+    height: 90px;
+  }
+
+  .text1,
+  .floatingText {
     font-size: 56px;
+    line-height: 90px;
   }
 
   .text2 {
@@ -223,8 +229,14 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .text1 {
+  .text1Wrapper {
+    height: 90px;
+  }
+
+  .text1,
+  .floatingText {
     font-size: 64px;
+    line-height: 90px;
   }
 
   .text2 {
@@ -249,8 +261,14 @@
 }
 
 @media (max-width: 480px) {
-  .text1 {
+  .text1Wrapper {
+    height: 46px;
+  }
+
+  .text1,
+  .floatingText {
     font-size: 32px;
+    line-height: 46px;
   }
 
   .text2 {

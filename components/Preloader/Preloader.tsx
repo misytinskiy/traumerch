@@ -99,16 +99,26 @@ export default function Preloader() {
     if (textElement && logoElement) {
       const sourceRect = textElement.getBoundingClientRect();
       const targetRect = logoElement.getBoundingClientRect();
+      const widthScale =
+        sourceRect.width && targetRect.width
+          ? targetRect.width / sourceRect.width
+          : 1;
       const sourceFontSize = parseFloat(
         window.getComputedStyle(textElement).fontSize || "100"
       );
       const targetFontSize = parseFloat(
         window.getComputedStyle(logoElement).fontSize || "36"
       );
-      const scale =
+      const fontScale =
         sourceFontSize && targetFontSize
           ? targetFontSize / sourceFontSize
-          : targetRect.width / sourceRect.width;
+          : 1;
+      const scale =
+        widthScale > 0
+          ? widthScale
+          : fontScale > 0
+            ? fontScale
+            : 1; // prefer rendered width to better match logo across breakpoints
       const measuredStartColor =
         window.getComputedStyle(textElement).color || "rgba(255, 255, 255, 1)";
       const startColor =
