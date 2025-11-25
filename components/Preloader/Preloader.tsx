@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { usePreloader } from "../../contexts/PreloaderContext";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -8,6 +9,7 @@ import Image from "next/image";
 import styles from "./Preloader.module.css";
 
 export default function Preloader() {
+  const pathname = usePathname();
   const { hasShown, setHasShown, setIsEnabled } = usePreloader();
   const { t } = useLanguage();
   const imagesTrackRef = useRef<HTMLDivElement>(null);
@@ -26,9 +28,9 @@ export default function Preloader() {
     startColor: string;
     targetColor: string;
   } | null>(null);
-  // Check if mobile immediately (before render)
-  const isMobile =
-    typeof window !== "undefined" && window.innerWidth <= 768;
+
+  // Only show preloader on home page
+  const isHomePage = pathname === "/";
 
   const finishPreloader = useCallback(() => {
     if (completionHandled.current) return;
@@ -110,15 +112,8 @@ export default function Preloader() {
         window.getComputedStyle(logoElement).fontSize || "36"
       );
       const fontScale =
-        sourceFontSize && targetFontSize
-          ? targetFontSize / sourceFontSize
-          : 1;
-      const scale =
-        widthScale > 0
-          ? widthScale
-          : fontScale > 0
-            ? fontScale
-            : 1; // prefer rendered width to better match logo across breakpoints
+        sourceFontSize && targetFontSize ? targetFontSize / sourceFontSize : 1;
+      const scale = widthScale > 0 ? widthScale : fontScale > 0 ? fontScale : 1; // prefer rendered width to better match logo across breakpoints
       const measuredStartColor =
         window.getComputedStyle(textElement).color || "rgba(255, 255, 255, 1)";
       const startColor =
@@ -178,8 +173,8 @@ export default function Preloader() {
         (floatingData.sourceRect.top + floatingData.sourceRect.height / 2)
       : 0;
 
-  // Don't render if already shown
-  if (hasShown) {
+  // Don't render if already shown or not on home page
+  if (hasShown || !isHomePage) {
     return null;
   }
 

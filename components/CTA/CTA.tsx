@@ -1,12 +1,14 @@
 "use client";
 
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import Button from "../Button/Button";
 import styles from "./CTA.module.css";
 
 export default function CTA() {
   const { t } = useLanguage();
+  const { openQuote } = useQuoteOverlay();
 
   return (
     <section className={styles.cta}>
@@ -23,6 +25,7 @@ export default function CTA() {
         padding768="42px 73px"
         padding350="26px 38px"
         arrow="white"
+        onClick={openQuote}
       >
         {t.cta.buttonText}
       </Button>

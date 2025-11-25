@@ -89,6 +89,20 @@
   max-width: 1013px;
 }
 
+@media (max-width: 1920px) and (max-height: 982px) {
+  .faq {
+    padding: 150px 300px;
+  }
+
+  .header {
+    margin-bottom: 48px;
+  }
+
+  .questionButton {
+    padding: 36px 0;
+  }
+}
+
 @media (max-width: 1536px) {
   .faq {
     padding: 160px 175px;

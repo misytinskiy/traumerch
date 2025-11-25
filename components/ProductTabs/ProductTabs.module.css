@@ -235,25 +235,45 @@
 }
 
 @media (max-width: 1920px) and (max-height: 982px) {
+  .tabs {
+    padding: 200px 300px 100px;
+  }
+
   .productImage {
-    margin-bottom: 21px;
+    margin-bottom: 24px;
   }
 
   .productImage.regular {
-    height: 400px !important;
+    height: 336px !important;
   }
 
   .productImage.large {
-    height: 800px !important;
+    height: 651px !important;
   }
 
   .productName {
-    font-size: 22px;
+    font-size: 20px;
     margin: 0 0 11px 0;
   }
 
   .productPrice {
-    font-size: 22px;
+    font-size: 20px;
+  }
+
+  .header {
+    margin-bottom: 48px;
+  }
+
+  .tab {
+    font-size: 16px;
+  }
+
+  .count {
+    font-size: 16px;
+  }
+
+  .tabList {
+    margin-bottom: 35px;
   }
 }
 

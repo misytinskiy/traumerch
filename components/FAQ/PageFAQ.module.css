@@ -60,8 +60,35 @@
   margin: 0 auto;
 }
 
+@media (max-width: 1920px) and (max-height: 982px) {
+  .faqSection {
+    padding: 200px 300px 100px;
+  }
+
+  .title {
+    font-size: 56px;
+    max-width: 600px;
+  }
+
+  .tabsContainer {
+    margin-top: 48px;
+  }
+
+  .tabs {
+    margin-bottom: 48px;
+  }
+}
+
 /* Responsive */
 @media (max-width: 1536px) {
+  .faqSection {
+    padding: 170px 175px 140px;
+  }
+
+  .tabs {
+    gap: 22px;
+  }
+
   .tab {
     font-size: 14px;
     padding: 0 0 8px 0;
@@ -74,10 +101,6 @@
   .title {
     font-size: 56px;
     max-width: 565px;
-  }
-
-  .faqSection {
-    padding: 190px 118px 140px;
   }
 }
 

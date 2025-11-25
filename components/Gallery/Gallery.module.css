@@ -141,13 +141,17 @@
 }
 
 @media (max-width: 1920px) and (max-height: 982px) {
+  .gallery {
+    padding: 150px 300px;
+  }
+
   .swiperSlide {
     width: 300px;
     height: 285px;
   }
 
   .header {
-    margin-bottom: 50px;
+    margin-bottom: 48px;
   }
 
   .navButton {

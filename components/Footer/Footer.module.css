@@ -92,6 +92,27 @@
   opacity: 0.4;
 }
 
+@media (max-width: 1920px) and (max-height: 982px) {
+  .footer {
+    padding: 110px 300px;
+  }
+  .logo {
+    font-size: 40px;
+  }
+
+  .columnTitle {
+    font-size: 20px;
+  }
+
+  .columnLink {
+    font-size: 16px;
+  }
+
+  .columns {
+    gap: 100px;
+  }
+}
+
 @media (max-width: 1536px) {
   .footer {
     padding: 120px 150px 40px;

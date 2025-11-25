@@ -29,6 +29,21 @@
   text-align: center;
 }
 
+@media (max-width: 1920px) and (max-height: 982px) {
+  .cta {
+    padding: 150px 300px;
+  }
+
+  .title {
+    margin-bottom: 36px;
+    max-width: 761px;
+  }
+
+  .description {
+    margin-bottom: 36px;
+  }
+}
+
 @media (max-width: 1536px) {
   .cta {
     padding: 153px 151px;

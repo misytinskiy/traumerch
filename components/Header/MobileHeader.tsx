@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { usePreloader } from "../../contexts/PreloaderContext";
 import Link from "next/link";
@@ -8,8 +9,10 @@ import Button from "../Button/Button";
 import styles from "./MobileHeader.module.css";
 
 export default function MobileHeader() {
+  const pathname = usePathname();
   const { language, setLanguage, country, t } = useLanguage();
   const { isEnabled: isPreloaderActive } = usePreloader();
+  const isHomePage = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -83,8 +86,8 @@ export default function MobileHeader() {
             className={styles.logo}
             id="header-logo-anchor"
             style={{
-              visibility: isPreloaderActive ? "hidden" : "visible",
-              pointerEvents: isPreloaderActive ? "none" : "auto",
+              visibility: isPreloaderActive && isHomePage ? "hidden" : "visible",
+              pointerEvents: isPreloaderActive && isHomePage ? "none" : "auto",
             }}
           >
             TRAUMERCH

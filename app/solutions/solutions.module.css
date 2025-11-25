@@ -63,6 +63,13 @@
   }
 }
 
+@media (max-width: 1920px) and (max-height: 982px) {
+  .title {
+    font-size: 56px;
+    max-width: 600px;
+  }
+}
+
 @media (max-width: 1536px) {
   .title {
     font-size: 56px;

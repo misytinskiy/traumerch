@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import { usePreloader } from "../../contexts/PreloaderContext";
@@ -16,9 +17,11 @@ import Button from "../Button/Button";
 import styles from "./Header.module.css";
 
 export default function Header() {
+  const pathname = usePathname();
   const { language, country, setLanguage, t } = useLanguage();
   const { openQuote } = useQuoteOverlay();
   const { isEnabled: isPreloaderActive } = usePreloader();
+  const isHomePage = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
   const [showLogo, setShowLogo] = useState(true);
@@ -156,6 +159,13 @@ export default function Header() {
       }, 400); // Wait for menu to fully close (duration: 0.4s)
     }
   };
+
+  // Ensure logo is visible on non-home pages
+  useEffect(() => {
+    if (!isHomePage && !showLogo) {
+      setShowLogo(true);
+    }
+  }, [isHomePage, showLogo]);
 
   // Handle hash navigation on main page
   useEffect(() => {
@@ -411,7 +421,7 @@ export default function Header() {
 
         {/* Center - Logo */}
         <AnimatePresence>
-          {(showLogo || isPreloaderActive) && (
+          {showLogo && (
             <motion.div
               initial={{ opacity: 0, scale: 1, filter: "blur(0px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
@@ -426,8 +436,10 @@ export default function Header() {
                 className={styles.logo}
                 id="header-logo-anchor"
                 style={{
-                  visibility: isPreloaderActive ? "hidden" : "visible",
-                  pointerEvents: isPreloaderActive ? "none" : "auto",
+                  visibility:
+                    isPreloaderActive && isHomePage ? "hidden" : "visible",
+                  pointerEvents:
+                    isPreloaderActive && isHomePage ? "none" : "auto",
                 }}
               >
                 TRAUMERCH

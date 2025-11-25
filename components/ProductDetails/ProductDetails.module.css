@@ -227,7 +227,7 @@
 
 @media (max-width: 1920px) and (max-height: 911px) {
   .productDetails {
-    padding: 240px 150px 160px;
+    padding: 240px 300px 160px;
   }
 
   .customizerSection {
@@ -283,7 +283,7 @@
 
 @media (max-width: 1536px) {
   .productDetails {
-    padding: 200px 150px 160px;
+    padding: 200px 175px 160px;
   }
 
   .mainImage {
