@@ -104,6 +104,12 @@
   }
 }
 
+@media (max-width: 1280px) {
+  .faqSection {
+    padding: 140px 120px;
+  }
+}
+
 @media (max-width: 768px) {
   .faqSection {
     padding: 273px 30px 160px;

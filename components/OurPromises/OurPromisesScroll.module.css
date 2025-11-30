@@ -165,6 +165,25 @@
   }
 }
 
+@media (max-width: 1280px) {
+  .ourPromisesScroll {
+    padding: 140px 120px;
+  }
+
+  .rightSide {
+    gap: 90px;
+  }
+
+  .promiseImage {
+    height: 312px;
+    width: 509px;
+  }
+
+  .description {
+    max-width: 491px;
+  }
+}
+
 @media (max-width: 768px) {
   .ourPromisesScroll {
     padding: 80px 40px 100px 40px;

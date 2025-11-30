@@ -16,6 +16,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Block page scroll when quote overlay is open */
+body.quote-overlay-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

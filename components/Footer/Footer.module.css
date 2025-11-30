@@ -157,23 +157,19 @@
   }
 }
 
-/* @media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .footer {
-    padding: 60px 40px;
+    padding: 120px 120px 40px;
   }
 
-  .columns {
-    gap: 80px;
+  .column:nth-child(1) {
+    margin-right: 77px;
   }
 
-  .logo {
-    font-size: 40px;
+  .column:nth-child(3) {
+    margin-right: 32px;
   }
-
-  .columnTitle {
-    font-size: 20px;
-  }
-} */
+}
 
 @media (max-width: 768px) {
   .footer {

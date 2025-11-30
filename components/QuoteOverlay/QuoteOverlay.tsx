@@ -45,9 +45,18 @@ export default function QuoteOverlay() {
 
   useEffect(() => {
     if (isOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      document.body.style.top = `-${scrollY}px`;
       document.body.classList.add("quote-overlay-open");
     } else {
+      // Restore scroll position
+      const scrollY = document.body.style.top;
       document.body.classList.remove("quote-overlay-open");
+      document.body.style.top = "";
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      }
       // Reset form when closing
       setFormData({
         name: "",
@@ -61,7 +70,17 @@ export default function QuoteOverlay() {
       setSelectedService(null);
       setShowThankYou(false);
     }
-    return () => document.body.classList.remove("quote-overlay-open");
+    return () => {
+      // Cleanup: restore scroll position if overlay is closed
+      if (!isOpen) {
+        const scrollY = document.body.style.top;
+        document.body.classList.remove("quote-overlay-open");
+        document.body.style.top = "";
+        if (scrollY) {
+          window.scrollTo(0, parseInt(scrollY || "0") * -1);
+        }
+      }
+    };
   }, [isOpen]);
 
   const handleInputChange = (

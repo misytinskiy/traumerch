@@ -340,6 +340,12 @@
   }
 }
 
+@media (max-width: 1280px) {
+  .tabs {
+    padding: 140px 120px 60px;
+  }
+}
+
 @media (max-width: 768px) {
   .title {
     font-size: 64px;

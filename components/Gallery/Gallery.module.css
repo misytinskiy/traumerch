@@ -204,6 +204,21 @@
   }
 } */
 
+@media (max-width: 1280px) {
+  .gallery {
+    padding: 140px 120px;
+  }
+
+  .quoteText {
+    font-size: 20px;
+    line-height: 27px;
+  }
+
+  .quoteAuthor {
+    font-size: 14px;
+  }
+}
+
 @media (max-width: 768px) {
   .gallery {
     padding: 88px 29px;

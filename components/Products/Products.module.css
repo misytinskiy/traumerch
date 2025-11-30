@@ -156,20 +156,11 @@
   }
 }
 
-/* @media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .products {
-    padding: 80px 40px;
+    padding: 140px 120px;
   }
-
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-  }
-
-  .productImage {
-    height: 380px;
-  }
-} */
+}
 
 @media (max-width: 768px) {
   .products {
