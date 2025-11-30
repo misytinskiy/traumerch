@@ -9,7 +9,7 @@ export default function ResponsiveHeader() {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 744);
+      setIsMobile(window.innerWidth <= 900);
     };
 
     // Check on mount

@@ -165,7 +165,7 @@
   }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1400px) {
   .ourPromisesScroll {
     padding: 140px 120px;
   }
@@ -184,7 +184,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .ourPromisesScroll {
     padding: 80px 40px 100px 40px;
   }
@@ -192,6 +192,7 @@
   .mainContent {
     flex-direction: column;
     gap: 60px;
+    align-items: center;
   }
 
   .leftSide {

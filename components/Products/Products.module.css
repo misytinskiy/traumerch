@@ -162,6 +162,12 @@
   }
 }
 
+@media (max-width: 1100px) {
+  .productImage {
+    height: 220px !important;
+  }
+}
+
 @media (max-width: 768px) {
   .products {
     padding: 88px 29px;

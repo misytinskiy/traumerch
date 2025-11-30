@@ -379,7 +379,7 @@
   }
 
   .content {
-    grid-template-columns: 570px 570px;
+    grid-template-columns: 37vw 37vw;
   }
 
   .closeButton svg {
@@ -467,7 +467,7 @@
   }
 
   .content {
-    grid-template-columns: 510px 510px;
+    grid-template-columns: 39vw 39vw;
   }
 
   .formTitle {
@@ -514,7 +514,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .panel {
     padding-top: 80px;
   }

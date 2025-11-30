@@ -346,7 +346,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .title {
     font-size: 64px;
     line-height: 113%;
@@ -357,6 +357,8 @@
 
   .productGrid {
     margin-bottom: 110px;
+
+    gap: 20px;
   }
 
   .tabList {
@@ -397,12 +399,12 @@
 
   .productImage.regular,
   .productImage.large {
-    height: 343px;
+    height: 343px !important;
   }
 
   .productName,
   .productPrice {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .mobileRow {
