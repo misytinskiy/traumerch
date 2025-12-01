@@ -72,13 +72,11 @@ export default function QuoteOverlay() {
     }
     return () => {
       // Cleanup: restore scroll position if overlay is closed
-      if (!isOpen) {
-        const scrollY = document.body.style.top;
-        document.body.classList.remove("quote-overlay-open");
-        document.body.style.top = "";
-        if (scrollY) {
-          window.scrollTo(0, parseInt(scrollY || "0") * -1);
-        }
+      const scrollY = document.body.style.top;
+      document.body.classList.remove("quote-overlay-open");
+      document.body.style.top = "";
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
       }
     };
   }, [isOpen]);
@@ -243,7 +241,9 @@ export default function QuoteOverlay() {
                                   }))
                                 }
                               >
-                                {(t.quote?.services || "Services").toUpperCase()}
+                                {(
+                                  t.quote?.services || "Services"
+                                ).toUpperCase()}
                               </button>
                               <button
                                 type="button"
@@ -293,7 +293,9 @@ export default function QuoteOverlay() {
                               name="description"
                               value={formData.description}
                               onChange={handleInputChange}
-                              placeholder={t.quote?.description || "Description"}
+                              placeholder={
+                                t.quote?.description || "Description"
+                              }
                               className={styles.textarea}
                               rows={6}
                             />

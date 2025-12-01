@@ -113,6 +113,16 @@
   }
 }
 
+@media (max-width: 1750px) {
+  .columns {
+    gap: 65px;
+  }
+
+  .logo {
+    font-size: 50px;
+  }
+}
+
 @media (max-width: 1536px) {
   .footer {
     padding: 120px 150px 40px;

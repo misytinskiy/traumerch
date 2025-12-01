@@ -21,6 +21,15 @@ body.quote-overlay-open {
   overflow: hidden;
   position: fixed;
   width: 100%;
+  height: 100%;
+}
+
+/* Block page scroll when preloader is showing */
+body.preloader-active {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 * {

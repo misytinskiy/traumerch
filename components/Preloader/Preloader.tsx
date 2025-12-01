@@ -18,6 +18,7 @@ export default function Preloader() {
   const completionHandled = useRef(false);
   const hideTimeoutRef = useRef<number | null>(null);
   const hasStartedHiding = useRef(false);
+  const lastPathnameRef = useRef(pathname);
   const [isHiding, setIsHiding] = useState(false);
   const [isTextDetached, setIsTextDetached] = useState(false);
   const [showFloatingText, setShowFloatingText] = useState(false);
@@ -32,8 +33,25 @@ export default function Preloader() {
   // Only show preloader on home page
   const isHomePage = pathname === "/";
 
+  // Reset state только при входе на главную после другой страницы
+  useEffect(() => {
+    const cameFromAnotherPage =
+      lastPathnameRef.current && lastPathnameRef.current !== pathname;
+    lastPathnameRef.current = pathname;
+    if (!isHomePage || !cameFromAnotherPage) return;
+    completionHandled.current = false;
+    hasStartedHiding.current = false;
+    setIsHiding(false);
+    setIsTextDetached(false);
+    setShowFloatingText(false);
+    setFloatingData(null);
+    setHasShown(false);
+    setIsEnabled(true);
+  }, [isHomePage, setHasShown, setIsEnabled]);
+
   const finishPreloader = useCallback(() => {
     if (completionHandled.current) return;
+
     completionHandled.current = true;
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
@@ -43,12 +61,30 @@ export default function Preloader() {
   }, [setHasShown, setIsEnabled]);
 
   useEffect(() => {
+    if (!isHomePage) return;
     if (hasShown || !imagesTrackRef.current || !lastImageRef.current) {
       return;
     }
 
+    const startHiding = () => {
+      if (hasStartedHiding.current) return;
+      hasStartedHiding.current = true;
+      setIsHiding(true);
+      if (imagesTrackRef.current) {
+        imagesTrackRef.current.style.animationPlayState = "paused";
+      }
+    };
+
     let animationFrameId: number | null = null;
     let isChecking = false;
+    const track = imagesTrackRef.current;
+    const fallbackHideId = window.setTimeout(() => startHiding(), 5500);
+
+    const handleAnimationEnd = () => {
+      startHiding();
+    };
+
+    track?.addEventListener("animationend", handleAnimationEnd);
 
     const checkLastImagePosition = () => {
       if (hasStartedHiding.current || !isChecking) {
@@ -63,13 +99,8 @@ export default function Preloader() {
       const rect = lastImage.getBoundingClientRect();
       // Когда правая граница последнего изображения уходит за левый край экрана
       if (rect.right <= 0) {
-        hasStartedHiding.current = true;
+        startHiding("last image passed viewport");
         isChecking = false;
-        setIsHiding(true);
-        // Останавливаем анимацию
-        if (imagesTrackRef.current) {
-          imagesTrackRef.current.style.animationPlayState = "paused";
-        }
         return;
       }
 
@@ -84,71 +115,96 @@ export default function Preloader() {
     }, 100);
 
     return () => {
+      window.clearTimeout(fallbackHideId);
+      track?.removeEventListener("animationend", handleAnimationEnd);
       clearTimeout(startCheckingTimeout);
       isChecking = false;
       if (animationFrameId !== null) {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [hasShown, setHasShown, setIsEnabled]);
+  }, [hasShown, isHomePage, setHasShown, setIsEnabled]);
 
   useEffect(() => {
+    if (!isHomePage) return;
     if (!isHiding) return;
 
-    const textElement = text1Ref.current;
-    const logoElement = document.getElementById("header-logo-anchor");
+    let cancelled = false;
+    let attempts = 0;
+    const maxAttempts = 80; // ~6s with 75ms interval
+    const attemptInterval = 75;
 
-    if (textElement && logoElement) {
-      const sourceRect = textElement.getBoundingClientRect();
-      const targetRect = logoElement.getBoundingClientRect();
-      const widthScale =
-        sourceRect.width && targetRect.width
-          ? targetRect.width / sourceRect.width
-          : 1;
-      const sourceFontSize = parseFloat(
-        window.getComputedStyle(textElement).fontSize || "100"
-      );
-      const targetFontSize = parseFloat(
-        window.getComputedStyle(logoElement).fontSize || "36"
-      );
-      const fontScale =
-        sourceFontSize && targetFontSize ? targetFontSize / sourceFontSize : 1;
-      const scale = widthScale > 0 ? widthScale : fontScale > 0 ? fontScale : 1; // prefer rendered width to better match logo across breakpoints
-      const measuredStartColor =
-        window.getComputedStyle(textElement).color || "rgba(255, 255, 255, 1)";
-      const startColor =
-        measuredStartColor === "rgb(255, 255, 255)" ||
-        measuredStartColor === "rgba(255, 255, 255, 1)"
-          ? "rgba(0, 0, 0, 1)"
-          : measuredStartColor;
-      const targetColor =
-        window.getComputedStyle(logoElement).color || "rgba(0, 0, 0, 1)";
+    const tryAttachToLogo = () => {
+      if (cancelled) return;
+      const textElement = text1Ref.current;
+      const logoElement = document.getElementById("header-logo-anchor");
 
-      setFloatingData({
-        sourceRect,
-        targetRect,
-        scale,
-        startColor,
-        targetColor,
-      });
+      if (textElement && logoElement) {
+        const sourceRect = textElement.getBoundingClientRect();
+        const targetRect = logoElement.getBoundingClientRect();
 
-      // Hide the original text after we've measured it
-      requestAnimationFrame(() => setIsTextDetached(true));
-      requestAnimationFrame(() => setShowFloatingText(true));
+        // Ensure we have real dimensions (can be zero if logo hasn't rendered yet)
+        if (sourceRect.width > 0 && targetRect.width > 0) {
+          const widthScale = targetRect.width / sourceRect.width;
+          const sourceFontSize = parseFloat(
+            window.getComputedStyle(textElement).fontSize || "100"
+          );
+          const targetFontSize = parseFloat(
+            window.getComputedStyle(logoElement).fontSize || "36"
+          );
+          const fontScale =
+            sourceFontSize && targetFontSize
+              ? targetFontSize / sourceFontSize
+              : 1;
+          const scale =
+            widthScale > 0 ? widthScale : fontScale > 0 ? fontScale : 1; // prefer rendered width to better match logo across breakpoints
+          const measuredStartColor =
+            window.getComputedStyle(textElement).color ||
+            "rgba(255, 255, 255, 1)";
+          const startColor =
+            measuredStartColor === "rgb(255, 255, 255)" ||
+            measuredStartColor === "rgba(255, 255, 255, 1)"
+              ? "rgba(0, 0, 0, 1)"
+              : measuredStartColor;
+          const targetColor =
+            window.getComputedStyle(logoElement).color || "rgba(0, 0, 0, 1)";
 
-      // Fallback in case the animation never resolves
-      hideTimeoutRef.current = window.setTimeout(finishPreloader, 1500);
-    } else {
-      // If something goes wrong, finish gracefully
-      finishPreloader();
-    }
+          setFloatingData({
+            sourceRect,
+            targetRect,
+            scale,
+            startColor,
+            targetColor,
+          });
+
+          // Hide the original text after we've measured it
+          requestAnimationFrame(() => setIsTextDetached(true));
+          requestAnimationFrame(() => setShowFloatingText(true));
+
+          // Fallback in case the animation never resolves
+          hideTimeoutRef.current = window.setTimeout(finishPreloader, 1500);
+          return;
+        }
+      }
+
+      if (attempts < maxAttempts) {
+        attempts += 1;
+        setTimeout(tryAttachToLogo, attemptInterval);
+      } else {
+        // If the logo never appears (e.g., delayed mount), still finish
+        finishPreloader();
+      }
+    };
+
+    tryAttachToLogo();
 
     return () => {
+      cancelled = true;
       if (hideTimeoutRef.current) {
         clearTimeout(hideTimeoutRef.current);
       }
     };
-  }, [finishPreloader, isHiding]);
+  }, [finishPreloader, isHiding, isHomePage]);
 
   useEffect(() => {
     return () => {
@@ -157,6 +213,21 @@ export default function Preloader() {
       }
     };
   }, []);
+
+  // Master failsafe: ensure preloader hides even if animations fail
+  useEffect(() => {
+    if (!isHomePage || hasShown) return;
+    const masterTimeout = window.setTimeout(() => {
+      if (!hasStartedHiding.current) {
+        setIsHiding(true);
+      }
+      finishPreloader();
+    }, 10000);
+
+    return () => {
+      window.clearTimeout(masterTimeout);
+    };
+  }, [finishPreloader, hasShown, isHomePage]);
 
   const textString = t.preloader?.text1 || "TrauMerch";
 

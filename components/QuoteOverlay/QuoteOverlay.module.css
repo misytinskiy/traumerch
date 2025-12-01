@@ -55,7 +55,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: 800px 800px;
+  grid-template-columns: 41.6vw 41.6vw;
   gap: 20px;
   align-items: start;
 }
