@@ -33,6 +33,36 @@ export default function Preloader() {
   // Only show preloader on home page
   const isHomePage = pathname === "/";
 
+  // Block page scroll when preloader is showing
+  useEffect(() => {
+    const shouldBlockScroll = isHomePage && !hasShown;
+
+    if (shouldBlockScroll) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      document.body.style.top = `-${scrollY}px`;
+      document.body.classList.add("preloader-active");
+    } else {
+      // Restore scroll position
+      const scrollY = document.body.style.top;
+      document.body.classList.remove("preloader-active");
+      document.body.style.top = "";
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      }
+    }
+
+    return () => {
+      // Cleanup: restore scroll position if preloader is hidden
+      const scrollY = document.body.style.top;
+      document.body.classList.remove("preloader-active");
+      document.body.style.top = "";
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      }
+    };
+  }, [isHomePage, hasShown]);
+
   // Reset state только при входе на главную после другой страницы
   useEffect(() => {
     const cameFromAnotherPage =
@@ -47,7 +77,7 @@ export default function Preloader() {
     setFloatingData(null);
     setHasShown(false);
     setIsEnabled(true);
-  }, [isHomePage, setHasShown, setIsEnabled]);
+  }, [isHomePage, pathname, setHasShown, setIsEnabled]);
 
   const finishPreloader = useCallback(() => {
     if (completionHandled.current) return;
@@ -99,7 +129,7 @@ export default function Preloader() {
       const rect = lastImage.getBoundingClientRect();
       // Когда правая граница последнего изображения уходит за левый край экрана
       if (rect.right <= 0) {
-        startHiding("last image passed viewport");
+        startHiding();
         isChecking = false;
         return;
       }

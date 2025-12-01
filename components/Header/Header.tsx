@@ -160,12 +160,12 @@ export default function Header() {
     }
   };
 
-  // Ensure logo is visible on non-home pages
+  // Ensure logo is visible on non-home pages (but not when menu is open)
   useEffect(() => {
-    if (!isHomePage && !showLogo) {
+    if (!isHomePage && !showLogo && !isMenuOpen) {
       setShowLogo(true);
     }
-  }, [isHomePage, showLogo]);
+  }, [isHomePage, showLogo, isMenuOpen]);
 
   // Handle hash navigation on main page
   useEffect(() => {
