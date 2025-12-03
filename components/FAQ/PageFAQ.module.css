@@ -151,7 +151,8 @@
   }
 
   .tabs {
-    margin-bottom: 44px;
+    margin-bottom: 34px;
+    gap: 20px;
   }
 
   .title {
@@ -160,7 +161,7 @@
 
   .tab {
     font-size: 12px;
-    padding: 9px 0px;
+    padding: 0;
     letter-spacing: 0.02em;
   }
 }

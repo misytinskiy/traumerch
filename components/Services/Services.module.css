@@ -226,7 +226,7 @@
 
 @media (max-width: 480px) {
   .services {
-    padding: 60px 10px 58px;
+    padding: 40px 10px 30px;
   }
 
   .badge {
@@ -246,13 +246,13 @@
 
   .serviceCard:not(:first-child) {
     padding-top: 0;
-    margin-top: 120px;
+    margin-top: 60px;
   }
 
   .description {
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 16px;
-    max-width: 294px;
+    /* max-width: 294px; */
     letter-spacing: 0.02em;
     line-height: 123%;
   }

@@ -450,7 +450,7 @@
   }
 
   .productName {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .colorGrid {
@@ -462,8 +462,16 @@
     height: 30px;
   }
 
+  .optionLabel {
+    font-size: 12px;
+  }
+
   .optionsSection {
     margin-left: 0;
+  }
+
+  .optionButtons {
+    gap: 9px;
   }
 
   .divider {
@@ -476,15 +484,26 @@
     font-size: 12px;
   }
 
+  .leadTimeText,
   .priceText {
-    font-size: 14px;
-  }
-
-  .leadTimeText {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .fullWidthButton {
     width: 242px;
+  }
+
+  .priceText {
+    margin: 0 0 5px 0;
+  }
+
+  .title {
+    font-size: 20px;
+    margin: 0;
+    line-height: normal;
+  }
+
+  .infoSection {
+    gap: 35px;
   }
 }

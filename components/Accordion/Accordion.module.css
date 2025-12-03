@@ -183,13 +183,13 @@
 
 @media (max-width: 480px) {
   .questionText {
-    font-size: 14px;
+    font-size: 12px;
     max-width: 230px;
     letter-spacing: -0.02em;
   }
 
   .questionButton {
-    padding: 32px 0;
+    padding: 36px 0;
   }
 
   .answerText {
@@ -198,6 +198,11 @@
     letter-spacing: 0.02em;
     line-height: 17px;
     max-width: 270px;
+  }
+
+  .chevronContainer {
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -217,5 +222,19 @@
 
   .compact .answerContent {
     padding: 0 0 15px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .compact .questionText {
+    font-size: 14px;
+  }
+
+  .compact .answerText {
+    font-size: 14px;
+  }
+
+  .compact .answerContent {
+    padding: 0;
   }
 }

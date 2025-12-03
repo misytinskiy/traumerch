@@ -93,8 +93,12 @@
 }
 
 @media (max-width: 480px) {
+  .hero {
+    padding: 60px 0px 40px;
+  }
+
   .title {
-    font-size: 32px;
+    font-size: 27px;
     margin-bottom: 30px;
   }
 

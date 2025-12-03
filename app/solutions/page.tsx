@@ -39,17 +39,7 @@ export default function Solutions() {
       <main>
         {/* Hero-like section */}
         <section className={styles.hero}>
-          {isSmallScreen ? (
-            <h1 className={styles.title}>
-              {t.solutions.hero.titleLine1}
-              <br />
-              {t.solutions.hero.titleLine2}
-              <br />
-              {t.solutions.hero.titleLine3}
-            </h1>
-          ) : (
-            <h1 className={styles.title}>{t.solutions.hero.title}</h1>
-          )}
+          <h1 className={styles.title}>{t.solutions.hero.title}</h1>
 
           <button
             className={styles.scrollButton}

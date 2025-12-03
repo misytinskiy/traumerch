@@ -242,7 +242,7 @@
 
 @media (max-width: 480px) {
   .footer {
-    padding: 121px 10px 70px;
+    padding: 60px 10px 40px;
     overflow: hidden;
   }
 
@@ -251,13 +251,16 @@
   }
 
   .content {
-    gap: 60px;
+    gap: 48px;
+
+    margin-bottom: 56px;
   }
 
   .columns {
     flex-direction: column;
-    column-gap: 27px;
-    row-gap: 55px;
+    column-gap: 0;
+    row-gap: 48px;
+    grid-template-columns: 3fr 3fr;
   }
 
   .column {
@@ -265,7 +268,7 @@
   }
 
   .columnTitle {
-    margin: 0 0 15px 0;
+    margin: 0 0 12px 0;
   }
 
   .columnLink {
@@ -273,7 +276,7 @@
   }
 
   .columnLinks {
-    gap: 8px;
+    gap: 6px;
   }
 
   .copyright {

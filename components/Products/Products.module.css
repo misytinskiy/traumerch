@@ -215,7 +215,7 @@
     /* grid-template-columns: 1fr; */
     column-gap: 10px;
     row-gap: 32px;
-    margin-bottom: 48px;
+    margin-bottom: 40px;
   }
 
   .productImage {
@@ -225,11 +225,11 @@
   }
 
   .productName {
-    font-size: 14px;
+    font-size: 12px;
     margin: 0 0 5px 0;
   }
 
   .productPrice {
-    font-size: 14px;
+    font-size: 12px;
   }
 }

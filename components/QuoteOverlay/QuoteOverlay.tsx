@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InlineWidget } from "react-calendly";
+import Image from "next/image";
 import Button from "../Button/Button";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -18,10 +19,9 @@ interface QuoteFormData {
 }
 
 const messengers = [
-  { id: 1, name: "WhatsApp" },
-  { id: 2, name: "Telegram" },
-  { id: 3, name: "Signal" },
-  { id: 4, name: "Other" },
+  { id: 1, name: "WhatsApp", icon: "/quoteIcons/whatsapp.svg" },
+  { id: 2, name: "Instagram", icon: "/quoteIcons/instagram.svg" },
+  { id: 3, name: "Facebook", icon: "/quoteIcons/facebook.svg" },
 ];
 
 const servicesList = ["Service 1", "Service 2", "Service 3", "Service 4"];
@@ -217,7 +217,16 @@ export default function QuoteOverlay() {
                                   onClick={() =>
                                     setSelectedMessenger(messenger.id)
                                   }
-                                />
+                                  aria-label={messenger.name}
+                                >
+                                  <Image
+                                    src={messenger.icon}
+                                    alt={messenger.name}
+                                    width={20}
+                                    height={20}
+                                    className={styles.messengerIcon}
+                                  />
+                                </button>
                               ))}
                             </div>
                           </div>
