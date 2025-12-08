@@ -437,7 +437,7 @@
     margin-bottom: 16px !important;
   }
   .productName {
-    margin: 0px 0 8px 0;
+    margin: 0px 0 7px 0;
   }
 
   .count {
@@ -457,7 +457,7 @@
 
   .productName,
   .productPrice {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .productGrid {
@@ -466,5 +466,6 @@
 
   .tabList {
     margin-bottom: 44px;
+    column-gap: 20px;
   }
 }

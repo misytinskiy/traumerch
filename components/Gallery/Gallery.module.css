@@ -16,9 +16,9 @@
   align-self: flex-end;
 }
 
-.mobileNavigation {
+/* .mobileNavigation {
   display: none;
-}
+} */
 
 .navButton {
   width: 54px;
@@ -263,7 +263,7 @@
     display: none;
   }
 
-  .mobileNavigation {
+  /* .mobileNavigation {
     display: flex;
     gap: 36px;
     justify-content: center;
@@ -274,7 +274,7 @@
     width: 60px !important;
     height: 60px !important;
     border-radius: 30px;
-  }
+  } */
 
   .imageItem {
     height: 312px;

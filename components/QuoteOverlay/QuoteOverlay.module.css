@@ -144,10 +144,9 @@
 .messengerButton {
   width: 48px;
   height: 48px;
-  border-radius: 50%;
+  border-radius: 19%;
   border: none;
-  background: #999999;
-  opacity: 0.4;
+
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -161,7 +160,7 @@
 }
 
 .messengerIcon {
-  width: 100%;
+  width: 20px;
   height: 100%;
   object-fit: contain;
 

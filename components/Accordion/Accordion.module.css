@@ -237,4 +237,9 @@
   .compact .answerContent {
     padding: 0;
   }
+
+  .answerText {
+    font-size: 12px;
+    padding: 0;
+  }
 }
