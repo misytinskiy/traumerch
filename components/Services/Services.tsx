@@ -63,8 +63,7 @@ export default function Services({ showAll = false }: ServicesProps) {
                 variant="solid"
                 padding="31px 40px"
                 padding768="42px 114px"
-                padding480="26px 72px"
-                padding350="26px 72px"
+                padding480="24px 65px"
                 arrow="white"
               >
                 SEE MORE

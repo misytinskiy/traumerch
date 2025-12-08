@@ -73,7 +73,7 @@ export default function Hero({
           <Button
             variant="solid"
             padding={isLargeScreen ? "31px 53px" : "31px 41px"}
-            padding350="27px 49px"
+            padding480="24px 48px"
             arrow="white"
             className={styles.ctaButton}
             onClick={onScrollClick}

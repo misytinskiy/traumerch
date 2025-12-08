@@ -354,7 +354,7 @@ export default function QuoteOverlay() {
                           <Button
                             type="submit"
                             variant="solid"
-                            padding="20px 48px"
+                            padding="24px 48px"
                             arrow="white"
                             className={styles.submitButton}
                           >

@@ -23,7 +23,7 @@ export default function CTA() {
         padding="32px 44px"
         padding1536="20px 48px"
         padding768="42px 73px"
-        padding350="26px 38px"
+        padding480="24px 48px"
         arrow="white"
         onClick={openQuote}
       >

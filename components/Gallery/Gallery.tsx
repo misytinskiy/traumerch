@@ -66,6 +66,7 @@ export default function Gallery() {
   const mobileNextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<SwiperRef | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [shouldShowNavigation, setShouldShowNavigation] = useState(true);
 
   // Create array of 10 frame images
   const images = Array.from({ length: 10 }, (_, index) => ({
@@ -76,7 +77,9 @@ export default function Gallery() {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 480);
+      const width = window.innerWidth;
+      setIsMobile(width <= 480);
+      setShouldShowNavigation(width > 1000);
     };
 
     checkScreenSize();
@@ -120,24 +123,26 @@ export default function Gallery() {
       <div className={styles.header}>
         <SectionTitle maxWidth={500}>{t.gallery.title}</SectionTitle>
 
-        <div className={styles.navigation}>
-          <button
-            ref={prevRef}
-            className={styles.navButton}
-            onClick={handlePrevClick}
-            aria-label="Previous images"
-          >
-            <LeftArrow />
-          </button>
-          <button
-            ref={nextRef}
-            className={styles.navButton}
-            onClick={handleNextClick}
-            aria-label="Next images"
-          >
-            <RightArrow />
-          </button>
-        </div>
+        {shouldShowNavigation && (
+          <div className={styles.navigation}>
+            <button
+              ref={prevRef}
+              className={styles.navButton}
+              onClick={handlePrevClick}
+              aria-label="Previous images"
+            >
+              <LeftArrow />
+            </button>
+            <button
+              ref={nextRef}
+              className={styles.navButton}
+              onClick={handleNextClick}
+              aria-label="Next images"
+            >
+              <RightArrow />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className={styles.swiperContainer}>
@@ -170,12 +175,16 @@ export default function Gallery() {
           slidesPerView={3}
           loop={true}
           speed={500}
-          navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
+          navigation={
+            shouldShowNavigation
+              ? {
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }
+              : false
+          }
           onBeforeInit={(swiper) => {
-            if (typeof swiper.params.navigation !== "boolean") {
+            if (shouldShowNavigation && typeof swiper.params.navigation !== "boolean") {
               const navigation = swiper.params.navigation;
               if (navigation) {
                 navigation.prevEl = prevRef.current;
@@ -226,7 +235,8 @@ export default function Gallery() {
         </Swiper>
       </div>
 
-      <div className={styles.mobileNavigation}>
+      {/* Mobile navigation is commented out */}
+      {/* <div className={styles.mobileNavigation}>
         <button
           ref={mobilePrevRef}
           className={styles.navButton}
@@ -243,7 +253,7 @@ export default function Gallery() {
         >
           <RightArrow />
         </button>
-      </div>
+      </div> */}
     </section>
   );
 }

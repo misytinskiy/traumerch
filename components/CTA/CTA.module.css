@@ -94,5 +94,6 @@
     font-size: 12px;
     letter-spacing: 0.015em;
     margin-bottom: 36px;
+    max-width: 300px;
   }
 }
