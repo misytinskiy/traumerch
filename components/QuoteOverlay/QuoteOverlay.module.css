@@ -11,7 +11,7 @@
 .panel {
   width: 100%;
   max-width: 1920px;
-  background: #fafafa;
+  background: #fff;
   border-radius: 0;
   overflow-y: auto;
   max-height: 100vh;
@@ -152,19 +152,51 @@
 }
 
 .messengerButtonActive {
+  background: #171717;
   opacity: 1;
+  transition: all 0.2s ease;
 }
 
 .messengerButton:hover {
-  opacity: 0.7;
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+.messengerButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .messengerIcon {
-  width: 20px;
+  width: 27px;
   height: 100%;
   object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease;
+  backface-visibility: hidden;
+}
 
-  transition: filter 0.2s ease;
+.messengerIconColored {
+  opacity: 1;
+  filter: none;
+}
+
+.messengerIconWhite {
+  opacity: 0;
+  filter: brightness(0) invert(1);
+}
+
+.messengerButtonActive .messengerIconColored {
+  opacity: 0;
+}
+
+.messengerButtonActive .messengerIconWhite {
+  opacity: 1;
 }
 
 /* Toggle Buttons */
@@ -264,7 +296,7 @@
 
 .submitButton {
   margin-top: 20px;
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 .thankYouContent {
@@ -587,6 +619,7 @@
 
   .serviceButtons {
     gap: 14px;
+    row-gap: 10px;
   }
 
   .serviceButton {
@@ -629,7 +662,7 @@
   }
 
   .main {
-    padding: 60px 0 80px;
+    padding: 60px 0 82px;
   }
 
   .leftColumn {
@@ -649,21 +682,30 @@
 
   .formTitle,
   .rightTitle {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: 16px;
+    line-height: 20px;
   }
 
   .formTitle {
     max-width: 287px;
   }
 
+  .input {
+    font-size: 12px;
+    padding: 12px;
+  }
+
   .label {
-    font-size: 14px;
+    font-size: 12px;
     line-height: normal;
   }
 
+  .textarea {
+    padding: 12px;
+  }
+
   .form {
-    gap: 20px;
+    gap: 24px;
   }
 
   .toggleButton {
@@ -713,6 +755,8 @@
 
   .fileUploadLabel {
     gap: 5px;
+    margin-top: -13px;
+    margin-bottom: 12px;
   }
 
   .fileUploadText {

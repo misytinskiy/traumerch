@@ -224,7 +224,14 @@ export default function QuoteOverlay() {
                                     alt={messenger.name}
                                     width={20}
                                     height={20}
-                                    className={styles.messengerIcon}
+                                    className={`${styles.messengerIcon} ${styles.messengerIconColored}`}
+                                  />
+                                  <Image
+                                    src={messenger.icon}
+                                    alt={messenger.name}
+                                    width={20}
+                                    height={20}
+                                    className={`${styles.messengerIcon} ${styles.messengerIconWhite}`}
                                   />
                                 </button>
                               ))}
@@ -351,7 +358,7 @@ export default function QuoteOverlay() {
                             arrow="white"
                             className={styles.submitButton}
                           >
-                            {t.quote?.send || "SEND"}
+                            {t.quote?.send || "Add to quote"}
                           </Button>
                         </form>
                       </div>
