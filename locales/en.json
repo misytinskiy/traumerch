@@ -4,8 +4,9 @@
     "quote": "QUOTE"
   },
   "hero": {
-    "title": "UNLEASHING YOUR BRAND THROUGH MERCHANDISE THAT TRULY CONNECTS WITH YOUR",
-    "titleHighlight": "AUDIENCE",
+    "title": "MERCHANDISE THAT CONNECTS YOUR BRAND WITH YOUR",
+    "titlePrefix": "Merchandise that connects your brand with your",
+    "rotatingWords": ["Audience", "Clients", "Community", "Fans", "Partners"],
     "titleLine1": "Unleashing your brand",
     "titleLine2": "through merchandise that",
     "titleLine3": "truly connects",

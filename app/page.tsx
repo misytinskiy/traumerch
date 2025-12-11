@@ -131,9 +131,9 @@ export default function Home() {
           <Gallery />
         </div>
 
-        <div id="products">
+        {/* <div id="products">
           <Products />
-        </div>
+        </div> */}
 
         <div id="services">
           <Services />

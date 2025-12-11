@@ -4,8 +4,9 @@
     "quote": "ANGEBOT"
   },
   "hero": {
-    "title": "ENTFESSELN SIE IHRE MARKE DURCH MERCHANDISE, DAS WIRKLICH MIT IHREM",
-    "titleHighlight": "PUBLIKUM VERBINDET",
+    "title": "MERCHANDISE, DAS IHRE MARKE MIT IHREM",
+    "titlePrefix": "Merchandise, das Ihre Marke mit Ihrem",
+    "rotatingWords": ["Publikum", "Kunden", "Community", "Fans", "Partnern"],
     "titleLine1": "Entfesseln Sie Ihre Marke",
     "titleLine2": "durch Merchandise, das",
     "titleLine3": "wirklich mit Ihrem",

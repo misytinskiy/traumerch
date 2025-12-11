@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import type { Swiper as SwiperRef } from "swiper";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
@@ -170,11 +170,15 @@ export default function Gallery() {
               }
             }, 0);
           }}
-          modules={[Navigation]}
+          modules={[Navigation, Autoplay]}
           spaceBetween={20}
           slidesPerView={3}
           loop={true}
           speed={500}
+          autoplay={{
+            delay: 1000,
+            disableOnInteraction: false,
+          }}
           navigation={
             shouldShowNavigation
               ? {
@@ -184,7 +188,10 @@ export default function Gallery() {
               : false
           }
           onBeforeInit={(swiper) => {
-            if (shouldShowNavigation && typeof swiper.params.navigation !== "boolean") {
+            if (
+              shouldShowNavigation &&
+              typeof swiper.params.navigation !== "boolean"
+            ) {
               const navigation = swiper.params.navigation;
               if (navigation) {
                 navigation.prevEl = prevRef.current;

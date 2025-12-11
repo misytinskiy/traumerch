@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import styles from "./Hero.module.css";
@@ -21,6 +21,62 @@ export default function Hero({
   const { t } = useLanguage();
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  // Rotation state - temporarily unused, will be re-enabled later
+  const [_currentWordIndex, _setCurrentWordIndex] = useState(0);
+  const [_isAnimating, _setIsAnimating] = useState(false);
+  const [_displayWordIndex, _setDisplayWordIndex] = useState(0);
+  const [containerWidth, setContainerWidth] = useState<string>("auto");
+  const measureRef = useRef<HTMLSpanElement>(null);
+
+  const rotatingWords = useMemo(() => t.hero.rotatingWords || [], [t]);
+  const _rotationInterval = 700; // 0.7 seconds - temporarily unused
+
+  // Measure actual width of all words to set fixed container width
+  useEffect(() => {
+    if (rotatingWords.length === 0) return;
+
+    // Wait for element to be rendered
+    const timeoutId = setTimeout(() => {
+      if (!measureRef.current) return;
+
+      const measureWord = (word: string): number => {
+        const tempSpan = document.createElement("span");
+        tempSpan.style.visibility = "hidden";
+        tempSpan.style.position = "absolute";
+        tempSpan.style.fontFamily = getComputedStyle(
+          measureRef.current!
+        ).fontFamily;
+        tempSpan.style.fontSize = getComputedStyle(
+          measureRef.current!
+        ).fontSize;
+        tempSpan.style.fontWeight = getComputedStyle(
+          measureRef.current!
+        ).fontWeight;
+        tempSpan.style.fontStyle = getComputedStyle(
+          measureRef.current!
+        ).fontStyle;
+        tempSpan.style.textTransform = getComputedStyle(
+          measureRef.current!
+        ).textTransform;
+        tempSpan.style.letterSpacing = getComputedStyle(
+          measureRef.current!
+        ).letterSpacing;
+        tempSpan.textContent = word;
+        document.body.appendChild(tempSpan);
+        const width = tempSpan.offsetWidth;
+        document.body.removeChild(tempSpan);
+        return width;
+      };
+
+      const maxWidth = Math.max(
+        ...rotatingWords.map((word) => measureWord(word))
+      );
+      // Add some padding to prevent jumping
+      setContainerWidth(`${maxWidth + 20}px`);
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [rotatingWords]);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -33,6 +89,28 @@ export default function Hero({
 
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
+
+  // Rotation temporarily disabled - will be re-enabled later
+  // useEffect(() => {
+  //   if (rotatingWords.length === 0) return;
+
+  //   const interval = setInterval(() => {
+  //     // Start fade out
+  //     setIsAnimating(true);
+  //     // After fade out, change word and fade in
+  //     setTimeout(() => {
+  //       const nextIndex = (currentWordIndex + 1) % rotatingWords.length;
+  //       setCurrentWordIndex(nextIndex);
+  //       setDisplayWordIndex(nextIndex);
+  //       setIsAnimating(false);
+  //     }, 300); // Half of transition duration
+  //   }, rotationInterval);
+
+  //   return () => clearInterval(interval);
+  // }, [currentWordIndex, rotatingWords.length, rotationInterval]);
+
+  // Always show first word while rotation is disabled
+  const currentWord = rotatingWords.length > 0 ? rotatingWords[0] : "";
 
   return (
     <section className={styles.hero}>
@@ -54,21 +132,20 @@ export default function Hero({
               <br />
               {t.hero.titleLine7Small}
             </h1>
-          ) : isLargeScreen ? (
-            <h1 className={styles.title}>
-              {t.hero.titleLine1}
-              <br />
-              {t.hero.titleLine2}
-              <br />
-              {t.hero.titleLine3}
-              <br />
-              {t.hero.titleLine4}{" "}
-              <span className={styles.highlight}>{t.hero.titleHighlight}</span>
-            </h1>
           ) : (
             <h1 className={styles.title}>
-              {t.hero.title}{" "}
-              <span className={styles.highlight}>{t.hero.titleHighlight}</span>
+              {t.hero.titlePrefix}{" "}
+              <span
+                className={styles.wordContainer}
+                style={{ width: containerWidth }}
+              >
+                <span
+                  ref={measureRef}
+                  className={`${styles.highlight} ${styles.rotatingWord} ${styles.fadeIn}`}
+                >
+                  {currentWord}
+                </span>
+              </span>
             </h1>
           )}
 

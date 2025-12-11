@@ -34,6 +34,29 @@
   font-weight: 300;
 }
 
+.wordContainer {
+  display: inline-block;
+  position: relative;
+  vertical-align: bottom;
+  text-align: left;
+  min-width: fit-content;
+}
+
+.rotatingWord {
+  display: inline-block;
+  white-space: nowrap;
+  transition: opacity 0.3s ease-in-out;
+  will-change: opacity;
+}
+
+.rotatingWord.fadeIn {
+  opacity: 1;
+}
+
+.rotatingWord.fadeOut {
+  opacity: 0;
+}
+
 /* Custom line breaks handled via <br> tags */
 
 .ctaButton {
