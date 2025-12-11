@@ -176,7 +176,7 @@ export default function Gallery() {
           loop={true}
           speed={500}
           autoplay={{
-            delay: 1000,
+            delay: 3000,
             disableOnInteraction: false,
           }}
           navigation={

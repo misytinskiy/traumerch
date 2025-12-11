@@ -143,6 +143,7 @@
     font-size: 56px;
     margin: 69px 0 40px 0;
     letter-spacing: -0.025em;
+    max-width: 800px;
   }
 
   /* Line breaks handled via <br> tags */

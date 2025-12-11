@@ -21,15 +21,14 @@ export default function Hero({
   const { t } = useLanguage();
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  // Rotation state - temporarily unused, will be re-enabled later
-  const [_currentWordIndex, _setCurrentWordIndex] = useState(0);
-  const [_isAnimating, _setIsAnimating] = useState(false);
-  const [_displayWordIndex, _setDisplayWordIndex] = useState(0);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [displayWordIndex, setDisplayWordIndex] = useState(0);
   const [containerWidth, setContainerWidth] = useState<string>("auto");
   const measureRef = useRef<HTMLSpanElement>(null);
 
   const rotatingWords = useMemo(() => t.hero.rotatingWords || [], [t]);
-  const _rotationInterval = 700; // 0.7 seconds - temporarily unused
+  const rotationInterval = 1400; // 0.7 seconds
 
   // Measure actual width of all words to set fixed container width
   useEffect(() => {
@@ -90,27 +89,25 @@ export default function Hero({
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  // Rotation temporarily disabled - will be re-enabled later
-  // useEffect(() => {
-  //   if (rotatingWords.length === 0) return;
+  useEffect(() => {
+    if (rotatingWords.length === 0) return;
 
-  //   const interval = setInterval(() => {
-  //     // Start fade out
-  //     setIsAnimating(true);
-  //     // After fade out, change word and fade in
-  //     setTimeout(() => {
-  //       const nextIndex = (currentWordIndex + 1) % rotatingWords.length;
-  //       setCurrentWordIndex(nextIndex);
-  //       setDisplayWordIndex(nextIndex);
-  //       setIsAnimating(false);
-  //     }, 300); // Half of transition duration
-  //   }, rotationInterval);
+    const interval = setInterval(() => {
+      // Start fade out
+      setIsAnimating(true);
+      // After fade out, change word and fade in
+      setTimeout(() => {
+        const nextIndex = (currentWordIndex + 1) % rotatingWords.length;
+        setCurrentWordIndex(nextIndex);
+        setDisplayWordIndex(nextIndex);
+        setIsAnimating(false);
+      }, 300); // Half of transition duration
+    }, rotationInterval);
 
-  //   return () => clearInterval(interval);
-  // }, [currentWordIndex, rotatingWords.length, rotationInterval]);
+    return () => clearInterval(interval);
+  }, [currentWordIndex, rotatingWords.length, rotationInterval]);
 
-  // Always show first word while rotation is disabled
-  const currentWord = rotatingWords.length > 0 ? rotatingWords[0] : "";
+  const currentWord = rotatingWords[displayWordIndex] || "";
 
   return (
     <section className={styles.hero}>
@@ -141,7 +138,9 @@ export default function Hero({
               >
                 <span
                   ref={measureRef}
-                  className={`${styles.highlight} ${styles.rotatingWord} ${styles.fadeIn}`}
+                  className={`${styles.highlight} ${styles.rotatingWord} ${
+                    isAnimating ? styles.fadeOut : styles.fadeIn
+                  }`}
                 >
                   {currentWord}
                 </span>

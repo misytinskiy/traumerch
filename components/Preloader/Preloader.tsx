@@ -63,21 +63,23 @@ export default function Preloader() {
     };
   }, [isHomePage, hasShown]);
 
-  // Reset state только при входе на главную после другой страницы
+  // Reset animation state only if preloader hasn't been shown yet
+  // Preloader shows only once per user (stored in localStorage)
   useEffect(() => {
     const cameFromAnotherPage =
       lastPathnameRef.current && lastPathnameRef.current !== pathname;
     lastPathnameRef.current = pathname;
-    if (!isHomePage || !cameFromAnotherPage) return;
+    // Only reset if we're on home page, came from another page, AND preloader hasn't been shown yet
+    if (!isHomePage || !cameFromAnotherPage || hasShown) return;
     completionHandled.current = false;
     hasStartedHiding.current = false;
     setIsHiding(false);
     setIsTextDetached(false);
     setShowFloatingText(false);
     setFloatingData(null);
-    setHasShown(false);
+    // Don't reset hasShown - it's managed by localStorage
     setIsEnabled(true);
-  }, [isHomePage, pathname, setHasShown, setIsEnabled]);
+  }, [isHomePage, pathname, hasShown, setIsEnabled]);
 
   const finishPreloader = useCallback(() => {
     if (completionHandled.current) return;

@@ -25,19 +25,24 @@ export function PreloaderProvider({ children }: { children: ReactNode }) {
   const [hasShown, setHasShown] = useState(false);
 
   useEffect(() => {
-    // Check if preloader has already been shown in this session
-    // Temporarily disabled for testing - uncomment to enable session-based preloader
-    // const shown = sessionStorage.getItem("preloaderShown");
-    // if (shown === "true") {
-    //   setHasShown(true);
-    //   setIsEnabled(false);
-    // }
+    // Check if preloader has already been shown (persists across sessions)
+    // Using localStorage so it shows only once per user, ever
+    if (typeof window !== "undefined") {
+      const shown = localStorage.getItem("preloaderShown");
+      if (shown === "true") {
+        setHasShown(true);
+        setIsEnabled(false);
+      }
+    }
   }, []);
 
   const handleSetEnabled = (enabled: boolean) => {
     setIsEnabled(enabled);
     if (!enabled) {
-      sessionStorage.setItem("preloaderShown", "true");
+      // Save to localStorage so preloader shows only once per user
+      if (typeof window !== "undefined") {
+        localStorage.setItem("preloaderShown", "true");
+      }
       setHasShown(true);
     }
   };
@@ -63,4 +68,3 @@ export function usePreloader() {
   }
   return context;
 }
-
