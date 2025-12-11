@@ -58,10 +58,26 @@ export default function Home() {
         smoothScrollTo(heroRef.current, 1500);
         setShowUpArrow(false);
       } else {
-        // Scroll to services section
-        const servicesElement = document.getElementById("services");
-        if (servicesElement) {
-          smoothScrollTo(servicesElement, 1500);
+        // Scroll to promises section
+        const promisesElement = document.getElementById("promises");
+        if (promisesElement) {
+          smoothScrollTo(promisesElement, 1500);
+        }
+      }
+    }
+  };
+
+  const handleScrollToGallery = () => {
+    if (!isScrolling) {
+      if (showUpArrow && heroRef.current) {
+        // Scroll back to hero section
+        smoothScrollTo(heroRef.current, 1500);
+        setShowUpArrow(false);
+      } else {
+        // Scroll to gallery section
+        const galleryElement = document.getElementById("gallery");
+        if (galleryElement) {
+          smoothScrollTo(galleryElement, 1500);
         }
       }
     }
@@ -105,6 +121,7 @@ export default function Home() {
         <div ref={heroRef}>
           <Hero
             onScrollClick={handleScrollToServices}
+            onScrollButtonClick={handleScrollToGallery}
             showUpArrow={showUpArrow}
             isScrolling={isScrolling}
           />

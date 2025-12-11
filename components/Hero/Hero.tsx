@@ -7,12 +7,14 @@ import styles from "./Hero.module.css";
 
 interface HeroProps {
   onScrollClick?: () => void;
+  onScrollButtonClick?: () => void;
   showUpArrow?: boolean;
   isScrolling?: boolean;
 }
 
 export default function Hero({
   onScrollClick,
+  onScrollButtonClick,
   showUpArrow = false,
   isScrolling = false,
 }: HeroProps) {
@@ -88,7 +90,7 @@ export default function Hero({
         className={`${styles.scrollButton} ${
           showUpArrow ? styles.rotated : ""
         } ${isScrolling ? styles.scrolling : ""}`}
-        onClick={onScrollClick}
+        onClick={onScrollButtonClick || onScrollClick}
         aria-label="Scroll to next section"
         disabled={isScrolling}
       >

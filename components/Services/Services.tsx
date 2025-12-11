@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
-import Button from "../Button/Button";
+// import Button from "../Button/Button";
 import styles from "./Services.module.css";
 
 interface ServicesProps {
@@ -34,7 +34,7 @@ export default function Services({ showAll = false }: ServicesProps) {
             </div>
             <div className={styles.desktopDescription}>
               <p className={styles.description}>{service.description}</p>
-              <Button
+              {/* <Button
                 variant="solid"
                 padding="31px 84px"
                 padding1536="20px 48px"
@@ -42,7 +42,7 @@ export default function Services({ showAll = false }: ServicesProps) {
                 arrow="white"
               >
                 SEE MORE
-              </Button>
+              </Button> */}
             </div>
           </div>
 
@@ -59,7 +59,7 @@ export default function Services({ showAll = false }: ServicesProps) {
             </div>
             <div className={styles.mobileDescription}>
               <p className={styles.description}>{service.description}</p>
-              <Button
+              {/* <Button
                 variant="solid"
                 padding="31px 40px"
                 padding768="42px 114px"
@@ -67,7 +67,7 @@ export default function Services({ showAll = false }: ServicesProps) {
                 arrow="white"
               >
                 SEE MORE
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
