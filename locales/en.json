@@ -282,7 +282,7 @@
     "columns": [
       {
         "title": "Explore",
-        "links": ["Products", "Services", "Portfolio", "FAQ"]
+        "links": ["Services", "Portfolio", "FAQ"]
       },
       {
         "title": "Legal & Policies",
@@ -295,11 +295,11 @@
       },
       {
         "title": "Stay Connected",
-        "links": ["LinkedIn", "Instagram", "TikTok", "Terms & Conditions"]
+        "links": ["LinkedIn", "Instagram", "TikTok"]
       },
       {
         "title": "Get in Touch",
-        "links": ["Stephansplatz 8, Vienna, Austria", "info@traumerch.com"]
+        "links": ["Stephansplatz 8, Vienna, Austria", "sales@traumerch.com"]
       }
     ],
     "copyright": "2025 TrauMerch©",
@@ -310,7 +310,7 @@
     "mainTitleEnd": "it's up to you",
     "formTitle": "From Messenger to Quote — it's that simple.",
     "rightTitle": "Let's talk it through",
-    "nameLabel": "Name",
+    "nameLabel": "Full name",
     "preferredMessenger": "Preferred Messenger",
     "namePlaceholder": "Name",
     "yourRequest": "Your request",

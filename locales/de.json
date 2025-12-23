@@ -282,7 +282,7 @@
     "columns": [
       {
         "title": "Entdecken",
-        "links": ["Produkte", "Leistungen", "Portfolio", "FAQ"]
+        "links": ["Leistungen", "Portfolio", "FAQ"]
       },
       {
         "title": "Recht & Dokumente",
@@ -301,7 +301,7 @@
         "title": "Kontakt aufnehmen",
         "links": [
           "Stephansplatz 8, Wien, Österreich",
-          "info@traumerch.com",
+          "sales@traumerch.com",
           "",
           ""
         ]
@@ -315,7 +315,7 @@
     "mainTitleEnd": "ganz wie Sie möchten",
     "formTitle": "Vom Messenger zum Angebot — so einfach ist es.",
     "rightTitle": "Lassen Sie uns darüber sprechen",
-    "nameLabel": "Name",
+    "nameLabel": "Vollständiger Name",
     "preferredMessenger": "Bevorzugter Messenger",
     "namePlaceholder": "Name",
     "yourRequest": "Ihre Anfrage",

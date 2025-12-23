@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 950;
+  z-index: 1100;
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -16,7 +16,7 @@
   overflow-y: auto;
   max-height: 100vh;
   position: relative;
-  padding-top: 100px;
+  padding-top: 0;
 }
 
 .titleRow {
@@ -35,6 +35,10 @@
   color: rgba(0, 0, 0, 0.6);
   flex-shrink: 0;
   margin-left: 20px;
+}
+.closeButton svg {
+  width: 56px;
+  height: 56px;
 }
 
 /* Main content styles */
@@ -433,8 +437,8 @@
   }
 
   .closeButton svg {
-    width: 56px;
-    height: 56px;
+    width: 45px;
+    height: 45px;
   }
 
   .thankYouImage {
@@ -615,7 +619,7 @@
 
 @media (max-width: 1000px) {
   .panel {
-    padding-top: 80px;
+    padding-top: 0;
   }
 
   .content {
@@ -708,8 +712,8 @@
   }
 
   .closeButton svg {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
   }
 
   .calendlyWidget {
