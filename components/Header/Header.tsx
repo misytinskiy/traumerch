@@ -362,7 +362,7 @@ export default function Header() {
                   delay: 0.2,
                 }}
               >
-                <motion.button
+                {/* <motion.button
                   className={`${styles.menuItem} ${
                     activeSection === "products" ? styles.active : ""
                   }`}
@@ -374,7 +374,7 @@ export default function Header() {
                   transition={{ delay: 0.1, duration: 0.2 }}
                 >
                   {language === "de" ? "UNSER KATALOG" : "OUR CATALOGUE"}
-                </motion.button>
+                </motion.button> */}
                 <motion.button
                   className={`${styles.menuItem} ${
                     activeSection === "services" ? styles.active : ""

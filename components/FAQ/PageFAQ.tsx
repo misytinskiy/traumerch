@@ -10,15 +10,21 @@ export default function PageFAQ() {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState(0);
 
-  // FAQ items (same for all tabs for now)
-  const faqItems = t.faq.items.map((item) => ({
-    title: item.question,
-    content: item.answer,
-  }));
-
   const handleTabClick = (index: number) => {
     setActiveTab(index);
   };
+
+  // Get current tab ID
+  const currentTabId = t.faq.tabs[activeTab]?.id;
+  
+  // Get FAQ items for the active tab
+  const tabsData = (t.faq as any).tabsData;
+  const faqItems = currentTabId && tabsData?.[currentTabId]
+    ? tabsData[currentTabId].map((item: { question: string; answer: string }) => ({
+        title: item.question,
+        content: item.answer,
+      }))
+    : [];
 
   return (
     <section className={styles.faqSection}>

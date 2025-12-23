@@ -6,7 +6,13 @@
   "hero": {
     "title": "MERCHANDISE THAT CONNECTS YOUR BRAND WITH YOUR",
     "titlePrefix": "Merchandise that connects your brand with your",
-    "rotatingWords": ["Audience", "Clients", "Community", "Fans", "Partners"],
+    "rotatingWords": [
+      "Customers",
+      "Community",
+      "Followers",
+      "Partners",
+      "Audience"
+    ],
     "titleLine1": "Unleashing your brand",
     "titleLine2": "through merchandise that",
     "titleLine3": "truly connects",
@@ -53,6 +59,100 @@
         "title": "Green Materials. Serious Standards."
       }
     ],
+    "tabsData": {
+      "why-merch": [
+        {
+          "question": "Why should we invest in merchandise at all?",
+          "answer": "Thoughtful merchandise turns your brand into something people can touch and use every day. It strengthens loyalty, keeps your message visible for longer than ads or social posts, and creates a sense of belonging, for both customers and employees."
+        },
+        {
+          "question": "What makes TrauMerch different from other merchandise agencies?",
+          "answer": "TrauMerch combines full creative support, strict quality control and a clear timeline promise: design in one day, samples in one week, delivery in one month for standard orders. You work with a dedicated contact person who understands your brand and coordinates design, production and logistics for you."
+        },
+        {
+          "question": "Who is TrauMerch the right partner for?",
+          "answer": "We work with companies, agencies, universities and organisations that see merchandise as part of their brand experience, from small teams planning their first drop to established brands running large campaigns across the DACH region."
+        },
+        {
+          "question": "Can you help us if we only have a rough idea and no finished designs?",
+          "answer": "Yes. Many projects start with nothing more than a rough idea or a mood board. Our designers translate your mission, colours and tone of voice into clear product concepts and artworks that you can review and refine before anything goes into production."
+        }
+      ],
+      "process": [
+        {
+          "question": "From design to delivery — how does it work?",
+        "answer": "Your merchandise journey with TrauMerch begins with a conversation about your mission. Our designers prepare artworks that show exactly how your items will look. After your approval, we create a sample based on our templates and send it to your address for review — or, if time is critical, we can move directly to production. Once confirmed, we handle full production and deliver the entire order to you."
+      },
+      {
+          "question": "What is the minimum order quantity (MOQ)?",
+          "answer": "Quantities start as low as 50 units, with some product categories beginning at 100 or 250 units. Samples can be single or multiple pieces for testing different designs."
+        },
+        {
+          "question": "How long does production and delivery take?",
+          "answer": "\"One day. One week. One month.\" is the motto for standard orders (design in one day, samples in one week, delivery in one month). Larger projects or orders over 500 units may extend beyond one month, depending on complexity and logistics. A salesperson provides a tailored schedule."
+        },
+        {
+          "question": "Can we request samples before production?",
+          "answer": "Samples are part of understanding the product and are always produced before final production. Only in cases of ultra-fast delivery, with agreement, can bulk production proceed based on approved designs."
+        },
+        {
+          "question": "Can you deliver merchandise to multiple locations?",
+          "answer": "By default, orders ship to a single address. A second address is free. For three or more locations, details should be discussed with a salesperson, as additional fees may apply."
+        },
+        {
+          "question": "How involved do we need to be during the process?",
+          "answer": "The client stays in control at key milestones (briefing, design approval, sample approval, final sign-off). The team handles coordination with suppliers and logistics between these steps."
+        },
+        {
+          "question": "What happens if we want to reorder the same items later?",
+          "answer": "Artworks, product specifications, and approved samples are stored in their system, allowing quick reorders or adaptations, often with shorter lead times as design and sampling are already done."
+        }
+      ],
+      "payments": [
+        {
+          "question": "Do you handle invoicing and VAT within the EU?",
+          "answer": "As an Austrian company, we issue invoices and calculate VAT in full compliance with European legislation. Our invoicing processes are structured to suit both single-person businesses and large corporations, ensuring correct and transparent documentation."
+        },
+        {
+          "question": "What payment methods do you accept?",
+          "answer": "For most projects we work with bank transfers based on a formal quote and invoice. For larger or international projects, alternative payment methods can be arranged individually with your salesperson."
+        },
+        {
+          "question": "Do you require a deposit before starting production?",
+          "answer": "Yes, we generally work with a deposit before production begins, with the remaining amount due before or upon delivery. The exact conditions are always stated clearly in your quote so you know the payment schedule in advance."
+        },
+        {
+          "question": "Can you work with companies outside the EU?",
+          "answer": "Yes. We can support projects for companies based outside the EU. In these cases we clarify VAT treatment, customs and documentation individually, so that your finance and logistics teams receive exactly what they need."
+        },
+        {
+          "question": "Do you also work with small businesses and non-profits?",
+          "answer": "Absolutely. Our processes are set up to support both small teams and large organisations. Whether you are a start-up, an association or a corporate brand, we adapt our quoting, invoicing and documentation to your structure."
+        }
+      ],
+      "materials": [
+        {
+          "question": "Do you offer eco-friendly product options?",
+          "answer": "Sustainability is integrated into our work. We select suppliers with eco-friendly certifications, and every partner undergoes a strict internal process to ensure environmental responsibility."
+        },
+        {
+          "question": "Which sustainability certifications do your products and suppliers have?",
+          "answer": "We prioritize suppliers with recognized certifications for textiles, materials, and social standards. The exact certificates vary by product, and a salesperson can provide detailed documentation."
+        },
+        {
+          "question": "Are eco-friendly options more expensive than standard products?",
+          "answer": "In many cases, sustainable materials are slightly more expensive, but the difference is often smaller than expected. We provide transparent price comparisons to help decide where sustainability adds the most value."
+        },
+        {
+          "question": "Can you provide documentation for our CSR or sustainability reporting?",
+          "answer": "Yes, for most products, we can supply data sheets, certificates, and supplier information to assist CSR or procurement teams with documenting materials, origin, and standards in internal reports."
+        },
+        {
+          "question": "Do sustainable choices limit our design or product options?",
+          "answer": "Not necessarily. For many core categories (textiles, drinkware, stationery), there are broad sustainable ranges with modern fits, colors, and finishes. In niche materials, the selection is smaller, but we always propose options that balance sustainability, aesthetics, and budget."
+        }
+      ]
+    },
     "items": [
       {
         "question": "FROM DESIGN TO DELIVERY — HOW DOES IT WORK?",

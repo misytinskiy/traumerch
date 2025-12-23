@@ -6,7 +6,13 @@
   "hero": {
     "title": "MERCHANDISE, DAS IHRE MARKE MIT IHREM",
     "titlePrefix": "Merchandise, das Ihre Marke mit Ihrem",
-    "rotatingWords": ["Publikum", "Kunden", "Community", "Fans", "Partnern"],
+    "rotatingWords": [
+      "Kundschaft",
+      "Community",
+      "Followers",
+      "Partnerteam",
+      "Zielgruppe"
+    ],
     "titleLine1": "Entfesseln Sie Ihre Marke",
     "titleLine2": "durch Merchandise, das",
     "titleLine3": "wirklich mit Ihrem",
@@ -53,6 +59,100 @@
         "title": "Grüne Materialien. Strenge Standards."
       }
     ],
+    "tabsData": {
+      "why-merch": [
+        {
+          "question": "Warum sollten wir überhaupt in Merchandise investieren?",
+          "answer": "Durchdachtes Merchandise macht Ihre Marke physisch erlebbar und täglich nutzbar. Es stärkt die Loyalität, hält Ihre Botschaft länger sichtbar als Anzeigen oder Social Media und schafft ein Zugehörigkeitsgefühl, sowohl bei Kund:innen als auch bei Mitarbeiter:innen."
+        },
+        {
+          "question": "Was unterscheidet TrauMerch von anderen Merchandise-Agenturen?",
+          "answer": "TrauMerch verbindet umfassende kreative Betreuung, strenge Qualitätskontrolle und ein klares Zeitversprechen: Design in einem Tag, Muster in einer Woche, Lieferung in einem Monat bei Standardaufträgen. Sie arbeiten mit einer festen Ansprechperson, die Ihre Marke versteht und Design, Produktion und Logistik für Sie koordiniert."
+        },
+        {
+          "question": "Für wen ist TrauMerch der richtige Partner?",
+          "answer": "Wir arbeiten mit Unternehmen, Agenturen, Universitäten und Organisationen, die Merchandise als Teil ihres Markenerlebnisses verstehen, von kleinen Teams mit ihrem ersten Drop bis hin zu etablierten Marken mit großen Kampagnen im gesamten DACH-Raum."
+        },
+        {
+          "question": "Können Sie uns helfen, wenn wir nur eine grobe Idee und noch keine fertigen Designs haben?",
+          "answer": "Ja. Viele Projekte beginnen lediglich mit einer groben Idee oder einem Moodboard. Unsere Designer übersetzen Ihre Mission, Farben und Tonalität in klare Produktkonzepte und Entwürfe, die Sie prüfen und verfeinern können, bevor etwas in Produktion geht."
+        }
+      ],
+      "process": [
+        {
+          "question": "Vom Design bis zur Lieferung - wie funktioniert es?",
+          "answer": "Ihre Merchandise-Reise mit TrauMerch beginnt mit einem Gespräch über Ihre Mission. Unsere Designer erstellen Entwürfe, die genau zeigen, wie Ihre Artikel aussehen werden. Nach Ihrer Freigabe fertigen wir ein Muster auf Basis unserer Vorlagen an und senden es zu Ihnen zur Überprüfung — oder, wenn es besonders schnell gehen muss, starten wir direkt mit der Produktion. Sobald alles bestätigt ist, übernehmen wir die Serienproduktion und liefern die gesamte Bestellung an Sie."
+        },
+        {
+          "question": "Wie hoch ist die Mindestbestellmenge (MOQ)?",
+          "answer": "Die Mengen beginnen bereits bei 50 Stück, einige Produktkategorien starten bei 100 oder 250 Stück. Muster können als Einzelstücke oder mehrere Stücke zur Prüfung verschiedener Designs gefertigt werden."
+        },
+        {
+          "question": "Wie lange dauern Produktion und Lieferung?",
+          "answer": "\"Ein Tag. Eine Woche. Ein Monat.\" ist das Motto für Standardaufträge (Design in einem Tag, Muster in einer Woche, Lieferung in einem Monat). Größere Projekte oder Bestellungen über 500 Stück können sich über einen Monat hinaus erstrecken, abhängig von Komplexität und Logistik. Ein Sales Manager erstellt einen maßgeschneiderten Zeitplan."
+        },
+        {
+          "question": "Können wir vor der Produktion Muster anfordern?",
+          "answer": "Muster sind Teil des Produktverständnisses und werden immer vor der Serienproduktion gefertigt. Nur bei extrem schneller Lieferung und mit Ihrer Zustimmung kann die Serienproduktion direkt auf Basis genehmigter Designs erfolgen."
+        },
+        {
+          "question": "Können Sie Merchandise an mehrere Standorte liefern?",
+          "answer": "Standardmäßig werden Bestellungen an eine Adresse geliefert. Eine zweite Adresse ist kostenlos. Bei drei oder mehr Standorten sollten die Details mit einem Sales Manager besprochen werden, da zusätzliche Gebühren anfallen können."
+        },
+        {
+          "question": "Wie stark müssen wir während des Prozesses eingebunden sein?",
+          "answer": "Der Kunde behält die Kontrolle an wichtigen Meilensteinen (Briefing, Designfreigabe, Musterfreigabe, finale Freigabe). Das Team übernimmt die Koordination mit Lieferanten und Logistik zwischen diesen Schritten."
+        },
+        {
+          "question": "Was passiert, wenn wir dieselben Artikel später nachbestellen möchten?",
+          "answer": "Entwürfe, Produktspezifikationen und genehmigte Muster werden in unserem System gespeichert, was schnelle Nachbestellungen oder Anpassungen ermöglicht, oft mit kürzeren Lieferzeiten, da Design und Musterung bereits abgeschlossen sind."
+        }
+      ],
+      "payments": [
+        {
+          "question": "Übernehmen Sie Rechnungsstellung und Mehrwertsteuer innerhalb der EU?",
+          "answer": "Als österreichisches Unternehmen stellen wir Rechnungen aus und berechnen die Mehrwertsteuer in voller Übereinstimmung mit der europäischen Gesetzgebung. Unsere Abrechnungsprozesse sind sowohl für Ein-Personen-Unternehmen als auch für große Konzerne geeignet und gewährleisten eine korrekte und transparente Dokumentation."
+        },
+        {
+          "question": "Welche Zahlungsmethoden akzeptieren Sie?",
+          "answer": "Bei den meisten Projekten arbeiten wir mit Banküberweisungen auf Basis eines formellen Angebots und einer Rechnung. Für größere oder internationale Projekte können alternative Zahlungsmethoden individuell mit Ihrem Sales Manager vereinbart werden."
+        },
+        {
+          "question": "Benötigen Sie eine Anzahlung, bevor die Produktion startet?",
+          "answer": "Ja, in der Regel arbeiten wir mit einer Anzahlung, bevor die Produktion startet; der Restbetrag ist vor oder bei Lieferung fällig. Die genauen Konditionen sind in Ihrem Angebot klar ausgewiesen, sodass Sie den Zahlungsplan im Voraus kennen."
+        },
+        {
+          "question": "Können Sie auch mit Unternehmen außerhalb der EU zusammenarbeiten?",
+          "answer": "Ja. Wir können Projekte für Unternehmen außerhalb der EU betreuen. In diesen Fällen klären wir Mehrwertsteuer, Zoll und Dokumentation individuell, damit Ihre Finanz- und Logistikabteilungen genau die Unterlagen erhalten, die sie benötigen."
+        },
+        {
+          "question": "Arbeiten Sie auch mit kleinen Unternehmen und Non-Profit-Organisationen?",
+          "answer": "Auf jeden Fall. Unsere Prozesse sind so aufgebaut, dass sie sowohl kleine Teams als auch große Organisationen unterstützen. Ob Start-up, Verein oder Konzernmarke - wir passen Angebot, Abrechnung und Dokumentation an Ihre Struktur an."
+        }
+      ],
+      "materials": [
+        {
+          "question": "Bieten Sie umweltfreundliche Produktoptionen an?",
+          "answer": "Nachhaltigkeit ist in unsere Arbeit integriert. Wir wählen Lieferanten mit Zertifizierungen für umweltfreundliche Produktion und Materialien aus, und jeder Partner durchläuft einen strengen internen Prozess, um Umweltverantwortung zu gewährleisten."
+        },
+        {
+          "question": "Über welche Nachhaltigkeitszertifizierungen verfügen Ihre Produkte und Lieferanten?",
+          "answer": "Wir bevorzugen Lieferanten, die mit anerkannten Zertifizierungen für Textilien, Materialien und soziale Standards arbeiten. Die spezifischen Zertifikate variieren je nach Produkt, und unser Sales Manager stellt gerne detaillierte Dokumentationen für ausgewählte Artikel bereit."
+        },
+        {
+          "question": "Sind umweltfreundliche Optionen teurer als Standardprodukte?",
+          "answer": "In vielen Fällen sind nachhaltige Materialien etwas teurer als konventionelle Optionen, aber der Unterschied ist oft kleiner als erwartet. Wir zeigen immer transparente Preisvergleiche, damit Kunden entscheiden können, wo Nachhaltigkeit den größten Mehrwert für ihre Marke und ihr Budget bietet."
+        },
+        {
+          "question": "Können Sie Unterlagen für unser CSR- bzw. Nachhaltigkeitsreporting bereitstellen?",
+          "answer": "Ja, für die meisten Produkte können wir Datenblätter, Zertifikate und Lieferanteninformationen bereitstellen, um CSR- oder Einkaufsabteilungen bei der Dokumentation von Materialien, Herkunft und Standards in internen Berichten zu unterstützen."
+        },
+        {
+          "question": "Einschränken nachhaltige Optionen unsere Design- oder Produktauswahl?",
+          "answer": "Nicht unbedingt. In vielen Kernkategorien (Textilien, Trinkware, Schreibwaren) gibt es jetzt umfangreiche nachhaltige Sortimente mit modernen Schnitten, Farben und Oberflächen. Bei einigen Nischenmaterialien ist die Auswahl kleiner, aber wir schlagen immer Optionen vor, die Nachhaltigkeit, Aussehen und Budget sinnvoll kombinieren."
+        }
+      ]
+    },
     "items": [
       {
         "question": "VOM DESIGN BIS ZUR LIEFERUNG — WIE FUNKTIONIERT ES?",

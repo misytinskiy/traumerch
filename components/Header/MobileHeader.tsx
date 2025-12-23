@@ -86,7 +86,8 @@ export default function MobileHeader() {
             className={styles.logo}
             id="header-logo-anchor"
             style={{
-              visibility: isPreloaderActive && isHomePage ? "hidden" : "visible",
+              visibility:
+                isPreloaderActive && isHomePage ? "hidden" : "visible",
               pointerEvents: isPreloaderActive && isHomePage ? "none" : "auto",
             }}
           >
@@ -156,12 +157,12 @@ export default function MobileHeader() {
 
             {/* Main Menu Items */}
             <nav className={styles.menuNav}>
-              <button
+              {/* <button
                 className={styles.menuItem}
                 onClick={() => handleMenuNavigation("products")}
               >
                 {language === "de" ? "UNSER KATALOG" : "OUR CATALOGUE"}
-              </button>
+              </button> */}
               <button
                 className={styles.menuItem}
                 onClick={() => handleMenuNavigation("services")}
