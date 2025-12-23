@@ -144,6 +144,10 @@
     padding: 140px 120px;
   }
 
+  .serviceCard {
+    gap: 42px;
+  }
+
   .serviceImage {
     width: 40vw;
     height: 420px;
@@ -157,6 +161,13 @@
 /* Показываем desktop описание */
 .desktopDescription {
   display: block;
+}
+
+@media (max-width: 1150px) {
+  .serviceImage {
+    width: 39vw;
+    height: 399px;
+  }
 }
 
 @media (max-width: 900px) {

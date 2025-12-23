@@ -184,6 +184,64 @@
   }
 }
 
+@media (max-width: 1200px) {
+  .promiseTitle {
+    font-size: 30px;
+    line-height: 40px;
+  }
+
+  .promiseImage {
+    width: 37vw;
+  }
+
+  .rightSide {
+    max-width: 37vw;
+  }
+}
+
+@media (max-width: 1100px) {
+  .promiseImage {
+    height: 191px;
+    width: 375px;
+  }
+
+  .contentBlock {
+    gap: 15px;
+  }
+
+  .promiseTitle {
+    font-size: 27px;
+    line-height: 34px;
+  }
+
+  .phrase {
+    font-size: 18px;
+  }
+
+  .description {
+    font-size: 14px;
+    max-width: 376px;
+  }
+
+  .rightSide {
+    gap: 80px;
+    max-width: 373px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .promisesList {
+    display: none;
+  }
+  .mainContent {
+    justify-content: center;
+  }
+
+  .promiseImage {
+    width: 100%;
+  }
+}
+
 @media (max-width: 900px) {
   .ourPromisesScroll {
     padding: 80px 40px 100px 40px;

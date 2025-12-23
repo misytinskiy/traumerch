@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
-import SectionTitle from "../SectionTitle/SectionTitle";
+import ServiceTitle from "../ServiceTitle/ServiceTitle";
 // import Button from "../Button/Button";
 import styles from "./Services.module.css";
 
@@ -30,7 +30,7 @@ export default function Services({ showAll = false }: ServicesProps) {
           <div className={styles.textContent}>
             <p className={styles.badge}>{service.badge}</p>
             <div className={styles.title}>
-              <SectionTitle maxWidth={610}>{service.title}</SectionTitle>
+              <ServiceTitle maxWidth={610}>{service.title}</ServiceTitle>
             </div>
             <div className={styles.desktopDescription}>
               <p className={styles.description}>{service.description}</p>
