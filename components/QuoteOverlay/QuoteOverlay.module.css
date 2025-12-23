@@ -316,6 +316,13 @@
   padding: 120px 150px;
 }
 
+.thankYouTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
 .thankYouTitle {
   font-family: var(--font-eb-garamond);
   font-size: 80px;
@@ -325,6 +332,7 @@
   text-transform: uppercase;
   letter-spacing: -0.8px;
   margin: 0;
+  flex: 1;
 }
 
 .thankYouDescription {
@@ -333,6 +341,14 @@
   line-height: 150%;
   color: rgba(0, 0, 0, 0.8);
   max-width: 650px;
+}
+
+.thankYouImage {
+  width: 100%;
+  height: 688px;
+  border-radius: 20px;
+  background: var(--General-Grey, #999);
+  object-fit: cover;
 }
 
 /* Right Column */
@@ -420,6 +436,15 @@
     width: 56px;
     height: 56px;
   }
+
+  .thankYouImage {
+    height: 500px;
+  }
+
+  .thankYouTitle {
+    font-size: 60px;
+    line-height: 72px;
+  }
 }
 
 @media (max-width: 1700px) {
@@ -490,6 +515,19 @@
     min-height: 600px;
   }
 
+  .thankYouContent {
+    padding: 50px 180px 120px;
+  }
+
+  .thankYouImage {
+    height: 450px;
+  }
+
+  .thankYouTitle {
+    font-size: 56px;
+    line-height: 68px;
+  }
+
   .calendlyWidget {
     min-height: 937px;
   }
@@ -537,6 +575,19 @@
 
   .leftColumn {
     min-height: 1016px;
+  }
+
+  .thankYouContent {
+    padding: 50px 120px 120px;
+  }
+
+  .thankYouImage {
+    height: 400px;
+  }
+
+  .thankYouTitle {
+    font-size: 48px;
+    line-height: 58px;
   }
 
   .calendlyWidget {
@@ -642,6 +693,25 @@
   .thankYouContent {
     padding: 80px 20px;
   }
+
+  .thankYouImage {
+    height: 350px;
+  }
+
+  .thankYouTitleRow {
+    flex-wrap: wrap;
+  }
+
+  .thankYouTitle {
+    font-size: 48px;
+    line-height: 58px;
+  }
+
+  .closeButton svg {
+    width: 48px;
+    height: 48px;
+  }
+
   .calendlyWidget {
     min-height: 825px;
   }
@@ -734,11 +804,28 @@
 
   .thankYouContent {
     padding: 60px 16px;
+    gap: 20px;
+  }
+
+  .thankYouTitleRow {
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .thankYouTitle {
-    font-size: 48px;
-    line-height: 58px;
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.4px;
+  }
+
+  .thankYouDescription {
+    font-size: 18px;
+    line-height: 150%;
+  }
+
+  .thankYouImage {
+    height: 250px;
+    border-radius: 16px;
   }
 
   .closeButton svg {

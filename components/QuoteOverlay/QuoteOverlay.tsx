@@ -121,13 +121,53 @@ export default function QuoteOverlay() {
             <div className={styles.contentWrapper}>
               {showThankYou ? (
                 <div className={styles.thankYouContent}>
-                  <h1 className={styles.thankYouTitle}>
-                    {t.quote?.thankYouTitle || "Thank you"}
-                  </h1>
+                  <div className={styles.thankYouTitleRow}>
+                    <h1 className={styles.thankYouTitle}>
+                      {t.quote?.thankYouTitle || "Thank you"}
+                    </h1>
+                    <button
+                      className={styles.closeButton}
+                      onClick={closeQuote}
+                      aria-label="Close quote form"
+                    >
+                      <svg
+                        width="76"
+                        height="76"
+                        viewBox="0 0 76 76"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clipPath="url(#clip0_352_3469)">
+                          <rect
+                            x="16.5059"
+                            y="56.8086"
+                            width="57"
+                            height="3.8"
+                            transform="rotate(-45 16.5059 56.8086)"
+                            fill="black"
+                          />
+                          <rect
+                            x="16.5059"
+                            y="19.1914"
+                            width="3.8"
+                            height="57"
+                            transform="rotate(-45 16.5059 19.1914)"
+                            fill="black"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_352_3469">
+                            <rect width="76" height="76" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </button>
+                  </div>
                   <p className={styles.thankYouDescription}>
                     {t.quote?.thankYouDescription ||
                       "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable."}
                   </p>
+                  <div className={styles.thankYouImage}></div>
                 </div>
               ) : (
                 <>
