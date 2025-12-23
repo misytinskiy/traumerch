@@ -368,7 +368,7 @@ export default function QuoteOverlay() {
                           {t.quote?.rightTitle || "Let's talk it through"}
                         </h2>
                         <div className={styles.calendlyWidget}>
-                          <InlineWidget url="https://calendly.com/crocorocky/30min" />
+                          <InlineWidget url="https://calendly.com/traumerch/30min" />
                         </div>
                       </div>
                     </div>
