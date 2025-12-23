@@ -18,9 +18,10 @@ export default function PageFAQ() {
   const currentTabId = t.faq.tabs[activeTab]?.id;
   
   // Get FAQ items for the active tab
-  const tabsData = (t.faq as any).tabsData;
+  type TabData = Record<string, Array<{ question: string; answer: string }>>;
+  const tabsData = (t.faq as typeof t.faq & { tabsData?: TabData }).tabsData;
   const faqItems = currentTabId && tabsData?.[currentTabId]
-    ? tabsData[currentTabId].map((item: { question: string; answer: string }) => ({
+    ? tabsData[currentTabId].map((item) => ({
         title: item.question,
         content: item.answer,
       }))
