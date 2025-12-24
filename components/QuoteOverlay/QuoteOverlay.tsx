@@ -157,11 +157,60 @@ export default function QuoteOverlay() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      setShowThankYou(true);
-      // You can add form submission logic here
+      try {
+        // Get selected messenger name
+        const selectedMessengerName =
+          messengers.find((m) => m.id === selectedMessenger)?.name || "";
+
+        console.log("=== FORM SUBMISSION DEBUG ===");
+        console.log("selectedMessenger (ID):", selectedMessenger);
+        console.log("selectedMessengerName:", selectedMessengerName);
+        console.log(
+          "formData.preferredMessenger:",
+          formData.preferredMessenger
+        );
+        console.log("All messengers:", messengers);
+
+        // Prepare data for Airtable
+        const submitData = {
+          name: formData.name,
+          email: formData.email,
+          preferredMessenger:
+            selectedMessengerName || formData.preferredMessenger,
+          messengerContact: formData.messengerContact,
+          requestType: formData.requestType,
+          service: selectedService || "",
+          description: formData.description,
+        };
+
+        console.log("=== SUBMIT DATA ===");
+        console.log("submitData:", JSON.stringify(submitData, null, 2));
+
+        // Submit data to Airtable
+        const submitResponse = await fetch("/api/airtable-quote", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitData),
+        });
+
+        const result = await submitResponse.json();
+
+        if (submitResponse.ok) {
+          console.log("Successfully submitted to Airtable:", result);
+          setShowThankYou(true);
+        } else {
+          console.error("Failed to submit to Airtable:", result);
+          alert("Failed to submit form. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("An error occurred. Please try again.");
+      }
     }
   };
 

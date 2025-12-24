@@ -59,7 +59,7 @@ const RightArrow = () => (
 );
 
 export default function Gallery() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const mobilePrevRef = useRef<HTMLButtonElement>(null);
@@ -68,12 +68,64 @@ export default function Gallery() {
   const [isMobile, setIsMobile] = useState(false);
   const [shouldShowNavigation, setShouldShowNavigation] = useState(true);
 
-  // Create array of 6 gallery images
-  const images = Array.from({ length: 6 }, (_, index) => ({
-    id: index + 1,
-    src: `/gallery/${index + 1}.jpg`,
-    alt: `Gallery image ${index + 1}`,
-  }));
+  // Quotes array - 5 quotes, one will be used twice (index 0 for images 1 and 6)
+  const quotes = [
+    {
+      text: {
+        en: "From brief to delivery, everything was smooth. The quality looked premium and consistent across every items",
+        de: "Vom Briefing bis zur Lieferung lief alles reibungslos. Die Qualität wirkte hochwertig und über alle Artikeln hinweg absolut konsistent",
+      },
+      author: "Clara Rossi, Brand Manager",
+    },
+    {
+      text: {
+        en: "They handled last-minute changes without drama and still shipped on time. That reliability is rare",
+        de: "Kurzfristige Änderungen haben sie ohne Stress umgesetzt und trotzdem pünktlich geliefert. Diese Verlässlichkeit ist selten",
+      },
+      author: "Amir Haddad, Event Producer",
+    },
+    {
+      text: {
+        en: "The team understood our brand guidelines instantly and nailed the details: colors, finishes, packaging, no back-and-forth",
+        de: "Das Team hat unsere Brand Guidelines sofort verstanden und die Details perfekt getroffen: Farben, Veredelungen, Packaging, ganz ohne endloses Hin und He.",
+      },
+      author: "Sophie Laurent, Marketing Lead",
+    },
+    {
+      text: {
+        en: "We ordered a mixed welcome kit for new hires, and the unboxing experience was genuinely impressive. People loved it",
+        de: "Wir haben ein gemischtes Welcome Kit für neue Mitarbeitende bestellt, und das Unboxing war wirklich beeindruckend. Alle waren begeistert",
+      },
+      author: "Olena Koval, People Operations Manager",
+    },
+    {
+      text: {
+        en: "Pricing was clear, communication was fast, and the final product matched the samples perfectly. Zero surprises",
+        de: "Die Preise waren transparent, die Kommunikation schnell, und das Endprodukt entsprach den Mustern perfekt. Keine Überraschungen",
+      },
+      author: "Mateo Silva, Procurement Lead",
+    },
+  ];
+
+  // Create array of 6 gallery images with quotes
+  // Using quote index 0 twice (for images 1 and 6)
+  const images = Array.from({ length: 6 }, (_, index) => {
+    // For index 0 (image 1) and index 5 (image 6), use quote index 0
+    // For others, use quote index 1-4
+    const quoteIndex = index === 0 || index === 5 ? 0 : index;
+    const quote = quotes[quoteIndex];
+    const currentLanguage = language || "en";
+    const quoteText =
+      currentLanguage === "de" ? quote.text.de : quote.text.en;
+
+    return {
+      id: index + 1,
+      src: `/gallery/${index + 1}.jpg`,
+      alt: `Gallery image ${index + 1}`,
+      quote: quoteText,
+      author: quote.author,
+    };
+  });
 
   // Commented out: previous 10 images structure
   // const images = Array.from({ length: 10 }, (_, index) => ({
@@ -235,12 +287,9 @@ export default function Gallery() {
                 <div className={styles.overlay}>
                   <div className={styles.quote}>
                     <p className={styles.quoteText}>
-                      &ldquo;They delivered samples in a week — faster than any
-                      supplier we&apos;ve worked with.&rdquo;
+                      &ldquo;{image.quote}&rdquo;
                     </p>
-                    <p className={styles.quoteAuthor}>
-                      Jonas Müller, Product Lead
-                    </p>
+                    <p className={styles.quoteAuthor}>{image.author}</p>
                   </div>
                 </div>
                 {/* Commented out: Quotes for removed images (7-10)
