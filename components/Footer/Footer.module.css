@@ -12,12 +12,17 @@
 }
 
 .logo {
-  font-family: var(--font-eb-garamond);
-  font-size: 60px;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 1);
   text-decoration: none;
-  letter-spacing: 0;
+  display: inline-block;
+  line-height: 0;
+  align-self: center;
+}
+
+.logoImage {
+  width: 130.745px;
+  height: 113.51px;
+  margin-bottom: 28px;
+  display: block;
 }
 
 .columns {
@@ -96,8 +101,9 @@
   .footer {
     padding: 110px 300px;
   }
-  .logo {
-    font-size: 40px;
+  .logoImage {
+    width: 129.793px;
+    height: 113.271px;
   }
 
   .columnTitle {
@@ -115,12 +121,13 @@
 
 @media (max-width: 1750px) {
   .columns {
-    gap: 65px;
+    gap: 90px;
   }
 
-  .logo {
-    font-size: 50px;
-  }
+  /* .logoImage {
+    width: 154.769px;
+    height: 152.991px;
+  } */
 }
 
 @media (max-width: 1536px) {
@@ -128,8 +135,10 @@
     padding: 120px 150px 40px;
   }
 
-  .logo {
-    font-size: 36px;
+  .logoImage {
+    margin-top: 0px;
+    width: 129.425px;
+    height: 110.145px;
   }
   .content {
     margin-bottom: 100px;
@@ -206,10 +215,18 @@
     padding: 109px 30px;
   }
 
+  /* .content > :first-child {
+    order: 2;
+  }
+
+  .content > :nth-child(2) {
+    order: 1;
+  } */
+
   .content {
-    flex-direction: column;
-    gap: 66px;
-    margin-bottom: 97px;
+    flex-direction: row-reverse;
+    gap: 0;
+    margin-bottom: 51px;
   }
 
   .columns {
@@ -225,8 +242,19 @@
   }
 
   .logo {
-    font-size: 48px;
-    text-align: center;
+    align-self: end;
+  }
+
+  .logoImage {
+    width: 110.529px;
+    height: 110.823px;
+    margin: 0 auto;
+  }
+
+  .column:nth-child(4) {
+    margin-right: 0;
+    max-width: 172px;
+    justify-content: space-between;
   }
 
   .bottomRow {
@@ -246,8 +274,9 @@
     overflow: hidden;
   }
 
-  .logo {
-    font-size: 32px;
+  .logoImage {
+    width: 90.058px;
+    height: 90.919px;
   }
 
   .content {

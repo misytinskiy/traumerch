@@ -23,7 +23,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 120px;
+  margin-bottom: 70px;
 }
 
 .closeButton {
@@ -61,7 +61,7 @@
   text-transform: uppercase;
   letter-spacing: -0.8px;
   margin: 0;
-  max-width: 800px;
+  /* max-width: 800px; */
   flex: 1;
 }
 
@@ -69,7 +69,7 @@
   display: grid;
   grid-template-columns: 49.5% 49.5%;
   gap: 20px;
-  align-items: start;
+  align-items: stretch;
 }
 
 /* Left Column - Form */
@@ -77,8 +77,11 @@
   background: #ffffff;
   border-radius: 20px;
   padding: 48px 20px;
-  min-height: 1134px;
   border: 1px solid #ebebeb;
+  display: flex;
+  flex-direction: column;
+  margin-top: -70px;
+  margin-bottom: -70px;
 }
 
 .formTitle {
@@ -109,7 +112,7 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 32px;
-  color: #999999;
+  color: #000;
   letter-spacing: -0.2px;
 }
 
@@ -142,9 +145,29 @@
 }
 
 .textarea {
-  min-height: 200px;
+  min-height: 101px;
   resize: vertical;
   font-family: inherit;
+}
+
+.inputError {
+  border: 1px solid #ff0000 !important;
+}
+
+.errorMessage {
+  font-family: var(--font-geist-sans);
+  font-size: 12px;
+  color: #ff0000;
+  margin-top: 4px;
+  display: block;
+}
+
+.messengerInput {
+  margin-top: 12px;
+}
+
+.emailInput {
+  margin-top: -16px;
 }
 
 /* Messenger Buttons */
@@ -359,10 +382,12 @@
 .rightColumn {
   border-radius: 20px;
   padding: 48px 20px;
-  min-height: 1134px;
   display: flex;
   flex-direction: column;
   border: 1px solid #ebebeb;
+  align-self: stretch;
+  margin-top: -70px;
+  margin-bottom: -70px;
 }
 
 .rightTitle {
@@ -425,7 +450,7 @@
   .mainTitle {
     font-size: 56px;
     line-height: 64px;
-    max-width: 809px;
+    /* max-width: 809px; */
   }
 
   .formTitle {
@@ -433,7 +458,6 @@
   }
   .rightColumn {
     padding: 48px 20px 4px;
-    min-height: 1151px;
   }
 
   .closeButton svg {
@@ -465,11 +489,7 @@
   }
 
   .form {
-    gap: 36px;
-  }
-
-  .leftColumn {
-    min-height: 1087px;
+    gap: 28px;
   }
 
   .main {
@@ -477,13 +497,13 @@
   }
 
   .titleRow {
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
   }
 
   .mainTitle {
     font-size: 42px;
     line-height: normal;
-    max-width: 609px;
+    /* max-width: 609px; */
   }
 
   .formTitle {
@@ -509,14 +529,12 @@
   .leftColumn,
   .rightColumn {
     max-width: 100%;
+    margin-top: -50px;
+    margin-bottom: -50px;
   }
 
   .label {
     font-size: 16px;
-  }
-
-  .rightColumn {
-    min-height: 600px;
   }
 
   .thankYouContent {
@@ -575,10 +593,6 @@
 
   .fileUploadLabel {
     margin-top: -3px;
-  }
-
-  .leftColumn {
-    min-height: 1016px;
   }
 
   .thankYouContent {
@@ -663,12 +677,10 @@
 
   .leftColumn {
     padding: 48px 20px;
-    min-height: auto;
   }
 
   .rightColumn {
     padding: 48px 20px;
-    min-height: auto;
   }
 
   .toggleButtons {

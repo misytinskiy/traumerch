@@ -11,7 +11,9 @@ import styles from "./QuoteOverlay.module.css";
 
 interface QuoteFormData {
   name: string;
+  email: string;
   preferredMessenger: string;
+  messengerContact: string;
   requestType: "services" | "merchandise";
   service: string;
   description: string;
@@ -20,8 +22,9 @@ interface QuoteFormData {
 
 const messengers = [
   { id: 1, name: "WhatsApp", icon: "/quoteIcons/whatsapp.svg" },
-  { id: 2, name: "Instagram", icon: "/quoteIcons/instagram.svg" },
+  { id: 2, name: "Email", icon: "/quoteIcons/email.svg" },
   { id: 3, name: "Facebook", icon: "/quoteIcons/facebook.svg" },
+  { id: 4, name: "Teams", icon: "/quoteIcons/teams.svg" },
 ];
 
 const servicesList = ["Service 1", "Service 2", "Service 3", "Service 4"];
@@ -31,8 +34,10 @@ export default function QuoteOverlay() {
   const { t } = useLanguage();
   const [formData, setFormData] = useState<QuoteFormData>({
     name: "",
+    email: "",
     preferredMessenger: "",
-    requestType: "services",
+    messengerContact: "",
+    requestType: "merchandise",
     service: "",
     description: "",
     file: null,
@@ -42,6 +47,11 @@ export default function QuoteOverlay() {
   );
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [showThankYou, setShowThankYou] = useState(false);
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    messengerContact?: string;
+  }>({});
 
   useEffect(() => {
     if (isOpen) {
@@ -60,8 +70,10 @@ export default function QuoteOverlay() {
       // Reset form when closing
       setFormData({
         name: "",
+        email: "",
         preferredMessenger: "",
-        requestType: "services",
+        messengerContact: "",
+        requestType: "merchandise",
         service: "",
         description: "",
         file: null,
@@ -69,6 +81,7 @@ export default function QuoteOverlay() {
       setSelectedMessenger(null);
       setSelectedService(null);
       setShowThankYou(false);
+      setErrors({});
     }
     return () => {
       // Cleanup: restore scroll position if overlay is closed
@@ -86,6 +99,56 @@ export default function QuoteOverlay() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string): boolean => {
+    // Basic phone validation - allows numbers, spaces, +, -, (, )
+    const phoneRegex = /^[\d\s\+\-\(\)]{7,}$/;
+    return phoneRegex.test(phone.replace(/\s/g, ""));
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: typeof errors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (selectedMessenger) {
+      const messenger = messengers.find((m) => m.id === selectedMessenger);
+      if (
+        messenger &&
+        messenger.name !== "Email" &&
+        messenger.name !== "Teams"
+      ) {
+        if (!formData.messengerContact.trim()) {
+          newErrors.messengerContact = "Contact information is required";
+        } else if (
+          messenger.name === "WhatsApp" &&
+          !validatePhone(formData.messengerContact)
+        ) {
+          newErrors.messengerContact = "Please enter a valid phone number";
+        }
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,8 +159,42 @@ export default function QuoteOverlay() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setShowThankYou(true);
-    // You can add form submission logic here
+    if (validateForm()) {
+      setShowThankYou(true);
+      // You can add form submission logic here
+    }
+  };
+
+  const handleMessengerSelect = (messengerId: number) => {
+    setSelectedMessenger(messengerId);
+    setFormData((prev) => ({
+      ...prev,
+      messengerContact: "",
+      preferredMessenger:
+        messengers.find((m) => m.id === messengerId)?.name || "",
+    }));
+    if (errors.messengerContact) {
+      setErrors((prev) => ({ ...prev, messengerContact: undefined }));
+    }
+  };
+
+  const getMessengerPlaceholder = (messengerName: string): string => {
+    switch (messengerName) {
+      case "WhatsApp":
+        return "Phone number*";
+      case "Facebook":
+        return "@username*";
+      case "Teams":
+        return "Email address*";
+      default:
+        return "";
+    }
+  };
+
+  const shouldShowMessengerInput = (messengerId: number | null): boolean => {
+    if (!messengerId) return false;
+    const messenger = messengers.find((m) => m.id === messengerId);
+    return messenger?.name !== "Email" && messenger?.name !== "Teams";
   };
 
   return (
@@ -174,8 +271,7 @@ export default function QuoteOverlay() {
                   <div className={styles.main}>
                     <div className={styles.titleRow}>
                       <h1 className={styles.mainTitle}>
-                        {t.quote?.mainTitle || "Talk or type"} <br />—{" "}
-                        {t.quote?.mainTitleEnd || "it's up to you"}
+                        {t.quote?.mainTitle || "Talk or type"}
                       </h1>
                       <button
                         className={styles.closeButton}
@@ -223,21 +319,53 @@ export default function QuoteOverlay() {
                             "From Messenger to Quote — it's that simple."}
                         </h2>
 
-                        <form className={styles.form} onSubmit={handleSubmit}>
+                        <motion.form
+                          className={styles.form}
+                          onSubmit={handleSubmit}
+                          layout="position"
+                          transition={{
+                            layout: {
+                              duration: 0.35,
+                              ease: [0.4, 0, 0.2, 1],
+                            },
+                          }}
+                        >
                           <div className={styles.formGroup}>
-                            <label className={styles.label}>
-                              {t.quote?.nameLabel ||
-                                t.quote?.namePlaceholder ||
-                                "Name"}
-                            </label>
                             <input
                               type="text"
                               name="name"
                               value={formData.name}
                               onChange={handleInputChange}
-                              placeholder={t.quote?.namePlaceholder || "Name"}
-                              className={styles.input}
+                              placeholder={
+                                t.quote?.namePlaceholder || "Full name*"
+                              }
+                              className={`${styles.input} ${
+                                errors.name ? styles.inputError : ""
+                              }`}
                             />
+                            {errors.name && (
+                              <span className={styles.errorMessage}>
+                                {errors.name}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className={styles.formGroup}>
+                            <input
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              placeholder="Email*"
+                              className={`${styles.input} ${
+                                styles.emailInput
+                              } ${errors.email ? styles.inputError : ""}`}
+                            />
+                            {errors.email && (
+                              <span className={styles.errorMessage}>
+                                {errors.email}
+                              </span>
+                            )}
                           </div>
 
                           <div className={styles.formGroup}>
@@ -256,7 +384,7 @@ export default function QuoteOverlay() {
                                       : ""
                                   }`}
                                   onClick={() =>
-                                    setSelectedMessenger(messenger.id)
+                                    handleMessengerSelect(messenger.id)
                                   }
                                   aria-label={messenger.name}
                                 >
@@ -277,6 +405,61 @@ export default function QuoteOverlay() {
                                 </button>
                               ))}
                             </div>
+                            <AnimatePresence initial={false}>
+                              {shouldShowMessengerInput(selectedMessenger) && (
+                                <motion.div
+                                  layout
+                                  initial={{
+                                    height: 0,
+                                    opacity: 0,
+                                    overflow: "hidden",
+                                  }}
+                                  animate={{
+                                    height: "auto",
+                                    opacity: 1,
+                                  }}
+                                  exit={{
+                                    height: 0,
+                                    opacity: 0,
+                                    overflow: "hidden",
+                                  }}
+                                  transition={{
+                                    height: {
+                                      duration: 0.35,
+                                      ease: [0.4, 0, 0.2, 1],
+                                    },
+                                    opacity: {
+                                      duration: 0.35,
+                                      ease: [0.4, 0, 0.2, 1],
+                                    },
+                                  }}
+                                >
+                                  <input
+                                    type="text"
+                                    name="messengerContact"
+                                    value={formData.messengerContact}
+                                    onChange={handleInputChange}
+                                    placeholder={getMessengerPlaceholder(
+                                      messengers.find(
+                                        (m) => m.id === selectedMessenger
+                                      )?.name || ""
+                                    )}
+                                    className={`${styles.input} ${
+                                      styles.messengerInput
+                                    } ${
+                                      errors.messengerContact
+                                        ? styles.inputError
+                                        : ""
+                                    }`}
+                                  />
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                            {errors.messengerContact && (
+                              <span className={styles.errorMessage}>
+                                {errors.messengerContact}
+                              </span>
+                            )}
                           </div>
 
                           <div className={styles.formGroup}>
@@ -284,6 +467,22 @@ export default function QuoteOverlay() {
                               {t.quote?.yourRequest || "Your request"}
                             </label>
                             <div className={styles.toggleButtons}>
+                              <button
+                                type="button"
+                                className={`${styles.toggleButton} ${
+                                  formData.requestType === "merchandise"
+                                    ? styles.toggleButtonActive
+                                    : ""
+                                }`}
+                                onClick={() =>
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    requestType: "merchandise",
+                                  }))
+                                }
+                              >
+                                {t.quote?.merchandise || "MERCHANDISE"}
+                              </button>
                               <button
                                 type="button"
                                 className={`${styles.toggleButton} ${
@@ -302,50 +501,68 @@ export default function QuoteOverlay() {
                                   t.quote?.services || "Services"
                                 ).toUpperCase()}
                               </button>
-                              <button
-                                type="button"
-                                className={`${styles.toggleButton} ${
-                                  formData.requestType === "merchandise"
-                                    ? styles.toggleButtonActive
-                                    : ""
-                                }`}
-                                onClick={() =>
-                                  setFormData((prev) => ({
-                                    ...prev,
-                                    requestType: "merchandise",
-                                  }))
-                                }
-                              >
-                                {t.quote?.merchandise || "MERCHANDISE"}
-                              </button>
                             </div>
                           </div>
 
-                          {formData.requestType === "services" && (
-                            <div className={styles.formGroup}>
-                              <label className={styles.label}>
-                                {t.quote?.services || "Services"}
-                              </label>
-                              <div className={styles.serviceButtons}>
-                                {servicesList.map((service) => (
-                                  <button
-                                    key={service}
-                                    type="button"
-                                    className={`${styles.serviceButton} ${
-                                      selectedService === service
-                                        ? styles.serviceButtonActive
-                                        : ""
-                                    }`}
-                                    onClick={() => setSelectedService(service)}
-                                  >
-                                    {service.toUpperCase()}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                          )}
+                          <AnimatePresence mode="popLayout" initial={false}>
+                            {formData.requestType === "services" && (
+                              <motion.div
+                                className={styles.formGroup}
+                                layout
+                                initial={{
+                                  height: 0,
+                                  opacity: 0,
+                                  overflow: "hidden",
+                                }}
+                                animate={{
+                                  height: "auto",
+                                  opacity: 1,
+                                }}
+                                exit={{
+                                  height: 0,
+                                  opacity: 0,
+                                  overflow: "hidden",
+                                }}
+                                transition={{
+                                  height: {
+                                    duration: 0.35,
+                                    ease: [0.4, 0, 0.2, 1],
+                                  },
+                                  opacity: {
+                                    duration: 0.35,
+                                    ease: [0.4, 0, 0.2, 1],
+                                  },
+                                }}
+                              >
+                                <label className={styles.label}>
+                                  {t.quote?.services || "Services"}
+                                </label>
+                                <div className={styles.serviceButtons}>
+                                  {servicesList.map((service) => (
+                                    <button
+                                      key={service}
+                                      type="button"
+                                      className={`${styles.serviceButton} ${
+                                        selectedService === service
+                                          ? styles.serviceButtonActive
+                                          : ""
+                                      }`}
+                                      onClick={() =>
+                                        setSelectedService(service)
+                                      }
+                                    >
+                                      {service.toUpperCase()}
+                                    </button>
+                                  ))}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
 
-                          <div className={styles.formGroup}>
+                          <motion.div
+                            className={styles.formGroup}
+                            layout="position"
+                          >
                             <textarea
                               name="description"
                               value={formData.description}
@@ -356,9 +573,12 @@ export default function QuoteOverlay() {
                               className={styles.textarea}
                               rows={6}
                             />
-                          </div>
+                          </motion.div>
 
-                          <div className={styles.formGroup}>
+                          <motion.div
+                            className={styles.formGroup}
+                            layout="position"
+                          >
                             <label
                               htmlFor="file-upload"
                               className={styles.fileUploadLabel}
@@ -390,18 +610,23 @@ export default function QuoteOverlay() {
                               className={styles.fileInput}
                               accept="image/*,.pdf,.doc,.docx"
                             />
-                          </div>
+                          </motion.div>
 
-                          <Button
-                            type="submit"
-                            variant="solid"
-                            padding="24px 48px"
-                            arrow="white"
-                            className={styles.submitButton}
+                          <motion.div
+                            className={styles.formGroup}
+                            layout="position"
                           >
-                            {t.quote?.send || "Add to quote"}
-                          </Button>
-                        </form>
+                            <Button
+                              type="submit"
+                              variant="solid"
+                              padding="24px 48px"
+                              arrow="white"
+                              className={styles.submitButton}
+                            >
+                              {t.quote?.send || "Add to quote"}
+                            </Button>
+                          </motion.div>
+                        </motion.form>
                       </div>
 
                       <div className={styles.rightColumn}>

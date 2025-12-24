@@ -81,9 +81,9 @@
       "process": [
         {
           "question": "From design to delivery — how does it work?",
-        "answer": "Your merchandise journey with TrauMerch begins with a conversation about your mission. Our designers prepare artworks that show exactly how your items will look. After your approval, we create a sample based on our templates and send it to your address for review — or, if time is critical, we can move directly to production. Once confirmed, we handle full production and deliver the entire order to you."
-      },
-      {
+          "answer": "Your merchandise journey with TrauMerch begins with a conversation about your mission. Our designers prepare artworks that show exactly how your items will look. After your approval, we create a sample based on our templates and send it to your address for review — or, if time is critical, we can move directly to production. Once confirmed, we handle full production and deliver the entire order to you."
+        },
+        {
           "question": "What is the minimum order quantity (MOQ)?",
           "answer": "Quantities start as low as 50 units, with some product categories beginning at 100 or 250 units. Samples can be single or multiple pieces for testing different designs."
         },
@@ -306,7 +306,7 @@
     "allRights": "All rights reserved."
   },
   "quote": {
-    "mainTitle": "Talk or type",
+    "mainTitle": "Talk or type — it's up to you",
     "mainTitleEnd": "it's up to you",
     "formTitle": "From Messenger to Quote — it's that simple.",
     "rightTitle": "Let's talk it through",

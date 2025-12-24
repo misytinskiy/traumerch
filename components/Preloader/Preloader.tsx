@@ -333,8 +333,8 @@ export default function Preloader() {
             >
               <div className={styles.imageWrapper}>
                 <Image
-                  src="/services/1.png"
-                  alt="Service 1"
+                  src="/preloader/1.jpg"
+                  alt="Preloader 1"
                   width={652}
                   height={420}
                   className={styles.image}
@@ -343,8 +343,8 @@ export default function Preloader() {
               </div>
               <div className={styles.imageWrapper}>
                 <Image
-                  src="/services/2.png"
-                  alt="Service 2"
+                  src="/preloader/2.jpg"
+                  alt="Preloader 2"
                   width={652}
                   height={420}
                   className={styles.image}
@@ -353,8 +353,8 @@ export default function Preloader() {
               </div>
               <div ref={lastImageRef} className={styles.imageWrapper}>
                 <Image
-                  src="/services/3.png"
-                  alt="Service 3"
+                  src="/preloader/3.jpg"
+                  alt="Preloader 3"
                   width={652}
                   height={420}
                   className={styles.image}

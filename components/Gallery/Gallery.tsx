@@ -68,12 +68,19 @@ export default function Gallery() {
   const [isMobile, setIsMobile] = useState(false);
   const [shouldShowNavigation, setShouldShowNavigation] = useState(true);
 
-  // Create array of 10 frame images
-  const images = Array.from({ length: 10 }, (_, index) => ({
+  // Create array of 6 gallery images
+  const images = Array.from({ length: 6 }, (_, index) => ({
     id: index + 1,
-    src: "/frame.png",
+    src: `/gallery/${index + 1}.jpg`,
     alt: `Gallery image ${index + 1}`,
   }));
+
+  // Commented out: previous 10 images structure
+  // const images = Array.from({ length: 10 }, (_, index) => ({
+  //   id: index + 1,
+  //   src: "/frame.png",
+  //   alt: `Gallery image ${index + 1}`,
+  // }));
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -236,6 +243,10 @@ export default function Gallery() {
                     </p>
                   </div>
                 </div>
+                {/* Commented out: Quotes for removed images (7-10)
+                Previously there were 10 images, now reduced to 6.
+                If needed, individual quotes can be added here for each image.
+                */}
               </div>
             </SwiperSlide>
           ))}

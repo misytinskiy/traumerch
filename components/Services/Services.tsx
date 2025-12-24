@@ -49,7 +49,7 @@ export default function Services({ showAll = false }: ServicesProps) {
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
               <Image
-                src={`/services/${index + 1}.png`}
+                src={`/services/${index + 1}.jpg`}
                 alt={service.title}
                 fill
                 sizes="(max-width: 768px) 100vw, 590px"
