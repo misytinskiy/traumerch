@@ -10,7 +10,7 @@ import styles from "./MobileHeader.module.css";
 
 export default function MobileHeader() {
   const pathname = usePathname();
-  const { language, setLanguage, country, t } = useLanguage();
+  const { language, setLanguage, country } = useLanguage();
   const { isEnabled: isPreloaderActive } = usePreloader();
   const isHomePage = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);

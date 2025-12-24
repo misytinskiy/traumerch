@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./OurPromisesScroll.module.css";
 
@@ -98,11 +99,13 @@ export default function OurPromisesScroll() {
               >
                 <div className={styles.imagePlaceholder}>
                   <div className={styles.promiseImage}>
-                    <img
+                    <Image
                       src={`/promises/${index + 1}.png`}
                       alt={promise.heading}
+                      width={400}
+                      height={300}
                       className={styles.promiseImageTag}
-                      loading={index === 0 ? "eager" : "lazy"}
+                      priority={index === 0}
                     />
                   </div>
                 </div>

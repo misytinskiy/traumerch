@@ -2,7 +2,6 @@
 
 import ResponsiveHeader from "../../components/Header/ResponsiveHeader";
 import ProductDetails from "../../components/ProductDetails/ProductDetails";
-import PromiseDesign from "../../components/PromiseDesign/PromiseDesign";
 import CTA from "../../components/CTA/CTA";
 import Services from "../../components/Services/Services";
 import Footer from "../../components/Footer/Footer";

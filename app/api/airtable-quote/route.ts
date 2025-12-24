@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
 
     // Map form data to Airtable fields based on actual table structure
     // Fields: Name, Email, Phone, Preferred Type, Username, Description, Request Type, Attachments
-    const airtableFields: Record<string, any> = {};
+    const airtableFields: Record<string, string> = {};
     
     // Basic text fields
     if (name) airtableFields["Name"] = name;

@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from "react";
 import ResponsiveHeader from "../components/Header/ResponsiveHeader";
 import Hero from "../components/Hero/Hero";
 import Gallery from "../components/Gallery/Gallery";
-import Products from "../components/Products/Products";
 import FAQ from "../components/FAQ/FAQ";
 import Services from "../components/Services/Services";
 import ResponsiveOurPromises from "../components/OurPromises/ResponsiveOurPromises";

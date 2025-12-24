@@ -4,8 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
-  useRef,
   useState,
   ReactNode,
 } from "react";

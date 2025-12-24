@@ -48,11 +48,12 @@ export async function GET(request: NextRequest) {
       const recordsData = await recordsResponse.json();
 
       // Extract field structure from records
-      const fields: Record<string, any> = {};
+      const fields: Record<string, { name: string; type: string; sampleValue: unknown }> = {};
       if (recordsData.records && recordsData.records.length > 0) {
         // Get all field names from the first record
-        Object.keys(recordsData.records[0].fields).forEach((fieldName) => {
-          const fieldValue = recordsData.records[0].fields[fieldName];
+        const firstRecordFields = recordsData.records[0].fields as Record<string, unknown>;
+        Object.keys(firstRecordFields).forEach((fieldName) => {
+          const fieldValue = firstRecordFields[fieldName];
           fields[fieldName] = {
             name: fieldName,
             type: Array.isArray(fieldValue) ? "array" : typeof fieldValue,
@@ -96,10 +97,17 @@ export async function GET(request: NextRequest) {
           );
         }
 
+        interface AirtableField {
+          id: string;
+          name: string;
+          type: string;
+          options?: unknown;
+        }
+        
         return NextResponse.json({
           tableName: table.name,
           tableId: table.id,
-          fields: table.fields.map((field: any) => ({
+          fields: (table.fields as AirtableField[]).map((field) => ({
             id: field.id,
             name: field.name,
             type: field.type,
@@ -107,7 +115,7 @@ export async function GET(request: NextRequest) {
           })),
         });
       }
-    } catch (metaError) {
+    } catch {
       // Meta API failed, will try alternative approach below
     }
 

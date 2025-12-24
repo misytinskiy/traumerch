@@ -1,6 +1,5 @@
 "use client";
 
-import SectionTitle from "../SectionTitle/SectionTitle";
 import PolicyAccordion from "../FAQ/PolicyAccordion";
 import styles from "./Policies.module.css";
 

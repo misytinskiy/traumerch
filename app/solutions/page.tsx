@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import ResponsiveHeader from "../../components/Header/ResponsiveHeader";
 import Services from "../../components/Services/Services";
 import CTA from "../../components/CTA/CTA";
@@ -11,18 +11,6 @@ import styles from "./solutions.module.css";
 export default function Solutions() {
   const { t } = useLanguage();
   const servicesRef = useRef<HTMLElement>(null);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsSmallScreen(window.innerWidth <= 350);
-    };
-
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
 
   const handleScrollToServices = () => {
     if (servicesRef.current) {

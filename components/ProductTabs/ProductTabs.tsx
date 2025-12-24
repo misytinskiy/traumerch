@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import styles from "./ProductTabs.module.css";
@@ -206,7 +206,10 @@ export default function ProductTabs() {
     return counts;
   }, [categorizedRecords]);
 
-  const activeRecords = categorizedRecords[activeTab] ?? [];
+  const activeRecords = useMemo(
+    () => categorizedRecords[activeTab] ?? [],
+    [categorizedRecords, activeTab]
+  );
 
   const tabLabels: Record<TabKey, string> = {
     allProducts: t.catalog.tabs.allProducts,
@@ -252,41 +255,47 @@ export default function ProductTabs() {
     []
   );
 
-  const mapRecordToProduct = (
-    record: AirtableRecord,
-    size: "regular" | "large" = "regular"
-  ): Product => {
-    const fields = record.fields || {};
-    const name =
-      (fields["[WEB] Name ENG"] as string | undefined) ||
-      (fields["[WEB] Name DE"] as string | undefined) ||
-      (fields["Name"] as string | undefined) ||
-      "Product";
+  const mapRecordToProduct = useCallback(
+    (
+      record: AirtableRecord,
+      size: "regular" | "large" = "regular"
+    ): Product => {
+      const fields = record.fields || {};
+      const name =
+        (fields["[WEB] Name ENG"] as string | undefined) ||
+        (fields["[WEB] Name DE"] as string | undefined) ||
+        (fields["Name"] as string | undefined) ||
+        "Product";
 
-    const priceValue = fields["Price"];
-    const price =
-      typeof priceValue === "number"
-        ? `From €${priceValue}`
-        : (fields["[WEB] Price"] as string | undefined) || "From €6";
+      const priceValue = fields["Price"];
+      const price =
+        typeof priceValue === "number"
+          ? `From €${priceValue}`
+          : (fields["[WEB] Price"] as string | undefined) || "From €6";
 
-    return {
-      id: record.id,
-      name,
-      price,
-      size,
-    };
-  };
+      return {
+        id: record.id,
+        name,
+        price,
+        size,
+      };
+    },
+    []
+  );
 
-  const buildDesktopProducts = (sourceRecords: AirtableRecord[]) => {
-    const sizes = [...DESKTOP_LAYOUT_PATTERN];
-    while (sizes.length < sourceRecords.length) {
-      sizes.push("regular");
-    }
+  const buildDesktopProducts = useCallback(
+    (sourceRecords: AirtableRecord[]) => {
+      const sizes = [...DESKTOP_LAYOUT_PATTERN];
+      while (sizes.length < sourceRecords.length) {
+        sizes.push("regular");
+      }
 
-    return sourceRecords.map((record, index) =>
-      mapRecordToProduct(record, sizes[index] ?? "regular")
-    );
-  };
+      return sourceRecords.map((record, index) =>
+        mapRecordToProduct(record, sizes[index] ?? "regular")
+      );
+    },
+    [mapRecordToProduct]
+  );
 
   const desktopProducts = useMemo(() => {
     if (!activeRecords.length) {
@@ -294,7 +303,7 @@ export default function ProductTabs() {
     }
 
     return buildDesktopProducts(activeRecords);
-  }, [activeRecords]);
+  }, [activeRecords, buildDesktopProducts]);
 
   const mobileProducts = useMemo(() => {
     if (!activeRecords.length) {
@@ -302,7 +311,7 @@ export default function ProductTabs() {
     }
 
     return activeRecords.map((record) => mapRecordToProduct(record, "regular"));
-  }, [activeRecords]);
+  }, [activeRecords, mapRecordToProduct]);
 
   const shouldShowSkeleton = isLoadingRecords;
 
