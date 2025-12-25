@@ -374,7 +374,11 @@
   width: 100%;
   height: 688px;
   border-radius: 20px;
-  background: var(--General-Grey, #999);
+  position: relative;
+  overflow: hidden;
+}
+
+.thankYouImageTag {
   object-fit: cover;
 }
 
@@ -475,9 +479,6 @@
   }
 }
 
-@media (max-width: 1700px) {
-}
-
 @media (max-width: 1536px) {
   /* .content {
     grid-template-columns: 37vw 37vw;
@@ -494,10 +495,6 @@
 
   .main {
     padding: 50px 180px 120px;
-  }
-
-  .titleRow {
-    /* margin-bottom: 40px; */
   }
 
   .mainTitle {

@@ -48,6 +48,7 @@ export default function Services({ showAll = false }: ServicesProps) {
 
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
+              {/* Static image (always visible) */}
               <Image
                 src={`/services/${index + 1}.jpg`}
                 alt={service.title}
@@ -55,6 +56,14 @@ export default function Services({ showAll = false }: ServicesProps) {
                 sizes="(max-width: 768px) 100vw, 590px"
                 priority={index === 0}
                 className={styles.serviceImageTag}
+              />
+              {/* GIF image (shown on hover) */}
+              <Image
+                src={`/services/${index + 1}.gif`}
+                alt={service.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 590px"
+                className={styles.serviceImageGif}
               />
             </div>
             <div className={styles.mobileDescription}>

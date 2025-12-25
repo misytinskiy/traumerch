@@ -9,6 +9,11 @@
   position: relative;
 }
 
+.wordContainer {
+  width: 365px;
+  overflow: visible;
+}
+
 .heroContent {
   display: flex;
   flex-direction: column;
@@ -174,6 +179,10 @@
     padding: 60px 20px 40px;
   }
 
+  .wordContainer {
+    width: 0;
+  }
+
   .title {
     font-size: clamp(1.8rem, 6vw, 3rem);
     margin-bottom: 40px;
@@ -194,6 +203,10 @@
     margin: 50px 0 92px 0;
     letter-spacing: -0.02em;
     line-height: 40px;
+  }
+
+  .wordContainer {
+    width: 202px;
   }
 
   .ctaButton {

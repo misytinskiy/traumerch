@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import styles from "./Hero.module.css";
@@ -24,58 +24,9 @@ export default function Hero({
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [displayWordIndex, setDisplayWordIndex] = useState(0);
-  const [containerWidth, setContainerWidth] = useState<string>("auto");
-  const measureRef = useRef<HTMLSpanElement>(null);
 
   const rotatingWords = useMemo(() => t.hero.rotatingWords || [], [t]);
   const rotationInterval = 1400; // 0.7 seconds
-
-  // Measure actual width of all words to set fixed container width
-  useEffect(() => {
-    if (rotatingWords.length === 0) return;
-
-    // Wait for element to be rendered
-    const timeoutId = setTimeout(() => {
-      if (!measureRef.current) return;
-
-      const measureWord = (word: string): number => {
-        const tempSpan = document.createElement("span");
-        tempSpan.style.visibility = "hidden";
-        tempSpan.style.position = "absolute";
-        tempSpan.style.fontFamily = getComputedStyle(
-          measureRef.current!
-        ).fontFamily;
-        tempSpan.style.fontSize = getComputedStyle(
-          measureRef.current!
-        ).fontSize;
-        tempSpan.style.fontWeight = getComputedStyle(
-          measureRef.current!
-        ).fontWeight;
-        tempSpan.style.fontStyle = getComputedStyle(
-          measureRef.current!
-        ).fontStyle;
-        tempSpan.style.textTransform = getComputedStyle(
-          measureRef.current!
-        ).textTransform;
-        tempSpan.style.letterSpacing = getComputedStyle(
-          measureRef.current!
-        ).letterSpacing;
-        tempSpan.textContent = word;
-        document.body.appendChild(tempSpan);
-        const width = tempSpan.offsetWidth;
-        document.body.removeChild(tempSpan);
-        return width;
-      };
-
-      const maxWidth = Math.max(
-        ...rotatingWords.map((word) => measureWord(word))
-      );
-      // Add some padding to prevent jumping
-      setContainerWidth(`${maxWidth + 20}px`);
-    }, 100);
-
-    return () => clearTimeout(timeoutId);
-  }, [rotatingWords]);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -132,12 +83,8 @@ export default function Hero({
           ) : (
             <h1 className={styles.title}>
               {t.hero.titlePrefix}{" "}
-              <span
-                className={styles.wordContainer}
-                style={{ width: containerWidth }}
-              >
+              <span className={styles.wordContainer}>
                 <span
-                  ref={measureRef}
                   className={`${styles.highlight} ${styles.rotatingWord} ${
                     isAnimating ? styles.fadeOut : styles.fadeIn
                   }`}

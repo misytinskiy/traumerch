@@ -68,7 +68,7 @@ export default function Gallery() {
   const [isMobile, setIsMobile] = useState(false);
   const [shouldShowNavigation, setShouldShowNavigation] = useState(true);
 
-  // Quotes array - 5 quotes, one will be used twice (index 0 for images 1 and 6)
+  // Quotes array - 6 quotes (one will be used twice for images 1 and 6)
   const quotes = [
     {
       text: {
@@ -105,18 +105,25 @@ export default function Gallery() {
       },
       author: "Mateo Silva, Procurement Lead",
     },
+    {
+      text: {
+        en: "They delivered samples in a week — faster than any supplier we've worked with.",
+        de: "Sie haben Muster innerhalb einer Woche geliefert — schneller als jeder Lieferant, mit dem wir bisher gearbeitet haben.",
+      },
+      author: "Jonas Müller, Product Lead",
+    },
   ];
 
   // Create array of 6 gallery images with quotes
-  // Using quote index 0 twice (for images 1 and 6)
+  // Using quote index 0 twice (for images 1 and 6), last image uses index 5
   const images = Array.from({ length: 6 }, (_, index) => {
-    // For index 0 (image 1) and index 5 (image 6), use quote index 0
-    // For others, use quote index 1-4
-    const quoteIndex = index === 0 || index === 5 ? 0 : index;
+    // For index 0 (image 1), use quote index 0
+    // For index 5 (image 6), use quote index 5 (Jonas Müller)
+    // For others (index 1-4), use quote index 1-4
+    const quoteIndex = index === 0 ? 0 : index === 5 ? 5 : index;
     const quote = quotes[quoteIndex];
     const currentLanguage = language || "en";
-    const quoteText =
-      currentLanguage === "de" ? quote.text.de : quote.text.en;
+    const quoteText = currentLanguage === "de" ? quote.text.de : quote.text.en;
 
     return {
       id: index + 1,

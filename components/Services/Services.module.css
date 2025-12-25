@@ -68,6 +68,20 @@
   object-fit: cover;
 }
 
+.serviceImageGif {
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.serviceImage:hover .serviceImageGif {
+  opacity: 1;
+}
+
 /* Базовые стили для описаний */
 .desktopDescription {
   display: block;

@@ -313,7 +313,15 @@ export default function QuoteOverlay() {
                     {t.quote?.thankYouDescription ||
                       "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable."}
                   </p>
-                  <div className={styles.thankYouImage}></div>
+                  <div className={styles.thankYouImage}>
+                    <Image
+                      src="/thankYou.gif"
+                      alt="Thank you"
+                      fill
+                      sizes="100vw"
+                      className={styles.thankYouImageTag}
+                    />
+                  </div>
                 </div>
               ) : (
                 <>
