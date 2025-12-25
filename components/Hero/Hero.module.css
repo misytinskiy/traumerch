@@ -212,7 +212,7 @@
     min-width: 202px;
     max-width: none;
     overflow: visible;
-    padding-right: 2px;
+    padding-right: 5px;
     box-sizing: content-box;
   }
 
@@ -227,7 +227,4 @@
   .scrollButton {
     display: none;
   }
-}
-
-@media (max-width: 350px) {
 }
