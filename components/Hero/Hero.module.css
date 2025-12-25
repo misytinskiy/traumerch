@@ -212,8 +212,11 @@
     min-width: 202px;
     max-width: none;
     overflow: visible;
-    padding-right: 5px;
     box-sizing: content-box;
+  }
+
+  .wordContainer span {
+    padding-right: 7px;
   }
 
   .rotatingWord {
