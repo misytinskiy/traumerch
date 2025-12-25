@@ -27,6 +27,22 @@ export const metadata: Metadata = {
   title: "TrauMerch - Merchandise Solutions",
   description:
     "Unleashing your brand through merchandise that truly connects with your audience",
+  icons: {
+    icon: [
+      {
+        url: "/favicons/forLightTheme.png",
+        media: "(prefers-color-scheme: light)",
+        type: "image/png",
+      },
+      {
+        url: "/favicons/forDarkTheme.svg",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: "/favicons/forLightTheme.png",
+    apple: "/favicons/forLightTheme.png",
+  },
 };
 
 export default function RootLayout({
