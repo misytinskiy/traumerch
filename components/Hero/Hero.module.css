@@ -9,11 +9,6 @@
   position: relative;
 }
 
-.wordContainer {
-  width: 365px;
-  overflow: visible;
-}
-
 .heroContent {
   display: flex;
   flex-direction: column;
@@ -30,8 +25,8 @@
   max-width: 1200px;
   margin: 0 0 52px 0;
   text-transform: uppercase;
-
   letter-spacing: -0.01em;
+  overflow: visible;
 }
 
 .highlight {
@@ -45,6 +40,8 @@
   vertical-align: bottom;
   text-align: left;
   min-width: fit-content;
+  width: 365px;
+  overflow: visible;
 }
 
 .rotatingWord {
@@ -205,8 +202,19 @@
     line-height: 40px;
   }
 
+  .title {
+    overflow: visible;
+  }
+
   .wordContainer {
-    width: 202px;
+    width: auto;
+    min-width: 202px;
+    max-width: none;
+    overflow: visible;
+  }
+
+  .rotatingWord {
+    overflow: visible;
   }
 
   .ctaButton {
