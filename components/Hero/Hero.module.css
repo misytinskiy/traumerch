@@ -190,9 +190,9 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 490px) {
   .hero {
-    padding: 60px 10px 40px;
+    padding: 60px 15px 40px;
   }
 
   .title {
@@ -200,6 +200,7 @@
     margin: 50px 0 92px 0;
     letter-spacing: -0.02em;
     line-height: 40px;
+    max-width: 300px;
   }
 
   .title {
@@ -211,6 +212,8 @@
     min-width: 202px;
     max-width: none;
     overflow: visible;
+    padding-right: 2px;
+    box-sizing: content-box;
   }
 
   .rotatingWord {
@@ -224,4 +227,7 @@
   .scrollButton {
     display: none;
   }
+}
+
+@media (max-width: 350px) {
 }
