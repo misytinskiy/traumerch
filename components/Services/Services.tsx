@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import ServiceTitle from "../ServiceTitle/ServiceTitle";
 // import Button from "../Button/Button";
@@ -48,15 +47,19 @@ export default function Services({ showAll = false }: ServicesProps) {
 
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
-              {/* GIF image (always visible) */}
-              <Image
-                src={`/services/${index + 1}.gif`}
-                alt={service.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 590px"
-                priority={index === 0}
+              {/* WebM video (much smaller file size than GIF) */}
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
                 className={styles.serviceImageTag}
-              />
+                preload={index === 0 ? "auto" : "metadata"}
+              >
+                <source src={`/services/${index + 1}.webm`} type="video/webm" />
+                {/* Fallback to GIF if WebM not supported */}
+                Your browser does not support the video tag.
+              </video>
             </div>
             <div className={styles.mobileDescription}>
               <p className={styles.description}>{service.description}</p>
