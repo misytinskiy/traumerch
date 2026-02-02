@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import type { Swiper as SwiperRef } from "swiper";
@@ -127,8 +126,6 @@ export default function Gallery() {
 
     return {
       id: index + 1,
-      src: `/gallery/${index + 1}.jpg`,
-      alt: `Gallery image ${index + 1}`,
       quote: quoteText,
       author: quote.author,
     };
@@ -284,13 +281,7 @@ export default function Gallery() {
           {images.map((image) => (
             <SwiperSlide key={image.id} className={styles.swiperSlide}>
               <div className={styles.imageItem}>
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={614}
-                  height={583}
-                  priority={image.id <= 3}
-                />
+                <div className={styles.imagePlaceholder} aria-hidden />
                 <div className={styles.overlay}>
                   <div className={styles.quote}>
                     <p className={styles.quoteText}>

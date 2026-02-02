@@ -47,19 +47,7 @@ export default function Services({ showAll = false }: ServicesProps) {
 
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
-              {/* WebM video (much smaller file size than GIF) */}
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className={styles.serviceImageTag}
-                preload={index === 0 ? "auto" : "metadata"}
-              >
-                <source src={`/services/${index + 1}.webm`} type="video/webm" />
-                {/* Fallback to GIF if WebM not supported */}
-                Your browser does not support the video tag.
-              </video>
+              <div className={styles.serviceImagePlaceholder} aria-hidden />
             </div>
             <div className={styles.mobileDescription}>
               <p className={styles.description}>{service.description}</p>

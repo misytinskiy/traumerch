@@ -64,10 +64,11 @@
   position: relative;
 }
 
-.serviceImageTag {
-  object-fit: cover;
+.serviceImagePlaceholder {
   width: 100%;
   height: 100%;
+  min-height: 100%;
+  background: #e5e5e5;
 }
 
 /* Базовые стили для описаний */
