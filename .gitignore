@@ -42,3 +42,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large service media (UI uses placeholders; keep locally if needed)
+/public/services/*.gif
+/public/services/*.webm
