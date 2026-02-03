@@ -21,7 +21,7 @@ interface AirtableRecord {
 const SKELETON_COUNT = 4;
 
 export default function Products() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [records, setRecords] = useState<AirtableRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
@@ -58,17 +58,26 @@ export default function Products() {
 
   const mapRecordToProduct = (record: AirtableRecord): Product => {
     const fields = record.fields || {};
+    const nameEng = fields["[WEB] Name ENG"] as string | undefined;
+    const nameDe = fields["[WEB] Name DE"] as string | undefined;
+    const nameFallback = fields["Name"] as string | undefined;
     const name =
-      (fields["[WEB] Name ENG"] as string | undefined) ||
-      (fields["[WEB] Name DE"] as string | undefined) ||
-      (fields["Name"] as string | undefined) ||
-      "Product";
+      language === "de"
+        ? (nameDe || nameEng || nameFallback || "Product")
+        : (nameEng || nameDe || nameFallback || "Product");
 
-    const priceValue = fields["Price"];
+    const sampleSalesValue =
+      fields["1-24 pcs (Sample) | SALES"] ??
+      fields["Price"] ??
+      (fields["[WEB] Price"] as string | undefined);
     const price =
-      typeof priceValue === "number"
-        ? `From €${priceValue}`
-        : (fields["[WEB] Price"] as string | undefined) || "From €6";
+      typeof sampleSalesValue === "number"
+        ? `From €${sampleSalesValue}`
+        : typeof sampleSalesValue === "string" && sampleSalesValue.trim()
+          ? sampleSalesValue.startsWith("€")
+            ? sampleSalesValue
+            : `From €${sampleSalesValue}`
+          : "From €6";
 
     return {
       id: record.id,

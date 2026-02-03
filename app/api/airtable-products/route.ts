@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 const airtableLink = process.env.AIRTABLE_LINK;
 const apiToken = process.env.API_TOKEN;
+const catalogViewId = process.env.AIRTABLE_CATALOG_VIEW_ID;
 
 export async function GET() {
   if (!airtableLink || !apiToken) {
@@ -11,8 +12,12 @@ export async function GET() {
     );
   }
 
+  const url = catalogViewId
+    ? `${airtableLink}${airtableLink.includes("?") ? "&" : "?"}view=${catalogViewId}`
+    : airtableLink;
+
   try {
-    const response = await fetch(airtableLink, {
+    const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${apiToken}`,
       },

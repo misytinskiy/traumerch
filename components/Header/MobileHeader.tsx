@@ -157,12 +157,12 @@ export default function MobileHeader() {
 
             {/* Main Menu Items */}
             <nav className={styles.menuNav}>
-              {/* <button
+              <button
                 className={styles.menuItem}
                 onClick={() => handleMenuNavigation("products")}
               >
                 {language === "de" ? "UNSER KATALOG" : "OUR CATALOGUE"}
-              </button> */}
+              </button>
               <button
                 className={styles.menuItem}
                 onClick={() => handleMenuNavigation("services")}
