@@ -347,7 +347,7 @@ export default function ProductDetails({
 
           <Button
             variant="solid"
-            padding="32px 44px"
+            padding="26px 44px"
             arrow="white"
             className={styles.fullWidthButton}
             onClick={() => {
