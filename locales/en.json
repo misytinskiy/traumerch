@@ -3,6 +3,11 @@
     "menu": "MENU",
     "quote": "QUOTE"
   },
+  "cart": {
+    "title": "YOUR QUOTE",
+    "empty": "No items in your quote yet.",
+    "viewQuote": "VIEW MY QUOTE"
+  },
   "hero": {
     "title": "MERCHANDISE THAT CONNECTS YOUR BRAND WITH YOUR",
     "titlePrefix": "Merchandise that connects your brand with your",
@@ -230,10 +235,12 @@
     "productName": "Heavy Tote Bag",
     "color": "Color",
     "quantity": "Quantity",
+    "description": "Description",
     "customisationType": "Customisation type",
     "designPlacement": "Design placement",
     "price": "Price: X",
     "leadTime": "Lead time: Y",
+    "days": "days",
     "seePromise": "ADD TO QUOTE",
     "knowYourProduct": "Know your product",
     "accordion": [

@@ -3,6 +3,11 @@
     "menu": "MENÜ",
     "quote": "ANGEBOT"
   },
+  "cart": {
+    "title": "IHR ANGEBOT",
+    "empty": "Noch keine Artikel in Ihrem Angebot.",
+    "viewQuote": "ANGEBOT ANSEHEN"
+  },
   "hero": {
     "title": "MERCHANDISE, DAS IHRE MARKE MIT IHREM",
     "titlePrefix": "Merchandise, das Ihre Marke mit Ihrem",
@@ -230,10 +235,12 @@
     "productName": "Heavy Tote Bag",
     "color": "Farbe",
     "quantity": "Menge",
+    "description": "Beschreibung",
     "customisationType": "Art der Personalisierung",
     "designPlacement": "Design Platzierung",
     "price": "Preis: X",
     "leadTime": "Lieferzeit: Y",
+    "days": "Tage",
     "seePromise": "ZUM ANGEBOT HINZUFÜGEN",
     "knowYourProduct": "Ihr Produkt im Überblick",
     "accordion": [

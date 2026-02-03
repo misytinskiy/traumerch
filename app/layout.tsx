@@ -4,6 +4,8 @@ import "./globals.css";
 import { LanguageProvider } from "../contexts/LanguageContext";
 import { QuoteOverlayProvider } from "../contexts/QuoteOverlayContext";
 import { PreloaderProvider } from "../contexts/PreloaderContext";
+import { CartProvider } from "../contexts/CartContext";
+import CartSidebar from "../components/CartSidebar/CartSidebar";
 import QuoteOverlay from "../components/QuoteOverlay/QuoteOverlay";
 import Preloader from "../components/Preloader/Preloader";
 
@@ -58,9 +60,12 @@ export default function RootLayout({
         <LanguageProvider>
           <PreloaderProvider>
             <QuoteOverlayProvider>
-              <Preloader />
-              {children}
-              <QuoteOverlay />
+              <CartProvider>
+                <Preloader />
+                {children}
+                <QuoteOverlay />
+                <CartSidebar />
+              </CartProvider>
             </QuoteOverlayProvider>
           </PreloaderProvider>
         </LanguageProvider>

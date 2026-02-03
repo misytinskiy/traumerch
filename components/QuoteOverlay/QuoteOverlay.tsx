@@ -27,7 +27,11 @@ const messengers = [
   { id: 4, name: "Teams", icon: "/quoteIcons/teams.svg" },
 ];
 
-const servicesList = ["Service 1", "Service 2", "Service 3", "Service 4"];
+const servicesList = [
+  "Private Label",
+  "Influancer Activation",
+  "Smart Platform",
+];
 
 export default function QuoteOverlay() {
   const { isOpen, closeQuote } = useQuoteOverlay();
@@ -37,7 +41,7 @@ export default function QuoteOverlay() {
     email: "",
     preferredMessenger: "",
     messengerContact: "",
-    requestType: "merchandise",
+    requestType: "services",
     service: "",
     description: "",
     file: null,
@@ -73,7 +77,7 @@ export default function QuoteOverlay() {
         email: "",
         preferredMessenger: "",
         messengerContact: "",
-        requestType: "merchandise",
+        requestType: "services",
         service: "",
         description: "",
         file: null,
@@ -524,97 +528,29 @@ export default function QuoteOverlay() {
                               {t.quote?.yourRequest || "Your request"}
                             </label>
                             <div className={styles.toggleButtons}>
-                              <button
-                                type="button"
-                                className={`${styles.toggleButton} ${
-                                  formData.requestType === "merchandise"
-                                    ? styles.toggleButtonActive
-                                    : ""
-                                }`}
-                                onClick={() =>
-                                  setFormData((prev) => ({
-                                    ...prev,
-                                    requestType: "merchandise",
-                                  }))
-                                }
-                              >
-                                {t.quote?.merchandise || "MERCHANDISE"}
-                              </button>
-                              <button
-                                type="button"
-                                className={`${styles.toggleButton} ${
-                                  formData.requestType === "services"
-                                    ? styles.toggleButtonActive
-                                    : ""
-                                }`}
-                                onClick={() =>
-                                  setFormData((prev) => ({
-                                    ...prev,
-                                    requestType: "services",
-                                  }))
-                                }
-                              >
-                                {(
-                                  t.quote?.services || "Services"
-                                ).toUpperCase()}
-                              </button>
+                              {servicesList.map((service) => (
+                                <button
+                                  key={service}
+                                  type="button"
+                                  className={`${styles.toggleButton} ${
+                                    selectedService === service
+                                      ? styles.toggleButtonActive
+                                      : ""
+                                  }`}
+                                  onClick={() => {
+                                    setSelectedService(service);
+                                    setFormData((prev) => ({
+                                      ...prev,
+                                      requestType: "services",
+                                      service,
+                                    }));
+                                  }}
+                                >
+                                  {service.toUpperCase()}
+                                </button>
+                              ))}
                             </div>
                           </div>
-
-                          <AnimatePresence mode="popLayout" initial={false}>
-                            {formData.requestType === "services" && (
-                              <motion.div
-                                className={styles.formGroup}
-                                layout
-                                initial={{
-                                  height: 0,
-                                  opacity: 0,
-                                  overflow: "hidden",
-                                }}
-                                animate={{
-                                  height: "auto",
-                                  opacity: 1,
-                                }}
-                                exit={{
-                                  height: 0,
-                                  opacity: 0,
-                                  overflow: "hidden",
-                                }}
-                                transition={{
-                                  height: {
-                                    duration: 0.35,
-                                    ease: [0.4, 0, 0.2, 1],
-                                  },
-                                  opacity: {
-                                    duration: 0.35,
-                                    ease: [0.4, 0, 0.2, 1],
-                                  },
-                                }}
-                              >
-                                <label className={styles.label}>
-                                  {t.quote?.services || "Services"}
-                                </label>
-                                <div className={styles.serviceButtons}>
-                                  {servicesList.map((service) => (
-                                    <button
-                                      key={service}
-                                      type="button"
-                                      className={`${styles.serviceButton} ${
-                                        selectedService === service
-                                          ? styles.serviceButtonActive
-                                          : ""
-                                      }`}
-                                      onClick={() =>
-                                        setSelectedService(service)
-                                      }
-                                    >
-                                      {service.toUpperCase()}
-                                    </button>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
 
                           <motion.div
                             className={styles.formGroup}

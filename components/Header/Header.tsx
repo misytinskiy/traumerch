@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
+import { useCart } from "../../contexts/CartContext";
 import { usePreloader } from "../../contexts/PreloaderContext";
 import Button from "../Button/Button";
 import styles from "./Header.module.css";
@@ -20,7 +21,9 @@ export default function Header() {
   const pathname = usePathname();
   const { language, country, setLanguage, t } = useLanguage();
   const { openQuote } = useQuoteOverlay();
+  const { items, openCart } = useCart();
   const { isEnabled: isPreloaderActive } = usePreloader();
+  const hasCartItems = items.length > 0;
   const isHomePage = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
@@ -485,9 +488,19 @@ export default function Header() {
             size="medium"
             padding="23px 40px"
             padding1536="12px 40px"
-            onClick={openQuote}
+            onClick={hasCartItems ? openCart : openQuote}
+            className={hasCartItems ? styles.quoteButtonWithCart : ""}
           >
-            {t.header.quote}
+            {hasCartItems ? (
+              <span className={styles.quoteButtonInner}>
+                {t.header.quote}
+                <span className={styles.quoteBadge} aria-label={`${items.length} items`}>
+                  {items.length}
+                </span>
+              </span>
+            ) : (
+              t.header.quote
+            )}
           </Button>
         </motion.div>
       </div>

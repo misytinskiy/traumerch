@@ -248,14 +248,16 @@
   border: none;
   background: #f6f6f6;
   font-family: var(--font-geist-sans);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 24px;
   color: #999999;
   text-transform: uppercase;
   letter-spacing: 0.14px;
   cursor: pointer;
   transition: all 0.2s ease;
+
+  font-size: 12px;
+  padding: 0 10px;
+  font-weight: 400;
+  line-height: 15px;
 }
 
 .toggleButtonActive {
@@ -746,6 +748,18 @@
     flex: 1;
     display: block !important;
   }
+
+  .leftColumn {
+ 
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .rightColumn {
+
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -759,10 +773,14 @@
 
   .leftColumn {
     padding: 16px 10px 66px;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .rightColumn {
     padding: 16px 10px;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .titleRow {

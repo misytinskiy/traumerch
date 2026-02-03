@@ -44,6 +44,18 @@ export async function POST(request: NextRequest) {
     if (name) airtableFields["Name"] = name;
     if (email) airtableFields["Email"] = email;
     if (description) airtableFields["Description"] = description;
+
+    // Services - single select (exact Airtable option names required)
+    if (service) {
+      const servicesMap: Record<string, string> = {
+        "Private Label": "Private label",
+        "Influancer Activation": "Influancer Activation",
+        "Smart Platform": "Smart Platform",
+      };
+      const airtableService = servicesMap[service] ?? service;
+      airtableFields["Services"] = airtableService;
+      console.log("✅ Set Services to:", airtableService);
+    }
     
     // Request Type - capitalize first letter (Merchandise or Services)
     if (requestType) {
@@ -112,13 +124,6 @@ export async function POST(request: NextRequest) {
       }
     } else {
       console.log("ℹ️ No messengerContact provided");
-    }
-    
-    // If service is selected, append it to description
-    if (service && requestType === "services") {
-      const serviceText = `\n\nService: ${service}`;
-      airtableFields["Description"] = (description || "") + serviceText;
-      console.log("✅ Added service to description");
     }
     
     console.log("=== FINAL AIRTABLE FIELDS ===");

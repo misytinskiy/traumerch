@@ -62,11 +62,41 @@
   text-transform: uppercase;
 }
 
+.productNameSkeleton {
+  width: 60%;
+  max-width: 320px;
+  height: 48px;
+  margin: 0 0 40px 0;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.12) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  background-size: 300% 100%;
+  animation: productNameShimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes productNameShimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
 .divider {
   width: 100%;
   height: 1px;
   background: rgba(0, 0, 0, 0.2);
   margin: 24px 0;
+}
+
+/* Скрыто пока: Customisation type и Design placement */
+.hiddenSection {
+  display: none;
 }
 
 .optionLabel {
@@ -139,6 +169,55 @@
   width: 120px;
   height: 54px;
   border-radius: 500000px;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-family: inherit;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.quantityValue::-webkit-outer-spin-button,
+.quantityValue::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.descriptionInputWrap {
+  position: relative;
+  max-width: 475px;
+}
+
+.descriptionInput {
+  width: 100%;
+  max-width: 475px;
+  min-height: 120px;
+  padding: 16px 20px 36px 20px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 1);
+  background-color: #f5f5f5;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.descriptionInput::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.descriptionCounter {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+  pointer-events: none;
 }
 
 .optionButtons {
@@ -209,7 +288,7 @@
   font-weight: 400;
   line-height: 100%;
   color: rgba(0, 0, 0, 1);
-  margin: -36px 0 51px 0;
+  margin: 56px 0 51px 0;
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
@@ -256,6 +335,10 @@
     font-size: 32px;
   }
 
+  .productNameSkeleton {
+    height: 32px;
+  }
+
   .optionLabel {
     font-size: 20px;
     margin: 0 0 21px 0;
@@ -270,13 +353,17 @@
     font-size: 20px;
   }
 
+  .descriptionInput {
+    font-size: 20px;
+  }
+
   .priceSection {
     margin: 24px 0;
   }
 
   .title {
     font-size: 32px;
-    margin: -45px 0 45px 0;
+    margin: 20px 0 45px 0;
     line-height: 42px;
   }
 }
@@ -315,9 +402,18 @@
     margin-bottom: 24px;
   }
 
+  .productNameSkeleton {
+    height: 26px;
+    margin-bottom: 24px;
+  }
+
   .optionLabel {
     font-size: 16px;
     margin: 0 0 21px 0;
+  }
+
+  .descriptionInput {
+    font-size: 16px;
   }
 
   .optionButton {
@@ -390,6 +486,10 @@
     font-size: 26px;
   }
 
+  .productNameSkeleton {
+    height: 26px;
+  }
+
   .optionButtons {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -413,6 +513,10 @@
   }
 
   .quantityValue {
+    font-size: 20px;
+  }
+
+  .descriptionInput {
     font-size: 20px;
   }
 
@@ -453,6 +557,10 @@
     font-size: 16px;
   }
 
+  .productNameSkeleton {
+    height: 16px;
+  }
+
   .colorGrid {
     max-width: 90vw;
   }
@@ -463,6 +571,15 @@
   }
 
   .optionLabel {
+    font-size: 12px;
+  }
+
+  .descriptionInput {
+    font-size: 14px;
+    min-height: 100px;
+  }
+
+  .descriptionCounter {
     font-size: 12px;
   }
 

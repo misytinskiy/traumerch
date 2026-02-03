@@ -2,3 +2,8 @@
   font-family: var(--font-geist-sans);
   min-height: 100vh;
 }
+
+.productDetailsSkeleton {
+  min-height: 400px;
+  background: transparent;
+}

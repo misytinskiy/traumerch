@@ -175,3 +175,39 @@
     margin-left: 27px !important;
   }
 }
+
+/* Quote button when cart has items: no bg, no border, black text + badge */
+.quoteButtonInner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.quoteButtonWithCart {
+  background: transparent !important;
+  border: none !important;
+  color: rgba(0, 0, 0, 1) !important;
+}
+
+.quoteButtonWithCart:hover {
+  background: transparent !important;
+  border: none !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.quoteBadge {
+  min-width: 25px;
+  height: 25px;
+  padding: 0 6px;
+  border-radius: 14px;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-sizing: border-box;
+}

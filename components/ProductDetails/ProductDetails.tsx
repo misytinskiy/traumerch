@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useCart } from "../../contexts/CartContext";
 import Button from "../Button/Button";
 import ProductAccordion from "../ProductAccordion/ProductAccordion";
 import ProductSlider from "../ProductSlider/ProductSlider";
+import { getPriceForQuantity } from "../../lib/pricing";
 import styles from "./ProductDetails.module.css";
 
 const colors = [
@@ -69,10 +71,23 @@ const MinusIcon = () => (
   </svg>
 );
 
-export default function ProductDetails() {
+interface ProductDetailsProps {
+  productId?: string;
+  productName?: string | null;
+  productRecord?: { id: string; fields: Record<string, unknown> } | null;
+}
+
+export default function ProductDetails({
+  productId,
+  productName,
+  productRecord,
+}: ProductDetailsProps) {
   const { t } = useLanguage();
+  const { addItem } = useCart();
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [quantity, setQuantity] = useState(10);
+  const [quantityInputValue, setQuantityInputValue] = useState("10");
+  const [description, setDescription] = useState("");
   const [selectedCustomization, setSelectedCustomization] = useState("option1");
   const [selectedPlacements, setSelectedPlacements] = useState<string[]>([
     "option1",
@@ -87,8 +102,57 @@ export default function ProductDetails() {
   ];
   const placementOptions = ["Option 1", "Option 2", "Option 3", "Option 4"];
 
-  const incrementQuantity = () => setQuantity((prev) => prev + 1);
-  const decrementQuantity = () => setQuantity((prev) => Math.max(1, prev - 1));
+  const getEffectiveQuantity = () => {
+    const raw = quantityInputValue.trim();
+    if (raw === "") return quantity;
+    const num = parseInt(raw, 10);
+    if (Number.isNaN(num) || num < 1) return quantity;
+    return Math.min(num, 99999);
+  };
+
+  const incrementQuantity = () => {
+    const effective = getEffectiveQuantity();
+    const next = Math.min(effective + 1, 99999);
+    setQuantity(next);
+    setQuantityInputValue(String(next));
+  };
+  const decrementQuantity = () => {
+    const effective = getEffectiveQuantity();
+    const next = Math.max(1, effective - 1);
+    setQuantity(next);
+    setQuantityInputValue(String(next));
+  };
+
+  const handleQuantityInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    if (raw === "" || /^\d*$/.test(raw)) {
+      setQuantityInputValue(raw);
+      if (raw !== "") {
+        const num = parseInt(raw, 10);
+        if (!Number.isNaN(num) && num >= 1) {
+          setQuantity(Math.min(num, 99999));
+        }
+      }
+    }
+  };
+
+  const handleQuantityBlur = () => {
+    const raw = quantityInputValue.trim();
+    if (raw === "") {
+      setQuantity(1);
+      setQuantityInputValue("1");
+      return;
+    }
+    const num = parseInt(raw, 10);
+    if (Number.isNaN(num) || num < 1) {
+      setQuantity(1);
+      setQuantityInputValue("1");
+    } else {
+      const clamped = Math.min(num, 99999);
+      setQuantity(clamped);
+      setQuantityInputValue(String(clamped));
+    }
+  };
 
   const togglePlacement = (optionKey: string) => {
     setSelectedPlacements((prev) => {
@@ -99,6 +163,26 @@ export default function ProductDetails() {
       }
     });
   };
+
+  // Считаем цену и lead time из записи товара при каждом рендере
+  const effectiveQuantity = getEffectiveQuantity();
+  const priceDisplay = getPriceForQuantity(
+    effectiveQuantity,
+    productRecord?.fields
+  );
+  const leadTimeRaw = productRecord?.fields?.["Total Time (Days)"];
+  const leadTimeDisplay =
+    leadTimeRaw !== undefined && leadTimeRaw !== null && leadTimeRaw !== ""
+      ? String(leadTimeRaw)
+      : null;
+
+  useEffect(() => {
+    if (effectiveQuantity === 0) return;
+    console.log("[ProductDetails] qty/price", {
+      effectiveQuantity,
+      priceDisplay,
+    });
+  }, [effectiveQuantity, priceDisplay]);
 
   return (
     <section className={styles.productDetails}>
@@ -123,7 +207,13 @@ export default function ProductDetails() {
         </div>
 
         <div className={styles.optionsSection}>
-          <h1 className={styles.productName}>{t.design.productName}</h1>
+          {productId && productName === null ? (
+            <div className={styles.productNameSkeleton} aria-hidden />
+          ) : (
+            <h1 className={styles.productName}>
+              {productName ?? t.design.productName}
+            </h1>
+          )}
 
           <div className={styles.divider} />
 
@@ -156,7 +246,17 @@ export default function ProductDetails() {
               >
                 <MinusIcon />
               </button>
-              <span className={styles.quantityValue}>{quantity}</span>
+              <input
+                type="number"
+                className={styles.quantityValue}
+                value={quantityInputValue}
+                min={1}
+                max={99999}
+                step={1}
+                onChange={handleQuantityInputChange}
+                onBlur={handleQuantityBlur}
+                aria-label={t.design.quantity}
+              />
               <button
                 className={styles.quantityButton}
                 onClick={incrementQuantity}
@@ -169,50 +269,80 @@ export default function ProductDetails() {
           <div className={styles.divider} />
 
           <div className={styles.optionGroup}>
-            <h3 className={styles.optionLabel}>{t.design.customisationType}</h3>
-            <div className={styles.optionButtons}>
-              {customizationOptions.map((option, index) => (
-                <button
-                  key={index}
-                  className={`${styles.optionButton} ${
-                    selectedCustomization === `option${index + 1}`
-                      ? styles.selected
-                      : ""
-                  }`}
-                  onClick={() => setSelectedCustomization(`option${index + 1}`)}
-                >
-                  {option}
-                </button>
-              ))}
+            <h3 className={styles.optionLabel}>{t.design.description}</h3>
+            <div className={styles.descriptionInputWrap}>
+              <textarea
+                className={styles.descriptionInput}
+                value={description}
+                onChange={(e) => setDescription(e.target.value.slice(0, 1500))}
+                maxLength={1500}
+                placeholder=""
+                rows={4}
+                aria-label={t.design.description}
+              />
+              <span className={styles.descriptionCounter}>
+                {description.length} / 1500
+              </span>
             </div>
           </div>
 
-          <div className={styles.divider} />
+          {/* Скрыто пока: Customisation type и Design placement */}
+          <div className={styles.hiddenSection} aria-hidden>
+            <div className={styles.optionGroup}>
+              <h3 className={styles.optionLabel}>{t.design.customisationType}</h3>
+              <div className={styles.optionButtons}>
+                {customizationOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    className={`${styles.optionButton} ${
+                      selectedCustomization === `option${index + 1}`
+                        ? styles.selected
+                        : ""
+                    }`}
+                    onClick={() => setSelectedCustomization(`option${index + 1}`)}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <div className={styles.optionGroup}>
-            <h3 className={styles.optionLabel}>{t.design.designPlacement}</h3>
-            <div className={styles.optionButtons}>
-              {placementOptions.map((option, index) => (
-                <button
-                  key={index}
-                  className={`${styles.optionButton} ${
-                    selectedPlacements.includes(`option${index + 1}`)
-                      ? styles.selected
-                      : ""
-                  }`}
-                  onClick={() => togglePlacement(`option${index + 1}`)}
-                >
-                  {option}
-                </button>
-              ))}
+            <div className={styles.divider} />
+
+            <div className={styles.optionGroup}>
+              <h3 className={styles.optionLabel}>{t.design.designPlacement}</h3>
+              <div className={styles.optionButtons}>
+                {placementOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    className={`${styles.optionButton} ${
+                      selectedPlacements.includes(`option${index + 1}`)
+                        ? styles.selected
+                        : ""
+                    }`}
+                    onClick={() => togglePlacement(`option${index + 1}`)}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
           <div className={styles.divider} />
 
           <div className={styles.priceSection}>
-            <p className={styles.priceText}>{t.design.price}</p>
-            <p className={styles.leadTimeText}>{t.design.leadTime}</p>
+            <p className={styles.priceText}>
+              {(t.design.price as string).replace("X", priceDisplay ?? "—")}
+            </p>
+            <p className={styles.leadTimeText}>
+              {(t.design.leadTime as string).replace(
+                "Y",
+                leadTimeDisplay
+                  ? `${leadTimeDisplay} ${(t.design as { days?: string }).days ?? "days"}`
+                  : "—"
+              )}
+            </p>
           </div>
 
           <Button
@@ -220,6 +350,20 @@ export default function ProductDetails() {
             padding="32px 44px"
             arrow="white"
             className={styles.fullWidthButton}
+            onClick={() => {
+              if (productId) {
+                addItem({
+                  productId,
+                  productName: productName ?? t.design.productName,
+                  quantity,
+                  selectedColor,
+                  selectedCustomization,
+                  selectedPlacements,
+                  description: description.trim() || undefined,
+                  productFields: productRecord?.fields,
+                });
+              }
+            }}
           >
             {t.design.seePromise}
           </Button>

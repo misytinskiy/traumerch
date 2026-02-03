@@ -47,7 +47,12 @@ export default function Services({ showAll = false }: ServicesProps) {
 
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
-              <div className={styles.serviceImagePlaceholder} aria-hidden />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/services/${index + 1}.png`}
+                alt=""
+                className={styles.serviceImageImg}
+              />
             </div>
             <div className={styles.mobileDescription}>
               <p className={styles.description}>{service.description}</p>

@@ -81,10 +81,20 @@
   cursor: pointer;
 }
 
+.galleryImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
 .imagePlaceholder {
   position: absolute;
   inset: 0;
   background: #e5e5e5;
+  z-index: 0;
 }
 
 .imageItem:hover .imagePlaceholder {
@@ -104,6 +114,7 @@
   opacity: 0;
   transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   border-radius: 30px;
+  z-index: 2;
 }
 
 .imageItem:hover .overlay {

@@ -113,19 +113,16 @@ export default function Gallery() {
     },
   ];
 
-  // Create array of 6 gallery images with quotes
-  // Using quote index 0 twice (for images 1 and 6), last image uses index 5
-  const images = Array.from({ length: 6 }, (_, index) => {
-    // For index 0 (image 1), use quote index 0
-    // For index 5 (image 6), use quote index 5 (Jonas Müller)
-    // For others (index 1-4), use quote index 1-4
-    const quoteIndex = index === 0 ? 0 : index === 5 ? 5 : index;
-    const quote = quotes[quoteIndex];
+  // Create array of 5 gallery images (PNG from /gallery/ 1–5)
+  // 6th slide commented out — no 6.png in public/gallery yet
+  const images = Array.from({ length: 5 }, (_, index) => {
+    const quote = quotes[index];
     const currentLanguage = language || "en";
     const quoteText = currentLanguage === "de" ? quote.text.de : quote.text.en;
 
     return {
       id: index + 1,
+      src: `/gallery/${index + 1}.png`,
       quote: quoteText,
       author: quote.author,
     };
@@ -281,6 +278,12 @@ export default function Gallery() {
           {images.map((image) => (
             <SwiperSlide key={image.id} className={styles.swiperSlide}>
               <div className={styles.imageItem}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={image.src}
+                  alt=""
+                  className={styles.galleryImage}
+                />
                 <div className={styles.imagePlaceholder} aria-hidden />
                 <div className={styles.overlay}>
                   <div className={styles.quote}>

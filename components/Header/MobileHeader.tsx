@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
+import { useCart } from "../../contexts/CartContext";
 import { usePreloader } from "../../contexts/PreloaderContext";
 import Link from "next/link";
 import Button from "../Button/Button";
@@ -10,8 +12,11 @@ import styles from "./MobileHeader.module.css";
 
 export default function MobileHeader() {
   const pathname = usePathname();
-  const { language, setLanguage, country } = useLanguage();
+  const { language, setLanguage, country, t } = useLanguage();
+  const { openQuote } = useQuoteOverlay();
+  const { items, openCart } = useCart();
   const { isEnabled: isPreloaderActive } = usePreloader();
+  const hasCartItems = items.length > 0;
   const isHomePage = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -114,6 +119,25 @@ export default function MobileHeader() {
                 {labels.english}
               </button>
             </div>
+
+            <button
+              type="button"
+              className={`${styles.quoteButton} ${
+                hasCartItems ? styles.quoteButtonWithCart : ""
+              }`}
+              onClick={hasCartItems ? openCart : openQuote}
+            >
+              {hasCartItems ? (
+                <span className={styles.quoteButtonInner}>
+                  {t.header.quote}
+                  <span className={styles.quoteBadge} aria-label={`${items.length} items`}>
+                    {items.length}
+                  </span>
+                </span>
+              ) : (
+                t.header.quote
+              )}
+            </button>
 
             <button
               className={`${styles.burger} ${isMenuOpen ? styles.open : ""}`}
