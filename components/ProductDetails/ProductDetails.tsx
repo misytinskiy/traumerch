@@ -6,7 +6,7 @@ import { useCart } from "../../contexts/CartContext";
 import Button from "../Button/Button";
 import ProductAccordion from "../ProductAccordion/ProductAccordion";
 import ProductSlider from "../ProductSlider/ProductSlider";
-import { getPriceForQuantity } from "../../lib/pricing";
+import { getPriceForQuantity, getUnitPriceForQuantity } from "../../lib/pricing";
 import styles from "./ProductDetails.module.css";
 
 const colors = [
@@ -167,6 +167,10 @@ export default function ProductDetails({
   // Считаем цену и lead time из записи товара при каждом рендере
   const effectiveQuantity = getEffectiveQuantity();
   const priceDisplay = getPriceForQuantity(
+    effectiveQuantity,
+    productRecord?.fields
+  );
+  const unitPriceDisplay = getUnitPriceForQuantity(
     effectiveQuantity,
     productRecord?.fields
   );
@@ -334,6 +338,12 @@ export default function ProductDetails({
           <div className={styles.priceSection}>
             <p className={styles.priceText}>
               {(t.design.price as string).replace("X", priceDisplay ?? "—")}
+            </p>
+            <p className={styles.pricePerUnitText}>
+              {(t.design?.pricePerUnit ?? "Price per unit: X").replace(
+                "X",
+                unitPriceDisplay ?? "—"
+              )}
             </p>
             <p className={styles.leadTimeText}>
               {(t.design.leadTime as string).replace(

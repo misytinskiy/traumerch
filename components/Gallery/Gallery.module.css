@@ -191,12 +191,12 @@
   }
 
   .quoteText {
-    font-size: 21px;
-    line-height: 34px;
+    font-size: 16px;
+    line-height: 26px;
   }
 
   .quoteAuthor {
-    font-size: 18px;
+    font-size: 12px;
   }
 
   .navButton {

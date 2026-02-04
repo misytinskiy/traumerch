@@ -28,6 +28,23 @@ function parsePriceValue(value: unknown): number | null {
   return null;
 }
 
+/** Возвращает цену за единицу для данного количества (из тира) в формате "€12". */
+export function getUnitPriceForQuantity(
+  quantity: number,
+  fields: Record<string, unknown> | undefined
+): string | null {
+  if (!fields || quantity < 1) return null;
+  const tier = PRICE_TIERS.find(
+    (t) => quantity >= t.min && quantity <= t.max
+  );
+  if (!tier) return null;
+  const rawField = tier.fields.find((field) => field in fields);
+  if (!rawField) return null;
+  const unitPrice = parsePriceValue(fields[rawField]);
+  if (unitPrice === null) return null;
+  return `€${unitPrice.toFixed(unitPrice % 1 === 0 ? 0 : 1)}`;
+}
+
 /** Возвращает суммарную цену (unit × quantity) в формате "€120". */
 export function getPriceForQuantity(
   quantity: number,

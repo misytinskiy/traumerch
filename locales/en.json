@@ -239,6 +239,7 @@
     "customisationType": "Customisation type",
     "designPlacement": "Design placement",
     "price": "Price: X",
+    "pricePerUnit": "Price per unit: X",
     "leadTime": "Lead time: Y",
     "days": "days",
     "seePromise": "ADD TO QUOTE",

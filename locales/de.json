@@ -239,6 +239,7 @@
     "customisationType": "Art der Personalisierung",
     "designPlacement": "Design Platzierung",
     "price": "Preis: X",
+    "pricePerUnit": "Preis pro Einheit: X",
     "leadTime": "Lieferzeit: Y",
     "days": "Tage",
     "seePromise": "ZUM ANGEBOT HINZUFÜGEN",
