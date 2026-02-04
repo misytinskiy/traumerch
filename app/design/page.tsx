@@ -2,8 +2,8 @@
 
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
+import { Suspense, useEffect, useState, useCallback } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { useEffect, useState, useCallback } from "react";
 import ResponsiveHeader from "../../components/Header/ResponsiveHeader";
 import CTA from "../../components/CTA/CTA";
 import Footer from "../../components/Footer/Footer";
@@ -37,7 +37,7 @@ function getProductNameFromRecord(
     : (nameEng || nameDe || nameFallback || "Product");
 }
 
-export default function Design() {
+function DesignContent() {
   const searchParams = useSearchParams();
   const { language } = useLanguage();
   const productId = searchParams.get("product");
@@ -94,5 +94,13 @@ export default function Design() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function Design() {
+  return (
+    <Suspense fallback={<div className={styles.page}><ResponsiveHeader /><main><div className={styles.productDetailsSkeleton} /></main><Footer /></div>}>
+      <DesignContent />
+    </Suspense>
   );
 }
