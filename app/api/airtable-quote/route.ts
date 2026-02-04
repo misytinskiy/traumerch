@@ -72,12 +72,11 @@ export async function POST(request: NextRequest) {
     
     if (preferredMessenger) {
       // Map form messenger names to Airtable select options (exact match required)
-      const messengerMap: Record<string, string | null> = {
+      const messengerMap: Record<string, string> = {
         WhatsApp: "WhatsApp",
         Email: "Email",
+        Slack: "Slack",
         Teams: "Teams",
-        // Facebook is not in Airtable options, skip it or use Email as fallback
-        Facebook: null, // Skip Facebook as it's not available in Airtable
       };
       
       console.log("messengerMap:", messengerMap);
@@ -115,8 +114,8 @@ export async function POST(request: NextRequest) {
       } else if (messengerName === "email") {
         // Email is already in Email field, skip contact info
         console.log("ℹ️ Email selected - contact info not needed");
-      } else if (messengerName === "teams" || messengerName === "facebook") {
-        // For Teams, Facebook, etc., use Username field
+      } else if (messengerName === "teams" || messengerName === "slack") {
+        // For Teams, Slack, etc., use Username field
         airtableFields["Username"] = messengerContact;
         console.log("✅ Set Username to:", messengerContact);
       } else {

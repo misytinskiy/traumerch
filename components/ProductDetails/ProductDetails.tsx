@@ -385,7 +385,7 @@ export default function ProductDetails({
         <h2 className={styles.title}>{t.design.knowYourProduct}</h2>
         <div className={styles.accordionSliderSection}>
           <div className={styles.accordionSection}>
-            <ProductAccordion />
+            <ProductAccordion productFields={productRecord?.fields} />
           </div>
 
           <div className={styles.sliderSection}>

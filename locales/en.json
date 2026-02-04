@@ -244,6 +244,7 @@
     "days": "days",
     "seePromise": "ADD TO QUOTE",
     "knowYourProduct": "Know your product",
+    "noProductInfo": "No information about this product.",
     "accordion": [
       {
         "question": "Description",

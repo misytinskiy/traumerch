@@ -23,7 +23,7 @@ interface QuoteFormData {
 const messengers = [
   { id: 1, name: "WhatsApp", icon: "/quoteIcons/whatsapp.svg" },
   { id: 2, name: "Email", icon: "/quoteIcons/email.svg" },
-  { id: 3, name: "Facebook", icon: "/quoteIcons/facebook.svg" },
+  { id: 3, name: "Slack", icon: "/quoteIcons/slack.svg" },
   { id: 4, name: "Teams", icon: "/quoteIcons/teams.svg" },
 ];
 
@@ -235,7 +235,7 @@ export default function QuoteOverlay() {
     switch (messengerName) {
       case "WhatsApp":
         return "Phone number*";
-      case "Facebook":
+      case "Slack":
         return "@username*";
       case "Teams":
         return "Email address*";

@@ -244,6 +244,7 @@
     "days": "Tage",
     "seePromise": "ZUM ANGEBOT HINZUFÜGEN",
     "knowYourProduct": "Ihr Produkt im Überblick",
+    "noProductInfo": "Keine Informationen zu diesem Produkt.",
     "accordion": [
       {
         "question": "Beschreibung",
