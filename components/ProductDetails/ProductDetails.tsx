@@ -9,25 +9,27 @@ import ProductSlider from "../ProductSlider/ProductSlider";
 import { getPriceForQuantity, getUnitPriceForQuantity } from "../../lib/pricing";
 import styles from "./ProductDetails.module.css";
 
-const colors = [
-  "#F5F5F5", // Светло-серый
-  "#E8E8E8", // Серый
-  "#D4C5B9", // Бежевый
-  "#C8A882", // Песочный
-  "#B5A48B", // Теплый серый
-  "#A8B5A0", // Мятный
-  "#9BB5C4", // Пыльно-голубой
-  "#C4A5A0", // Пыльно-розовый
-  "#B8A8C8", // Лавандовый
-  "#A8C4A2", // Шалфей
-  "#D4B5A0", // Пыльный персик
-  "#A0B5D4", // Мягкий голубой
-  "#C8B5A8", // Молочный кофе
-  "#B5C8A8", // Мягкий оливковый
-  "#A8A8C8", // Серо-лавандовый
-  "#C8A8B5", // Пыльная роза
-  "#A8C8B5", // Морская пена
-];
+const PALETTE_FIELD = "[WEB] Palette Hex Colours";
+const MAIN_PHOTO_FIELD = "Main Product Photo";
+
+function getMainPhotoUrl(fields: Record<string, unknown> | undefined): string | null {
+  const raw = fields?.[MAIN_PHOTO_FIELD];
+  if (!Array.isArray(raw) || raw.length === 0) return null;
+  const first = raw[0];
+  if (first && typeof first === "object" && "url" in first && typeof (first as { url: string }).url === "string") {
+    return (first as { url: string }).url;
+  }
+  return null;
+}
+
+function parsePaletteHex(fields: Record<string, unknown> | undefined): string[] {
+  const raw = fields?.[PALETTE_FIELD];
+  if (typeof raw !== "string" || !raw.trim()) return [];
+  return raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => /^#[0-9A-Fa-f]{3}$|^#[0-9A-Fa-f]{6}$/.test(s));
+}
 
 const PlusIcon = () => (
   <svg
@@ -84,7 +86,17 @@ export default function ProductDetails({
 }: ProductDetailsProps) {
   const { t } = useLanguage();
   const { addItem } = useCart();
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
+  const paletteColors = parsePaletteHex(productRecord?.fields);
+  const paletteFieldRaw = productRecord?.fields?.[PALETTE_FIELD];
+  const mainPhotoUrl = getMainPhotoUrl(productRecord?.fields);
+  const [selectedColor, setSelectedColor] = useState("");
+
+  useEffect(() => {
+    if (paletteColors.length > 0 && (selectedColor === "" || !paletteColors.includes(selectedColor))) {
+      setSelectedColor(paletteColors[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- sync selectedColor when product/palette changes
+  }, [productRecord?.id, paletteFieldRaw]);
   const [quantity, setQuantity] = useState(10);
   const [quantityInputValue, setQuantityInputValue] = useState("10");
   const [description, setDescription] = useState("");
@@ -102,11 +114,28 @@ export default function ProductDetails({
   ];
   const placementOptions = ["Option 1", "Option 2", "Option 3", "Option 4"];
 
+  // Minimum order quantity from Airtable (try possible field names), fallback 1
+  const minQuantity = (() => {
+    const fields = productRecord?.fields;
+    if (!fields) return 1;
+    const keys = ["# MOQ | SALES", "MOQ | SALES", "# MOQ", "MOQ"];
+    let raw: unknown;
+    for (const key of keys) {
+      if (key in fields && fields[key] !== undefined && fields[key] !== null && fields[key] !== "") {
+        raw = fields[key];
+        break;
+      }
+    }
+    if (raw === undefined) return 1;
+    const n = typeof raw === "number" ? raw : parseInt(String(raw), 10);
+    return Number.isNaN(n) || n < 1 ? 1 : Math.min(n, 99999);
+  })();
+
   const getEffectiveQuantity = () => {
     const raw = quantityInputValue.trim();
     if (raw === "") return quantity;
     const num = parseInt(raw, 10);
-    if (Number.isNaN(num) || num < 1) return quantity;
+    if (Number.isNaN(num) || num < minQuantity) return quantity;
     return Math.min(num, 99999);
   };
 
@@ -118,7 +147,7 @@ export default function ProductDetails({
   };
   const decrementQuantity = () => {
     const effective = getEffectiveQuantity();
-    const next = Math.max(1, effective - 1);
+    const next = Math.max(minQuantity, effective - 1);
     setQuantity(next);
     setQuantityInputValue(String(next));
   };
@@ -129,7 +158,7 @@ export default function ProductDetails({
       setQuantityInputValue(raw);
       if (raw !== "") {
         const num = parseInt(raw, 10);
-        if (!Number.isNaN(num) && num >= 1) {
+        if (!Number.isNaN(num) && num >= minQuantity) {
           setQuantity(Math.min(num, 99999));
         }
       }
@@ -139,20 +168,33 @@ export default function ProductDetails({
   const handleQuantityBlur = () => {
     const raw = quantityInputValue.trim();
     if (raw === "") {
-      setQuantity(1);
-      setQuantityInputValue("1");
+      setQuantity(minQuantity);
+      setQuantityInputValue(String(minQuantity));
       return;
     }
     const num = parseInt(raw, 10);
-    if (Number.isNaN(num) || num < 1) {
-      setQuantity(1);
-      setQuantityInputValue("1");
+    if (Number.isNaN(num) || num < minQuantity) {
+      setQuantity(minQuantity);
+      setQuantityInputValue(String(minQuantity));
     } else {
       const clamped = Math.min(num, 99999);
       setQuantity(clamped);
       setQuantityInputValue(String(clamped));
     }
   };
+
+  // When product/MOQ is set, set quantity to minQuantity so we never show below MOQ
+  useEffect(() => {
+    if (!productRecord || minQuantity <= 1) return;
+    setQuantity(minQuantity);
+    setQuantityInputValue(String(minQuantity));
+  }, [productRecord?.id, minQuantity]);
+
+  // Пока state не синхронизирован с MOQ, показываем minQuantity в инпуте (убирает мелькание 10)
+  const quantityDisplayValue =
+    productRecord && minQuantity > 1 && quantity < minQuantity
+      ? String(minQuantity)
+      : quantityInputValue;
 
   const togglePlacement = (optionKey: string) => {
     setSelectedPlacements((prev) => {
@@ -194,19 +236,38 @@ export default function ProductDetails({
       <div className={styles.customizerSection}>
         <div className={styles.imageSection}>
           <div className={styles.mainImageContainer}>
-            <div
-              className={styles.mainImage}
-              style={{ backgroundColor: selectedColor }}
-            />
-          </div>
-          <div className={styles.thumbnails}>
-            {Array.from({ length: 4 }, (_, index) => (
+            {mainPhotoUrl ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={mainPhotoUrl}
+                alt=""
+                className={styles.mainImage}
+              />
+            ) : (
               <div
-                key={index}
-                className={styles.thumbnail}
+                className={styles.mainImage}
                 style={{ backgroundColor: selectedColor }}
               />
-            ))}
+            )}
+          </div>
+          <div className={styles.thumbnails}>
+            {mainPhotoUrl
+              ? Array.from({ length: 4 }, (_, index) => (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    key={index}
+                    src={mainPhotoUrl}
+                    alt=""
+                    className={styles.thumbnail}
+                  />
+                ))
+              : Array.from({ length: 4 }, (_, index) => (
+                  <div
+                    key={index}
+                    className={styles.thumbnail}
+                    style={{ backgroundColor: selectedColor }}
+                  />
+                ))}
           </div>
         </div>
 
@@ -224,7 +285,7 @@ export default function ProductDetails({
           <div className={styles.optionGroup}>
             <h3 className={styles.optionLabel}>{t.design.color}</h3>
             <div className={styles.colorGrid}>
-              {colors.map((color, index) => (
+              {paletteColors.map((color, index) => (
                 <button
                   key={index}
                   className={`${styles.colorOption} ${
@@ -246,15 +307,15 @@ export default function ProductDetails({
               <button
                 className={styles.quantityButton}
                 onClick={decrementQuantity}
-                disabled={quantity <= 1}
+                disabled={quantity <= minQuantity}
               >
                 <MinusIcon />
               </button>
               <input
                 type="number"
                 className={styles.quantityValue}
-                value={quantityInputValue}
-                min={1}
+                value={quantityDisplayValue}
+                min={minQuantity}
                 max={99999}
                 step={1}
                 onChange={handleQuantityInputChange}
@@ -365,7 +426,7 @@ export default function ProductDetails({
                 addItem({
                   productId,
                   productName: productName ?? t.design.productName,
-                  quantity,
+                  quantity: Math.max(minQuantity, getEffectiveQuantity()),
                   selectedColor,
                   selectedCustomization,
                   selectedPlacements,

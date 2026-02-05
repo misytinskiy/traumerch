@@ -3,8 +3,8 @@
 import { useLanguage } from "../../contexts/LanguageContext";
 import Accordion from "../Accordion/Accordion";
 
-/** Airtable column names for accordion content (same order as design.accordion). */
-const AIRTABLE_ACCORDION_FIELDS = [
+/** Base field names (same order as design.accordion). EN/DE suffix added from language. */
+const ACCORDION_FIELD_BASES = [
   "[WEB] Description",
   "[WEB] Specifications",
   "[WEB] Customisation",
@@ -16,10 +16,11 @@ interface ProductAccordionProps {
 }
 
 export default function ProductAccordion({ productFields }: ProductAccordionProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const suffix = language === "de" ? " DE" : " EN";
 
   const accordionItems = t.design.accordion.map((item, index) => {
-    const fieldName = AIRTABLE_ACCORDION_FIELDS[index];
+    const fieldName = ACCORDION_FIELD_BASES[index] + suffix;
     const airtableValue = productFields && fieldName ? productFields[fieldName] : undefined;
     const content =
       airtableValue !== undefined && airtableValue !== null && airtableValue !== ""

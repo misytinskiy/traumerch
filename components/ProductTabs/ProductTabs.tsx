@@ -10,6 +10,7 @@ interface Product {
   name: string;
   price: string;
   size: "regular" | "large";
+  imageUrl: string | null;
   isSkeleton?: boolean;
 }
 
@@ -238,6 +239,7 @@ export default function ProductTabs() {
         name: "",
         price: "",
         size,
+        imageUrl: null,
         isSkeleton: true,
       })),
     []
@@ -250,6 +252,7 @@ export default function ProductTabs() {
         name: "",
         price: "",
         size: "regular" as const,
+        imageUrl: null,
         isSkeleton: true,
       })),
     []
@@ -282,11 +285,24 @@ export default function ProductTabs() {
               : `From €${sampleSalesValue}`
             : "From €6";
 
+      const mainPhoto = fields["Main Product Photo"];
+      const mainPhotoArr = Array.isArray(mainPhoto) ? mainPhoto : [];
+      const firstAttachment = mainPhotoArr[0];
+      const imageUrl =
+        firstAttachment &&
+        typeof firstAttachment === "object" &&
+        firstAttachment !== null &&
+        "url" in firstAttachment &&
+        typeof (firstAttachment as { url?: string }).url === "string"
+          ? (firstAttachment as { url: string }).url
+          : null;
+
       return {
         id: record.id,
         name,
         price,
         size,
+        imageUrl,
       };
     },
     [language]
@@ -370,11 +386,22 @@ export default function ProductTabs() {
         onClick={isSkeleton ? undefined : () => handleProductClick(product.id)}
         style={{ cursor: isSkeleton ? "default" : "pointer" }}
       >
-        <div
-          className={`${styles.productImage} ${styles[product.size]} ${
-            isSkeleton ? styles.skeletonBlock : ""
-          }`}
-        />
+        {isSkeleton ? (
+          <div
+            className={`${styles.productImage} ${styles[product.size]} ${styles.skeletonBlock}`}
+          />
+        ) : product.imageUrl ? (
+          <img
+            src={product.imageUrl}
+            alt=""
+            className={`${styles.productImage} ${styles[product.size]}`}
+          />
+        ) : (
+          <div
+            className={`${styles.productImage} ${styles[product.size]}`}
+            style={{ background: "rgba(200, 200, 200, 1)" }}
+          />
+        )}
         {isSkeleton ? (
           <>
             <div className={`${styles.skeletonText} ${styles.long}`} />

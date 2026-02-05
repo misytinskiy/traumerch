@@ -74,7 +74,11 @@
   font-weight: 400;
   line-height: 130%;
   color: rgba(0, 0, 0, 1);
-  margin: 0;
+  margin: 0 0 0.5em 0;
+}
+
+.answerText:last-child {
+  margin-bottom: 0;
   letter-spacing: 0;
   opacity: 0.6;
   max-width: 1013px;
@@ -105,15 +109,15 @@
   font-size: 20px;
   line-height: 140%;
   opacity: 0.8;
-  max-width: 700px;
+  max-width: 570px;
 }
 
 .compact .answerContent {
-  padding: 0 0 20px 0;
+  padding: 0 0 28px 0;
 }
 
 .compact .accordionItem.open .answerContainer {
-  max-height: 300px;
+  max-height: 500px;
 }
 
 /* Responsive styles for default variant */
@@ -123,7 +127,7 @@
   }
 }
 
-@media (max-width: 1536px) {
+@media (max-width: 1540px) {
   .questionButton {
     padding: 30px 0;
   }
@@ -143,7 +147,10 @@
 
   .compact .answerText {
     font-size: 16px;
+    max-width: 510px;
   }
+
+
 }
 
 @media (max-width: 768px) {
@@ -155,6 +162,7 @@
   .questionText,
   .answerText {
     font-size: 20px;
+    max-width: 546px;
   }
 
   .questionButton {
@@ -162,7 +170,7 @@
   }
 
   .answerText {
-    padding: 0 0 25px 0;
+    padding: 0 0 7px 0;
     max-width: 600px;
   }
 
@@ -221,7 +229,7 @@
   }
 
   .compact .answerContent {
-    padding: 0 0 15px 0;
+    padding: 0 0 20px 0;
   }
 }
 
@@ -235,11 +243,38 @@
   }
 
   .compact .answerContent {
-    padding: 0;
+    padding: 0 0 16px 0;
+    max-width: 390px;
   }
 
   .answerText {
     font-size: 12px;
     padding: 0;
+
   }
+
+  
+}
+
+@media ( max-width: 460px){ 
+  .compact .answerText {
+  max-width: 350px;
+}
+}
+
+@media ( max-width: 415px){ 
+  .compact .answerText {
+  max-width: 310px;
+}
+}
+
+@media ( max-width: 360px){ 
+  .compact .answerText {
+  max-width: 270px;
+} }
+
+@media ( max-width: 330px){ 
+  .compact .answerText {
+  max-width: 240px;
+}
 }

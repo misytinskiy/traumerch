@@ -24,6 +24,30 @@ interface AccordionItem {
   content: string;
 }
 
+/** Splits content by bullet separators (• ∙ ·) and returns JSX: one paragraph per point. */
+function formatBulletList(content: string) {
+  // Split on "bullet with spaces" only when preceded by something (so we don't split the leading "• ")
+  const parts = content
+    .split(/(?<=.)\s*[•∙·]\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (parts.length <= 1) {
+    return <p className={styles.answerText}>{content}</p>;
+  }
+  return (
+    <>
+      {parts.map((line, i) => {
+        const text = /^[•∙·]\s*/.test(line) ? line : "• " + line;
+        return (
+          <p key={i} className={styles.answerText}>
+            {text}
+          </p>
+        );
+      })}
+    </>
+  );
+}
+
 interface AccordionProps {
   items: AccordionItem[];
   variant?: "default" | "compact";
@@ -61,7 +85,7 @@ export default function Accordion({
           </button>
           <div className={styles.answerContainer}>
             <div className={styles.answerContent}>
-              <p className={styles.answerText}>{item.content}</p>
+              {formatBulletList(item.content)}
             </div>
           </div>
         </li>

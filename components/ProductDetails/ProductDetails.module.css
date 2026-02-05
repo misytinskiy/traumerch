@@ -25,6 +25,7 @@
   height: 788px;
   border-radius: 20px;
   transition: background-color 0.3s ease;
+  object-fit: cover;
 }
 
 .thumbnails {
@@ -40,6 +41,7 @@
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
+  object-fit: cover;
 }
 
 .thumbnail:hover {
@@ -305,7 +307,7 @@
   /* align-self: flex-end; */
 }
 
-@media (max-width: 1920px) and (max-height: 911px) {
+@media (max-width: 1920px) and (max-height: 960px) {
   .productDetails {
     padding: 167px 300px 160px;
   }
@@ -330,6 +332,15 @@
 
   .thumbnails {
     gap: 11px;
+  }
+
+  .divider {
+    margin: 16px 0;
+  }
+
+  .mainImage {
+    width: 32vw;
+    height: 701px;
   }
 
   .productName {
@@ -365,7 +376,7 @@
 
   .title {
     font-size: 32px;
-    margin: 45px 0 45px 0;
+    margin: 75px 0 45px 0;
     line-height: 42px;
   }
 }
