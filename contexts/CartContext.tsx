@@ -28,6 +28,7 @@ interface CartContextValue {
   addItem: (item: CartItem) => void;
   removeItem: (index: number) => void;
   updateItemQuantity: (index: number, quantity: number) => void;
+  updateItemDescription: (index: number, description: string) => void;
   clearCart: () => void;
 }
 
@@ -56,6 +57,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
+  const updateItemDescription = useCallback(
+    (index: number, description: string) => {
+      setItems((prev) =>
+        prev.map((item, i) =>
+          i === index ? { ...item, description } : item
+        )
+      );
+    },
+    []
+  );
+
   const clearCart = useCallback(() => {
     setItems([]);
   }, []);
@@ -70,6 +82,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         addItem,
         removeItem,
         updateItemQuantity,
+        updateItemDescription,
         clearCart,
       }}
     >

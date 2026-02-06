@@ -1,0 +1,785 @@
+.page {
+  min-height: 100vh;
+  background: #fff;
+  color: #111;
+}
+
+.main {
+  margin: 0 auto;
+  padding: 218px 300px 150px;
+}
+
+.title {
+  font-family: var(--font-eb-garamond);
+  font-weight: 400;
+  font-size: 56px;
+  text-transform: uppercase;
+  margin: 0 0 83px;
+  line-height: 64px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 21px;
+  align-items: start;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.7);
+  margin: 0 0 29px;
+}
+
+.sectionSubtitle {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 0 8px;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.rowTwo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.input,
+.select {
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  border: none;
+  background: #f5f5f5;
+  padding: 0 26px;
+  font-size: 16px;
+  color: #999;
+  outline: none;
+}
+
+.input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 54px;
+  cursor: pointer;
+}
+
+/* Кастомный триггер (кнопка, выглядящая как поле) */
+.selectTrigger {
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  border: none;
+  background: #f5f5f5;
+  padding: 0 26px 0 26px;
+  font-size: 16px;
+  color: #999;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  font-family: inherit;
+}
+
+.selectTriggerText {
+  flex: 1;
+  min-width: 0;
+}
+
+.selectTrigger .selectArrow {
+  position: static;
+  transform: none;
+  flex-shrink: 0;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+.selectArrowOpen {
+  transform: rotate(180deg);
+}
+
+.selectArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectArrow svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+/* Выпадающий список */
+.selectDropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  max-height: 240px;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.selectDropdownOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.selectOption {
+  padding: 12px 26px;
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.selectOption:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.selectOption[aria-selected="true"] {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+
+.checkboxRow input {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 4px;
+  background: rgba(246, 246, 246, 1);
+  cursor: pointer;
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px 12px;
+}
+
+.checkboxRow input:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='12' viewBox='0 0 16 12' fill='none'%3E%3Cpath d='M5.52756 12L0 6.3004L1.16534 5.09879L5.52756 9.59677L14.8347 0L16 1.20161L5.52756 12Z' fill='black'/%3E%3C/svg%3E");
+}
+
+.deliveryBlock {
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 24px 0;
+}
+
+.deliveryRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+}
+
+.dateInput {
+  height: 44px;
+  border-radius: 3px;
+  border: none;
+  background: #f5f5f5;
+  padding: 0 12px;
+  color: #111;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: inherit;
+}
+
+/* Кастомный календарь */
+.datePickerWrap {
+  position: relative;
+}
+
+.dateTrigger {
+  height: 44px;
+  width: 154px;
+  border-radius: 6px;
+  border: none;
+  background: #f5f5f5;
+  padding: 0 14px 0 14px;
+  color: #111;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dateTrigger:hover {
+  background: #eeeeee;
+}
+
+.dateTriggerText {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.dateTriggerIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
+
+.dateTriggerIcon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.dateCalendar {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  min-width: 280px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.dateCalendarOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dateCalendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.dateCalendarTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #111;
+}
+
+.dateCalendarNav {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.06);
+  color: #111;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.dateCalendarNav:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.dateWeekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.dateWeekday {
+  font-size: 11px;
+  font-weight: 500;
+  color: #999;
+  text-align: center;
+}
+
+.dateCalendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.dateDayEmpty {
+  aspect-ratio: 1;
+}
+
+.dateDay {
+  aspect-ratio: 1;
+  min-width: 32px;
+  min-height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #111;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.dateDay:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.dateDayToday {
+  background: rgba(0, 0, 0, 0.06);
+  font-weight: 500;
+}
+
+.dateDaySelected {
+  background: #111;
+  color: #fff;
+}
+
+.dateDaySelected:hover {
+  background: #333;
+  color: #fff;
+}
+
+.quoteSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.quoteList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.quoteCard {
+  display: flex;
+  gap: 12px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.quoteCard:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.quoteCard:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.quoteMedia {
+  width: 106px;
+  height: 112px;
+}
+
+.quoteImage,
+.quoteImagePlaceholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #9c9c9c;
+}
+
+.quoteInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.quoteTextStack {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.quoteHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.quoteName {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.quoteMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.quoteMetaGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quoteSwatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.quantityControls {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quantityButton {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  color: #000;
+  transition: background 0.2s ease;
+}
+
+.quantityButton:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.quantityButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.quantityInput {
+  width: 52px;
+  height: 32px;
+  border: none;
+  border-radius: 999px;
+  background: #f5f5f5;
+  text-align: center;
+  font-size: 12px;
+  outline: none;
+  appearance: textfield;
+}
+
+.quantityInput::-webkit-outer-spin-button,
+.quantityInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.footerBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 36px;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 1536px) {
+  .main {
+    padding: 180px 200px 120px;
+  }
+
+  .title {
+    font-size: 44px;
+    margin-bottom: 64px;
+    line-height: 54px;
+  }
+
+  .sectionTitle,
+  .sectionSubtitle {
+    font-size: 18px;
+  }
+
+  .layout {
+    gap: 24px;
+  }
+
+  .input,
+  .select,
+  .selectTrigger {
+    height: 42px;
+    font-size: 14px;
+    padding: 0 20px;
+  }
+
+  .checkboxRow {
+    font-size: 14px;
+    margin: 20px 0;
+  }
+
+  .checkboxRow input {
+    width: 20px;
+    height: 20px;
+  }
+
+  .deliveryBlock {
+    padding: 20px 0;
+  }
+
+  .deliveryRow {
+    font-size: 14px;
+  }
+
+  .dateInput,
+  .dateTrigger {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .quoteMedia {
+    width: 96px;
+    height: 102px;
+  }
+
+  .quoteName {
+    font-size: 18px;
+  }
+
+  .quoteMeta {
+    font-size: 14px;
+  }
+
+  .quantityButton {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .quantityInput {
+    width: 46px;
+    height: 28px;
+  }
+
+  .footerBar {
+    padding-top: 28px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .main {
+    padding: 160px 140px 100px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .title {
+    font-size: 38px;
+    margin-bottom: 52px;
+    line-height: 48px;
+  }
+
+  .sectionTitle,
+  .sectionSubtitle {
+    font-size: 16px;
+  }
+
+  .input,
+  .select,
+  .selectTrigger {
+    height: 40px;
+    font-size: 14px;
+    padding: 0 18px;
+  }
+
+  .quoteMedia {
+    width: 88px;
+    height: 96px;
+  }
+
+  .quoteName {
+    font-size: 16px;
+  }
+
+  .quoteMeta {
+    font-size: 13px;
+  }
+
+  .quantityInput {
+    width: 42px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 140px 48px 80px;
+  }
+
+  .rowTwo {
+    grid-template-columns: 1fr;
+  }
+
+  .deliveryRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quoteCard {
+    gap: 10px;
+  }
+
+  .quoteMedia {
+    width: 80px;
+    height: 86px;
+  }
+
+  .quoteHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quantityControls {
+    margin-top: 6px;
+  }
+
+  .footerBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 120px 20px 64px;
+  }
+
+  .title {
+    font-size: 30px;
+    margin-bottom: 36px;
+    line-height: 40px;
+  }
+
+  .sectionTitle {
+    font-size: 14px;
+  }
+
+  .input,
+  .select,
+  .selectTrigger {
+    height: 38px;
+    font-size: 13px;
+    padding: 0 14px;
+  }
+
+  .checkboxRow {
+    font-size: 13px;
+  }
+
+  .dateInput,
+  .dateTrigger {
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .quoteCard {
+    padding: 16px 0;
+  }
+
+  .quoteMedia {
+    width: 72px;
+    height: 78px;
+  }
+
+  .quoteName {
+    font-size: 14px;
+  }
+
+  .quoteMeta {
+    font-size: 12px;
+  }
+
+  .quantityButton {
+    width: 26px;
+    height: 26px;
+    font-size: 13px;
+  }
+
+  .quantityInput {
+    width: 38px;
+    height: 26px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 350px) {
+  .main {
+    padding: 110px 16px 56px;
+  }
+
+  .title {
+    font-size: 26px;
+    line-height: 34px;
+  }
+
+  .sectionTitle,
+  .sectionSubtitle {
+    font-size: 13px;
+  }
+}

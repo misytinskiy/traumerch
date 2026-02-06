@@ -105,6 +105,15 @@
   border-radius: 12px;
   background: #e5e5e5;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.itemImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
 }
 
 .itemContent {
@@ -133,6 +142,18 @@
   color: rgba(0, 0, 0, 0.6);
   margin: 0;
   line-height: 1.3;
+}
+
+.itemColorSwatch {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  min-width: 14px;
+  min-height: 14px;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-left: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 /* Счётчик как в ProductDetails: справа по верхнему краю */

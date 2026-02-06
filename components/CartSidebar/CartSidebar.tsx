@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../../contexts/CartContext";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { getPriceForQuantity } from "../../lib/pricing";
+import { getPriceForQuantity, getMinQuantity } from "../../lib/pricing";
+import { getMainPhotoUrl } from "../../lib/product";
 import Button from "../Button/Button";
 import styles from "./CartSidebar.module.css";
 
@@ -75,6 +77,7 @@ const RemoveIcon = () => (
 );
 
 export default function CartSidebar() {
+  const router = useRouter();
   const { isCartOpen, closeCart, items, removeItem, updateItemQuantity } =
     useCart();
   const { t } = useLanguage();
@@ -103,8 +106,19 @@ export default function CartSidebar() {
     Record<number, string>
   >({});
 
-  const getQuantityDisplay = (index: number) =>
-    quantityInputByIndex[index] ?? String(items[index]?.quantity ?? 1);
+  const getMinQtyForItem = (item: { productFields?: Record<string, unknown> }) =>
+    getMinQuantity(item.productFields);
+
+  const getQuantityDisplay = (index: number) => {
+    const item = items[index];
+    if (!item) return "1";
+    const minQty = getMinQtyForItem(item);
+    const stored = quantityInputByIndex[index];
+    if (stored !== undefined) return stored;
+    const q = item.quantity;
+    if (minQty > 1 && q < minQty) return String(minQty);
+    return String(q);
+  };
 
   const handleQuantityInputChange = (
     index: number,
@@ -115,7 +129,9 @@ export default function CartSidebar() {
       setQuantityInputByIndex((prev) => ({ ...prev, [index]: raw }));
       if (raw !== "") {
         const num = parseInt(raw, 10);
-        if (!Number.isNaN(num) && num >= 1) {
+        const item = items[index];
+        const minQty = item ? getMinQtyForItem(item) : 1;
+        if (!Number.isNaN(num) && num >= minQty) {
           updateItemQuantity(index, Math.min(num, 99999));
         }
       }
@@ -123,9 +139,11 @@ export default function CartSidebar() {
   };
 
   const handleQuantityBlur = (index: number) => {
+    const item = items[index];
+    const minQty = item ? getMinQtyForItem(item) : 1;
     const raw = getQuantityDisplay(index).trim();
     if (raw === "") {
-      updateItemQuantity(index, 1);
+      updateItemQuantity(index, minQty);
       setQuantityInputByIndex((prev) => {
         const next = { ...prev };
         delete next[index];
@@ -134,8 +152,8 @@ export default function CartSidebar() {
       return;
     }
     const num = parseInt(raw, 10);
-    if (Number.isNaN(num) || num < 1) {
-      updateItemQuantity(index, 1);
+    if (Number.isNaN(num) || num < minQty) {
+      updateItemQuantity(index, minQty);
       setQuantityInputByIndex((prev) => {
         const next = { ...prev };
         delete next[index];
@@ -195,7 +213,10 @@ export default function CartSidebar() {
                   {t?.cart?.empty ?? "No items in your quote yet."}
                 </p>
               ) : (
-                items.map((item, index) => (
+                items.map((item, index) => {
+                  const itemImageUrl = getMainPhotoUrl(item.productFields);
+                  const minQty = getMinQtyForItem(item);
+                  return (
                   <div key={`${item.productId}-${index}`} className={styles.item}>
                     <button
                       type="button"
@@ -205,35 +226,53 @@ export default function CartSidebar() {
                     >
                       <RemoveIcon />
                     </button>
-                    <div className={styles.itemImage} aria-hidden />
+                    <div className={styles.itemImage} aria-hidden>
+                      {itemImageUrl ? (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img src={itemImageUrl} alt="" />
+                      ) : null}
+                    </div>
                     <div className={styles.itemContent}>
                       <h3 className={styles.itemName}>{item.productName}</h3>
                       <p className={styles.itemPrice}>
                         Price: {getItemTotalPrice(item) ?? "—"}
                       </p>
-                      <p className={styles.itemColor}>Color: {item.selectedColor}</p>
+                      <p className={styles.itemColor}>
+                        Color:{" "}
+                        {item.selectedColor ? (
+                          <span
+                            className={styles.itemColorSwatch}
+                            style={{ backgroundColor: item.selectedColor }}
+                            aria-hidden
+                          />
+                        ) : (
+                          "—"
+                        )}
+                      </p>
                     </div>
                     <div className={styles.quantityControl}>
                       <button
                         type="button"
                         className={styles.quantityButton}
                         onClick={() => {
-                          const next = Math.max(1, item.quantity - 1);
+                          const next = Math.max(minQty, item.quantity - 1);
                           updateItemQuantity(index, next);
                           setQuantityInputByIndex((prev) => ({
                             ...prev,
                             [index]: String(next),
                           }));
                         }}
-                        disabled={item.quantity <= 1}
+                        disabled={item.quantity <= minQty}
                       >
-                        −
+                        <svg width="12" height="1" viewBox="0 0 12 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                          <rect width="12" height="1" rx="0.5" fill="currentColor" />
+                        </svg>
                       </button>
                       <input
                         type="number"
                         className={styles.quantityValue}
                         value={getQuantityDisplay(index)}
-                        min={1}
+                        min={minQty}
                         max={99999}
                         onChange={(e) => handleQuantityInputChange(index, e)}
                         onBlur={() => handleQuantityBlur(index)}
@@ -251,11 +290,15 @@ export default function CartSidebar() {
                           }));
                         }}
                       >
-                        +
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden>
+                          <rect y="5.92188" width="12.5" height="0.657895" rx="0.328947" fill="currentColor" />
+                          <rect x="5.92114" y="12.5" width="12.5" height="0.657895" rx="0.328947" transform="rotate(-90 5.92114 12.5)" fill="currentColor" />
+                        </svg>
                       </button>
                     </div>
                   </div>
-                ))
+                  );
+                })
               )}
             </div>
 
@@ -267,7 +310,7 @@ export default function CartSidebar() {
                   arrow="white"
                   onClick={() => {
                     closeCart();
-                    // Later: navigate to quote page or open quote overlay
+                    router.push("/quote/view");
                   }}
                 >
                   {t?.cart?.viewQuote ?? "VIEW MY QUOTE"}

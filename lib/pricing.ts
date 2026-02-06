@@ -62,3 +62,23 @@ export function getPriceForQuantity(
   const total = unitPrice * quantity;
   return `€${total.toFixed(total % 1 === 0 ? 0 : 1)}`;
 }
+
+const MOQ_KEYS = ["# MOQ | SALES", "MOQ | SALES", "# MOQ", "MOQ"];
+
+/** Минимальный заказ из полей Airtable (MOQ), по умолчанию 1. */
+export function getMinQuantity(
+  fields: Record<string, unknown> | undefined
+): number {
+  if (!fields) return 1;
+  let raw: unknown;
+  for (const key of MOQ_KEYS) {
+    const v = fields[key];
+    if (v !== undefined && v !== null && v !== "") {
+      raw = v;
+      break;
+    }
+  }
+  if (raw === undefined) return 1;
+  const n = typeof raw === "number" ? raw : parseInt(String(raw), 10);
+  return Number.isNaN(n) || n < 1 ? 1 : Math.min(n, 99999);
+}

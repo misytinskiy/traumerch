@@ -1,0 +1,522 @@
+.page {
+  min-height: 100vh;
+  background: #fff;
+  color: #111;
+}
+
+.main {
+
+margin: 0 auto;
+  padding: 220px 300px 150px;
+}
+
+.title {
+  font-family: var(--font-eb-garamond);
+  font-weight: 400;
+  font-size: 56px;
+  text-transform: uppercase;
+  margin: 0 0 80px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.empty {
+  padding: 40px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.card {
+  display: flex;
+
+  gap: 20px;
+}
+
+.media {
+  width: 422px;
+  height: 475px;
+}
+
+.image,
+.imagePlaceholder {
+  width: 100%;
+  aspect-ratio: 1 / 1.15;
+  border-radius: 10px;
+  background: #9c9c9c;
+  object-fit: cover;
+}
+
+.image {
+  display: block;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.productName {
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.deleteButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: none;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.deleteButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.metaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 27px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.metaRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.metaLabel {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  text-transform: none;
+}
+
+.colorValue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.colorSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.quantityControls {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quantityButton {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1;
+  color: #000;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.quantityButton:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.quantityButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.quantityInput {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  width: 52px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  outline: none;
+  text-align: center;
+  background-color: #f5f5f5;
+  border-radius: 500000px;
+  font-family: inherit;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  box-sizing: border-box;
+}
+
+.quantityInput::-webkit-outer-spin-button,
+.quantityInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.metaRight {
+  justify-self: end;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.descriptionBlock {
+  padding-top: 8px;
+}
+
+.descriptionInput {
+  width: 100%;
+  min-height: 211px;
+  resize: vertical;
+  border: none;
+  border-radius: 10px;
+  background: #f5f5f5;
+  padding: 16px;
+  font-size: 16px;
+  color: #111;
+  font-family: Inter;
+}
+
+.descriptionInput::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.uploadRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.uploadLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.uploadLabel svg {
+  width: 16px;
+  height: 16px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileName {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.footerBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  margin-top: 100px;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 900px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .metaRow {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+
+  .metaRight {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 110px 16px 64px;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .metaRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footerBar {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 1536px) {
+  .main {
+    padding: 180px 200px 120px;
+  }
+
+  .title {
+    font-size: 44px;
+    margin-bottom: 64px;
+  }
+
+  .list {
+    gap: 44px;
+  }
+
+  .card {
+    gap: 16px;
+  }
+
+  .media {
+    width: 320px;
+    height: 360px;
+  }
+
+  .productName {
+    font-size: 18px;
+  }
+
+  .deleteButton {
+    font-size: 14px;
+  }
+
+  .metaBlock {
+    gap: 12px;
+    padding: 22px 0;
+  }
+
+  .metaLabel,
+  .colorValue,
+  .metaRight {
+    font-size: 14px;
+  }
+
+  .quantityButton {
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+  }
+
+  .quantityInput {
+    width: 46px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .descriptionInput {
+    min-height: 170px;
+    font-size: 14px;
+  }
+
+  .uploadRow {
+    font-size: 12px;
+  }
+
+  .footerBar {
+    margin-top: 72px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .main {
+    padding: 160px 140px 100px;
+  }
+
+  .title {
+    font-size: 38px;
+    margin-bottom: 52px;
+  }
+
+  .list {
+    gap: 36px;
+  }
+
+  .media {
+    width: 280px;
+    height: 320px;
+  }
+
+  .productName {
+    font-size: 16px;
+  }
+
+  .deleteButton {
+    font-size: 13px;
+  }
+
+  .metaLabel,
+  .colorValue,
+  .metaRight {
+    font-size: 13px;
+  }
+
+  .quantityButton {
+    width: 26px;
+    height: 26px;
+    font-size: 16px;
+  }
+
+  .quantityInput {
+    width: 42px;
+    height: 26px;
+    font-size: 13px;
+  }
+
+  .descriptionInput {
+    min-height: 150px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 140px 48px 80px;
+  }
+
+  .card {
+    flex-direction: column;
+  }
+
+  .media {
+    width: 100%;
+    height: auto;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .metaRow {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+
+  .quantityControls {
+    margin-left: 0;
+  }
+
+  .metaRight {
+    justify-self: start;
+  }
+
+  .footerBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 120px 20px 64px;
+  }
+
+  .title {
+    font-size: 30px;
+    margin-bottom: 36px;
+  }
+
+  .list {
+    gap: 28px;
+  }
+
+  .metaBlock {
+    padding: 18px 0;
+  }
+
+  .quantityControls {
+    gap: 6px;
+  }
+
+  .quantityButton {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .quantityInput {
+    width: 40px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .descriptionInput {
+    min-height: 140px;
+  }
+
+  .uploadRow {
+    font-size: 11px;
+  }
+
+  .footerBar {
+    gap: 12px;
+    margin-top: 48px;
+  }
+}
+
+@media (max-width: 350px) {
+  .main {
+    padding: 110px 16px 56px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .productName {
+    font-size: 15px;
+  }
+
+  .metaLabel,
+  .colorValue,
+  .metaRight {
+    font-size: 12px;
+  }
+}
