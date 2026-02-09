@@ -79,6 +79,9 @@ export async function POST(request: NextRequest) {
     console.log("service:", service);
     console.log("description:", description);
 
+    const toStringField = (value: unknown) =>
+      typeof value === "string" ? value : value == null ? "" : String(value);
+
     // Map form data to Airtable fields based on actual table structure
     // Fields: Name, Surname, Email, Phone, Company name, Address, Apartment, Postal code, City, Country, Vat number, Preferred delivery date, Use the same address for shipping, Product quantity
     // Also supports: Preferred Type, Username, Description, Request Type, Services (from QuoteOverlay)
@@ -88,18 +91,32 @@ export async function POST(request: NextRequest) {
     > = {};
     
     // Contact form fields (from contact page)
-    if (name) airtableFields["Name"] = name;
-    if (surname) airtableFields["Surname"] = surname;
-    if (email) airtableFields["Email"] = email;
-    if (phone) airtableFields["Phone"] = phone;
-    if (companyName) airtableFields["Company name"] = companyName;
-    if (address) airtableFields["Address"] = address;
-    if (apartment) airtableFields["Apartment"] = apartment;
-    if (postalCode) airtableFields["Postal code"] = postalCode;
-    if (city) airtableFields["City"] = city;
-    if (country) airtableFields["Country"] = country;
-    if (vatNumber) airtableFields["Vat number"] = vatNumber;
-    if (preferredDeliveryDate) airtableFields["Preferred delivery date"] = preferredDeliveryDate;
+    const nameStr = toStringField(name);
+    if (nameStr) airtableFields["Name"] = nameStr;
+    const surnameStr = toStringField(surname);
+    if (surnameStr) airtableFields["Surname"] = surnameStr;
+    const emailStr = toStringField(email);
+    if (emailStr) airtableFields["Email"] = emailStr;
+    const phoneStr = toStringField(phone);
+    if (phoneStr) airtableFields["Phone"] = phoneStr;
+    const companyNameStr = toStringField(companyName);
+    if (companyNameStr) airtableFields["Company name"] = companyNameStr;
+    const addressStr = toStringField(address);
+    if (addressStr) airtableFields["Address"] = addressStr;
+    const apartmentStr = toStringField(apartment);
+    if (apartmentStr) airtableFields["Apartment"] = apartmentStr;
+    const postalCodeStr = toStringField(postalCode);
+    if (postalCodeStr) airtableFields["Postal code"] = postalCodeStr;
+    const cityStr = toStringField(city);
+    if (cityStr) airtableFields["City"] = cityStr;
+    const countryStr = toStringField(country);
+    if (countryStr) airtableFields["Country"] = countryStr;
+    const vatNumberStr = toStringField(vatNumber);
+    if (vatNumberStr) airtableFields["Vat number"] = vatNumberStr;
+    const preferredDeliveryDateStr = toStringField(preferredDeliveryDate);
+    if (preferredDeliveryDateStr) {
+      airtableFields["Preferred delivery date"] = preferredDeliveryDateStr;
+    }
     if (useSameAddressForShipping !== undefined) {
       const useSame =
         typeof useSameAddressForShipping === "string"
@@ -143,7 +160,8 @@ export async function POST(request: NextRequest) {
     }
     
     // QuoteOverlay form fields (legacy support)
-    if (description) airtableFields["Description"] = description;
+    const descriptionStr = toStringField(description);
+    if (descriptionStr) airtableFields["Description"] = descriptionStr;
 
     const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024;
     if (attachments.length > 0) {
@@ -160,21 +178,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Services - single select (exact Airtable option names required)
-    if (service) {
+    const serviceStr = toStringField(service);
+    if (serviceStr) {
       const servicesMap: Record<string, string> = {
         "Private Label": "Private label",
         "Influancer Activation": "Influancer Activation",
         "Smart Platform": "Smart Platform",
       };
-      const airtableService = servicesMap[service] ?? service;
+      const airtableService = servicesMap[serviceStr] ?? serviceStr;
       airtableFields["Services"] = airtableService;
       console.log("✅ Set Services to:", airtableService);
     }
     
     // Request Type - capitalize first letter (Merchandise or Services)
-    if (requestType) {
+    const requestTypeStr = toStringField(requestType);
+    if (requestTypeStr) {
       airtableFields["Request Type"] =
-        requestType.charAt(0).toUpperCase() + requestType.slice(1);
+        requestTypeStr.charAt(0).toUpperCase() + requestTypeStr.slice(1);
     }
     
     // Preferred Type (Messenger) - map our messenger names to Airtable select options
@@ -184,7 +204,8 @@ export async function POST(request: NextRequest) {
     console.log("preferredMessenger type:", typeof preferredMessenger);
     console.log("preferredMessenger truthy?", !!preferredMessenger);
     
-    if (preferredMessenger) {
+    const preferredMessengerStr = toStringField(preferredMessenger);
+    if (preferredMessengerStr) {
       // Map form messenger names to Airtable select options (exact match required)
       const messengerMap: Record<string, string> = {
         WhatsApp: "WhatsApp",
@@ -194,10 +215,10 @@ export async function POST(request: NextRequest) {
       };
       
       console.log("messengerMap:", messengerMap);
-      console.log("Looking for key:", preferredMessenger);
-      console.log("Key exists in map?", preferredMessenger in messengerMap);
+      console.log("Looking for key:", preferredMessengerStr);
+      console.log("Key exists in map?", preferredMessengerStr in messengerMap);
       
-      const mappedMessenger = messengerMap[preferredMessenger];
+      const mappedMessenger = messengerMap[preferredMessengerStr];
       console.log("mappedMessenger result:", mappedMessenger);
       
       if (mappedMessenger) {
@@ -217,22 +238,23 @@ export async function POST(request: NextRequest) {
     console.log("messengerContact:", messengerContact);
     console.log("preferredMessenger for contact:", preferredMessenger);
     
-    if (messengerContact && !phone) {
+    const messengerContactStr = toStringField(messengerContact);
+    if (messengerContactStr && !phoneStr) {
       // Only use messengerContact if phone wasn't provided directly (from contact form)
-      const messengerName = preferredMessenger?.toLowerCase() || "";
+      const messengerName = preferredMessengerStr.toLowerCase() || "";
       console.log("messengerName (lowercase):", messengerName);
       
       if (messengerName === "whatsapp") {
         // For WhatsApp, use Phone field
-        airtableFields["Phone"] = messengerContact;
-        console.log("✅ Set Phone to:", messengerContact);
+        airtableFields["Phone"] = messengerContactStr;
+        console.log("✅ Set Phone to:", messengerContactStr);
       } else if (messengerName === "email") {
         // Email is already in Email field, skip contact info
         console.log("ℹ️ Email selected - contact info not needed");
       } else if (messengerName === "teams" || messengerName === "slack") {
         // For Teams, Slack, etc., use Username field
-        airtableFields["Username"] = messengerContact;
-        console.log("✅ Set Username to:", messengerContact);
+        airtableFields["Username"] = messengerContactStr;
+        console.log("✅ Set Username to:", messengerContactStr);
       } else {
         console.log("⚠️ Unknown messenger type for contact:", messengerName);
       }

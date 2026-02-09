@@ -22,7 +22,7 @@ const getSwatchColor = (color: string) => {
 
 export default function QuoteContactPage() {
   const router = useRouter();
-  const { items, updateItemQuantity } = useCart();
+  const { items, updateItemQuantity, clearCart } = useCart();
   const [quantityInputByIndex, setQuantityInputByIndex] = useState<
     Record<number, string>
   >({});
@@ -247,6 +247,7 @@ export default function QuoteContactPage() {
 
       if (submitResponse.ok) {
         console.log("Successfully submitted to Airtable:", result);
+        clearCart();
         router.push("/quote/thank-you");
       } else {
         console.error("Failed to submit to Airtable:", result);
