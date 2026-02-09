@@ -44,6 +44,20 @@
   max-width: 1620px;
 }
 
+.imageContainer {
+  width: 100%;
+  max-width: 1620px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.thankYouImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+}
+
 /* Responsive */
 @media (max-width: 1536px) {
   .main {
@@ -76,6 +90,10 @@
   .placeholder {
     height: 400px;
   }
+
+  .imageContainer {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -95,5 +113,9 @@
 
   .placeholder {
     height: 300px;
+  }
+
+  .imageContainer {
+    max-width: 100%;
   }
 }

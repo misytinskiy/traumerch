@@ -20,7 +20,10 @@ export default function ThankYouPage() {
           {t.quote?.thankYouDescription ||
             "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable."}
         </p>
-        <div className={styles.placeholder}></div>
+        <div className={styles.imageContainer}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/thankYou.gif" alt="" className={styles.thankYouImage} />
+        </div>
       </main>
 
       <CTA />
