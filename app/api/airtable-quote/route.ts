@@ -13,9 +13,28 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json();
+    const contentType = request.headers.get("content-type") || "";
+    let body: Record<string, unknown> = {};
+    let attachments: File[] = [];
+
+    if (contentType.includes("multipart/form-data")) {
+      const formData = await request.formData();
+      const entries = Array.from(formData.entries());
+      body = entries.reduce<Record<string, unknown>>((acc, [key, value]) => {
+        if (value instanceof File) return acc;
+        acc[key] = value;
+        return acc;
+      }, {});
+      attachments = formData
+        .getAll("attachments")
+        .filter((value): value is File => value instanceof File && value.size > 0);
+    } else {
+      body = await request.json();
+    }
+
     console.log("=== AIRTABLE QUOTE API - REQUEST BODY ===");
     console.log("Full body:", JSON.stringify(body, null, 2));
+    console.log("Attachments count:", attachments.length);
     
     const {
       name,
@@ -63,7 +82,10 @@ export async function POST(request: NextRequest) {
     // Map form data to Airtable fields based on actual table structure
     // Fields: Name, Surname, Email, Phone, Company name, Address, Apartment, Postal code, City, Country, Vat number, Preferred delivery date, Use the same address for shipping, Product quantity
     // Also supports: Preferred Type, Username, Description, Request Type, Services (from QuoteOverlay)
-    const airtableFields: Record<string, string | number | boolean> = {};
+    const airtableFields: Record<
+      string,
+      string | number | boolean | Array<{ url: string; filename?: string }>
+    > = {};
     
     // Contact form fields (from contact page)
     if (name) airtableFields["Name"] = name;
@@ -79,7 +101,11 @@ export async function POST(request: NextRequest) {
     if (vatNumber) airtableFields["Vat number"] = vatNumber;
     if (preferredDeliveryDate) airtableFields["Preferred delivery date"] = preferredDeliveryDate;
     if (useSameAddressForShipping !== undefined) {
-      airtableFields["Use the same address for shipping"] = useSameAddressForShipping;
+      const useSame =
+        typeof useSameAddressForShipping === "string"
+          ? useSameAddressForShipping === "true"
+          : Boolean(useSameAddressForShipping);
+      airtableFields["Use the same address for shipping"] = useSame;
     }
     if (productQuantity !== undefined && productQuantity !== null) {
       // Убеждаемся, что отправляется как целое число (integer)
@@ -118,6 +144,20 @@ export async function POST(request: NextRequest) {
     
     // QuoteOverlay form fields (legacy support)
     if (description) airtableFields["Description"] = description;
+
+    const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024;
+    if (attachments.length > 0) {
+      const tooLarge = attachments.find((file) => file.size > MAX_ATTACHMENT_BYTES);
+      if (tooLarge) {
+        return NextResponse.json(
+          {
+            error: "Attachment too large",
+            details: `${tooLarge.name} exceeds 5MB upload limit for direct attachment API`,
+          },
+          { status: 413 }
+        );
+      }
+    }
 
     // Services - single select (exact Airtable option names required)
     if (service) {
@@ -246,6 +286,47 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
+
+    if (attachments.length > 0) {
+      const recordId = data.id as string;
+      const attachmentFieldName = "Attachments";
+      const uploadUrl = `https://content.airtable.com/v0/${BASE_ID}/${recordId}/${encodeURIComponent(
+        attachmentFieldName
+      )}/uploadAttachment`;
+
+      for (const file of attachments) {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const base64 = buffer.toString("base64");
+        const contentType = file.type || "application/octet-stream";
+        const filename = file.name || "attachment";
+
+        const uploadResponse = await fetch(uploadUrl, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            file: base64,
+            filename,
+            contentType,
+          }),
+        });
+
+        if (!uploadResponse.ok) {
+          const uploadErrorText = await uploadResponse.text();
+          console.error("Airtable attachment upload error:", uploadErrorText);
+          return NextResponse.json(
+            {
+              error: "Failed to upload attachment to Airtable",
+              details: uploadErrorText,
+            },
+            { status: uploadResponse.status }
+          );
+        }
+      }
+    }
+
     return NextResponse.json({
       success: true,
       recordId: data.id,

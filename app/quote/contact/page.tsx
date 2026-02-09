@@ -177,6 +177,11 @@ export default function QuoteContactPage() {
     setIsSubmitting(true);
 
     try {
+      const combinedDescription = items
+        .map((item) => item.description?.trim() || "")
+        .filter(Boolean)
+        .join("\n");
+
       // Calculate total product quantity from all quantityInput fields (sum of all items' quantities)
       const totalQuantity = items.reduce((sum, item) => {
         const itemQty = item.quantity || 0;
@@ -203,6 +208,7 @@ export default function QuoteContactPage() {
         vatNumber: formData.vatNumber || undefined,
         preferredDeliveryDate: deliveryDate || undefined,
         useSameAddressForShipping: formData.useSameAddress,
+        description: combinedDescription || undefined,
       };
 
       // Product quantity - только если есть товары и сумма > 0, отправляем как число
@@ -218,13 +224,23 @@ export default function QuoteContactPage() {
       console.log("=== CONTACT FORM SUBMISSION ===");
       console.log("submitData:", JSON.stringify(submitData, null, 2));
 
+      const attachments = items
+        .map((item) => item.file ?? null)
+        .filter((file): file is File => Boolean(file));
+
+      const submitForm = new FormData();
+      Object.entries(submitData).forEach(([key, value]) => {
+        if (value === undefined || value === null || value === "") return;
+        submitForm.append(key, String(value));
+      });
+      attachments.forEach((file) => {
+        submitForm.append("attachments", file);
+      });
+
       // Submit data to Airtable
       const submitResponse = await fetch("/api/airtable-quote", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(submitData),
+        body: submitForm,
       });
 
       const result = await submitResponse.json();

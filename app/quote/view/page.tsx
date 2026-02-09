@@ -83,7 +83,13 @@ const getSwatchColor = (color: string) => {
 
 export default function QuoteViewPage() {
   const router = useRouter();
-  const { items, removeItem, updateItemQuantity, updateItemDescription } =
+  const {
+    items,
+    removeItem,
+    updateItemQuantity,
+    updateItemDescription,
+    updateItemFile,
+  } =
     useCart();
   const [quantityInputByIndex, setQuantityInputByIndex] = useState<
     Record<number, string>
@@ -278,7 +284,8 @@ export default function QuoteViewPage() {
                         type="file"
                         className={styles.fileInput}
                         onChange={(e) => {
-                          const file = e.target.files?.[0];
+                          const file = e.target.files?.[0] ?? null;
+                          updateItemFile(index, file);
                           setFileNamesByIndex((prev) => ({
                             ...prev,
                             [index]: file?.name ?? "",

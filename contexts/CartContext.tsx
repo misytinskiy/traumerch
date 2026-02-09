@@ -16,6 +16,7 @@ export interface CartItem {
   selectedCustomization: string;
   selectedPlacements: string[];
   description?: string;
+  file?: File | null;
   /** Поля Airtable товара для расчёта цены по количеству (из ProductDetails). */
   productFields?: Record<string, unknown>;
 }
@@ -29,6 +30,7 @@ interface CartContextValue {
   removeItem: (index: number) => void;
   updateItemQuantity: (index: number, quantity: number) => void;
   updateItemDescription: (index: number, description: string) => void;
+  updateItemFile: (index: number, file: File | null) => void;
   clearCart: () => void;
 }
 
@@ -68,6 +70,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     []
   );
 
+  const updateItemFile = useCallback((index: number, file: File | null) => {
+    setItems((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, file } : item
+      )
+    );
+  }, []);
+
   const clearCart = useCallback(() => {
     setItems([]);
   }, []);
@@ -83,6 +93,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         removeItem,
         updateItemQuantity,
         updateItemDescription,
+        updateItemFile,
         clearCart,
       }}
     >
