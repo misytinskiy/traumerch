@@ -27,6 +27,22 @@ export default function QuoteContactPage() {
     Record<number, string>
   >({});
 
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    companyName: "",
+    phone: "",
+    address: "",
+    apartment: "",
+    postalCode: "",
+    city: "",
+    vatNumber: "",
+    useSameAddress: true,
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const displayItems = useMemo(() => items, [items]);
 
   const countryOptions = ["Italy", "Germany", "France", "Spain"];
@@ -139,6 +155,95 @@ export default function QuoteContactPage() {
     updateItemQuantity(index, clamped);
   };
 
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
+
+    // Basic validation
+    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim()) {
+      alert("Please fill in required fields: First name, Last name, and Email");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Calculate total product quantity from all quantityInput fields (sum of all items' quantities)
+      const totalQuantity = items.reduce((sum, item) => {
+        const itemQty = item.quantity || 0;
+        const numQty = typeof itemQty === 'number' ? itemQty : parseInt(String(itemQty), 10) || 0;
+        return sum + numQty;
+      }, 0);
+
+      console.log("=== QUANTITY CALCULATION ===");
+      console.log("items:", items.map(item => ({ id: item.productId, quantity: item.quantity, type: typeof item.quantity })));
+      console.log("totalQuantity:", totalQuantity, "(type:", typeof totalQuantity, ")");
+
+      // Prepare data for Airtable
+      const submitData: Record<string, unknown> = {
+        name: formData.firstName,
+        surname: formData.lastName,
+        email: formData.email,
+        phone: formData.phone || undefined,
+        companyName: formData.companyName || undefined,
+        address: formData.address || undefined,
+        apartment: formData.apartment || undefined,
+        postalCode: formData.postalCode || undefined,
+        city: formData.city || undefined,
+        country: selectedCountry || undefined,
+        vatNumber: formData.vatNumber || undefined,
+        preferredDeliveryDate: deliveryDate || undefined,
+        useSameAddressForShipping: formData.useSameAddress,
+      };
+
+      // Product quantity - только если есть товары и сумма > 0, отправляем как число
+      // Преобразуем в целое число, чтобы избежать проблем с типами
+      if (totalQuantity > 0) {
+        const qtyInt = Math.floor(Number(totalQuantity));
+        submitData.productQuantity = qtyInt;
+        console.log("=== PRODUCT QUANTITY IN SUBMIT ===");
+        console.log("totalQuantity:", totalQuantity, "(type:", typeof totalQuantity, ")");
+        console.log("qtyInt:", qtyInt, "(type:", typeof qtyInt, ", isInteger:", Number.isInteger(qtyInt), ")");
+      }
+
+      console.log("=== CONTACT FORM SUBMISSION ===");
+      console.log("submitData:", JSON.stringify(submitData, null, 2));
+
+      // Submit data to Airtable
+      const submitResponse = await fetch("/api/airtable-quote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(submitData),
+      });
+
+      const result = await submitResponse.json();
+
+      if (submitResponse.ok) {
+        console.log("Successfully submitted to Airtable:", result);
+        router.push("/quote/thank-you");
+      } else {
+        console.error("Failed to submit to Airtable:", result);
+        alert("Failed to submit form. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className={styles.page}>
       <ResponsiveHeader />
@@ -154,17 +259,76 @@ export default function QuoteContactPage() {
             <h2 className={styles.sectionTitle}>Your information</h2>
             <div className={styles.formGrid}>
               <div className={styles.rowTwo}>
-                <input className={styles.input} placeholder="First name" />
-                <input className={styles.input} placeholder="Last name" />
+                <input
+                  className={styles.input}
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  placeholder="First name"
+                  required
+                />
+                <input
+                  className={styles.input}
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  placeholder="Last name"
+                  required
+                />
               </div>
-              <input className={styles.input} placeholder="Email" />
-              <input className={styles.input} placeholder="Company name" />
-              <input className={styles.input} placeholder="Phone number" />
-              <input className={styles.input} placeholder="Address" />
-              <input className={styles.input} placeholder="Apartment (optional)" />
+              <input
+                className={styles.input}
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Email"
+                required
+              />
+              <input
+                className={styles.input}
+                name="companyName"
+                value={formData.companyName}
+                onChange={handleInputChange}
+                placeholder="Company name"
+              />
+              <input
+                className={styles.input}
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="Phone number"
+              />
+              <input
+                className={styles.input}
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                placeholder="Address"
+              />
+              <input
+                className={styles.input}
+                name="apartment"
+                value={formData.apartment}
+                onChange={handleInputChange}
+                placeholder="Apartment (optional)"
+              />
               <div className={styles.rowTwo}>
-                <input className={styles.input} placeholder="Postal code" />
-                <input className={styles.input} placeholder="City" />
+                <input
+                  className={styles.input}
+                  name="postalCode"
+                  value={formData.postalCode}
+                  onChange={handleInputChange}
+                  placeholder="Postal code"
+                />
+                <input
+                  className={styles.input}
+                  name="city"
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  placeholder="City"
+                />
               </div>
               <div className={styles.rowTwo}>
                 <div className={styles.selectWrap} ref={selectWrapRef}>
@@ -205,12 +369,23 @@ export default function QuoteContactPage() {
                     ))}
                   </ul>
                 </div>
-                <input className={styles.input} placeholder="Vat number" />
+                <input
+                  className={styles.input}
+                  name="vatNumber"
+                  value={formData.vatNumber}
+                  onChange={handleInputChange}
+                  placeholder="Vat number"
+                />
               </div>
             </div>
 
             <label className={styles.checkboxRow}>
-              <input type="checkbox" defaultChecked />
+              <input
+                type="checkbox"
+                name="useSameAddress"
+                checked={formData.useSameAddress}
+                onChange={handleInputChange}
+              />
               <span>Use the same address for shipping</span>
             </label>
 
@@ -327,8 +502,10 @@ export default function QuoteContactPage() {
             size="medium"
             padding="31px 93px"
             arrow="white"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
           >
-            Continue
+            {isSubmitting ? "Submitting..." : "Continue"}
           </Button>
         </div>
           </section>

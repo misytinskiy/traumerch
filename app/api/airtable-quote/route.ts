@@ -19,7 +19,19 @@ export async function POST(request: NextRequest) {
     
     const {
       name,
+      surname,
       email,
+      phone,
+      companyName,
+      address,
+      apartment,
+      postalCode,
+      city,
+      country,
+      vatNumber,
+      preferredDeliveryDate,
+      useSameAddressForShipping,
+      productQuantity,
       preferredMessenger,
       messengerContact,
       requestType,
@@ -29,7 +41,19 @@ export async function POST(request: NextRequest) {
 
     console.log("=== EXTRACTED VALUES ===");
     console.log("name:", name);
+    console.log("surname:", surname);
     console.log("email:", email);
+    console.log("phone:", phone);
+    console.log("companyName:", companyName);
+    console.log("address:", address);
+    console.log("apartment:", apartment);
+    console.log("postalCode:", postalCode);
+    console.log("city:", city);
+    console.log("country:", country);
+    console.log("vatNumber:", vatNumber);
+    console.log("preferredDeliveryDate:", preferredDeliveryDate);
+    console.log("useSameAddressForShipping:", useSameAddressForShipping);
+    console.log("productQuantity:", productQuantity);
     console.log("preferredMessenger:", preferredMessenger, "(type:", typeof preferredMessenger, ")");
     console.log("messengerContact:", messengerContact);
     console.log("requestType:", requestType);
@@ -37,12 +61,62 @@ export async function POST(request: NextRequest) {
     console.log("description:", description);
 
     // Map form data to Airtable fields based on actual table structure
-    // Fields: Name, Email, Phone, Preferred Type, Username, Description, Request Type, Attachments
-    const airtableFields: Record<string, string> = {};
+    // Fields: Name, Surname, Email, Phone, Company name, Address, Apartment, Postal code, City, Country, Vat number, Preferred delivery date, Use the same address for shipping, Product quantity
+    // Also supports: Preferred Type, Username, Description, Request Type, Services (from QuoteOverlay)
+    const airtableFields: Record<string, string | number | boolean> = {};
     
-    // Basic text fields
+    // Contact form fields (from contact page)
     if (name) airtableFields["Name"] = name;
+    if (surname) airtableFields["Surname"] = surname;
     if (email) airtableFields["Email"] = email;
+    if (phone) airtableFields["Phone"] = phone;
+    if (companyName) airtableFields["Company name"] = companyName;
+    if (address) airtableFields["Address"] = address;
+    if (apartment) airtableFields["Apartment"] = apartment;
+    if (postalCode) airtableFields["Postal code"] = postalCode;
+    if (city) airtableFields["City"] = city;
+    if (country) airtableFields["Country"] = country;
+    if (vatNumber) airtableFields["Vat number"] = vatNumber;
+    if (preferredDeliveryDate) airtableFields["Preferred delivery date"] = preferredDeliveryDate;
+    if (useSameAddressForShipping !== undefined) {
+      airtableFields["Use the same address for shipping"] = useSameAddressForShipping;
+    }
+    if (productQuantity !== undefined && productQuantity !== null) {
+      // Убеждаемся, что отправляется как целое число (integer)
+      const qtyNum = typeof productQuantity === 'string' 
+        ? parseInt(productQuantity, 10) 
+        : Math.floor(Number(productQuantity));
+      
+      console.log("=== PRODUCT QUANTITY PROCESSING ===");
+      console.log("productQuantity raw:", productQuantity, "(type:", typeof productQuantity, ")");
+      console.log("qtyNum:", qtyNum, "(type:", typeof qtyNum, ", isNaN:", Number.isNaN(qtyNum), ")");
+      
+      if (!Number.isNaN(qtyNum) && qtyNum > 0 && Number.isInteger(qtyNum)) {
+        // Пробуем разные варианты названия поля
+        // Airtable может требовать точное совпадение названия поля
+        const fieldNames = [
+          "Product quantity",
+          "product quantity",
+          "Product Quantity",
+          "Quantity",
+          "quantity",
+        ];
+        
+        // Airtable field is single line text, so send as string
+        const qtyStr = String(qtyNum);
+        // Пробуем первое название (наиболее вероятное)
+        airtableFields["Product quantity"] = qtyStr;
+        console.log("✅ Set Product quantity to:", qtyStr, "(type:", typeof qtyStr, ")");
+        console.log("✅ Trying field name: 'Product quantity'");
+      } else {
+        console.log("⚠️ Invalid productQuantity value:", productQuantity, "->", qtyNum);
+        console.log("⚠️ Conditions: isNaN:", Number.isNaN(qtyNum), ", > 0:", qtyNum > 0, ", isInteger:", Number.isInteger(qtyNum));
+      }
+    } else {
+      console.log("ℹ️ productQuantity is undefined or null");
+    }
+    
+    // QuoteOverlay form fields (legacy support)
     if (description) airtableFields["Description"] = description;
 
     // Services - single select (exact Airtable option names required)
@@ -103,7 +177,8 @@ export async function POST(request: NextRequest) {
     console.log("messengerContact:", messengerContact);
     console.log("preferredMessenger for contact:", preferredMessenger);
     
-    if (messengerContact) {
+    if (messengerContact && !phone) {
+      // Only use messengerContact if phone wasn't provided directly (from contact form)
       const messengerName = preferredMessenger?.toLowerCase() || "";
       console.log("messengerName (lowercase):", messengerName);
       
@@ -122,11 +197,17 @@ export async function POST(request: NextRequest) {
         console.log("⚠️ Unknown messenger type for contact:", messengerName);
       }
     } else {
-      console.log("ℹ️ No messengerContact provided");
+      console.log("ℹ️ No messengerContact provided or phone already set");
     }
     
     console.log("=== FINAL AIRTABLE FIELDS ===");
     console.log("Sending to Airtable:", JSON.stringify(airtableFields, null, 2));
+    console.log("Product quantity field:", airtableFields["Product quantity"], "(type:", typeof airtableFields["Product quantity"], ")");
+    
+    // Проверяем типы всех полей перед отправкой
+    Object.entries(airtableFields).forEach(([key, value]) => {
+      console.log(`Field "${key}":`, value, "(type:", typeof value, ")");
+    });
 
     // Create record in Airtable
     const airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}`;
@@ -143,11 +224,22 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Airtable API error:", errorText);
+      console.error("Airtable API error response:", errorText);
+      console.error("Request body that was sent:", JSON.stringify({ fields: airtableFields }, null, 2));
+      
+      // Попробуем распарсить ошибку для более детальной информации
+      try {
+        const errorJson = JSON.parse(errorText);
+        console.error("Parsed error:", JSON.stringify(errorJson, null, 2));
+      } catch {
+        console.error("Could not parse error as JSON");
+      }
+      
       return NextResponse.json(
         {
           error: "Failed to create record in Airtable",
           details: errorText,
+          sentFields: airtableFields,
         },
         { status: response.status }
       );
@@ -170,4 +262,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
