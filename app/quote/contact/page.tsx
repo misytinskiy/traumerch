@@ -7,6 +7,7 @@ import CTA from "../../../components/CTA/CTA";
 import Footer from "../../../components/Footer/Footer";
 import Button from "../../../components/Button/Button";
 import { useCart } from "../../../contexts/CartContext";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import { getMainPhotoUrl } from "../../../lib/product";
 import { getMinQuantity, getPriceForQuantity } from "../../../lib/pricing";
 import styles from "./contact.module.css";
@@ -23,6 +24,7 @@ const getSwatchColor = (color: string) => {
 export default function QuoteContactPage() {
   const router = useRouter();
   const { items, updateItemQuantity, clearCart } = useCart();
+  const { t } = useLanguage();
   const [quantityInputByIndex, setQuantityInputByIndex] = useState<
     Record<number, string>
   >({});
@@ -38,23 +40,90 @@ export default function QuoteContactPage() {
     postalCode: "",
     city: "",
     vatNumber: "",
-    useSameAddress: true,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
 
   const displayItems = useMemo(() => items, [items]);
 
-  const countryOptions = ["Italy", "Germany", "France", "Spain"];
-  const [selectedCountry, setSelectedCountry] = useState("Italy");
+  const countryOptions = [
+    "", // Empty default option
+    "Austria",
+    "Belgium",
+    "Bulgaria",
+    "Croatia",
+    "Cyprus",
+    "Czech Republic",
+    "Denmark",
+    "Estonia",
+    "Finland",
+    "France",
+    "Germany",
+    "Greece",
+    "Hungary",
+    "Ireland",
+    "Italy",
+    "Latvia",
+    "Lithuania",
+    "Luxembourg",
+    "Malta",
+    "Netherlands",
+    "Poland",
+    "Portugal",
+    "Romania",
+    "Slovakia",
+    "Slovenia",
+    "Spain",
+    "Sweden",
+    "Switzerland",
+    "United Kingdom",
+    "Norway",
+    "Iceland",
+    "Liechtenstein",
+    "Albania",
+    "Bosnia and Herzegovina",
+    "North Macedonia",
+    "Montenegro",
+    "Serbia",
+    "Turkey",
+    "Ukraine",
+    "Israel",
+    "United Arab Emirates",
+    "Saudi Arabia",
+    "South Africa",
+    "Egypt",
+    "Morocco",
+    "Tunisia",
+    "Algeria",
+    "Nigeria",
+    "Kenya",
+    "Ghana",
+  ];
+  const [selectedCountry, setSelectedCountry] = useState("");
   const [selectOpen, setSelectOpen] = useState(false);
   const selectWrapRef = useRef<HTMLDivElement>(null);
 
-  const [deliveryDate, setDeliveryDate] = useState("2026-11-03");
+  // Calculate minimum date (today + 21 days)
+  const getMinDate = () => {
+    const today = new Date();
+    const minDate = new Date(today);
+    minDate.setDate(today.getDate() + 21);
+    return minDate;
+  };
+
+  const minDate = getMinDate();
+  const formatDateToISO = (date: Date) => {
+    const y = String(date.getFullYear());
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
+
+  const [deliveryDate, setDeliveryDate] = useState(() => formatDateToISO(minDate));
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [calendarView, setCalendarView] = useState(() => {
-    const d = new Date(2026, 10, 3);
-    return { year: d.getFullYear(), month: d.getMonth() };
+    return { year: minDate.getFullYear(), month: minDate.getMonth() };
   });
   const datePickerRef = useRef<HTMLDivElement>(null);
 
@@ -70,6 +139,20 @@ export default function QuoteContactPage() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Ensure deliveryDate is never before minimum date
+  useEffect(() => {
+    const currentDate = new Date(deliveryDate + "T12:00:00");
+    const min = new Date(minDate);
+    min.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
+    if (currentDate < min) {
+      const y = String(minDate.getFullYear());
+      const m = String(minDate.getMonth() + 1).padStart(2, "0");
+      const d = String(minDate.getDate()).padStart(2, "0");
+      setDeliveryDate(`${y}-${m}-${d}`);
+    }
+  }, [deliveryDate]);
 
   const formatDisplayDate = (iso: string) => {
     const d = new Date(iso + "T12:00:00");
@@ -88,7 +171,19 @@ export default function QuoteContactPage() {
     return days.slice(0, total);
   };
 
+  const isDateDisabled = (year: number, month: number, day: number) => {
+    const date = new Date(year, month, day);
+    const min = new Date(minDate);
+    min.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    return date < min;
+  };
+
   const handleSelectDate = (year: number, month: number, day: number) => {
+    // Prevent selecting dates before minimum date
+    if (isDateDisabled(year, month, day)) {
+      return;
+    }
     const y = String(year);
     const m = String(month + 1).padStart(2, "0");
     const d = String(day).padStart(2, "0");
@@ -159,18 +254,59 @@ export default function QuoteContactPage() {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    
+    // Special handling for phone number formatting
+    if (name === "phone") {
+      const formatted = formatPhoneNumber(value);
+      setFormData((prev) => ({
+        ...prev,
+        [name]: formatted,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      }));
+    }
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const formatPhoneNumber = (value: string) => {
+    // Allow flexible phone number format: +, digits, spaces, hyphens, parentheses
+    // Remove invalid characters but keep the format user prefers
+    return value.replace(/[^\d+\s\-\(\)]/g, "");
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, boolean> = {};
+    if (!formData.firstName.trim()) newErrors.firstName = true;
+    if (!formData.lastName.trim()) newErrors.lastName = true;
+    if (!formData.email.trim() || !validateEmail(formData.email.trim())) {
+      newErrors.email = true;
+    }
+    if (!formData.phone.trim()) newErrors.phone = true;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async () => {
     if (isSubmitting) return;
 
-    // Basic validation
-    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim()) {
-      alert("Please fill in required fields: First name, Last name, and Email");
+    // Validate required fields
+    if (!validateForm()) {
       return;
     }
 
@@ -198,7 +334,7 @@ export default function QuoteContactPage() {
         name: formData.firstName,
         surname: formData.lastName,
         email: formData.email,
-        phone: formData.phone || undefined,
+        phone: formData.phone,
         companyName: formData.companyName || undefined,
         address: formData.address || undefined,
         apartment: formData.apartment || undefined,
@@ -207,7 +343,6 @@ export default function QuoteContactPage() {
         country: selectedCountry || undefined,
         vatNumber: formData.vatNumber || undefined,
         preferredDeliveryDate: deliveryDate || undefined,
-        useSameAddressForShipping: formData.useSameAddress,
         description: combinedDescription || undefined,
       };
 
@@ -276,46 +411,57 @@ export default function QuoteContactPage() {
             <h2 className={styles.sectionTitle}>Your information</h2>
             <div className={styles.formGrid}>
               <div className={styles.rowTwo}>
+                <div className={styles.inputWrapper}>
+                  <input
+                    className={`${styles.input} ${errors.firstName ? styles.inputError : ""}`}
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    placeholder="First name *"
+                    required
+                  />
+                </div>
+                <div className={styles.inputWrapper}>
+                  <input
+                    className={`${styles.input} ${errors.lastName ? styles.inputError : ""}`}
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="Last name *"
+                    required
+                  />
+                </div>
+              </div>
+              <div className={styles.inputWrapper}>
                 <input
-                  className={styles.input}
-                  name="firstName"
-                  value={formData.firstName}
+                  className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
+                  name="email"
+                  type="email"
+                  value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="First name"
-                  required
-                />
-                <input
-                  className={styles.input}
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  placeholder="Last name"
+                  placeholder="Email *"
                   required
                 />
               </div>
-              <input
-                className={styles.input}
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Email"
-                required
-              />
+              <div className={styles.inputWrapper}>
+                <input
+                  className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Phone number *"
+                  required
+                  pattern="^\+?[0-9\s\-\(\)]+$"
+                  inputMode="tel"
+                />
+              </div>
               <input
                 className={styles.input}
                 name="companyName"
                 value={formData.companyName}
                 onChange={handleInputChange}
                 placeholder="Company name"
-              />
-              <input
-                className={styles.input}
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="Phone number"
               />
               <input
                 className={styles.input}
@@ -329,7 +475,7 @@ export default function QuoteContactPage() {
                 name="apartment"
                 value={formData.apartment}
                 onChange={handleInputChange}
-                placeholder="Apartment (optional)"
+                placeholder="Apartment"
               />
               <div className={styles.rowTwo}>
                 <input
@@ -358,7 +504,9 @@ export default function QuoteContactPage() {
                     aria-haspopup="listbox"
                     aria-label="Country"
                   >
-                    <span className={styles.selectTriggerText}>{selectedCountry}</span>
+                    <span className={styles.selectTriggerText}>
+                      {selectedCountry || "—"}
+                    </span>
                     <span className={`${styles.selectArrow} ${selectOpen ? styles.selectArrowOpen : ""}`} aria-hidden>
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M16.8582 8.95199L17.9182 10.013L12.1412 15.792C12.0487 15.8851 11.9386 15.9591 11.8173 16.0095C11.6961 16.06 11.5661 16.0859 11.4347 16.0859C11.3034 16.0859 11.1734 16.06 11.0521 16.0095C10.9309 15.9591 10.8208 15.8851 10.7282 15.792L4.94824 10.013L6.00824 8.95299L11.4332 14.377L16.8582 8.95199Z" fill="#999999" />
@@ -372,7 +520,7 @@ export default function QuoteContactPage() {
                   >
                     {countryOptions.map((option) => (
                       <li
-                        key={option}
+                        key={option || "empty"}
                         role="option"
                         aria-selected={selectedCountry === option}
                         className={styles.selectOption}
@@ -381,7 +529,7 @@ export default function QuoteContactPage() {
                           setSelectOpen(false);
                         }}
                       >
-                        {option}
+                        {option || "—"}
                       </li>
                     ))}
                   </ul>
@@ -395,16 +543,6 @@ export default function QuoteContactPage() {
                 />
               </div>
             </div>
-
-            <label className={styles.checkboxRow}>
-              <input
-                type="checkbox"
-                name="useSameAddress"
-                checked={formData.useSameAddress}
-                onChange={handleInputChange}
-              />
-              <span>Use the same address for shipping</span>
-            </label>
 
             <div className={styles.deliveryBlock}>
               <h3 className={styles.sectionSubtitle}>Delivery date</h3>
@@ -490,10 +628,15 @@ export default function QuoteContactPage() {
                               isSelected(calendarView.year, calendarView.month, day)
                                 ? styles.dateDaySelected
                                 : ""
-                            } ${isToday(calendarView.year, calendarView.month, day) ? styles.dateDayToday : ""}`}
+                            } ${isToday(calendarView.year, calendarView.month, day) ? styles.dateDayToday : ""} ${
+                              isDateDisabled(calendarView.year, calendarView.month, day)
+                                ? styles.dateDayDisabled
+                                : ""
+                            }`}
                             onClick={() =>
                               handleSelectDate(calendarView.year, calendarView.month, day)
                             }
+                            disabled={isDateDisabled(calendarView.year, calendarView.month, day)}
                           >
                             {day}
                           </button>
@@ -556,7 +699,12 @@ export default function QuoteContactPage() {
                         <div className={styles.quoteTextStack}>
                           <div className={styles.quoteName}>{item.productName}</div>
                           <div className={styles.quoteMetaGroup}>
-                            <div className={styles.quoteMeta}>Price: {price}</div>
+                            <div className={styles.quoteMeta}>
+                              {(t?.quote?.contact?.price ?? t?.cart?.price ?? "Estimated price: X").replace(
+                                "X",
+                                price
+                              )}
+                            </div>
                             <div className={styles.quoteMeta}>
                               Color:
                               <span

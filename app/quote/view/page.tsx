@@ -259,10 +259,10 @@ export default function QuoteViewPage() {
                         </button>
                       </div>
                     </div>
-                    <div className={styles.metaRow}>
+                    {/* <div className={styles.metaRow}>
                       <span className={styles.metaLabel}>Quantity method:</span>
                       <span className={styles.metaRight}>Printing</span>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className={styles.descriptionBlock}>

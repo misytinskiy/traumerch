@@ -6,9 +6,11 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import { useCart } from "../../contexts/CartContext";
 import { usePreloader } from "../../contexts/PreloaderContext";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import Button from "../Button/Button";
+import QuoteButton from "../QuoteButton/QuoteButton";
 import styles from "./MobileHeader.module.css";
+import Button from "../Button/Button";
 
 export default function MobileHeader() {
   const pathname = usePathname();
@@ -100,7 +102,16 @@ export default function MobileHeader() {
           </Link>
 
           {/* Right side - Languages and Burger */}
-          <div className={styles.rightSection}>
+          <motion.div
+            className={styles.rightSection}
+            layoutId="mobile-header-right-section"
+            transition={{
+              layout: {
+                duration: 0.3,
+                ease: [0.25, 0.46, 0.45, 0.94],
+              },
+            }}
+          >
             <div className={styles.languageSwitcher}>
               <button
                 className={`${styles.languageButton} ${
@@ -120,24 +131,13 @@ export default function MobileHeader() {
               </button>
             </div>
 
-            <button
-              type="button"
-              className={`${styles.quoteButton} ${
-                hasCartItems ? styles.quoteButtonWithCart : ""
-              }`}
+            <QuoteButton
               onClick={hasCartItems ? openCart : openQuote}
-            >
-              {hasCartItems ? (
-                <span className={styles.quoteButtonInner}>
-                  {t.header.quote}
-                  <span className={styles.quoteBadge} aria-label={`${items.length} items`}>
-                    {items.length}
-                  </span>
-                </span>
-              ) : (
-                t.header.quote
-              )}
-            </button>
+              hasCartItems={hasCartItems}
+              itemCount={items.length}
+              text={t.header.quote}
+              isMobile={true}
+            />
 
             <button
               className={`${styles.burger} ${isMenuOpen ? styles.open : ""}`}
@@ -147,7 +147,7 @@ export default function MobileHeader() {
               <span></span>
               <span></span>
             </button>
-          </div>
+          </motion.div>
         </div>
       </header>
 

@@ -14,7 +14,7 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import { useCart } from "../../contexts/CartContext";
 import { usePreloader } from "../../contexts/PreloaderContext";
-import Button from "../Button/Button";
+import QuoteButton from "../QuoteButton/QuoteButton";
 import styles from "./Header.module.css";
 
 export default function Header() {
@@ -454,12 +454,17 @@ export default function Header() {
         {/* Right Section - Languages and Quote Button */}
         <motion.div
           className={styles.rightSection}
+          layoutId="header-right-section"
           animate={{
             x: 0,
             opacity: 1,
             scale: 1,
           }}
           transition={{
+            layout: {
+              duration: 0.3,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            },
             duration: 0.3,
             ease: "easeOut",
           }}
@@ -483,25 +488,12 @@ export default function Header() {
             </button>
           </div>
 
-          <Button
-            variant="solid"
-            size="medium"
-            padding="23px 40px"
-            padding1536="12px 40px"
+          <QuoteButton
             onClick={hasCartItems ? openCart : openQuote}
-            className={hasCartItems ? styles.quoteButtonWithCart : ""}
-          >
-            {hasCartItems ? (
-              <span className={styles.quoteButtonInner}>
-                {t.header.quote}
-                <span className={styles.quoteBadge} aria-label={`${items.length} items`}>
-                  {items.length}
-                </span>
-              </span>
-            ) : (
-              t.header.quote
-            )}
-          </Button>
+            hasCartItems={hasCartItems}
+            itemCount={items.length}
+            text={t.header.quote}
+          />
         </motion.div>
       </div>
     </motion.header>

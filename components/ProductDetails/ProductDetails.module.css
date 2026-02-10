@@ -126,7 +126,7 @@
 }
 
 .colorOption.selected {
-  border: 1px solid rgb(218, 218, 218);
+  /* border: 1px solid rgb(218, 218, 218); */
   transform: scale(1.15);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }

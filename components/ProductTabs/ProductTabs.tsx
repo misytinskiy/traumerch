@@ -273,7 +273,7 @@ export default function ProductTabs() {
           : (nameEng || nameDe || nameFallback || "Product");
 
       const sampleSalesValue =
-        fields["1-24 pcs (Sample) | SALES"] ??
+        fields["1000+ pcs | SALES"] ??
         fields["Price"] ??
         (fields["[WEB] Price"] as string | undefined);
       const price =

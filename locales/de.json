@@ -6,7 +6,8 @@
   "cart": {
     "title": "IHR ANGEBOT",
     "empty": "Noch keine Artikel in Ihrem Angebot.",
-    "viewQuote": "ANGEBOT ANSEHEN"
+    "viewQuote": "ANGEBOT ANSEHEN",
+    "price": "Geschätzter Preis: X"
   },
   "hero": {
     "title": "MERCHANDISE, DAS IHRE MARKE MIT IHREM",
@@ -238,8 +239,8 @@
     "description": "Beschreibung",
     "customisationType": "Art der Personalisierung",
     "designPlacement": "Design Platzierung",
-    "price": "Preis: X",
-    "pricePerUnit": "Preis pro Einheit: X",
+    "price": "Geschätzter Preis: X",
+    "pricePerUnit": "Geschätzter Preis pro Einheit: X",
     "leadTime": "Lieferzeit: Y",
     "days": "Tage",
     "seePromise": "ZUM ANGEBOT HINZUFÜGEN",
@@ -335,7 +336,10 @@
     "fileUpload": "DATEI HOCHLADEN",
     "send": "SENDEN",
     "thankYouTitle": "Vielen Dank",
-    "thankYouDescription": "Lassen Sie uns Ihre Ideen zum Leben erwecken — vom ersten Design bis zur Lieferung machen wir den Prozess einfach und zuverlässig."
+    "thankYouDescription": "Lassen Sie uns Ihre Ideen zum Leben erwecken — vom ersten Design bis zur Lieferung machen wir den Prozess einfach und zuverlässig.",
+    "contact": {
+      "price": "Geschätzter Preis: X"
+    }
   },
   "promises": {
     "topText": "UNSER VERSPRECHEN. IHR VORTEIL.",

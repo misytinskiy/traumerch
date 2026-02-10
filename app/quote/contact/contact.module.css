@@ -67,10 +67,25 @@
   font-size: 16px;
   color: #999;
   outline: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .input::placeholder {
   color: rgba(0, 0, 0, 0.4);
+}
+
+.inputWrapper {
+  width: 100%;
+}
+
+.inputError {
+  background: #fff5f5 !important;
+  border: 1px solid #ff4444 !important;
+  color: #111 !important;
+}
+
+.inputError::placeholder {
+  color: #ff4444 !important;
 }
 
 .selectWrap {
@@ -208,7 +223,6 @@
 }
 
 .deliveryBlock {
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
   padding: 24px 0;
 }
 
@@ -392,6 +406,16 @@
 .dateDaySelected:hover {
   background: #333;
   color: #fff;
+}
+
+.dateDayDisabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dateDayDisabled:hover {
+  background: transparent;
 }
 
 .quoteSection {

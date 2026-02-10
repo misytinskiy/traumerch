@@ -49,7 +49,6 @@ export async function POST(request: NextRequest) {
       country,
       vatNumber,
       preferredDeliveryDate,
-      useSameAddressForShipping,
       productQuantity,
       preferredMessenger,
       messengerContact,
@@ -71,7 +70,6 @@ export async function POST(request: NextRequest) {
     console.log("country:", country);
     console.log("vatNumber:", vatNumber);
     console.log("preferredDeliveryDate:", preferredDeliveryDate);
-    console.log("useSameAddressForShipping:", useSameAddressForShipping);
     console.log("productQuantity:", productQuantity);
     console.log("preferredMessenger:", preferredMessenger, "(type:", typeof preferredMessenger, ")");
     console.log("messengerContact:", messengerContact);
@@ -83,7 +81,7 @@ export async function POST(request: NextRequest) {
       typeof value === "string" ? value : value == null ? "" : String(value);
 
     // Map form data to Airtable fields based on actual table structure
-    // Fields: Name, Surname, Email, Phone, Company name, Address, Apartment, Postal code, City, Country, Vat number, Preferred delivery date, Use the same address for shipping, Product quantity
+    // Fields: Name, Surname, Email, Phone, Company name, Address, Apartment, Postal code, City, Country, Vat number, Preferred delivery date, Product quantity
     // Also supports: Preferred Type, Username, Description, Request Type, Services (from QuoteOverlay)
     const airtableFields: Record<
       string,
@@ -116,13 +114,6 @@ export async function POST(request: NextRequest) {
     const preferredDeliveryDateStr = toStringField(preferredDeliveryDate);
     if (preferredDeliveryDateStr) {
       airtableFields["Preferred delivery date"] = preferredDeliveryDateStr;
-    }
-    if (useSameAddressForShipping !== undefined) {
-      const useSame =
-        typeof useSameAddressForShipping === "string"
-          ? useSameAddressForShipping === "true"
-          : Boolean(useSameAddressForShipping);
-      airtableFields["Use the same address for shipping"] = useSame;
     }
     if (productQuantity !== undefined && productQuantity !== null) {
       // Убеждаемся, что отправляется как целое число (integer)

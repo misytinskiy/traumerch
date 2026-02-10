@@ -235,7 +235,10 @@ export default function CartSidebar() {
                     <div className={styles.itemContent}>
                       <h3 className={styles.itemName}>{item.productName}</h3>
                       <p className={styles.itemPrice}>
-                        Price: {getItemTotalPrice(item) ?? "—"}
+                        {(t?.cart?.price ?? "Estimated price: X").replace(
+                          "X",
+                          getItemTotalPrice(item) ?? "—"
+                        )}
                       </p>
                       <p className={styles.itemColor}>
                         Color:{" "}

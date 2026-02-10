@@ -6,7 +6,8 @@
   "cart": {
     "title": "YOUR QUOTE",
     "empty": "No items in your quote yet.",
-    "viewQuote": "VIEW MY QUOTE"
+    "viewQuote": "VIEW MY QUOTE",
+    "price": "Estimated price: X"
   },
   "hero": {
     "title": "MERCHANDISE THAT CONNECTS YOUR BRAND WITH YOUR",
@@ -238,8 +239,8 @@
     "description": "Description",
     "customisationType": "Customisation type",
     "designPlacement": "Design placement",
-    "price": "Price: X",
-    "pricePerUnit": "Price per unit: X",
+    "price": "Estimated price: X",
+    "pricePerUnit": "Estimated price per unit: X",
     "leadTime": "Lead time: Y",
     "days": "days",
     "seePromise": "ADD TO QUOTE",
@@ -330,7 +331,10 @@
     "fileUpload": "FILE UPLOAD",
     "send": "ADD TO QUOTE",
     "thankYouTitle": "Thank you",
-    "thankYouDescription": "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable."
+    "thankYouDescription": "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable.",
+    "contact": {
+      "price": "Estimated price: X"
+    }
   },
   "promises": {
     "topText": "OUR PROMISE. YOUR ADVANTAGE.",

@@ -1,0 +1,173 @@
+/* Base button styles */
+.quoteButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+  border: none;
+  text-decoration: none;
+  
+  /* Desktop styles */
+  font-size: 14px;
+  padding: 23px 40px;
+  width: 130px;
+  min-width: 130px;
+  max-width: 130px;
+  height: 49px;
+  min-height: 49px;
+  max-height: 49px;
+  
+  /* Base transitions */
+  transition: background-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  
+  /* Text rendering optimizations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform-origin: center center;
+  -webkit-transform-origin: center center;
+  
+  /* Default solid state */
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+}
+
+.quoteButton:hover:not(:disabled) {
+  background: rgba(153, 153, 153, 1);
+  border-color: rgba(153, 153, 153, 1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.quoteButton:active:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.quoteButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Button with cart items - transparent state */
+.quoteButtonWithCart {
+  background: transparent !important;
+  border: none !important;
+  color: rgba(0, 0, 0, 1) !important;
+}
+
+.quoteButtonWithCart:hover {
+  background: transparent !important;
+  border: none !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Inner content wrapper */
+.quoteButtonInner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  width: 100%;
+}
+
+/* Badge styles */
+.quoteBadge {
+  min-width: 25px;
+  height: 25px;
+  padding: 0 6px;
+  border-radius: 14px;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-sizing: border-box;
+  transform-origin: center;
+  flex-shrink: 0;
+}
+
+/* Mobile styles */
+.quoteButton.mobile {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 10px 16px;
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
+  height: 36px;
+  min-height: 36px;
+  max-height: 36px;
+}
+
+.quoteButton.mobile .quoteBadge {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 11px;
+  font-size: 12px;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1536px) {
+  .quoteButton:not(.mobile) {
+    padding: 12px 40px;
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .quoteButton:not(.mobile) {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .quoteButton:not(.mobile) {
+    font-size: 12px;
+  }
+}
+
+/* Tablet styles for mobile button */
+@media (max-width: 744px) {
+  .quoteButton.mobile {
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+  }
+}
+
+/* Mobile styles for mobile button */
+@media (max-width: 480px) {
+  .quoteButton.mobile {
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+  }
+}

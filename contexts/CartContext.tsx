@@ -45,6 +45,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addItem = useCallback((item: CartItem) => {
     setItems((prev) => [...prev, item]);
+    setIsCartOpen(true); // Автоматически открываем корзину при добавлении товара
   }, []);
 
   const removeItem = useCallback((index: number) => {
