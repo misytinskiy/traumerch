@@ -3,12 +3,17 @@ import DesignClient from "./DesignClient";
 
 export const revalidate = 300;
 
+type SearchParams =
+  | { product?: string }
+  | Promise<{ product?: string }>;
+
 export default async function Design({
   searchParams,
 }: {
-  searchParams?: { product?: string };
+  searchParams?: SearchParams;
 }) {
-  const productId = searchParams?.product ?? null;
+  const resolved = searchParams ? await searchParams : undefined;
+  const productId = resolved?.product ?? null;
   const apiToken = process.env.API_TOKEN;
 
   let initialRecord: { id: string; fields: Record<string, unknown> } | null =
