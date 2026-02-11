@@ -41,6 +41,9 @@
     "productName": "Heavy Tote Bag",
     "priceFrom": "From €6"
   },
+  "common": {
+    "loadProductsError": "Failed to load products."
+  },
   "promise": {
     "title": "OUR PROMISE. YOUR ADVANTAGE."
   },
@@ -282,6 +285,50 @@
       "wearableTextile": "Wearable Textile"
     },
     "seeMore": "SEE MORE"
+  },
+  "quoteView": {
+    "title": "Your quote",
+    "empty": "No items in your quote yet.",
+    "delete": "Delete",
+    "color": "Color",
+    "quantityMin": "Quantity min",
+    "descriptionPlaceholder": "Description",
+    "fileUpload": "FILE UPLOAD",
+    "backToShopping": "Back to shopping",
+    "continue": "Continue",
+    "quantityAria": "Quantity"
+  },
+  "quoteContact": {
+    "titleLine1": "Contact",
+    "titleLine2": "information",
+    "sectionTitle": "Your information",
+    "firstNamePlaceholder": "First name *",
+    "lastNamePlaceholder": "Last name *",
+    "emailPlaceholder": "Email *",
+    "phonePlaceholder": "Phone number *",
+    "companyNamePlaceholder": "Company name",
+    "addressPlaceholder": "Address",
+    "apartmentPlaceholder": "Apartment",
+    "postalCodePlaceholder": "Postal code",
+    "cityPlaceholder": "City",
+    "countryLabel": "Country",
+    "countryPlaceholder": "—",
+    "vatNumberPlaceholder": "Vat number",
+    "deliveryDateLabel": "Delivery date",
+    "deliveryHelp": "Let us know your preferred in-hands date:",
+    "chooseDateLabel": "Choose date",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "weekdayShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "submitting": "Submitting...",
+    "continue": "Continue",
+    "backToShopping": "Back to shopping",
+    "submitFailed": "Failed to submit form. Please try again.",
+    "submitError": "An error occurred. Please try again.",
+    "quantityAria": "Quantity",
+    "yourQuoteTitle": "Your quote",
+    "estimatedPrice": "Estimated price: X",
+    "color": "Color"
   },
   "cta": {
     "title": "READY TO CREATE MERCHANDISE FOR YOUR BRAND?",

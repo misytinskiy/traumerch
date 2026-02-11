@@ -7,7 +7,8 @@ import CTA from "../../../components/CTA/CTA";
 import Footer from "../../../components/Footer/Footer";
 import Button from "../../../components/Button/Button";
 import { useCart } from "../../../contexts/CartContext";
-import { getMainPhotoUrl } from "../../../lib/product";
+import { useLanguage } from "../../../contexts/LanguageContext";
+import { getMainPhotoUrl, getProductNameFromFields } from "../../../lib/product";
 import styles from "./quote-view.module.css";
 
 const TrashIcon = () => (
@@ -83,6 +84,7 @@ const getSwatchColor = (color: string) => {
 
 export default function QuoteViewPage() {
   const router = useRouter();
+  const { t, language } = useLanguage();
   const {
     items,
     removeItem,
@@ -158,15 +160,20 @@ export default function QuoteViewPage() {
     <div className={styles.page}>
       <ResponsiveHeader />
       <main className={styles.main}>
-        <h1 className={styles.title}>Your quote</h1>
+        <h1 className={styles.title}>{t.quoteView.title}</h1>
 
         <div className={styles.list}>
           {displayItems.length === 0 && (
-            <div className={styles.empty}>No items in your quote yet.</div>
+            <div className={styles.empty}>{t.quoteView.empty}</div>
           )}
 
           {displayItems.map((item, index) => {
             const photoUrl = getMainPhotoUrl(item.productFields) ?? "";
+            const displayName = getProductNameFromFields(
+              item.productFields,
+              language,
+              item.productName
+            );
             const minQuantity = item.minQuantity;
             return (
               <article className={styles.card} key={`${item.productId}-${index}`}>
@@ -174,7 +181,7 @@ export default function QuoteViewPage() {
                   {photoUrl ? (
                     <img
                       src={photoUrl}
-                      alt={item.productName}
+                      alt={displayName}
                       className={styles.image}
                     />
                   ) : (
@@ -184,20 +191,22 @@ export default function QuoteViewPage() {
 
                 <div className={styles.details}>
                   <div className={styles.headerRow}>
-                    <h2 className={styles.productName}>{item.productName}</h2>
+                    <h2 className={styles.productName}>{displayName}</h2>
                     <button
                       type="button"
                       className={styles.deleteButton}
                       onClick={() => removeItem(index)}
                     >
-                      <span>Delete</span>
+                      <span>{t.quoteView.delete}</span>
                       <TrashIcon />
                     </button>
                   </div>
 
                   <div className={styles.metaBlock}>
                     <div className={styles.metaRow}>
-                      <span className={styles.metaLabel}>Color:</span>
+                      <span className={styles.metaLabel}>
+                        {t.quoteView.color}:
+                      </span>
                       <span className={styles.colorValue}>
                         <span
                           className={styles.colorSwatch}
@@ -207,7 +216,9 @@ export default function QuoteViewPage() {
                       </span>
                     </div>
                     <div className={styles.metaRow}>
-                      <span className={styles.metaLabel}>Quantity min: {minQuantity}</span>
+                      <span className={styles.metaLabel}>
+                        {t.quoteView.quantityMin}: {minQuantity}
+                      </span>
                       <div className={styles.quantityControls}>
                         <button
                           type="button"
@@ -238,7 +249,7 @@ export default function QuoteViewPage() {
                           onBlur={() =>
                             handleQuantityBlur(index, minQuantity, item.quantity)
                           }
-                          aria-label="Quantity"
+                          aria-label={t.quoteView.quantityAria}
                         />
                         <button
                           type="button"
@@ -268,7 +279,7 @@ export default function QuoteViewPage() {
                   <div className={styles.descriptionBlock}>
                     <textarea
                       className={styles.descriptionInput}
-                      placeholder="Description"
+                      placeholder={t.quoteView.descriptionPlaceholder}
                       value={item.description ?? ""}
                       onChange={(e) =>
                         updateItemDescription(index, e.target.value)
@@ -279,7 +290,7 @@ export default function QuoteViewPage() {
                   <div className={styles.uploadRow}>
                     <label className={styles.uploadLabel}>
                       <UploadIcon />
-                      <span>FILE UPLOAD</span>
+                      <span>{t.quoteView.fileUpload}</span>
                       <input
                         type="file"
                         className={styles.fileInput}
@@ -312,7 +323,7 @@ export default function QuoteViewPage() {
             padding="31px 84px"
             onClick={() => router.push("/catalog")}
           >
-            Back to shopping
+            {t.quoteView.backToShopping}
           </Button>
           <Button
             variant="solid"
@@ -321,7 +332,7 @@ export default function QuoteViewPage() {
             arrow="white"
             onClick={() => router.push("/quote/contact")}
           >
-            Continue
+            {t.quoteView.continue}
           </Button>
         </div>
       </main>

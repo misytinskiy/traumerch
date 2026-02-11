@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 // Helper endpoint to view Airtable table structure
 // Usage: GET /api/airtable-table-structure?baseId=YOUR_BASE_ID&tableName=YOUR_TABLE_NAME
 export async function GET(request: NextRequest) {
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const searchParams = request.nextUrl.searchParams;
   const baseId = searchParams.get("baseId");
   const tableName = searchParams.get("tableName");

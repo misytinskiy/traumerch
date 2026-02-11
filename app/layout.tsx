@@ -8,6 +8,7 @@ import { CartProvider } from "../contexts/CartContext";
 import CartSidebar from "../components/CartSidebar/CartSidebar";
 import QuoteOverlay from "../components/QuoteOverlay/QuoteOverlay";
 import Preloader from "../components/Preloader/Preloader";
+import SWRProvider from "../components/SWRProvider/SWRProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,10 +62,12 @@ export default function RootLayout({
           <PreloaderProvider>
             <QuoteOverlayProvider>
               <CartProvider>
-                <Preloader />
-                {children}
-                <QuoteOverlay />
-                <CartSidebar />
+                <SWRProvider>
+                  <Preloader />
+                  {children}
+                  <QuoteOverlay />
+                  <CartSidebar />
+                </SWRProvider>
               </CartProvider>
             </QuoteOverlayProvider>
           </PreloaderProvider>

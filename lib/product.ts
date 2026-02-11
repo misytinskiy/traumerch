@@ -17,3 +17,30 @@ export function getMainPhotoUrl(
   }
   return null;
 }
+
+const NAME_FIELDS = {
+  en: "[WEB] Name ENG",
+  de: "[WEB] Name DE",
+  fallback: "Name",
+} as const;
+
+/** Локализованное имя товара из Airtable полей. */
+export function getProductNameFromFields(
+  fields: Record<string, unknown> | undefined,
+  language: "en" | "de",
+  fallbackName?: string
+): string {
+  if (!fields) return fallbackName ?? "Product";
+  const nameEn = fields[NAME_FIELDS.en];
+  const nameDe = fields[NAME_FIELDS.de];
+  const base = fields[NAME_FIELDS.fallback];
+  const resolved =
+    language === "de"
+      ? (nameDe as string | undefined) ||
+        (nameEn as string | undefined) ||
+        (base as string | undefined)
+      : (nameEn as string | undefined) ||
+        (nameDe as string | undefined) ||
+        (base as string | undefined);
+  return resolved || fallbackName || "Product";
+}

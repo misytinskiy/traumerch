@@ -4,6 +4,24 @@
 }
 
 .productDetailsSkeleton {
-  min-height: 400px;
+  min-height: 1200px;
   background: transparent;
+}
+
+@media (max-width: 1536px) {
+  .productDetailsSkeleton {
+    min-height: 1000px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .productDetailsSkeleton {
+    min-height: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .productDetailsSkeleton {
+    min-height: 700px;
+  }
 }

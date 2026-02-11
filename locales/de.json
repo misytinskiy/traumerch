@@ -41,6 +41,9 @@
     "productName": "Heavy Tote Bag",
     "priceFrom": "Ab €6"
   },
+  "common": {
+    "loadProductsError": "Produkte konnten nicht geladen werden."
+  },
   "promise": {
     "title": "UNSER VERSPRECHEN. IHR VORTEIL."
   },
@@ -282,6 +285,50 @@
       "wearableTextile": "Tragbare Textilien"
     },
     "seeMore": "MEHR SEHEN"
+  },
+  "quoteView": {
+    "title": "Ihr Angebot",
+    "empty": "Noch keine Artikel in Ihrem Angebot.",
+    "delete": "Löschen",
+    "color": "Farbe",
+    "quantityMin": "Mindestmenge",
+    "descriptionPlaceholder": "Beschreibung",
+    "fileUpload": "DATEI HOCHLADEN",
+    "backToShopping": "Zurück zum Einkauf",
+    "continue": "Weiter",
+    "quantityAria": "Menge"
+  },
+  "quoteContact": {
+    "titleLine1": "Kontakt",
+    "titleLine2": "Informationen",
+    "sectionTitle": "Ihre Angaben",
+    "firstNamePlaceholder": "Vorname *",
+    "lastNamePlaceholder": "Nachname *",
+    "emailPlaceholder": "E-Mail *",
+    "phonePlaceholder": "Telefonnummer *",
+    "companyNamePlaceholder": "Firmenname",
+    "addressPlaceholder": "Adresse",
+    "apartmentPlaceholder": "Wohnung",
+    "postalCodePlaceholder": "Postleitzahl",
+    "cityPlaceholder": "Stadt",
+    "countryLabel": "Land",
+    "countryPlaceholder": "—",
+    "vatNumberPlaceholder": "USt-IdNr.",
+    "deliveryDateLabel": "Lieferdatum",
+    "deliveryHelp": "Teilen Sie uns Ihr gewünschtes Lieferdatum mit:",
+    "chooseDateLabel": "Datum auswählen",
+    "previousMonth": "Vorheriger Monat",
+    "nextMonth": "Nächster Monat",
+    "weekdayShort": ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+    "submitting": "Wird gesendet...",
+    "continue": "Weiter",
+    "backToShopping": "Zurück zum Einkauf",
+    "submitFailed": "Formular konnte nicht gesendet werden. Bitte erneut versuchen.",
+    "submitError": "Ein Fehler ist aufgetreten. Bitte erneut versuchen.",
+    "quantityAria": "Menge",
+    "yourQuoteTitle": "Ihr Angebot",
+    "estimatedPrice": "Geschätzter Preis: X",
+    "color": "Farbe"
   },
   "cta": {
     "title": "BEREIT, MERCHANDISE FÜR IHRE MARKE ZU ERSTELLEN?",

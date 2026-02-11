@@ -31,9 +31,7 @@ export default function Header() {
   const [showMenuButton, setShowMenuButton] = useState(true);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
-  // Check if we're on small desktop for responsive values
-  const isSmallDesktop =
-    typeof window !== "undefined" && window.innerWidth <= 1536;
+  const [isSmallDesktop, setIsSmallDesktop] = useState(false);
 
   // Determine display labels based on country and language
   const getLanguageLabels = () => {
@@ -44,6 +42,15 @@ export default function Header() {
   };
 
   const labels = getLanguageLabels();
+
+  useEffect(() => {
+    const updateBreakpoint = () => {
+      setIsSmallDesktop(window.innerWidth <= 1536);
+    };
+    updateBreakpoint();
+    window.addEventListener("resize", updateBreakpoint);
+    return () => window.removeEventListener("resize", updateBreakpoint);
+  }, []);
 
   // Framer Motion scroll animations
   const { scrollY } = useScroll();
@@ -147,7 +154,6 @@ export default function Header() {
   };
 
   const handleMenuClick = () => {
-    console.log("Menu clicked, current state:", isMenuOpen);
     if (!isMenuOpen) {
       // Opening menu - hide logo and menu button immediately
       setShowLogo(false);
@@ -200,7 +206,6 @@ export default function Header() {
       const isClickOnMenu = target.closest(".header-menu-container");
 
       if (isMenuOpen && !isClickOnMenu) {
-        console.log("Menu closed by outside click");
         setIsMenuOpen(false);
         setTimeout(() => {
           setShowLogo(true);

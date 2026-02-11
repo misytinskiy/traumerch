@@ -80,6 +80,50 @@
   animation: productNameShimmer 2.4s ease-in-out infinite;
 }
 
+.skeletonBlock {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.12) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  background-size: 300% 100%;
+  animation: productNameShimmer 2.4s ease-in-out infinite;
+}
+
+.quantitySkeletonRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.descriptionSkeleton {
+  width: 100%;
+  height: 120px;
+  border-radius: 20px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.12) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  background-size: 300% 100%;
+  animation: productNameShimmer 2.4s ease-in-out infinite;
+}
+
+.priceSkeletonLine {
+  height: 16px;
+  border-radius: 6px;
+  margin: 0 0 8px 0;
+  width: 65%;
+}
+
+.accordionSkeleton {
+  width: 100%;
+  height: 360px;
+  border-radius: 20px;
+}
+
 @keyframes productNameShimmer {
   0% {
     background-position: 100% 0;

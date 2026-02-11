@@ -8,7 +8,7 @@ import Footer from "../../../components/Footer/Footer";
 import Button from "../../../components/Button/Button";
 import { useCart } from "../../../contexts/CartContext";
 import { useLanguage } from "../../../contexts/LanguageContext";
-import { getMainPhotoUrl } from "../../../lib/product";
+import { getMainPhotoUrl, getProductNameFromFields } from "../../../lib/product";
 import { getMinQuantity, getPriceForQuantity } from "../../../lib/pricing";
 import styles from "./contact.module.css";
 
@@ -24,7 +24,7 @@ const getSwatchColor = (color: string) => {
 export default function QuoteContactPage() {
   const router = useRouter();
   const { items, updateItemQuantity, clearCart } = useCart();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [quantityInputByIndex, setQuantityInputByIndex] = useState<
     Record<number, string>
   >({});
@@ -156,8 +156,11 @@ export default function QuoteContactPage() {
 
   const formatDisplayDate = (iso: string) => {
     const d = new Date(iso + "T12:00:00");
-    const months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" ");
-    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+    return d.toLocaleDateString(language === "de" ? "de-DE" : "en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   };
 
   const getDaysInMonth = (year: number, month: number) => {
@@ -325,10 +328,6 @@ export default function QuoteContactPage() {
         return sum + numQty;
       }, 0);
 
-      console.log("=== QUANTITY CALCULATION ===");
-      console.log("items:", items.map(item => ({ id: item.productId, quantity: item.quantity, type: typeof item.quantity })));
-      console.log("totalQuantity:", totalQuantity, "(type:", typeof totalQuantity, ")");
-
       // Prepare data for Airtable
       const submitData: Record<string, unknown> = {
         name: formData.firstName,
@@ -351,13 +350,7 @@ export default function QuoteContactPage() {
       if (totalQuantity > 0) {
         const qtyInt = Math.floor(Number(totalQuantity));
         submitData.productQuantity = qtyInt;
-        console.log("=== PRODUCT QUANTITY IN SUBMIT ===");
-        console.log("totalQuantity:", totalQuantity, "(type:", typeof totalQuantity, ")");
-        console.log("qtyInt:", qtyInt, "(type:", typeof qtyInt, ", isInteger:", Number.isInteger(qtyInt), ")");
       }
-
-      console.log("=== CONTACT FORM SUBMISSION ===");
-      console.log("submitData:", JSON.stringify(submitData, null, 2));
 
       const attachments = items
         .map((item) => item.file ?? null)
@@ -381,16 +374,13 @@ export default function QuoteContactPage() {
       const result = await submitResponse.json();
 
       if (submitResponse.ok) {
-        console.log("Successfully submitted to Airtable:", result);
         clearCart();
         router.push("/quote/thank-you");
       } else {
-        console.error("Failed to submit to Airtable:", result);
-        alert("Failed to submit form. Please try again.");
+        alert(t.quoteContact.submitFailed);
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("An error occurred. Please try again.");
+      alert(t.quoteContact.submitError);
     } finally {
       setIsSubmitting(false);
     }
@@ -401,14 +391,14 @@ export default function QuoteContactPage() {
       <ResponsiveHeader />
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Contact
+          {t.quoteContact.titleLine1}
           <br />
-          information
+          {t.quoteContact.titleLine2}
         </h1>
 
         <div className={styles.layout}>
           <section className={styles.formSection}>
-            <h2 className={styles.sectionTitle}>Your information</h2>
+            <h2 className={styles.sectionTitle}>{t.quoteContact.sectionTitle}</h2>
             <div className={styles.formGrid}>
               <div className={styles.rowTwo}>
                 <div className={styles.inputWrapper}>
@@ -417,7 +407,7 @@ export default function QuoteContactPage() {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleInputChange}
-                    placeholder="First name *"
+                    placeholder={t.quoteContact.firstNamePlaceholder}
                     required
                   />
                 </div>
@@ -427,7 +417,7 @@ export default function QuoteContactPage() {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    placeholder="Last name *"
+                    placeholder={t.quoteContact.lastNamePlaceholder}
                     required
                   />
                 </div>
@@ -439,7 +429,7 @@ export default function QuoteContactPage() {
                   type="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="Email *"
+                  placeholder={t.quoteContact.emailPlaceholder}
                   required
                 />
               </div>
@@ -450,7 +440,7 @@ export default function QuoteContactPage() {
                   type="tel"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  placeholder="Phone number *"
+                  placeholder={t.quoteContact.phonePlaceholder}
                   required
                   pattern="^\+?[0-9\s\-\(\)]+$"
                   inputMode="tel"
@@ -461,21 +451,21 @@ export default function QuoteContactPage() {
                 name="companyName"
                 value={formData.companyName}
                 onChange={handleInputChange}
-                placeholder="Company name"
+                placeholder={t.quoteContact.companyNamePlaceholder}
               />
               <input
                 className={styles.input}
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
-                placeholder="Address"
+                placeholder={t.quoteContact.addressPlaceholder}
               />
               <input
                 className={styles.input}
                 name="apartment"
                 value={formData.apartment}
                 onChange={handleInputChange}
-                placeholder="Apartment"
+                placeholder={t.quoteContact.apartmentPlaceholder}
               />
               <div className={styles.rowTwo}>
                 <input
@@ -483,14 +473,14 @@ export default function QuoteContactPage() {
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleInputChange}
-                  placeholder="Postal code"
+                  placeholder={t.quoteContact.postalCodePlaceholder}
                 />
                 <input
                   className={styles.input}
                   name="city"
                   value={formData.city}
                   onChange={handleInputChange}
-                  placeholder="City"
+                  placeholder={t.quoteContact.cityPlaceholder}
                 />
               </div>
               <div className={styles.rowTwo}>
@@ -502,10 +492,10 @@ export default function QuoteContactPage() {
                     onClick={() => setSelectOpen((o) => !o)}
                     aria-expanded={selectOpen}
                     aria-haspopup="listbox"
-                    aria-label="Country"
+                    aria-label={t.quoteContact.countryLabel}
                   >
                     <span className={styles.selectTriggerText}>
-                      {selectedCountry || "—"}
+                      {selectedCountry || t.quoteContact.countryPlaceholder}
                     </span>
                     <span className={`${styles.selectArrow} ${selectOpen ? styles.selectArrowOpen : ""}`} aria-hidden>
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -516,7 +506,7 @@ export default function QuoteContactPage() {
                   <ul
                     className={`${styles.selectDropdown} ${selectOpen ? styles.selectDropdownOpen : ""}`}
                     role="listbox"
-                    aria-label="Country"
+                    aria-label={t.quoteContact.countryLabel}
                   >
                     {countryOptions.map((option) => (
                       <li
@@ -529,7 +519,7 @@ export default function QuoteContactPage() {
                           setSelectOpen(false);
                         }}
                       >
-                        {option || "—"}
+                        {option || t.quoteContact.countryPlaceholder}
                       </li>
                     ))}
                   </ul>
@@ -539,15 +529,15 @@ export default function QuoteContactPage() {
                   name="vatNumber"
                   value={formData.vatNumber}
                   onChange={handleInputChange}
-                  placeholder="Vat number"
+                  placeholder={t.quoteContact.vatNumberPlaceholder}
                 />
               </div>
             </div>
 
             <div className={styles.deliveryBlock}>
-              <h3 className={styles.sectionSubtitle}>Delivery date</h3>
+              <h3 className={styles.sectionSubtitle}>{t.quoteContact.deliveryDateLabel}</h3>
               <div className={styles.deliveryRow}>
-                <span>Let us know your preferred in-hands date:</span>
+                <span>{t.quoteContact.deliveryHelp}</span>
                 <div className={styles.datePickerWrap} ref={datePickerRef}>
                   <input type="hidden" name="deliveryDate" value={deliveryDate} readOnly />
                   <button
@@ -556,7 +546,7 @@ export default function QuoteContactPage() {
                     onClick={() => setCalendarOpen((o) => !o)}
                     aria-expanded={calendarOpen}
                     aria-haspopup="dialog"
-                    aria-label="Delivery date"
+                    aria-label={t.quoteContact.deliveryDateLabel}
                   >
                     <span className={styles.dateTriggerText}>{formatDisplayDate(deliveryDate)}</span>
                     <span className={styles.dateTriggerIcon} aria-hidden>
@@ -571,7 +561,7 @@ export default function QuoteContactPage() {
                   <div
                     className={`${styles.dateCalendar} ${calendarOpen ? styles.dateCalendarOpen : ""}`}
                     role="dialog"
-                    aria-label="Choose date"
+                    aria-label={t.quoteContact.chooseDateLabel}
                   >
                     <div className={styles.dateCalendarHeader}>
                       <button
@@ -584,15 +574,18 @@ export default function QuoteContactPage() {
                               : { ...v, month: v.month - 1 }
                           )
                         }
-                        aria-label="Previous month"
+                        aria-label={t.quoteContact.previousMonth}
                       >
                         ‹
                       </button>
                       <span className={styles.dateCalendarTitle}>
-                        {new Date(calendarView.year, calendarView.month).toLocaleString("en-US", {
-                          month: "long",
-                          year: "numeric",
-                        })}
+                        {new Date(calendarView.year, calendarView.month).toLocaleString(
+                          language === "de" ? "de-DE" : "en-US",
+                          {
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )}
                       </span>
                       <button
                         type="button"
@@ -604,13 +597,13 @@ export default function QuoteContactPage() {
                               : { ...v, month: v.month + 1 }
                           )
                         }
-                        aria-label="Next month"
+                        aria-label={t.quoteContact.nextMonth}
                       >
                         ›
                       </button>
                     </div>
                     <div className={styles.dateWeekdays}>
-                      {"Sun Mon Tue Wed Thu Fri Sat".split(" ").map((w) => (
+                      {(t.quoteContact.weekdayShort ?? ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((w) => (
                         <span key={w} className={styles.dateWeekday}>
                           {w}
                         </span>
@@ -655,7 +648,7 @@ export default function QuoteContactPage() {
             padding="31px 84px"
             onClick={() => router.push("/catalog")}
           >
-            Back to shopping
+            {t.quoteContact.backToShopping}
           </Button>
           <Button
             variant="solid"
@@ -665,16 +658,21 @@ export default function QuoteContactPage() {
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting..." : "Continue"}
+            {isSubmitting ? t.quoteContact.submitting : t.quoteContact.continue}
           </Button>
         </div>
           </section>
 
           <aside className={styles.quoteSection}>
-            <h2 className={styles.sectionTitle}>Your quote</h2>
+            <h2 className={styles.sectionTitle}>{t.quoteContact.yourQuoteTitle}</h2>
             <div className={styles.quoteList}>
               {displayItems.map((item, index) => {
                 const photoUrl = getMainPhotoUrl(item.productFields) ?? "";
+                const displayName = getProductNameFromFields(
+                  item.productFields,
+                  language,
+                  item.productName
+                );
                 const minQuantity = getMinQuantity(item.productFields);
                 const price =
                   getPriceForQuantity(item.quantity, item.productFields) ?? "—";
@@ -687,7 +685,7 @@ export default function QuoteContactPage() {
                       {photoUrl ? (
                         <img
                           src={photoUrl}
-                          alt={item.productName}
+                          alt={displayName}
                           className={styles.quoteImage}
                         />
                       ) : (
@@ -697,16 +695,16 @@ export default function QuoteContactPage() {
                     <div className={styles.quoteInfo}>
                       <div className={styles.quoteHeader}>
                         <div className={styles.quoteTextStack}>
-                          <div className={styles.quoteName}>{item.productName}</div>
+                          <div className={styles.quoteName}>{displayName}</div>
                           <div className={styles.quoteMetaGroup}>
                             <div className={styles.quoteMeta}>
-                              {(t?.quote?.contact?.price ?? t?.cart?.price ?? "Estimated price: X").replace(
+                              {(t.quoteContact.estimatedPrice ?? t?.quote?.contact?.price ?? t?.cart?.price ?? "Estimated price: X").replace(
                                 "X",
                                 price
                               )}
                             </div>
                             <div className={styles.quoteMeta}>
-                              Color:
+                              {t.quoteContact.color}:
                               <span
                                 className={styles.quoteSwatch}
                                 style={{
@@ -760,7 +758,7 @@ export default function QuoteContactPage() {
                                 minQuantity
                               )
                             }
-                            aria-label="Quantity"
+                            aria-label={t.quoteContact.quantityAria}
                           />
                           <button
                             type="button"

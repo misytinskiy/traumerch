@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
+import useSWR from "swr";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
+import type { NormalizedProduct } from "../../lib/products";
 import styles from "./ProductTabs.module.css";
 
 interface Product {
@@ -12,11 +14,6 @@ interface Product {
   size: "regular" | "large";
   imageUrl: string | null;
   isSkeleton?: boolean;
-}
-
-interface AirtableRecord {
-  id: string;
-  fields: Record<string, unknown>;
 }
 
 const TAB_KEYS = [
@@ -71,52 +68,34 @@ const DESKTOP_LAYOUT_PATTERN: Product["size"][] = [
 
 const MOBILE_SKELETON_COUNT = 12;
 
-const normalizeCategoryValue = (value: string) =>
-  value.toLowerCase().replace(/[^a-z]/g, "");
-
-const CATEGORY_KEY_MAP: Record<string, TabKey> = {
-  allproducts: "allProducts",
+const TAB_CATEGORY_TERM: Record<TabKey, string | null> = {
+  allProducts: null,
   bags: "bags",
-  bag: "bags",
-  customproduct: "customProduct",
-  customproducts: "customProduct",
-  custom: "customProduct",
+  customProduct: "custom product",
   drinkware: "drinkware",
   footwear: "footwear",
-  shoes: "footwear",
   headwear: "headwear",
-  caps: "headwear",
-  hats: "headwear",
-  homewareappliances: "homewareAppliances",
-  homeware: "homewareAppliances",
-  appliances: "homewareAppliances",
-  wearableaccessories: "wearableAccessories",
-  accessories: "wearableAccessories",
-  wearabletextile: "wearableTextile",
-  textile: "wearableTextile",
-  apparel: "wearableTextile",
+  homewareAppliances: "homeware appliances",
+  wearableAccessories: "wearable accessories",
+  wearableTextile: "wearable textile",
 };
 
-const mapCategoryValue = (value: string): TabKey | null => {
-  const normalized = normalizeCategoryValue(value);
-  return CATEGORY_KEY_MAP[normalized] ?? null;
-};
-
-const extractStringValues = (value: unknown): string[] => {
-  if (!value) return [];
-  if (Array.isArray(value)) {
-    return value.filter((item): item is string => typeof item === "string");
+const fetcher = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch products: ${response.status}`);
   }
-  return typeof value === "string" ? [value] : [];
+  return response.json();
 };
 
-export default function ProductTabs() {
+export default function ProductTabs({
+  initialRecords = [],
+}: {
+  initialRecords?: NormalizedProduct[];
+}) {
   const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = useState<TabKey>("allProducts");
   const [isMobile, setIsMobile] = useState(false);
-  const [records, setRecords] = useState<AirtableRecord[]>([]);
-  const [isLoadingRecords, setIsLoadingRecords] = useState(true);
-  const [fetchError, setFetchError] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
 
   const handleProductClick = (productId: string) => {
@@ -135,82 +114,22 @@ export default function ProductTabs() {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchProducts = async () => {
-      try {
-        setIsLoadingRecords(true);
-        const response = await fetch("/api/airtable-products", {
-          signal: controller.signal,
-        });
-        if (!response.ok) {
-          throw new Error(`Failed to fetch products: ${response.status}`);
-        }
-        const payload = await response.json();
-        setRecords(payload.records ?? []);
-        setFetchError(null);
-      } catch (error) {
-        if ((error as Error).name !== "AbortError") {
-          console.error("Airtable fetch error", error);
-          setFetchError("Не удалось загрузить продукты");
-        }
-      } finally {
-        setIsLoadingRecords(false);
-      }
-    };
-
-    fetchProducts();
-
-    return () => controller.abort();
-  }, []);
+  const categoryTerm = TAB_CATEGORY_TERM[activeTab];
+  const apiUrl = `/api/airtable-products?format=normalized&priceTier=bulk${
+    categoryTerm ? `&category=${encodeURIComponent(categoryTerm)}` : ""
+  }`;
+  const { data, error, isLoading } = useSWR(apiUrl, fetcher, {
+    fallbackData:
+      activeTab === "allProducts" ? { records: initialRecords } : undefined,
+  });
+  const fetchError = error ? t.common.loadProductsError : null;
+  const records = (data?.records ?? []) as NormalizedProduct[];
 
   useEffect(() => {
     setShowAll(false);
   }, [records.length, activeTab]);
 
-  const categorizedRecords = useMemo(() => {
-    const initial = TAB_KEYS.reduce((acc, key) => {
-      acc[key] = [];
-      return acc;
-    }, {} as Record<TabKey, AirtableRecord[]>);
-
-    records.forEach((record) => {
-      const categories = new Set<TabKey>();
-      categories.add("allProducts");
-
-      const categoryValues = [
-        ...extractStringValues(record.fields["Item Category"]),
-        ...extractStringValues(record.fields["[WEB] Item Category"]),
-      ];
-
-      categoryValues.forEach((value) => {
-        const mapped = mapCategoryValue(value);
-        if (mapped && mapped !== "allProducts") {
-          categories.add(mapped);
-        }
-      });
-
-      categories.forEach((category) => {
-        initial[category]?.push(record);
-      });
-    });
-
-    return initial;
-  }, [records]);
-
-  const tabCounts = useMemo(() => {
-    const counts = {} as Record<TabKey, number>;
-    TAB_KEYS.forEach((key) => {
-      counts[key] = categorizedRecords[key]?.length ?? 0;
-    });
-    return counts;
-  }, [categorizedRecords]);
-
-  const activeRecords = useMemo(
-    () => categorizedRecords[activeTab] ?? [],
-    [categorizedRecords, activeTab]
-  );
+  const activeRecords = records;
 
   const tabLabels: Record<TabKey, string> = {
     allProducts: t.catalog.tabs.allProducts,
@@ -227,7 +146,7 @@ export default function ProductTabs() {
   const tabs = TAB_KEYS.map((key) => ({
     key,
     label: tabLabels[key],
-    count: tabCounts[key] ?? 0,
+    count: key === activeTab ? activeRecords.length : 0,
   }));
 
   const initialDesktopCapacity = DESKTOP_LAYOUT_PATTERN.length;
@@ -260,49 +179,18 @@ export default function ProductTabs() {
 
   const mapRecordToProduct = useCallback(
     (
-      record: AirtableRecord,
+      record: NormalizedProduct,
       size: "regular" | "large" = "regular"
     ): Product => {
-      const fields = record.fields || {};
-      const nameEng = fields["[WEB] Name ENG"] as string | undefined;
-      const nameDe = fields["[WEB] Name DE"] as string | undefined;
-      const nameFallback = fields["Name"] as string | undefined;
       const name =
-        language === "de"
-          ? (nameDe || nameEng || nameFallback || "Product")
-          : (nameEng || nameDe || nameFallback || "Product");
-
-      const sampleSalesValue =
-        fields["1000+ pcs | SALES"] ??
-        fields["Price"] ??
-        (fields["[WEB] Price"] as string | undefined);
-      const price =
-        typeof sampleSalesValue === "number"
-          ? `From €${sampleSalesValue}`
-          : typeof sampleSalesValue === "string" && sampleSalesValue.trim()
-            ? sampleSalesValue.startsWith("€")
-              ? sampleSalesValue
-              : `From €${sampleSalesValue}`
-            : "From €6";
-
-      const mainPhoto = fields["Main Product Photo"];
-      const mainPhotoArr = Array.isArray(mainPhoto) ? mainPhoto : [];
-      const firstAttachment = mainPhotoArr[0];
-      const imageUrl =
-        firstAttachment &&
-        typeof firstAttachment === "object" &&
-        firstAttachment !== null &&
-        "url" in firstAttachment &&
-        typeof (firstAttachment as { url?: string }).url === "string"
-          ? (firstAttachment as { url: string }).url
-          : null;
+        language === "de" ? record.nameDe : record.nameEn;
 
       return {
         id: record.id,
         name,
-        price,
+        price: record.price,
         size,
-        imageUrl,
+        imageUrl: record.imageUrl,
       };
     },
     [language]
@@ -338,7 +226,7 @@ export default function ProductTabs() {
     return activeRecords.map((record) => mapRecordToProduct(record, "regular"));
   }, [activeRecords, mapRecordToProduct]);
 
-  const shouldShowSkeleton = isLoadingRecords;
+  const shouldShowSkeleton = isLoading;
 
   const showEmptyState =
     !shouldShowSkeleton && !fetchError && activeRecords.length === 0;
@@ -376,6 +264,18 @@ export default function ProductTabs() {
 
   const renderProductCard = (product: Product) => {
     const isSkeleton = Boolean(product.isSkeleton);
+    const priceText = (() => {
+      const raw = product.price?.trim() || "";
+      if (!raw) return "";
+      if (language === "de") {
+        if (/^ab\b/i.test(raw)) return raw;
+        const cleaned = raw.replace(/^from\s+/i, "");
+        return `Ab ${cleaned}`;
+      }
+      if (/^from\b/i.test(raw)) return raw;
+      const cleaned = raw.replace(/^ab\s+/i, "");
+      return `From ${cleaned}`;
+    })();
 
     return (
       <div
@@ -410,7 +310,7 @@ export default function ProductTabs() {
         ) : (
           <>
             <h3 className={styles.productName}>{product.name}</h3>
-            <p className={styles.productPrice}>{product.price}</p>
+            <p className={styles.productPrice}>{priceText}</p>
           </>
         )}
       </div>

@@ -86,6 +86,7 @@ export default function ProductDetails({
 }: ProductDetailsProps) {
   const { t } = useLanguage();
   const { addItem } = useCart();
+  const isLoading = Boolean(productId && !productRecord);
   const paletteColors = parsePaletteHex(productRecord?.fields);
   const paletteFieldRaw = productRecord?.fields?.[PALETTE_FIELD];
   const mainPhotoUrl = getMainPhotoUrl(productRecord?.fields);
@@ -222,21 +223,15 @@ export default function ProductDetails({
       ? String(leadTimeRaw)
       : null;
 
-  useEffect(() => {
-    if (effectiveQuantity === 0) return;
-    console.log("[ProductDetails] qty/price", {
-      effectiveQuantity,
-      priceDisplay,
-    });
-  }, [effectiveQuantity, priceDisplay]);
-
   return (
     <section className={styles.productDetails}>
       {/* Product Customizer Section */}
       <div className={styles.customizerSection}>
         <div className={styles.imageSection}>
           <div className={styles.mainImageContainer}>
-            {mainPhotoUrl ? (
+            {isLoading ? (
+              <div className={`${styles.mainImage} ${styles.skeletonBlock}`} />
+            ) : mainPhotoUrl ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 src={mainPhotoUrl}
@@ -251,7 +246,14 @@ export default function ProductDetails({
             )}
           </div>
           <div className={styles.thumbnails}>
-            {mainPhotoUrl
+            {isLoading
+              ? Array.from({ length: 4 }, (_, index) => (
+                  <div
+                    key={index}
+                    className={`${styles.thumbnail} ${styles.skeletonBlock}`}
+                  />
+                ))
+              : mainPhotoUrl
               ? Array.from({ length: 4 }, (_, index) => (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
@@ -285,17 +287,24 @@ export default function ProductDetails({
           <div className={styles.optionGroup}>
             <h3 className={styles.optionLabel}>{t.design.color}</h3>
             <div className={styles.colorGrid}>
-              {paletteColors.map((color, index) => (
-                <button
-                  key={index}
-                  className={`${styles.colorOption} ${
-                    selectedColor === color ? styles.selected : ""
-                  }`}
-                  style={{ backgroundColor: color }}
-                  onClick={() => setSelectedColor(color)}
-                  aria-label={`Color ${index + 1}`}
-                />
-              ))}
+              {isLoading
+                ? Array.from({ length: 6 }, (_, index) => (
+                    <div
+                      key={index}
+                      className={`${styles.colorOption} ${styles.skeletonBlock}`}
+                    />
+                  ))
+                : paletteColors.map((color, index) => (
+                    <button
+                      key={index}
+                      className={`${styles.colorOption} ${
+                        selectedColor === color ? styles.selected : ""
+                      }`}
+                      style={{ backgroundColor: color }}
+                      onClick={() => setSelectedColor(color)}
+                      aria-label={`Color ${index + 1}`}
+                    />
+                  ))}
             </div>
           </div>
 
@@ -303,52 +312,64 @@ export default function ProductDetails({
 
           <div className={styles.optionGroup}>
             <h3 className={styles.optionLabel}>{t.design.quantity}</h3>
-            <div className={styles.quantityControl}>
-              <button
-                className={styles.quantityButton}
-                onClick={decrementQuantity}
-                disabled={quantity <= minQuantity}
-              >
-                <MinusIcon />
-              </button>
-              <input
-                type="number"
-                className={styles.quantityValue}
-                value={quantityDisplayValue}
-                min={minQuantity}
-                max={99999}
-                step={1}
-                onChange={handleQuantityInputChange}
-                onBlur={handleQuantityBlur}
-                aria-label={t.design.quantity}
-              />
-              <button
-                className={styles.quantityButton}
-                onClick={incrementQuantity}
-              >
-                <PlusIcon />
-              </button>
-            </div>
+            {isLoading ? (
+              <div className={styles.quantitySkeletonRow}>
+                <div className={`${styles.quantityButton} ${styles.skeletonBlock}`} />
+                <div className={`${styles.quantityValue} ${styles.skeletonBlock}`} />
+                <div className={`${styles.quantityButton} ${styles.skeletonBlock}`} />
+              </div>
+            ) : (
+              <div className={styles.quantityControl}>
+                <button
+                  className={styles.quantityButton}
+                  onClick={decrementQuantity}
+                  disabled={quantity <= minQuantity}
+                >
+                  <MinusIcon />
+                </button>
+                <input
+                  type="number"
+                  className={styles.quantityValue}
+                  value={quantityDisplayValue}
+                  min={minQuantity}
+                  max={99999}
+                  step={1}
+                  onChange={handleQuantityInputChange}
+                  onBlur={handleQuantityBlur}
+                  aria-label={t.design.quantity}
+                />
+                <button
+                  className={styles.quantityButton}
+                  onClick={incrementQuantity}
+                >
+                  <PlusIcon />
+                </button>
+              </div>
+            )}
           </div>
 
           <div className={styles.divider} />
 
           <div className={styles.optionGroup}>
             <h3 className={styles.optionLabel}>{t.design.description}</h3>
-            <div className={styles.descriptionInputWrap}>
-              <textarea
-                className={styles.descriptionInput}
-                value={description}
-                onChange={(e) => setDescription(e.target.value.slice(0, 1500))}
-                maxLength={1500}
-                placeholder=""
-                rows={4}
-                aria-label={t.design.description}
-              />
-              <span className={styles.descriptionCounter}>
-                {description.length} / 1500
-              </span>
-            </div>
+            {isLoading ? (
+              <div className={styles.descriptionSkeleton} />
+            ) : (
+              <div className={styles.descriptionInputWrap}>
+                <textarea
+                  className={styles.descriptionInput}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value.slice(0, 1500))}
+                  maxLength={1500}
+                  placeholder=""
+                  rows={4}
+                  aria-label={t.design.description}
+                />
+                <span className={styles.descriptionCounter}>
+                  {description.length} / 1500
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Скрыто пока: Customisation type и Design placement */}
@@ -397,23 +418,33 @@ export default function ProductDetails({
           <div className={styles.divider} />
 
           <div className={styles.priceSection}>
-            <p className={styles.priceText}>
-              {(t.design.price as string).replace("X", priceDisplay ?? "—")}
-            </p>
-            <p className={styles.pricePerUnitText}>
-              {(t.design?.pricePerUnit ?? "Price per unit: X").replace(
-                "X",
-                unitPriceDisplay ?? "—"
-              )}
-            </p>
-            <p className={styles.leadTimeText}>
-              {(t.design.leadTime as string).replace(
-                "Y",
-                leadTimeDisplay
-                  ? `${leadTimeDisplay} ${(t.design as { days?: string }).days ?? "days"}`
-                  : "—"
-              )}
-            </p>
+            {isLoading ? (
+              <>
+                <div className={`${styles.priceSkeletonLine} ${styles.skeletonBlock}`} />
+                <div className={`${styles.priceSkeletonLine} ${styles.skeletonBlock}`} />
+                <div className={`${styles.priceSkeletonLine} ${styles.skeletonBlock}`} />
+              </>
+            ) : (
+              <>
+                <p className={styles.priceText}>
+                  {(t.design.price as string).replace("X", priceDisplay ?? "—")}
+                </p>
+                <p className={styles.pricePerUnitText}>
+                  {(t.design?.pricePerUnit ?? "Price per unit: X").replace(
+                    "X",
+                    unitPriceDisplay ?? "—"
+                  )}
+                </p>
+                <p className={styles.leadTimeText}>
+                  {(t.design.leadTime as string).replace(
+                    "Y",
+                    leadTimeDisplay
+                      ? `${leadTimeDisplay} ${(t.design as { days?: string }).days ?? "days"}`
+                      : "—"
+                  )}
+                </p>
+              </>
+            )}
           </div>
 
           <Button
@@ -446,7 +477,11 @@ export default function ProductDetails({
         <h2 className={styles.title}>{t.design.knowYourProduct}</h2>
         <div className={styles.accordionSliderSection}>
           <div className={styles.accordionSection}>
-            <ProductAccordion productFields={productRecord?.fields} />
+            {isLoading ? (
+              <div className={`${styles.accordionSkeleton} ${styles.skeletonBlock}`} />
+            ) : (
+              <ProductAccordion productFields={productRecord?.fields} />
+            )}
           </div>
 
           <div className={styles.sliderSection}>
