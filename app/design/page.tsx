@@ -3,14 +3,10 @@ import DesignClient from "./DesignClient";
 
 export const revalidate = 300;
 
-type SearchParams =
-  | { product?: string }
-  | Promise<{ product?: string }>;
-
 export default async function Design({
   searchParams,
 }: {
-  searchParams?: SearchParams;
+  searchParams?: Promise<{ product?: string }>;
 }) {
   const resolved = searchParams ? await searchParams : undefined;
   const productId = resolved?.product ?? null;
