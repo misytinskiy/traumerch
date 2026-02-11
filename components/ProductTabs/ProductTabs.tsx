@@ -197,7 +197,7 @@ export default function ProductTabs({
   );
 
   const buildDesktopProducts = useCallback(
-    (sourceRecords: AirtableRecord[]) => {
+    (sourceRecords: NormalizedProduct[]) => {
       const sizes = [...DESKTOP_LAYOUT_PATTERN];
       while (sizes.length < sourceRecords.length) {
         sizes.push("regular");
