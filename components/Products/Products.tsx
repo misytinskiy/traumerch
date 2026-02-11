@@ -36,7 +36,7 @@ export default function Products({
     fallbackData: { records: initialRecords },
   });
   const fetchError = error ? t.common.loadProductsError : null;
-  const records = (data?.records ?? []) as NormalizedProduct[];
+  const records = data?.records as NormalizedProduct[] | undefined;
 
   const products = useMemo(() => {
     if (isLoading) {
@@ -47,12 +47,13 @@ export default function Products({
         isSkeleton: true,
       }));
     }
-    return records.slice(0, 4).map((record) => ({
+    const source = records ?? initialRecords;
+    return source.slice(0, 4).map((record) => ({
       id: record.id,
       name: language === "de" ? record.nameDe : record.nameEn,
       price: record.price,
     }));
-  }, [records, isLoading, language]);
+  }, [records, initialRecords, isLoading, language]);
 
   const handleProductClick = (productId: string) => {
     // Navigate to design page for the specific product

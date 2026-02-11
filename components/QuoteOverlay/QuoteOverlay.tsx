@@ -190,14 +190,14 @@ export default function QuoteOverlay() {
           body: JSON.stringify(submitData),
         });
 
-        const result = await submitResponse.json();
+        await submitResponse.json();
 
         if (submitResponse.ok) {
           setShowThankYou(true);
         } else {
           alert("Failed to submit form. Please try again.");
         }
-      } catch (error) {
+      } catch {
         alert("An error occurred. Please try again.");
       }
     }

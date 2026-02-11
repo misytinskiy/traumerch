@@ -1,5 +1,5 @@
 import { buildAirtableRecordUrl, fetchAirtable } from "../../lib/airtable";
-import DesignClient, { DesignFallback } from "./DesignClient";
+import DesignClient from "./DesignClient";
 
 export const revalidate = 300;
 
@@ -38,5 +38,3 @@ export default async function Design({
     />
   );
 }
-
-export { DesignFallback };
