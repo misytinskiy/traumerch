@@ -160,6 +160,15 @@
   object-fit: cover;
 }
 
+.imageWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.productImageContent {
+  object-fit: cover;
+}
+
 .productImage.regular {
   height: 452px;
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import useSWR from "swr";
+import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import type { NormalizedProduct } from "../../lib/products";
@@ -121,6 +122,8 @@ export default function ProductTabs({
   const { data, error, isLoading } = useSWR(apiUrl, fetcher, {
     fallbackData:
       activeTab === "allProducts" ? { records: initialRecords } : undefined,
+    revalidateOnMount: true,
+    revalidateIfStale: true,
   });
   const fetchError = error ? t.common.loadProductsError : null;
   const records = (data?.records ?? []) as NormalizedProduct[];
@@ -190,7 +193,7 @@ export default function ProductTabs({
         name,
         price: record.price,
         size,
-        imageUrl: record.imageUrl,
+        imageUrl: record.imageUrlLarge ?? record.imageUrlSmall ?? record.imageUrl,
       };
     },
     [language]
@@ -291,11 +294,20 @@ export default function ProductTabs({
             className={`${styles.productImage} ${styles[product.size]} ${styles.skeletonBlock}`}
           />
         ) : product.imageUrl ? (
-          <img
-            src={product.imageUrl}
-            alt=""
-            className={`${styles.productImage} ${styles[product.size]}`}
-          />
+          <div className={`${styles.productImage} ${styles[product.size]} ${styles.imageWrap}`}>
+            <Image
+              src={product.imageUrl}
+              alt=""
+              fill
+              sizes={
+                product.size === "large"
+                  ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
+                  : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
+              }
+              className={styles.productImageContent}
+              loading="lazy"
+            />
+          </div>
         ) : (
           <div
             className={`${styles.productImage} ${styles[product.size]}`}

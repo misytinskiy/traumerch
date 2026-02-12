@@ -6,6 +6,9 @@ export type NormalizedProduct = {
   nameDe: string;
   price: string;
   imageUrl: string | null;
+  imageUrlSmall: string | null;
+  imageUrlLarge: string | null;
+  imageUrlFull: string | null;
   categories: string[];
 };
 
@@ -80,15 +83,32 @@ const normalizeRecord = (
 
   const mainPhoto = fields[IMAGE_FIELD];
   const mainPhotoArr = Array.isArray(mainPhoto) ? mainPhoto : [];
-  const firstAttachment = mainPhotoArr[0];
-  const imageUrl =
-    firstAttachment &&
-    typeof firstAttachment === "object" &&
-    firstAttachment !== null &&
-    "url" in firstAttachment &&
-    typeof (firstAttachment as { url?: string }).url === "string"
-      ? (firstAttachment as { url: string }).url
+  const firstAttachment =
+    mainPhotoArr[0] && typeof mainPhotoArr[0] === "object"
+      ? (mainPhotoArr[0] as {
+          url?: string;
+          thumbnails?: {
+            small?: { url?: string };
+            large?: { url?: string };
+            full?: { url?: string };
+          };
+        })
       : null;
+  const imageUrlFull =
+    firstAttachment?.url && typeof firstAttachment.url === "string"
+      ? firstAttachment.url
+      : null;
+  const imageUrlLarge =
+    firstAttachment?.thumbnails?.large?.url &&
+    typeof firstAttachment.thumbnails.large.url === "string"
+      ? firstAttachment.thumbnails.large.url
+      : null;
+  const imageUrlSmall =
+    firstAttachment?.thumbnails?.small?.url &&
+    typeof firstAttachment.thumbnails.small.url === "string"
+      ? firstAttachment.thumbnails.small.url
+      : null;
+  const imageUrl = imageUrlLarge || imageUrlSmall || imageUrlFull;
 
   const categories = CATEGORY_FIELDS.flatMap((field) =>
     extractStringValues(fields[field])
@@ -100,6 +120,9 @@ const normalizeRecord = (
     nameDe,
     price,
     imageUrl,
+    imageUrlSmall,
+    imageUrlLarge,
+    imageUrlFull,
     categories,
   };
 };

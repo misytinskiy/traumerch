@@ -28,6 +28,15 @@
   object-fit: cover;
 }
 
+.imageWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.imageContent {
+  object-fit: cover;
+}
+
 .thumbnails {
   display: flex;
   flex-direction: column;

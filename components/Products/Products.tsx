@@ -34,6 +34,8 @@ export default function Products({
   const url = "/api/airtable-products?format=normalized&priceTier=sample&maxRecords=4";
   const { data, error, isLoading } = useSWR(url, fetcher, {
     fallbackData: { records: initialRecords },
+    revalidateOnMount: true,
+    revalidateIfStale: true,
   });
   const fetchError = error ? t.common.loadProductsError : null;
   const records = data?.records as NormalizedProduct[] | undefined;

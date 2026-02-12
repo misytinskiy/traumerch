@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useCart } from "../../contexts/CartContext";
 import Button from "../Button/Button";
@@ -12,14 +13,41 @@ import styles from "./ProductDetails.module.css";
 const PALETTE_FIELD = "[WEB] Palette Hex Colours";
 const MAIN_PHOTO_FIELD = "Main Product Photo";
 
-function getMainPhotoUrl(fields: Record<string, unknown> | undefined): string | null {
+function getMainPhotoUrls(fields: Record<string, unknown> | undefined): {
+  full: string | null;
+  large: string | null;
+  small: string | null;
+  fallback: string | null;
+} {
   const raw = fields?.[MAIN_PHOTO_FIELD];
-  if (!Array.isArray(raw) || raw.length === 0) return null;
-  const first = raw[0];
-  if (first && typeof first === "object" && "url" in first && typeof (first as { url: string }).url === "string") {
-    return (first as { url: string }).url;
+  if (!Array.isArray(raw) || raw.length === 0) {
+    return { full: null, large: null, small: null, fallback: null };
   }
-  return null;
+  const first =
+    raw[0] && typeof raw[0] === "object"
+      ? (raw[0] as {
+          url?: string;
+          thumbnails?: {
+            small?: { url?: string };
+            large?: { url?: string };
+            full?: { url?: string };
+          };
+        })
+      : null;
+  const full =
+    first?.url && typeof first.url === "string" ? first.url : null;
+  const large =
+    first?.thumbnails?.large?.url &&
+    typeof first.thumbnails.large.url === "string"
+      ? first.thumbnails.large.url
+      : null;
+  const small =
+    first?.thumbnails?.small?.url &&
+    typeof first.thumbnails.small.url === "string"
+      ? first.thumbnails.small.url
+      : null;
+  const fallback = large || small || full;
+  return { full, large, small, fallback };
 }
 
 function parsePaletteHex(fields: Record<string, unknown> | undefined): string[] {
@@ -89,7 +117,9 @@ export default function ProductDetails({
   const isLoading = Boolean(productId && !productRecord);
   const paletteColors = parsePaletteHex(productRecord?.fields);
   const paletteFieldRaw = productRecord?.fields?.[PALETTE_FIELD];
-  const mainPhotoUrl = getMainPhotoUrl(productRecord?.fields);
+  const mainPhoto = getMainPhotoUrls(productRecord?.fields);
+  const mainPhotoUrl = mainPhoto.full || mainPhoto.large || mainPhoto.small || null;
+  const thumbnailUrl = mainPhoto.small || mainPhoto.large || mainPhoto.full || null;
   const [selectedColor, setSelectedColor] = useState("");
 
   useEffect(() => {
@@ -232,12 +262,16 @@ export default function ProductDetails({
             {isLoading ? (
               <div className={`${styles.mainImage} ${styles.skeletonBlock}`} />
             ) : mainPhotoUrl ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                src={mainPhotoUrl}
-                alt=""
-                className={styles.mainImage}
-              />
+              <div className={`${styles.mainImage} ${styles.imageWrap}`}>
+                <Image
+                  src={mainPhotoUrl}
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
+                  className={styles.imageContent}
+                  priority
+                />
+              </div>
             ) : (
               <div
                 className={styles.mainImage}
@@ -253,15 +287,21 @@ export default function ProductDetails({
                     className={`${styles.thumbnail} ${styles.skeletonBlock}`}
                   />
                 ))
-              : mainPhotoUrl
+              : thumbnailUrl
               ? Array.from({ length: 4 }, (_, index) => (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
+                  <div
                     key={index}
-                    src={mainPhotoUrl}
-                    alt=""
-                    className={styles.thumbnail}
-                  />
+                    className={`${styles.thumbnail} ${styles.imageWrap}`}
+                  >
+                    <Image
+                      src={thumbnailUrl}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 25vw, 96px"
+                      className={styles.imageContent}
+                      loading="lazy"
+                    />
+                  </div>
                 ))
               : Array.from({ length: 4 }, (_, index) => (
                   <div

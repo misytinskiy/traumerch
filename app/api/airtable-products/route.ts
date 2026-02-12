@@ -49,11 +49,14 @@ export async function GET(request: NextRequest) {
   const category = (searchParams.get("category") || "").toLowerCase().trim();
 
   const cacheSeconds = recordId ? 600 : 300;
+  const requestStart = performance.now();
 
   try {
     let data: unknown;
+    let airtableFetchMs = 0;
 
     if (format === "normalized" && !recordId) {
+      const fetchStart = performance.now();
       data = await fetchNormalizedProducts({
         apiToken,
         priceTier,
@@ -64,6 +67,7 @@ export async function GET(request: NextRequest) {
         filterByFormula,
         revalidateSeconds: cacheSeconds,
       });
+      airtableFetchMs = performance.now() - fetchStart;
     } else {
       const url = recordId
         ? buildAirtableRecordUrl(recordId, fields)
@@ -74,9 +78,11 @@ export async function GET(request: NextRequest) {
             pageSize,
             filterByFormula,
           });
+      const fetchStart = performance.now();
       const response = await fetchAirtable(url, apiToken, {
         revalidateSeconds: cacheSeconds,
       });
+      airtableFetchMs = performance.now() - fetchStart;
       if (!response.ok) {
         const message = await response.text();
         return NextResponse.json(
