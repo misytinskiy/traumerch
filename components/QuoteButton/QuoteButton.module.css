@@ -132,8 +132,8 @@
 @media (max-width: 1536px) {
   .quoteButton:not(.mobile) {
     padding: 12px 40px;
-    width: 312px;
-    height: 82px;
+    width: 254px;
+    height: 67px;
     font-size: 14px;
   }
 }
