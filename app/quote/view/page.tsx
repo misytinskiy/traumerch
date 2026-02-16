@@ -90,15 +90,18 @@ export default function QuoteViewPage() {
     removeItem,
     updateItemQuantity,
     updateItemDescription,
-    updateItemFile,
+    updateItemFiles,
   } =
     useCart();
   const [quantityInputByIndex, setQuantityInputByIndex] = useState<
     Record<number, string>
   >({});
-  const [fileNamesByIndex, setFileNamesByIndex] = useState<
+  const [fileErrorsByIndex, setFileErrorsByIndex] = useState<
     Record<number, string>
   >({});
+
+  const MAX_FILES = 5;
+  const MAX_TOTAL_BYTES = 15 * 1024 * 1024;
 
   const displayItems = useMemo(() => {
     return items.map((item) => ({
@@ -156,6 +159,42 @@ export default function QuoteViewPage() {
     updateItemQuantity(index, clamped);
   };
 
+  const getTotalSize = (files: File[]) =>
+    files.reduce((sum, file) => sum + file.size, 0);
+
+  const handleFilesChange = (index: number, fileList: FileList | null) => {
+    if (!fileList) return;
+    const incoming = Array.from(fileList);
+    const existing = items[index]?.files ?? [];
+    const next = [...existing, ...incoming];
+
+    if (next.length > MAX_FILES) {
+      setFileErrorsByIndex((prev) => ({
+        ...prev,
+        [index]: `Maximum ${MAX_FILES} files allowed.`,
+      }));
+      return;
+    }
+
+    if (getTotalSize(next) > MAX_TOTAL_BYTES) {
+      setFileErrorsByIndex((prev) => ({
+        ...prev,
+        [index]: "Total size must be 15 MB or less.",
+      }));
+      return;
+    }
+
+    updateItemFiles(index, next);
+    setFileErrorsByIndex((prev) => ({ ...prev, [index]: "" }));
+  };
+
+  const handleRemoveFile = (index: number, fileIndex: number) => {
+    const existing = items[index]?.files ?? [];
+    const next = existing.filter((_, i) => i !== fileIndex);
+    updateItemFiles(index, next);
+    setFileErrorsByIndex((prev) => ({ ...prev, [index]: "" }));
+  };
+
   return (
     <div className={styles.page}>
       <ResponsiveHeader />
@@ -175,6 +214,7 @@ export default function QuoteViewPage() {
               item.productName
             );
             const minQuantity = item.minQuantity;
+            const itemFiles = item.files ?? [];
             return (
               <article className={styles.card} key={`${item.productId}-${index}`}>
                 <div className={styles.media}>
@@ -294,22 +334,39 @@ export default function QuoteViewPage() {
                       <input
                         type="file"
                         className={styles.fileInput}
+                        multiple
+                        accept="image/*,.pdf,.doc,.docx"
                         onChange={(e) => {
-                          const file = e.target.files?.[0] ?? null;
-                          updateItemFile(index, file);
-                          setFileNamesByIndex((prev) => ({
-                            ...prev,
-                            [index]: file?.name ?? "",
-                          }));
+                          handleFilesChange(index, e.target.files);
+                          e.currentTarget.value = "";
                         }}
                       />
                     </label>
-                    {fileNamesByIndex[index] && (
-                      <span className={styles.fileName}>
-                        {fileNamesByIndex[index]}
+                    {fileErrorsByIndex[index] && (
+                      <span className={styles.fileError}>
+                        {fileErrorsByIndex[index]}
                       </span>
                     )}
                   </div>
+                  {itemFiles.length > 0 && (
+                    <ul className={styles.fileList}>
+                      {itemFiles.map((file, fileIndex) => (
+                        <li
+                          key={`${file.name}-${fileIndex}`}
+                          className={styles.fileItem}
+                        >
+                          <span className={styles.fileName}>{file.name}</span>
+                          <button
+                            type="button"
+                            className={styles.fileRemove}
+                            onClick={() => handleRemoveFile(index, fileIndex)}
+                          >
+                            Remove
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </article>
             );

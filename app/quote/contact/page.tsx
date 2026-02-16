@@ -353,7 +353,7 @@ export default function QuoteContactPage() {
       }
 
       const attachments = items
-        .map((item) => item.file ?? null)
+        .flatMap((item) => item.files ?? [])
         .filter((file): file is File => Boolean(file));
 
       const submitForm = new FormData();

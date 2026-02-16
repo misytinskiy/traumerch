@@ -59,16 +59,26 @@
 }
 
 /* Responsive */
-@media (max-width: 1536px) {
+@media (max-width: 1540px) {
   .main {
-    padding: 100px 60px 120px;
+    padding: 160px 175px 120px;
   }
 
   .title {
-    font-size: 64px;
-    line-height: 78px;
+    font-size: 56px;
+    line-height: 0;
+margin-bottom: 40px;
+    
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 28px;
+    margin-bottom: 24px;
   }
 }
+
+
 
 @media (max-width: 768px) {
   .main {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { InlineWidget } from "react-calendly";
 import Image from "next/image";
@@ -15,9 +16,9 @@ interface QuoteFormData {
   preferredMessenger: string;
   messengerContact: string;
   requestType: "services" | "merchandise";
-  service: string;
+  service: string[];
   description: string;
-  file: File | null;
+  files: File[];
 }
 
 const messengers = [
@@ -36,20 +37,21 @@ const servicesList = [
 export default function QuoteOverlay() {
   const { isOpen, closeQuote } = useQuoteOverlay();
   const { t } = useLanguage();
+  const router = useRouter();
   const [formData, setFormData] = useState<QuoteFormData>({
     name: "",
     email: "",
     preferredMessenger: "",
     messengerContact: "",
     requestType: "services",
-    service: "",
+    service: [],
     description: "",
-    file: null,
+    files: [],
   });
   const [selectedMessenger, setSelectedMessenger] = useState<number | null>(
     null
   );
-  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [showThankYou, setShowThankYou] = useState(false);
   const [errors, setErrors] = useState<{
     name?: string;
@@ -78,12 +80,12 @@ export default function QuoteOverlay() {
         preferredMessenger: "",
         messengerContact: "",
         requestType: "services",
-        service: "",
+        service: [],
         description: "",
-        file: null,
+        files: [],
       });
       setSelectedMessenger(null);
-      setSelectedService(null);
+      setSelectedServices([]);
       setShowThankYou(false);
       setErrors({});
     }
@@ -155,10 +157,41 @@ export default function QuoteOverlay() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const [fileError, setFileError] = useState<string>("");
+  const MAX_FILES = 5;
+  const MAX_TOTAL_BYTES = 15 * 1024 * 1024;
+
+  const getTotalSize = (files: File[]) =>
+    files.reduce((sum, file) => sum + file.size, 0);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({ ...prev, file: e.target.files![0] }));
+    if (!e.target.files) return;
+    const incoming = Array.from(e.target.files);
+    const next = [...formData.files, ...incoming];
+
+    if (next.length > MAX_FILES) {
+      setFileError(`Maximum ${MAX_FILES} files allowed.`);
+      e.currentTarget.value = "";
+      return;
     }
+
+    if (getTotalSize(next) > MAX_TOTAL_BYTES) {
+      setFileError("Total size must be 15 MB or less.");
+      e.currentTarget.value = "";
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, files: next }));
+    setFileError("");
+    e.currentTarget.value = "";
+  };
+
+  const handleRemoveFile = (fileIndex: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      files: prev.files.filter((_, i) => i !== fileIndex),
+    }));
+    setFileError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -170,30 +203,41 @@ export default function QuoteOverlay() {
           messengers.find((m) => m.id === selectedMessenger)?.name || "";
 
         // Prepare data for Airtable
-        const submitData = {
+        const submitData: Record<string, unknown> = {
           name: formData.name,
           email: formData.email,
           preferredMessenger:
             selectedMessengerName || formData.preferredMessenger,
           messengerContact: formData.messengerContact,
           requestType: formData.requestType,
-          service: selectedService || "",
+          service: selectedServices,
           description: formData.description,
         };
+
+        const submitForm = new FormData();
+        Object.entries(submitData).forEach(([key, value]) => {
+          if (value === undefined || value === null || value === "") return;
+          if (Array.isArray(value)) {
+            submitForm.append(key, JSON.stringify(value));
+          } else {
+            submitForm.append(key, String(value));
+          }
+        });
+        formData.files.forEach((file) => {
+          submitForm.append("attachments", file);
+        });
 
         // Submit data to Airtable
         const submitResponse = await fetch("/api/airtable-quote", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(submitData),
+          body: submitForm,
         });
 
         await submitResponse.json();
 
         if (submitResponse.ok) {
-          setShowThankYou(true);
+          closeQuote();
+          router.push("/quote/thank-you");
         } else {
           alert("Failed to submit form. Please try again.");
         }
@@ -518,16 +562,22 @@ export default function QuoteOverlay() {
                                   key={service}
                                   type="button"
                                   className={`${styles.toggleButton} ${
-                                    selectedService === service
+                                    selectedServices.includes(service)
                                       ? styles.toggleButtonActive
                                       : ""
                                   }`}
                                   onClick={() => {
-                                    setSelectedService(service);
+                                    setSelectedServices((prev) =>
+                                      prev.includes(service)
+                                        ? prev.filter((item) => item !== service)
+                                        : [...prev, service]
+                                    );
                                     setFormData((prev) => ({
                                       ...prev,
                                       requestType: "services",
-                                      service,
+                                      service: prev.service.includes(service)
+                                        ? prev.service.filter((item) => item !== service)
+                                        : [...prev.service, service],
                                     }));
                                   }}
                                 >
@@ -587,8 +637,33 @@ export default function QuoteOverlay() {
                               onChange={handleFileChange}
                               className={styles.fileInput}
                               accept="image/*,.pdf,.doc,.docx"
+                              multiple
                             />
                           </motion.div>
+                          {fileError && (
+                            <div className={styles.fileError}>{fileError}</div>
+                          )}
+                          {formData.files.length > 0 && (
+                            <ul className={styles.fileList}>
+                              {formData.files.map((file, index) => (
+                                <li
+                                  key={`${file.name}-${index}`}
+                                  className={styles.fileItem}
+                                >
+                                  <span className={styles.fileName}>
+                                    {file.name}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    className={styles.fileRemove}
+                                    onClick={() => handleRemoveFile(index)}
+                                  >
+                                    Remove
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
 
                           <motion.div
                             className={styles.formGroup}

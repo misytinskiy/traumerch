@@ -21,8 +21,14 @@ export default function ThankYouPage() {
             "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable."}
         </p>
         <div className={styles.imageContainer}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/thankYou.gif" alt="" className={styles.thankYouImage} />
+          <video
+            className={styles.thankYouImage}
+            autoPlay
+            muted
+            playsInline
+          >
+            <source src="/thankYou.webm" type="video/webm" />
+          </video>
         </div>
       </main>
 

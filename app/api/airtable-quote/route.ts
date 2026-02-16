@@ -139,16 +139,39 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Services - single select (exact Airtable option names required)
-    const serviceStr = toStringField(service);
-    if (serviceStr) {
+    let normalizedService: unknown = service;
+    if (typeof normalizedService === "string") {
+      try {
+        const parsed = JSON.parse(normalizedService);
+        if (Array.isArray(parsed)) {
+          normalizedService = parsed;
+        }
+      } catch {
+        // Keep as string if not valid JSON
+      }
+    }
+
+    // Services - supports single or multiple selections
+    if (Array.isArray(normalizedService) && normalizedService.length > 0) {
       const servicesMap: Record<string, string> = {
         "Private Label": "Private label",
         "Influancer Activation": "Influancer Activation",
         "Smart Platform": "Smart Platform",
       };
-      const airtableService = servicesMap[serviceStr] ?? serviceStr;
-      airtableFields["Services"] = airtableService;
+      airtableFields["Services"] = normalizedService.map(
+        (item) => servicesMap[item] ?? item
+      );
+    } else {
+      const serviceStr = toStringField(normalizedService);
+      if (serviceStr) {
+        const servicesMap: Record<string, string> = {
+          "Private Label": "Private label",
+          "Influancer Activation": "Influancer Activation",
+          "Smart Platform": "Smart Platform",
+        };
+        const airtableService = servicesMap[serviceStr] ?? serviceStr;
+        airtableFields["Services"] = airtableService;
+      }
     }
     
     // Request Type - capitalize first letter (Merchandise or Services)
