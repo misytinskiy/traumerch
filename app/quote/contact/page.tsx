@@ -646,6 +646,7 @@ export default function QuoteContactPage() {
             variant="transparent"
             size="medium"
             padding="31px 84px"
+            padding480="26px 70px"
             onClick={() => router.push("/catalog")}
           >
             {t.quoteContact.backToShopping}
@@ -654,6 +655,7 @@ export default function QuoteContactPage() {
             variant="solid"
             size="medium"
             padding="31px 93px"
+            padding480="26px 70px"
             onClick={handleSubmit}
             disabled={isSubmitting}
           >

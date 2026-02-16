@@ -28,6 +28,7 @@
   will-change: transform;
   transform-origin: center center;
   -webkit-transform-origin: center center;
+  font-family: Inter;
 }
 
 .button:disabled {
@@ -117,18 +118,24 @@
   padding: 8px 20px;
   font-size: 14px;
   height: 36px;
+  font-family: 'Inter';
+
+
+
 }
 
 .medium {
   padding: 12px 24px;
   font-size: 14px;
   height: 42px;
+  font-family: 'Inter';
 }
 
 .large {
   padding: 16px 40px;
   font-size: 16px;
   height: 49px;
+  font-family: 'Inter';
 }
 
 /* Custom dimensions */
@@ -149,6 +156,7 @@
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  font-family: 'Inter';
 }
 
 .button:hover {
@@ -182,10 +190,17 @@
 @media (max-width: 480px) {
   .button {
     font-size: 12px;
+   
+  }
+
+  .buttonText {
+    text-transform: uppercase;
   }
 
   .arrow {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 10px;
   }
+
+
 }

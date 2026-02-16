@@ -321,6 +321,7 @@ export default function QuoteViewPage() {
             variant="transparent"
             size="medium"
             padding="31px 84px"
+            padding480="26px 70px"
             onClick={() => router.push("/catalog")}
           >
             {t.quoteView.backToShopping}
@@ -329,6 +330,7 @@ export default function QuoteViewPage() {
             variant="solid"
             size="medium"
             padding="31px 94px"
+            padding480="26px 70px"
             arrow="white"
             onClick={() => router.push("/quote/contact")}
           >

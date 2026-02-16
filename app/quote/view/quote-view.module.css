@@ -212,6 +212,7 @@ margin: 0 auto;
   font-size: 16px;
   color: #111;
   font-family: Inter;
+  
 }
 
 .descriptionInput::placeholder {
@@ -266,30 +267,22 @@ margin: 0 auto;
     grid-template-columns: 1fr;
   }
 
-  .metaRow {
-    grid-template-columns: 1fr;
-    row-gap: 8px;
-  }
 
   .metaRight {
     justify-self: start;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 744px) {
   .main {
     padding: 110px 16px 64px;
   }
 
   .headerRow {
-    flex-direction: column;
     align-items: flex-start;
   }
 
-  .metaRow {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+
 
   .footerBar {
     flex-direction: column;
@@ -430,14 +423,21 @@ margin: 0 auto;
   }
 
   .headerRow {
-    flex-direction: column;
     align-items: flex-start;
   }
 
-  .metaRow {
-    grid-template-columns: 1fr;
-    row-gap: 8px;
+  .metaBlock {
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
   }
+
+  .metaLabel,
+  .colorValue,
+  .metaRight {
+    color: #000;
+  }
+
+
 
   .quantityControls {
     margin-left: 0;
@@ -455,24 +455,56 @@ margin: 0 auto;
 
 @media (max-width: 480px) {
   .main {
-    padding: 120px 20px 64px;
+    padding: 115px 10px 64px;
   }
 
   .title {
-    font-size: 30px;
-    margin-bottom: 36px;
+    font-size: 28px;
+    margin-bottom: 35px;
   }
+
+  .card {
+        gap: 22.5px;
+  }
+
+  .productName {
+     font-size: 12px;
+  }
+
+  .deleteButton {
+    font-size: 12px;
+  }
+
+  .deleteButton svg {
+    width: 20px;
+height: 20px;
+  }
+
+  .metaLabel,
+  .colorValue,
+  .metaRight {
+    font-size: 12px;
+  }
+
+  .details {
+    gap: 24px;
+  }
+
 
   .list {
     gap: 28px;
   }
 
   .metaBlock {
-    padding: 18px 0;
+    padding: 24px 0;
   }
 
   .quantityControls {
     gap: 6px;
+  }
+
+  .uploadLabel {
+    margin-top: -12px;
   }
 
   .quantityButton {
@@ -482,13 +514,15 @@ margin: 0 auto;
   }
 
   .quantityInput {
-    width: 40px;
+    width: 45px;
     height: 28px;
     font-size: 12px;
   }
 
   .descriptionInput {
-    min-height: 140px;
+    min-height: 90px;
+  
+  
   }
 
   .uploadRow {
@@ -496,27 +530,8 @@ margin: 0 auto;
   }
 
   .footerBar {
-    gap: 12px;
+    gap: 24px;
     margin-top: 48px;
   }
 }
 
-@media (max-width: 350px) {
-  .main {
-    padding: 110px 16px 56px;
-  }
-
-  .title {
-    font-size: 26px;
-  }
-
-  .productName {
-    font-size: 15px;
-  }
-
-  .metaLabel,
-  .colorValue,
-  .metaRight {
-    font-size: 12px;
-  }
-}

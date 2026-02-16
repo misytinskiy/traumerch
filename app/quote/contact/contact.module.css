@@ -26,6 +26,7 @@
 }
 
 .sectionTitle {
+  font-family: 'Inter';
   font-size: 20px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.7);
@@ -654,6 +655,14 @@
     gap: 32px;
   }
 
+  .quoteSection {
+    order: 1;
+  }
+
+  .formSection {
+    order: 2;
+  }
+
   .title {
     font-size: 38px;
     margin-bottom: 52px;
@@ -696,13 +705,14 @@
     padding: 140px 48px 80px;
   }
 
-  .rowTwo {
-    grid-template-columns: 1fr;
-  }
+ 
 
   .deliveryRow {
     flex-direction: column;
     align-items: flex-start;
+  }
+  .sectionTitle {
+    text-transform: uppercase;
   }
 
   .quoteCard {
@@ -714,14 +724,8 @@
     height: 86px;
   }
 
-  .quoteHeader {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  
 
-  .quantityControls {
-    margin-top: 6px;
-  }
 
   .footerBar {
     flex-direction: column;
@@ -730,26 +734,32 @@
 }
 
 @media (max-width: 480px) {
+
+  .layout {
+    gap: 30px;
+  }
+
   .main {
-    padding: 120px 20px 64px;
+    padding: 117px 10px 64px;
   }
 
   .title {
-    font-size: 30px;
-    margin-bottom: 36px;
+    font-size: 28px;
+    margin-bottom: 50px;
     line-height: 40px;
   }
 
   .sectionTitle {
-    font-size: 14px;
+    font-size: 12px;
+    margin-bottom: 20px
   }
 
   .input,
   .select,
   .selectTrigger {
-    height: 38px;
-    font-size: 13px;
-    padding: 0 14px;
+    height: 46px;
+    font-size: 12px;
+    padding: 0 24px;
   }
 
   .checkboxRow {
@@ -763,16 +773,21 @@
   }
 
   .quoteCard {
-    padding: 16px 0;
+    padding: 13px 0;
+    gap: 12px
   }
 
   .quoteMedia {
-    width: 72px;
-    height: 78px;
+    width: 71px;
+    height: 79px;
   }
 
   .quoteName {
-    font-size: 14px;
+    font-size: 12px;
+  }
+
+  .quoteTextStack {
+    gap: 7px;
   }
 
   .quoteMeta {
@@ -780,30 +795,45 @@
   }
 
   .quantityButton {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     font-size: 13px;
   }
 
   .quantityInput {
-    width: 38px;
-    height: 26px;
-    font-size: 11px;
-  }
-}
-
-@media (max-width: 350px) {
-  .main {
-    padding: 110px 16px 56px;
+    width: 34px;
+    height: 28px;
+    font-size: 12px;
   }
 
-  .title {
-    font-size: 26px;
-    line-height: 34px;
+  .deliveryBlock {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    margin-top: 24px
   }
 
-  .sectionTitle,
   .sectionSubtitle {
-    font-size: 13px;
+    font-size: 12px;
+    margin-bottom: 16px;
   }
+
+  .deliveryRow {
+    font-size: 12px;
+    gap: 6px
+  }
+.dateTrigger {
+  height: 44px;
+        font-size: 12px;
+        padding: 0 24px 0 24px;
 }
+
+.dateTriggerIcon svg {
+  width: 24px;
+height: 24px;
+}
+
+.footerBar {
+  padding-top: 36px;
+}
+
+}
+
