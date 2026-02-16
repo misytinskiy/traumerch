@@ -654,11 +654,10 @@ export default function QuoteContactPage() {
             variant="solid"
             size="medium"
             padding="31px 93px"
-            arrow="white"
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            {isSubmitting ? t.quoteContact.submitting : t.quoteContact.continue}
+            {isSubmitting ? t.quoteContact.submitting : "Submit"}
           </Button>
         </div>
           </section>

@@ -181,6 +181,9 @@
   height: 48px;
   border-radius: 19%;
   border: none;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
 
   cursor: pointer;
   transition: all 0.2s ease;

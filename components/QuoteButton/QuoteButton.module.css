@@ -146,6 +146,16 @@
   .quoteButton:not(.mobile) {
     font-size: 14px;
   }
+
+  .quoteButton {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .quoteButton {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {

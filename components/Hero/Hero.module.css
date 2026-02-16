@@ -39,8 +39,8 @@
   position: relative;
   vertical-align: bottom;
   text-align: left;
-  min-width: fit-content;
-  width: 365px;
+  min-width: 365px;
+  width: auto;
   overflow: visible;
 }
 
@@ -49,6 +49,8 @@
   white-space: nowrap;
   transition: opacity 0.3s ease-in-out;
   will-change: opacity;
+  padding-right: 0.2em;
+  box-sizing: content-box;
 }
 
 .rotatingWord.fadeIn {

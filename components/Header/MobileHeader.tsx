@@ -236,6 +236,7 @@ export default function MobileHeader() {
                   setTimeout(() => {
                     setIsMenuOpen(false);
                     setIsClosing(false);
+                    openQuote();
                   }, 300);
                 }}
               >
