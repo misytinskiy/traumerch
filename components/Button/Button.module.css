@@ -183,4 +183,9 @@
   .button {
     font-size: 12px;
   }
+
+  .arrow {
+    width: 16px;
+    height: 16px;
+  }
 }

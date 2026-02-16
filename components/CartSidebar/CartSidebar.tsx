@@ -310,6 +310,7 @@ export default function CartSidebar() {
                 <Button
                   variant="solid"
                   padding="32px 60px"
+                  padding480="25px 37px"
                   arrow="white"
                   onClick={() => {
                     closeCart();
