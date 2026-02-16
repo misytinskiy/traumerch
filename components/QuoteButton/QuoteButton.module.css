@@ -132,12 +132,8 @@
 @media (max-width: 1536px) {
   .quoteButton:not(.mobile) {
     padding: 12px 40px;
-    width: 130px;
-    min-width: 130px;
-    max-width: 130px;
-    height: 42px;
-    min-height: 42px;
-    max-height: 42px;
+    width: 312px;
+    height: 82px;
     font-size: 14px;
   }
 }
@@ -167,17 +163,15 @@
 /* Tablet styles for mobile button */
 @media (max-width: 744px) {
   .quoteButton.mobile {
-    width: 130px;
-    min-width: 130px;
-    max-width: 130px;
+    width: 312px !important; 
+    height: 82px  !important;
   }
 }
 
 /* Mobile styles for mobile button */
 @media (max-width: 480px) {
   .quoteButton.mobile {
-    width: 130px;
-    min-width: 130px;
-    max-width: 130px;
+    width: 312px;
+    height: 82px;
   }
 }

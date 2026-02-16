@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import QuoteButton from "../QuoteButton/QuoteButton";
 import styles from "./MobileHeader.module.css";
-import Button from "../Button/Button";
 
 export default function MobileHeader() {
   const pathname = usePathname();
@@ -80,6 +79,19 @@ export default function MobileHeader() {
     setTimeout(() => {
       setIsMenuOpen(false);
       setIsClosing(false);
+    }, 300);
+  };
+
+  const handleMenuQuoteAction = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsMenuOpen(false);
+      setIsClosing(false);
+      if (hasCartItems) {
+        openCart();
+      } else {
+        openQuote();
+      }
     }, 300);
   };
 
@@ -225,23 +237,13 @@ export default function MobileHeader() {
 
             {/* Contact Button */}
             <div className={styles.menuFooter}>
-              <Button
-                variant="solid"
-                padding="42px 98px"
-                padding350="26px 65px"
-                arrow="white"
-                onClick={() => {
-                  // Close menu with animation
-                  setIsClosing(true);
-                  setTimeout(() => {
-                    setIsMenuOpen(false);
-                    setIsClosing(false);
-                    openQuote();
-                  }, 300);
-                }}
-              >
-                CONTACT US
-              </Button>
+              <QuoteButton
+                onClick={handleMenuQuoteAction}
+                hasCartItems={hasCartItems}
+                itemCount={items.length}
+                text={hasCartItems ? "CART" : "CONTACT US"}
+                className={styles.menuQuoteButton}
+              />
             </div>
           </div>
         </div>

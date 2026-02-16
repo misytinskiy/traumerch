@@ -9,6 +9,7 @@ interface QuoteButtonProps {
   itemCount: number;
   text: string;
   isMobile?: boolean;
+  className?: string;
 }
 
 export default function QuoteButton({
@@ -17,16 +18,18 @@ export default function QuoteButton({
   itemCount,
   text,
   isMobile = false,
+  className,
 }: QuoteButtonProps) {
   const buttonClassName = `${styles.quoteButton} ${
     hasCartItems ? styles.quoteButtonWithCart : ""
-  } ${isMobile ? styles.mobile : ""}`;
+  } ${isMobile ? styles.mobile : ""} ${className ?? ""}`.trim();
 
   return (
     <motion.button
       type="button"
       className={buttonClassName}
       onClick={onClick}
+      data-has-cart={hasCartItems ? "true" : "false"}
       transition={{
         duration: 0.3,
         ease: [0.25, 0.46, 0.45, 0.94],
@@ -48,6 +51,7 @@ export default function QuoteButton({
             {text}
             <motion.span
               className={styles.quoteBadge}
+              data-quote-badge="true"
               aria-label={`${itemCount} items`}
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
