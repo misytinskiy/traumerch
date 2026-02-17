@@ -36,20 +36,9 @@ export const metadata: Metadata = {
   description:
     "Unleashing your brand through merchandise that truly connects with your audience",
   icons: {
-    icon: [
-      {
-        url: "/favicons/forLightTheme.png",
-        media: "(prefers-color-scheme: light)",
-        type: "image/png",
-      },
-      {
-        url: "/favicons/forDarkTheme.svg",
-        media: "(prefers-color-scheme: dark)",
-        type: "image/svg+xml",
-      },
-    ],
-    shortcut: "/favicons/forLightTheme.png",
-    apple: "/favicons/forLightTheme.png",
+    icon: "/favicons/favicon.svg",
+    shortcut: "/favicons/favicon.svg",
+    apple: "/favicons/favicon.svg",
   },
 };
 
