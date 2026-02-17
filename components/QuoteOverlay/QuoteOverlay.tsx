@@ -28,16 +28,19 @@ const messengers = [
   { id: 4, name: "Teams", icon: "/quoteIcons/teams.svg" },
 ];
 
-const servicesList = [
-  "Private Label",
-  "Influancer Activation",
-  "Smart Platform",
+const defaultServiceOptions = [
+  { value: "Private Label", label: "Private Label" },
+  { value: "Influancer Activation", label: "Influancer Activation" },
+  { value: "Smart Platform", label: "Smart Platform" },
 ];
 
 export default function QuoteOverlay() {
   const { isOpen, closeQuote } = useQuoteOverlay();
   const { t } = useLanguage();
   const router = useRouter();
+  const serviceOptions =
+    (t.quote?.requestOptions as { value: string; label: string }[]) ??
+    defaultServiceOptions;
   const [formData, setFormData] = useState<QuoteFormData>({
     name: "",
     email: "",
@@ -557,31 +560,31 @@ export default function QuoteOverlay() {
                               {t.quote?.yourRequest || "Your request"}
                             </label>
                             <div className={styles.toggleButtons}>
-                              {servicesList.map((service) => (
+                              {serviceOptions.map((service) => (
                                 <button
-                                  key={service}
+                                  key={service.value}
                                   type="button"
                                   className={`${styles.toggleButton} ${
-                                    selectedServices.includes(service)
+                                    selectedServices.includes(service.value)
                                       ? styles.toggleButtonActive
                                       : ""
                                   }`}
                                   onClick={() => {
                                     setSelectedServices((prev) =>
-                                      prev.includes(service)
-                                        ? prev.filter((item) => item !== service)
-                                        : [...prev, service]
+                                      prev.includes(service.value)
+                                        ? prev.filter((item) => item !== service.value)
+                                        : [...prev, service.value]
                                     );
                                     setFormData((prev) => ({
                                       ...prev,
                                       requestType: "services",
-                                      service: prev.service.includes(service)
-                                        ? prev.service.filter((item) => item !== service)
-                                        : [...prev.service, service],
+                                      service: prev.service.includes(service.value)
+                                        ? prev.service.filter((item) => item !== service.value)
+                                        : [...prev.service, service.value],
                                     }));
                                   }}
                                 >
-                                  {service.toUpperCase()}
+                                  {service.label.toUpperCase()}
                                 </button>
                               ))}
                             </div>

@@ -49,24 +49,48 @@ const RightArrowIcon = () => (
 );
 
 export default function ProductSlider() {
-  const [, setCurrentSlide] = useState(0);
-  const totalSlides = 5; // Number of slider images
+  const images = ["/inspiration/1.png", "/inspiration/2.png"];
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [prevSlide, setPrevSlide] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const totalSlides = images.length;
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  const goToSlide = (nextIndex: number) => {
+    if (isAnimating || nextIndex === currentSlide) return;
+    setPrevSlide(currentSlide);
+    setCurrentSlide(nextIndex);
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), 320);
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  const nextSlide = () => {
+    goToSlide((currentSlide + 1) % totalSlides);
+  };
+
+  const goPrevSlide = () => {
+    goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
   };
 
   return (
     <div className={styles.sliderContainer}>
-      <div className={styles.sliderImage} />
+      <div className={styles.sliderStage}>
+        <div
+          className={`${styles.sliderImage} ${styles.sliderImagePrev} ${
+            isAnimating ? styles.fadeOut : ""
+          }`}
+          style={{ backgroundImage: `url("${images[prevSlide]}")` }}
+        />
+        <div
+          className={`${styles.sliderImage} ${styles.sliderImageCurrent} ${
+            isAnimating ? styles.fadeIn : ""
+          }`}
+          style={{ backgroundImage: `url("${images[currentSlide]}")` }}
+        />
+      </div>
 
       <button
         className={`${styles.sliderNav} ${styles.prev}`}
-        onClick={prevSlide}
+        onClick={goPrevSlide}
         aria-label="Previous image"
       >
         <LeftArrowIcon />

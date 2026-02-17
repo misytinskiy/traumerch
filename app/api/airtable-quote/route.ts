@@ -75,7 +75,11 @@ export async function POST(request: NextRequest) {
     // Also supports: Preferred Type, Username, Description, Request Type, Services (from QuoteOverlay)
     const airtableFields: Record<
       string,
-      string | number | boolean | Array<{ url: string; filename?: string }>
+      | string
+      | number
+      | boolean
+      | string[]
+      | Array<{ url: string; filename?: string }>
     > = {};
     
     // Contact form fields (from contact page)

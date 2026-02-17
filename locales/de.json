@@ -376,6 +376,11 @@
     "preferredMessenger": "Bevorzugter Messenger",
     "namePlaceholder": "Name",
     "yourRequest": "Zusätzliche Anfrage",
+    "requestOptions": [
+      { "value": "Private Label", "label": "Private Label" },
+      { "value": "Influancer Activation", "label": "Influencer-Aktivierung" },
+      { "value": "Smart Platform", "label": "Intelligente Plattform" }
+    ],
     "services": "Dienstleistungen",
     "merchandise": "MERCHANDISE",
     "description": "Beschreibung",
