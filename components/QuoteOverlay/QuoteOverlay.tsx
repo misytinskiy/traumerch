@@ -44,7 +44,7 @@ export default function QuoteOverlay() {
   const [formData, setFormData] = useState<QuoteFormData>({
     name: "",
     email: "",
-    preferredMessenger: "",
+    preferredMessenger: "Email",
     messengerContact: "",
     requestType: "services",
     service: [],
@@ -52,7 +52,7 @@ export default function QuoteOverlay() {
     files: [],
   });
   const [selectedMessenger, setSelectedMessenger] = useState<number | null>(
-    null
+    2
   );
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [showThankYou, setShowThankYou] = useState(false);
@@ -80,14 +80,14 @@ export default function QuoteOverlay() {
       setFormData({
         name: "",
         email: "",
-        preferredMessenger: "",
+        preferredMessenger: "Email",
         messengerContact: "",
         requestType: "services",
         service: [],
         description: "",
         files: [],
       });
-      setSelectedMessenger(null);
+      setSelectedMessenger(2);
       setSelectedServices([]);
       setShowThankYou(false);
       setErrors({});
