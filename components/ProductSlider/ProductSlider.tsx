@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ProductSlider.module.css";
 
 const LeftArrowIcon = () => (
@@ -53,10 +53,31 @@ export default function ProductSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [prevSlide, setPrevSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [loadedCount, setLoadedCount] = useState(0);
   const totalSlides = images.length;
+  const allLoaded = loadedCount >= totalSlides;
+
+  useEffect(() => {
+    let isMounted = true;
+    const preload = (src: string) =>
+      new Promise<void>((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve();
+        img.onerror = () => resolve();
+        img.src = src;
+      });
+
+    Promise.all(images.map(preload)).then(() => {
+      if (isMounted) setLoadedCount(images.length);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [images]);
 
   const goToSlide = (nextIndex: number) => {
-    if (isAnimating || nextIndex === currentSlide) return;
+    if (!allLoaded || isAnimating || nextIndex === currentSlide) return;
     setPrevSlide(currentSlide);
     setCurrentSlide(nextIndex);
     setIsAnimating(true);
@@ -91,6 +112,7 @@ export default function ProductSlider() {
       <button
         className={`${styles.sliderNav} ${styles.prev}`}
         onClick={goPrevSlide}
+        disabled={!allLoaded}
         aria-label="Previous image"
       >
         <LeftArrowIcon />
@@ -99,6 +121,7 @@ export default function ProductSlider() {
       <button
         className={`${styles.sliderNav} ${styles.next}`}
         onClick={nextSlide}
+        disabled={!allLoaded}
         aria-label="Next image"
       >
         <RightArrowIcon />
