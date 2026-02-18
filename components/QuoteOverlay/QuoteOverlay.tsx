@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { InlineWidget } from "react-calendly";
 import Image from "next/image";
 import Button from "../Button/Button";
+import ThankYouOverlay from "../ThankYouOverlay/ThankYouOverlay";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./QuoteOverlay.module.css";
@@ -29,15 +29,14 @@ const messengers = [
 ];
 
 const defaultServiceOptions = [
-  { value: "Private Label", label: "Private Label" },
-  { value: "Influancer Activation", label: "Influancer Activation" },
-  { value: "Smart Platform", label: "Smart Platform" },
+  { value: "Private Label", label: "Private label" },
+  { value: "Influencer Activation", label: "Influencer activation" },
+  { value: "Smart Platform", label: "Smart platform" },
 ];
 
 export default function QuoteOverlay() {
   const { isOpen, closeQuote } = useQuoteOverlay();
   const { t } = useLanguage();
-  const router = useRouter();
   const serviceOptions =
     (t.quote?.requestOptions as { value: string; label: string }[]) ??
     defaultServiceOptions;
@@ -56,6 +55,7 @@ export default function QuoteOverlay() {
   );
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [showThankYou, setShowThankYou] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{
     name?: string;
     email?: string;
@@ -129,13 +129,13 @@ export default function QuoteOverlay() {
     const newErrors: typeof errors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
+      newErrors.name = t.quote.errors.nameRequired;
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = t.quote.errors.emailRequired;
     } else if (!validateEmail(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+      newErrors.email = t.quote.errors.emailInvalid;
     }
 
     if (selectedMessenger) {
@@ -146,12 +146,12 @@ export default function QuoteOverlay() {
         messenger.name !== "Teams"
       ) {
         if (!formData.messengerContact.trim()) {
-          newErrors.messengerContact = "Contact information is required";
+          newErrors.messengerContact = t.quote.errors.messengerContactRequired;
         } else if (
           messenger.name === "WhatsApp" &&
           !validatePhone(formData.messengerContact)
         ) {
-          newErrors.messengerContact = "Please enter a valid phone number";
+          newErrors.messengerContact = t.quote.errors.phoneInvalid;
         }
       }
     }
@@ -173,13 +173,15 @@ export default function QuoteOverlay() {
     const next = [...formData.files, ...incoming];
 
     if (next.length > MAX_FILES) {
-      setFileError(`Maximum ${MAX_FILES} files allowed.`);
+      setFileError(t.quote.fileErrors.maxFiles.replace("X", String(MAX_FILES)));
       e.currentTarget.value = "";
       return;
     }
 
     if (getTotalSize(next) > MAX_TOTAL_BYTES) {
-      setFileError("Total size must be 15 MB or less.");
+      setFileError(
+        t.quote.fileErrors.maxTotalSize.replace("X", String(15))
+      );
       e.currentTarget.value = "";
       return;
     }
@@ -199,7 +201,9 @@ export default function QuoteOverlay() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     if (validateForm()) {
+      setIsSubmitting(true);
       try {
         // Get selected messenger name
         const selectedMessengerName =
@@ -236,16 +240,21 @@ export default function QuoteOverlay() {
           body: submitForm,
         });
 
-        await submitResponse.json();
+        const responsePayload = await submitResponse.json();
 
         if (submitResponse.ok) {
-          closeQuote();
-          router.push("/quote/thank-you");
+          setShowThankYou(true);
         } else {
-          alert("Failed to submit form. Please try again.");
+          console.error("QuoteOverlay submit error", {
+            status: submitResponse.status,
+            payload: responsePayload,
+          });
+          alert(t.quote.submitFailed);
         }
       } catch {
-        alert("An error occurred. Please try again.");
+        alert(t.quote.submitError);
+      } finally {
+        setIsSubmitting(false);
       }
     }
   };
@@ -266,13 +275,13 @@ export default function QuoteOverlay() {
   const getMessengerPlaceholder = (messengerName: string): string => {
     switch (messengerName) {
       case "WhatsApp":
-        return "Phone number*";
+        return t.quote.messengerPlaceholders.whatsapp;
       case "Slack":
-        return "@username*";
+        return t.quote.messengerPlaceholders.slack;
       case "Teams":
-        return "Email address*";
+        return t.quote.messengerPlaceholders.teams;
       default:
-        return "";
+        return t.quote.messengerPlaceholders.default;
     }
   };
 
@@ -284,8 +293,17 @@ export default function QuoteOverlay() {
 
   return (
     <AnimatePresence>
-      {isOpen && (
-        <motion.div
+      {isOpen ? (
+        showThankYou ? (
+          <ThankYouOverlay
+            title={t.quote.thankYouTitle}
+            description={
+              t.quote.thankYouDescription
+            }
+            onClose={closeQuote}
+          />
+        ) : (
+          <motion.div
           className={styles.overlay}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -301,147 +319,84 @@ export default function QuoteOverlay() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles.contentWrapper}>
-              {showThankYou ? (
-                <div className={styles.thankYouContent}>
-                  <div className={styles.thankYouTitleRow}>
-                    <h1 className={styles.thankYouTitle}>
-                      {t.quote?.thankYouTitle || "Thank you"}
-                    </h1>
-                    <button
-                      className={styles.closeButton}
-                      onClick={closeQuote}
-                      aria-label="Close quote form"
+              <div className={styles.main}>
+                <div className={styles.titleRow}>
+                  <h1 className={styles.mainTitle}>
+                    {t.quote.mainTitleShort}
+                  </h1>
+                  <button
+                    className={styles.closeButton}
+                    onClick={closeQuote}
+                    aria-label={t.quote.closeAria}
+                  >
+                    <svg
+                      width="76"
+                      height="76"
+                      viewBox="0 0 76 76"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        width="76"
-                        height="76"
-                        viewBox="0 0 76 76"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clipPath="url(#clip0_352_3469)">
-                          <rect
-                            x="16.5059"
-                            y="56.8086"
-                            width="57"
-                            height="3.8"
-                            transform="rotate(-45 16.5059 56.8086)"
-                            fill="black"
-                          />
-                          <rect
-                            x="16.5059"
-                            y="19.1914"
-                            width="3.8"
-                            height="57"
-                            transform="rotate(-45 16.5059 19.1914)"
-                            fill="black"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_352_3469">
-                            <rect width="76" height="76" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </button>
-                  </div>
-                  <p className={styles.thankYouDescription}>
-                    {t.quote?.thankYouDescription ||
-                      "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable."}
-                  </p>
-                  <div className={styles.thankYouImage}>
-                    <Image
-                      src="/thankYou.gif"
-                      alt="Thank you"
-                      fill
-                      sizes="100vw"
-                      className={styles.thankYouImageTag}
-                    />
-                  </div>
+                      <g clipPath="url(#clip0_352_3469)">
+                        <rect
+                          x="16.5059"
+                          y="56.8086"
+                          width="57"
+                          height="3.8"
+                          transform="rotate(-45 16.5059 56.8086)"
+                          fill="black"
+                        />
+                        <rect
+                          x="16.5059"
+                          y="19.1914"
+                          width="3.8"
+                          height="57"
+                          transform="rotate(-45 16.5059 19.1914)"
+                          fill="black"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_352_3469">
+                          <rect width="76" height="76" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </button>
                 </div>
-              ) : (
-                <>
-                  <div className={styles.main}>
-                    <div className={styles.titleRow}>
-                      <h1 className={styles.mainTitle}>
-                        {t.quote?.mainTitle || "Talk or type"}
-                      </h1>
-                      <button
-                        className={styles.closeButton}
-                        onClick={closeQuote}
-                        aria-label="Close quote form"
-                      >
-                        <svg
-                          width="76"
-                          height="76"
-                          viewBox="0 0 76 76"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clipPath="url(#clip0_352_3469)">
-                            <rect
-                              x="16.5059"
-                              y="56.8086"
-                              width="57"
-                              height="3.8"
-                              transform="rotate(-45 16.5059 56.8086)"
-                              fill="black"
-                            />
-                            <rect
-                              x="16.5059"
-                              y="19.1914"
-                              width="3.8"
-                              height="57"
-                              transform="rotate(-45 16.5059 19.1914)"
-                              fill="black"
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_352_3469">
-                              <rect width="76" height="76" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
-                      </button>
-                    </div>
 
-                    <div className={styles.content}>
-                      <div className={styles.leftColumn}>
-                        <h2 className={styles.formTitle}>
-                          {t.quote?.formTitle ||
-                            "From Messenger to Quote — it's that simple."}
-                        </h2>
+                <div className={styles.content}>
+                  <div className={styles.leftColumn}>
+                    <h2 className={styles.formTitle}>
+                      {t.quote.formTitle}
+                    </h2>
 
-                        <motion.form
-                          className={styles.form}
-                          onSubmit={handleSubmit}
-                          layout="position"
-                          transition={{
-                            layout: {
-                              duration: 0.35,
-                              ease: [0.4, 0, 0.2, 1],
-                            },
-                          }}
-                        >
-                          <div className={styles.formGroup}>
-                            <input
-                              type="text"
-                              name="name"
-                              value={formData.name}
-                              onChange={handleInputChange}
-                              placeholder={
-                                t.quote?.namePlaceholder || "Full name*"
-                              }
-                              className={`${styles.input} ${
-                                errors.name ? styles.inputError : ""
-                              }`}
-                            />
-                            {errors.name && (
-                              <span className={styles.errorMessage}>
-                                {errors.name}
-                              </span>
-                            )}
-                          </div>
+                    <motion.form
+                      className={styles.form}
+                      onSubmit={handleSubmit}
+                      layout="position"
+                      transition={{
+                        layout: {
+                          duration: 0.35,
+                          ease: [0.4, 0, 0.2, 1],
+                        },
+                      }}
+                    >
+                      <div className={styles.formGroup}>
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          placeholder={t.quote.namePlaceholder}
+                          className={`${styles.input} ${
+                            errors.name ? styles.inputError : ""
+                          }`}
+                        />
+                        {errors.name && (
+                          <span className={styles.errorMessage}>
+                            {errors.name}
+                          </span>
+                        )}
+                      </div>
 
                           <div className={styles.formGroup}>
                             <input
@@ -449,7 +404,7 @@ export default function QuoteOverlay() {
                               name="email"
                               value={formData.email}
                               onChange={handleInputChange}
-                              placeholder="Email*"
+                              placeholder={t.quote.emailPlaceholder}
                               className={`${styles.input} ${
                                 styles.emailInput
                               } ${errors.email ? styles.inputError : ""}`}
@@ -463,8 +418,7 @@ export default function QuoteOverlay() {
 
                           <div className={styles.formGroup}>
                             <label className={styles.label}>
-                              {t.quote?.preferredMessenger ||
-                                "Preferred Messenger"}
+                              {t.quote.preferredMessenger}
                             </label>
                             <div className={styles.messengerButtons}>
                               {messengers.map((messenger) => (
@@ -557,7 +511,7 @@ export default function QuoteOverlay() {
 
                           <div className={styles.formGroup}>
                             <label className={styles.label}>
-                              {t.quote?.yourRequest || "Your request"}
+                              {t.quote.yourRequest}
                             </label>
                             <div className={styles.toggleButtons}>
                               {serviceOptions.map((service) => (
@@ -599,7 +553,7 @@ export default function QuoteOverlay() {
                               value={formData.description}
                               onChange={handleInputChange}
                               placeholder={
-                                t.quote?.description || "Description"
+                                t.quote.description
                               }
                               className={styles.textarea}
                               rows={6}
@@ -631,7 +585,7 @@ export default function QuoteOverlay() {
                                 />
                               </svg>
                               <span className={styles.fileUploadText}>
-                                {t.quote?.fileUpload || "FILE UPLOAD"}
+                                {t.quote.fileUpload}
                               </span>
                             </label>
                             <input
@@ -661,46 +615,58 @@ export default function QuoteOverlay() {
                                     className={styles.fileRemove}
                                     onClick={() => handleRemoveFile(index)}
                                   >
-                                    Remove
+                                    {t.quote.fileRemove}
                                   </button>
                                 </li>
                               ))}
                             </ul>
                           )}
 
-                          <motion.div
-                            className={styles.formGroup}
-                            layout="position"
-                          >
-                            <Button
-                              type="submit"
-                              variant="solid"
-                              padding="24px 48px"
-                              arrow="white"
-                              className={styles.submitButton}
-                            >
-                              {t.quote?.send || "Add to quote"}
-                            </Button>
-                          </motion.div>
-                        </motion.form>
-                      </div>
+                      <motion.div
+                        className={styles.formGroup}
+                        layout="position"
+                      >
+                        <Button
+                          type="submit"
+                          variant="solid"
+                          padding="24px 48px"
+                          arrow="white"
+                          className={styles.submitButton}
+                          disabled={isSubmitting}
+                        >
+                          <span className={styles.submitContent}>
+                            {isSubmitting && (
+                              <span
+                                className={styles.spinner}
+                                aria-hidden
+                              />
+                            )}
+                            <span>
+                              {isSubmitting
+                                ? t.quote.submitting
+                                : t.quote.send}
+                            </span>
+                          </span>
+                        </Button>
+                      </motion.div>
+                    </motion.form>
+                  </div>
 
-                      <div className={styles.rightColumn}>
-                        <h2 className={styles.rightTitle}>
-                          {t.quote?.rightTitle || "Let's talk it through"}
-                        </h2>
-                        <div className={styles.calendlyWidget}>
-                          <InlineWidget url="https://calendly.com/traumerch/30min" />
-                        </div>
-                      </div>
+                  <div className={styles.rightColumn}>
+                    <h2 className={styles.rightTitle}>
+                      {t.quote.rightTitle}
+                    </h2>
+                    <div className={styles.calendlyWidget}>
+                      <InlineWidget url="https://calendly.com/traumerch/30min" />
                     </div>
                   </div>
-                </>
-              )}
+                </div>
+              </div>
             </div>
           </motion.div>
         </motion.div>
-      )}
+        )
+      ) : null}
     </AnimatePresence>
   );
 }

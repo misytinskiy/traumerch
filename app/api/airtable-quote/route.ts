@@ -110,17 +110,12 @@ export async function POST(request: NextRequest) {
       airtableFields["Preferred delivery date"] = preferredDeliveryDateStr;
     }
     if (productQuantity !== undefined && productQuantity !== null) {
-      // Убеждаемся, что отправляется как целое число (integer)
       const qtyNum = typeof productQuantity === 'string' 
         ? parseInt(productQuantity, 10) 
         : Math.floor(Number(productQuantity));
 
       if (!Number.isNaN(qtyNum) && qtyNum > 0 && Number.isInteger(qtyNum)) {
-        // Пробуем разные варианты названия поля
-        // Airtable может требовать точное совпадение названия поля
-        // Airtable field is single line text, so send as string
         const qtyStr = String(qtyNum);
-        // Пробуем первое название (наиболее вероятное)
         airtableFields["Product quantity"] = qtyStr;
       }
     }
@@ -155,14 +150,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Services - supports single or multiple selections
+    // Additional request (multi-select) - supports single or multiple selections
     if (Array.isArray(normalizedService) && normalizedService.length > 0) {
       const servicesMap: Record<string, string> = {
         "Private Label": "Private label",
-        "Influancer Activation": "Influancer Activation",
-        "Smart Platform": "Smart Platform",
+        "Influancer Activation": "Influencer activation",
+        "Influencer Activation": "Influencer activation",
+        "Smart Platform": "Smart platform",
       };
-      airtableFields["Services"] = normalizedService.map(
+      airtableFields["Additional request"] = normalizedService.map(
         (item) => servicesMap[item] ?? item
       );
     } else {
@@ -170,11 +166,12 @@ export async function POST(request: NextRequest) {
       if (serviceStr) {
         const servicesMap: Record<string, string> = {
           "Private Label": "Private label",
-          "Influancer Activation": "Influancer Activation",
-          "Smart Platform": "Smart Platform",
+          "Influancer Activation": "Influencer activation",
+          "Influencer Activation": "Influencer activation",
+          "Smart Platform": "Smart platform",
         };
         const airtableService = servicesMap[serviceStr] ?? serviceStr;
-        airtableFields["Services"] = airtableService;
+        airtableFields["Additional request"] = airtableService;
       }
     }
     
@@ -236,6 +233,11 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
+      console.error("Airtable create error", {
+        status: response.status,
+        details: errorText,
+        sentFields: airtableFields,
+      });
       return NextResponse.json(
         {
           error: "Failed to create record in Airtable",

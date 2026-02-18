@@ -198,7 +198,7 @@ export default function CartSidebar() {
                 type="button"
                 className={styles.closeButton}
                 onClick={closeCart}
-                aria-label="Close"
+                aria-label={t.cart.closeAria}
               >
                 <CloseIcon />
               </button>
@@ -222,7 +222,7 @@ export default function CartSidebar() {
                       type="button"
                       className={styles.removeButton}
                       onClick={() => removeItem(index)}
-                      aria-label="Remove"
+                      aria-label={t.cart.removeAria}
                     >
                       <RemoveIcon />
                     </button>
@@ -235,13 +235,13 @@ export default function CartSidebar() {
                     <div className={styles.itemContent}>
                       <h3 className={styles.itemName}>{item.productName}</h3>
                       <p className={styles.itemPrice}>
-                        {(t?.cart?.price ?? "Estimated price: X").replace(
+                        {t.cart.price.replace(
                           "X",
                           getItemTotalPrice(item) ?? "—"
                         )}
                       </p>
                       <p className={styles.itemColor}>
-                        Color:{" "}
+                        {t.cart.color}{" "}
                         {item.selectedColor ? (
                           <span
                             className={styles.itemColorSwatch}
@@ -279,7 +279,7 @@ export default function CartSidebar() {
                         max={99999}
                         onChange={(e) => handleQuantityInputChange(index, e)}
                         onBlur={() => handleQuantityBlur(index)}
-                        aria-label="Quantity"
+                        aria-label={t.cart.quantityAria}
                       />
                       <button
                         type="button"

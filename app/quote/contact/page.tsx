@@ -6,6 +6,7 @@ import ResponsiveHeader from "../../../components/Header/ResponsiveHeader";
 import CTA from "../../../components/CTA/CTA";
 import Footer from "../../../components/Footer/Footer";
 import Button from "../../../components/Button/Button";
+import ThankYouOverlay from "../../../components/ThankYouOverlay/ThankYouOverlay";
 import { useCart } from "../../../contexts/CartContext";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import { getMainPhotoUrl, getProductNameFromFields } from "../../../lib/product";
@@ -29,7 +30,7 @@ export default function QuoteContactPage() {
     Record<number, string>
   >({});
 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     firstName: "",
     lastName: "",
     email: "",
@@ -40,66 +41,17 @@ export default function QuoteContactPage() {
     postalCode: "",
     city: "",
     vatNumber: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const displayItems = useMemo(() => items, [items]);
 
-  const countryOptions = [
-    "", // Empty default option
-    "Austria",
-    "Belgium",
-    "Bulgaria",
-    "Croatia",
-    "Cyprus",
-    "Czech Republic",
-    "Denmark",
-    "Estonia",
-    "Finland",
-    "France",
-    "Germany",
-    "Greece",
-    "Hungary",
-    "Ireland",
-    "Italy",
-    "Latvia",
-    "Lithuania",
-    "Luxembourg",
-    "Malta",
-    "Netherlands",
-    "Poland",
-    "Portugal",
-    "Romania",
-    "Slovakia",
-    "Slovenia",
-    "Spain",
-    "Sweden",
-    "Switzerland",
-    "United Kingdom",
-    "Norway",
-    "Iceland",
-    "Liechtenstein",
-    "Albania",
-    "Bosnia and Herzegovina",
-    "North Macedonia",
-    "Montenegro",
-    "Serbia",
-    "Turkey",
-    "Ukraine",
-    "Israel",
-    "United Arab Emirates",
-    "Saudi Arabia",
-    "South Africa",
-    "Egypt",
-    "Morocco",
-    "Tunisia",
-    "Algeria",
-    "Nigeria",
-    "Kenya",
-    "Ghana",
-  ];
+  const countryOptions = t.quoteContact.countryOptions;
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectOpen, setSelectOpen] = useState(false);
   const selectWrapRef = useRef<HTMLDivElement>(null);
@@ -375,7 +327,7 @@ export default function QuoteContactPage() {
 
       if (submitResponse.ok) {
         clearCart();
-        router.push("/quote/thank-you");
+        setShowThankYou(true);
       } else {
         alert(t.quoteContact.submitFailed);
       }
@@ -384,6 +336,22 @@ export default function QuoteContactPage() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleThankYouClose = () => {
+    setShowThankYou(false);
+    setFormData(initialFormData);
+    setErrors({});
+    setQuantityInputByIndex({});
+    setSelectedCountry("");
+    setSelectOpen(false);
+    setCalendarOpen(false);
+    const freshMinDate = getMinDate();
+    setDeliveryDate(formatDateToISO(freshMinDate));
+    setCalendarView({
+      year: freshMinDate.getFullYear(),
+      month: freshMinDate.getMonth(),
+    });
   };
 
   return (
@@ -603,7 +571,7 @@ export default function QuoteContactPage() {
                       </button>
                     </div>
                     <div className={styles.dateWeekdays}>
-                      {(t.quoteContact.weekdayShort ?? ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((w) => (
+                      {t.quoteContact.weekdayShort.map((w) => (
                         <span key={w} className={styles.dateWeekday}>
                           {w}
                         </span>
@@ -659,13 +627,25 @@ export default function QuoteContactPage() {
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            {isSubmitting ? t.quoteContact.submitting : "Submit"}
-          </Button>
+            <span className={styles.submitContent}>
+              {isSubmitting && (
+                <span className={styles.spinner} aria-hidden />
+              )}
+                <span>
+                {isSubmitting ? t.quoteContact.submitting : t.quoteContact.submitLabel}
+                </span>
+              </span>
+            </Button>
         </div>
           </section>
 
           <aside className={styles.quoteSection}>
             <h2 className={styles.sectionTitle}>{t.quoteContact.yourQuoteTitle}</h2>
+            {displayItems.length === 0 && (
+              <p className={styles.emptyQuote}>
+                {t.quoteContact.emptyQuote}
+              </p>
+            )}
             <div className={styles.quoteList}>
               {displayItems.map((item, index) => {
                 const photoUrl = getMainPhotoUrl(item.productFields) ?? "";
@@ -699,7 +679,7 @@ export default function QuoteContactPage() {
                           <div className={styles.quoteName}>{displayName}</div>
                           <div className={styles.quoteMetaGroup}>
                             <div className={styles.quoteMeta}>
-                              {(t.quoteContact.estimatedPrice ?? t?.quote?.contact?.price ?? t?.cart?.price ?? "Estimated price: X").replace(
+                              {t.quoteContact.estimatedPrice.replace(
                                 "X",
                                 price
                               )}
@@ -790,6 +770,15 @@ export default function QuoteContactPage() {
 
 
       </main>
+      {showThankYou && (
+        <ThankYouOverlay
+          title={t.quote.thankYouTitle}
+          description={
+            t.quote.thankYouDescription
+          }
+          onClose={handleThankYouClose}
+        />
+      )}
       <CTA />
       <Footer />
     </div>

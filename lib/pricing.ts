@@ -1,4 +1,4 @@
-/** Ценовые тиры по количеству (поля Airtable). */
+
 const PRICE_TIERS: { min: number; max: number; fields: string[] }[] = [
   { min: 1, max: 24, fields: ["1-24 pcs (Sample) | SALES"] },
   { min: 25, max: 49, fields: ["24-49 pcs | SALES"] },
@@ -28,7 +28,6 @@ function parsePriceValue(value: unknown): number | null {
   return null;
 }
 
-/** Возвращает цену за единицу для данного количества (из тира) в формате "€12". */
 export function getUnitPriceForQuantity(
   quantity: number,
   fields: Record<string, unknown> | undefined
@@ -45,7 +44,6 @@ export function getUnitPriceForQuantity(
   return `€${unitPrice.toFixed(unitPrice % 1 === 0 ? 0 : 1)}`;
 }
 
-/** Возвращает суммарную цену (unit × quantity) в формате "€120". */
 export function getPriceForQuantity(
   quantity: number,
   fields: Record<string, unknown> | undefined
@@ -65,7 +63,6 @@ export function getPriceForQuantity(
 
 const MOQ_KEYS = ["# MOQ | SALES", "MOQ | SALES", "# MOQ", "MOQ"];
 
-/** Минимальный заказ из полей Airtable (MOQ), по умолчанию 1. */
 export function getMinQuantity(
   fields: Record<string, unknown> | undefined
 ): number {

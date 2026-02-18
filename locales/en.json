@@ -1,13 +1,25 @@
 {
   "header": {
     "menu": "MENU",
-    "quote": "QUOTE"
+    "quote": "QUOTE",
+    "catalog": "OUR CATALOGUE",
+    "services": "SERVICES",
+    "servicesLong": "SERVICES",
+    "faq": "FAQ",
+    "portfolio": "PORTFOLIO",
+    "policy": "POLICY",
+    "cart": "CART",
+    "contact": "CONTACT US"
   },
   "cart": {
     "title": "YOUR QUOTE",
     "empty": "No items in your quote yet.",
     "viewQuote": "VIEW MY QUOTE",
-    "price": "Estimated price: X"
+    "price": "Estimated price: X",
+    "color": "Color",
+    "closeAria": "Close",
+    "removeAria": "Remove",
+    "quantityAria": "Quantity"
   },
   "hero": {
     "title": "MERCHANDISE THAT CONNECTS YOUR BRAND WITH YOUR",
@@ -294,6 +306,9 @@
     "quantityMin": "Quantity min",
     "descriptionPlaceholder": "Description",
     "fileUpload": "FILE UPLOAD",
+    "fileRemove": "Remove",
+    "maxFilesError": "Maximum X files allowed.",
+    "maxTotalSizeError": "Total size must be X MB or less.",
     "backToShopping": "Back to shopping",
     "continue": "Continue",
     "quantityAria": "Quantity"
@@ -320,7 +335,61 @@
     "previousMonth": "Previous month",
     "nextMonth": "Next month",
     "weekdayShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "countryOptions": [
+      "",
+      "Austria",
+      "Belgium",
+      "Bulgaria",
+      "Croatia",
+      "Cyprus",
+      "Czech Republic",
+      "Denmark",
+      "Estonia",
+      "Finland",
+      "France",
+      "Germany",
+      "Greece",
+      "Hungary",
+      "Ireland",
+      "Italy",
+      "Latvia",
+      "Lithuania",
+      "Luxembourg",
+      "Malta",
+      "Netherlands",
+      "Poland",
+      "Portugal",
+      "Romania",
+      "Slovakia",
+      "Slovenia",
+      "Spain",
+      "Sweden",
+      "Switzerland",
+      "United Kingdom",
+      "Norway",
+      "Iceland",
+      "Liechtenstein",
+      "Albania",
+      "Bosnia and Herzegovina",
+      "North Macedonia",
+      "Montenegro",
+      "Serbia",
+      "Turkey",
+      "Ukraine",
+      "Israel",
+      "United Arab Emirates",
+      "Saudi Arabia",
+      "South Africa",
+      "Egypt",
+      "Morocco",
+      "Tunisia",
+      "Algeria",
+      "Nigeria",
+      "Kenya",
+      "Ghana"
+    ],
     "submitting": "Submitting...",
+    "submitLabel": "Submit",
     "continue": "Continue",
     "backToShopping": "Back to shopping",
     "submitFailed": "Failed to submit form. Please try again.",
@@ -328,7 +397,8 @@
     "quantityAria": "Quantity",
     "yourQuoteTitle": "Your quote",
     "estimatedPrice": "Estimated price: X",
-    "color": "Color"
+    "color": "Color",
+    "emptyQuote": "Your cart is empty"
   },
   "cta": {
     "title": "READY TO CREATE MERCHANDISE FOR YOUR BRAND?",
@@ -363,13 +433,15 @@
     "allRights": "All rights reserved."
   },
   "quote": {
+    "mainTitleShort": "Talk or type",
     "mainTitle": "Talk or type — it's up to you",
     "mainTitleEnd": "it's up to you",
     "formTitle": "From Messenger to Quote — it's that simple.",
     "rightTitle": "Let's talk it through",
     "nameLabel": "Full name",
     "preferredMessenger": "Preferred Messenger",
-    "namePlaceholder": "Name",
+    "namePlaceholder": "Full name*",
+    "emailPlaceholder": "Email*",
     "yourRequest": "Additional Request",
     "requestOptions": [
       { "value": "Private Label", "label": "Private Label" },
@@ -382,8 +454,30 @@
     "descriptionPlaceholder": "",
     "fileUpload": "FILE UPLOAD",
     "send": "ADD TO QUOTE",
+    "submitting": "Submitting...",
     "thankYouTitle": "Thank you",
     "thankYouDescription": "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable.",
+    "closeAria": "Close quote form",
+    "submitFailed": "Failed to submit form. Please try again.",
+    "submitError": "An error occurred. Please try again.",
+    "fileRemove": "Remove",
+    "errors": {
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "messengerContactRequired": "Contact information is required",
+      "phoneInvalid": "Please enter a valid phone number"
+    },
+    "fileErrors": {
+      "maxFiles": "Maximum X files allowed.",
+      "maxTotalSize": "Total size must be X MB or less."
+    },
+    "messengerPlaceholders": {
+      "whatsapp": "Phone number*",
+      "slack": "@username*",
+      "teams": "Email address*",
+      "default": ""
+    },
     "contact": {
       "price": "Estimated price: X"
     }
@@ -425,6 +519,9 @@
   },
   "preloader": {
     "text1": "TrauMerch",
-    "text2": "Unleashing your brand"
+    "text2": "Unleashing your brand",
+    "alt1": "Preloader 1",
+    "alt2": "Preloader 2",
+    "alt3": "Preloader 3"
   }
 }

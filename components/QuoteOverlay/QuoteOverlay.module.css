@@ -382,6 +382,27 @@
   align-self: flex-start;
 }
 
+.submitContent {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: quoteOverlaySpin 0.8s linear infinite;
+}
+
+@keyframes quoteOverlaySpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .thankYouContent {
   display: flex;
   flex-direction: column;

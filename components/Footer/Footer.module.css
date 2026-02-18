@@ -129,10 +129,7 @@
     max-width: 183px;
   }
 
-  /* .logoImage {
-    width: 154.769px;
-    height: 152.991px;
-  } */
+
 }
 
 @media (max-width: 1536px) {
@@ -159,24 +156,23 @@
   }
 
   .columns {
-    gap: 0; /* Убираем общий gap */
+    gap: 0; 
   }
 
-  /* Разные расстояния для каждой колонки */
   .column:nth-child(1) {
-    margin-right: 128px; /* Расстояние после первой колонки */
+    margin-right: 128px; 
   }
 
   .column:nth-child(2) {
-    margin-right: 54px; /* Расстояние после второй колонки */
+    margin-right: 54px; 
   }
 
   .column:nth-child(3) {
-    margin-right: 53px; /* Расстояние после третьей колонки */
+    margin-right: 53px; 
   }
 
   .column:nth-child(4) {
-    margin-right: 0; /* Последняя колонка без отступа */
+    margin-right: 0; 
     max-width: 172px;
   }
 }
@@ -220,13 +216,7 @@
     padding: 109px 30px;
   }
 
-  /* .content > :first-child {
-    order: 2;
-  }
 
-  .content > :nth-child(2) {
-    order: 1;
-  } */
 
   .content {
     flex-direction: row-reverse;
@@ -263,7 +253,6 @@
   }
 
   .bottomRow {
-    /* flex-direction: column; */
     gap: 16px;
     text-align: center;
   }

@@ -171,7 +171,7 @@ export default function QuoteViewPage() {
     if (next.length > MAX_FILES) {
       setFileErrorsByIndex((prev) => ({
         ...prev,
-        [index]: `Maximum ${MAX_FILES} files allowed.`,
+        [index]: t.quoteView.maxFilesError.replace("X", String(MAX_FILES)),
       }));
       return;
     }
@@ -179,7 +179,7 @@ export default function QuoteViewPage() {
     if (getTotalSize(next) > MAX_TOTAL_BYTES) {
       setFileErrorsByIndex((prev) => ({
         ...prev,
-        [index]: "Total size must be 15 MB or less.",
+        [index]: t.quoteView.maxTotalSizeError.replace("X", String(15)),
       }));
       return;
     }
@@ -361,7 +361,7 @@ export default function QuoteViewPage() {
                             className={styles.fileRemove}
                             onClick={() => handleRemoveFile(index, fileIndex)}
                           >
-                            Remove
+                            {t.quoteView.fileRemove}
                           </button>
                         </li>
                       ))}

@@ -381,7 +381,7 @@ export default function Header() {
                   whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.1, duration: 0.2 }}
                 >
-                  {language === "de" ? "UNSER KATALOG" : "OUR CATALOGUE"}
+                  {t.header.catalog}
                 </motion.button>
                 <motion.button
                   className={`${styles.menuItem} ${
@@ -394,7 +394,7 @@ export default function Header() {
                   whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.15, duration: 0.2 }}
                 >
-                  {language === "de" ? "LEISTUNGEN" : "SERVICES"}
+                  {t.header.services}
                 </motion.button>
                 <motion.button
                   className={`${styles.menuItem} ${
@@ -407,7 +407,7 @@ export default function Header() {
                   whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.2, duration: 0.2 }}
                 >
-                  FAQ
+                  {t.header.faq}
                 </motion.button>
                 <motion.button
                   className={`${styles.menuItem} ${
@@ -420,7 +420,7 @@ export default function Header() {
                   whileHover={{ opacity: 0.7 }}
                   transition={{ delay: 0.25, duration: 0.2 }}
                 >
-                  PORTFOLIO
+                  {t.header.portfolio}
                 </motion.button>
               </motion.div>
             )}

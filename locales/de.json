@@ -1,13 +1,25 @@
 {
   "header": {
     "menu": "MENÜ",
-    "quote": "ANGEBOT"
+    "quote": "ANGEBOT",
+    "catalog": "UNSER KATALOG",
+    "services": "LEISTUNGEN",
+    "servicesLong": "DIENSTLEISTUNGEN",
+    "faq": "FAQ",
+    "portfolio": "PORTFOLIO",
+    "policy": "RICHTLINIEN",
+    "cart": "WARENKORB",
+    "contact": "KONTAKT"
   },
   "cart": {
     "title": "IHR ANGEBOT",
     "empty": "Noch keine Artikel in Ihrem Angebot.",
     "viewQuote": "ANGEBOT ANSEHEN",
-    "price": "Geschätzter Preis: X"
+    "price": "Geschätzter Preis: X",
+    "color": "Farbe",
+    "closeAria": "Schließen",
+    "removeAria": "Entfernen",
+    "quantityAria": "Menge"
   },
   "hero": {
     "title": "MERCHANDISE, DAS IHRE MARKE MIT IHREM",
@@ -294,6 +306,9 @@
     "quantityMin": "Mindestmenge",
     "descriptionPlaceholder": "Beschreibung",
     "fileUpload": "DATEI HOCHLADEN",
+    "fileRemove": "Entfernen",
+    "maxFilesError": "Maximal X Dateien erlaubt.",
+    "maxTotalSizeError": "Gesamtgröße muss X MB oder weniger sein.",
     "backToShopping": "Zurück zum Einkauf",
     "continue": "Weiter",
     "quantityAria": "Menge"
@@ -320,7 +335,61 @@
     "previousMonth": "Vorheriger Monat",
     "nextMonth": "Nächster Monat",
     "weekdayShort": ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+    "countryOptions": [
+      "",
+      "Österreich",
+      "Belgien",
+      "Bulgarien",
+      "Kroatien",
+      "Zypern",
+      "Tschechien",
+      "Dänemark",
+      "Estland",
+      "Finnland",
+      "Frankreich",
+      "Deutschland",
+      "Griechenland",
+      "Ungarn",
+      "Irland",
+      "Italien",
+      "Lettland",
+      "Litauen",
+      "Luxemburg",
+      "Malta",
+      "Niederlande",
+      "Polen",
+      "Portugal",
+      "Rumänien",
+      "Slowakei",
+      "Slowenien",
+      "Spanien",
+      "Schweden",
+      "Schweiz",
+      "Vereinigtes Königreich",
+      "Norwegen",
+      "Island",
+      "Liechtenstein",
+      "Albanien",
+      "Bosnien und Herzegowina",
+      "Nordmazedonien",
+      "Montenegro",
+      "Serbien",
+      "Türkei",
+      "Ukraine",
+      "Israel",
+      "Vereinigte Arabische Emirate",
+      "Saudi-Arabien",
+      "Südafrika",
+      "Ägypten",
+      "Marokko",
+      "Tunesien",
+      "Algerien",
+      "Nigeria",
+      "Kenia",
+      "Ghana"
+    ],
     "submitting": "Wird gesendet...",
+    "submitLabel": "Senden",
     "continue": "Weiter",
     "backToShopping": "Zurück zum Einkauf",
     "submitFailed": "Formular konnte nicht gesendet werden. Bitte erneut versuchen.",
@@ -328,7 +397,8 @@
     "quantityAria": "Menge",
     "yourQuoteTitle": "Ihr Angebot",
     "estimatedPrice": "Geschätzter Preis: X",
-    "color": "Farbe"
+    "color": "Farbe",
+    "emptyQuote": "Ihr Warenkorb ist leer"
   },
   "cta": {
     "title": "BEREIT, MERCHANDISE FÜR IHRE MARKE ZU ERSTELLEN?",
@@ -368,13 +438,15 @@
     "allRights": "Alle Rechte vorbehalten."
   },
   "quote": {
+    "mainTitleShort": "Sprechen oder tippen",
     "mainTitle": "Sprechen oder tippen",
     "mainTitleEnd": "ganz wie Sie möchten",
     "formTitle": "Vom Messenger zum Angebot — so einfach ist es.",
     "rightTitle": "Lassen Sie uns darüber sprechen",
     "nameLabel": "Vollständiger Name",
     "preferredMessenger": "Bevorzugter Messenger",
-    "namePlaceholder": "Name",
+    "namePlaceholder": "Vollständiger Name*",
+    "emailPlaceholder": "E-Mail*",
     "yourRequest": "Zusätzliche Anfrage",
     "requestOptions": [
       { "value": "Private Label", "label": "Private Label" },
@@ -387,8 +459,30 @@
     "descriptionPlaceholder": "",
     "fileUpload": "DATEI HOCHLADEN",
     "send": "SENDEN",
+    "submitting": "Wird gesendet...",
     "thankYouTitle": "Vielen Dank",
     "thankYouDescription": "Lassen Sie uns Ihre Ideen zum Leben erwecken — vom ersten Design bis zur Lieferung machen wir den Prozess einfach und zuverlässig.",
+    "closeAria": "Angebotsformular schließen",
+    "submitFailed": "Formular konnte nicht gesendet werden. Bitte erneut versuchen.",
+    "submitError": "Ein Fehler ist aufgetreten. Bitte erneut versuchen.",
+    "fileRemove": "Entfernen",
+    "errors": {
+      "nameRequired": "Name ist erforderlich",
+      "emailRequired": "E-Mail ist erforderlich",
+      "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "messengerContactRequired": "Kontaktinformation ist erforderlich",
+      "phoneInvalid": "Bitte geben Sie eine gültige Telefonnummer ein"
+    },
+    "fileErrors": {
+      "maxFiles": "Maximal X Dateien erlaubt.",
+      "maxTotalSize": "Gesamtgröße muss X MB oder weniger sein."
+    },
+    "messengerPlaceholders": {
+      "whatsapp": "Telefonnummer*",
+      "slack": "@benutzername*",
+      "teams": "E-Mail-Adresse*",
+      "default": ""
+    },
     "contact": {
       "price": "Geschätzter Preis: X"
     }
@@ -430,6 +524,9 @@
   },
   "preloader": {
     "text1": "TrauMerch",
-    "text2": "Entfesseln Sie Ihre Marke"
+    "text2": "Entfesseln Sie Ihre Marke",
+    "alt1": "Preloader 1",
+    "alt2": "Preloader 2",
+    "alt3": "Preloader 3"
   }
 }

@@ -79,7 +79,6 @@
   background: #e5e5e5;
 }
 
-/* Базовые стили для описаний */
 .desktopDescription {
   display: block;
 }
@@ -119,7 +118,6 @@
     padding-top: 100px;
   }
 
-  /* 130px */
 }
 
 @media (max-width: 1536px) and (max-height: 1400px) {
@@ -128,7 +126,6 @@
   }
 
   .serviceImage {
-    /* margin-bottom: 162px; */
     width: 38vw;
     height: 430px;
   }
@@ -164,12 +161,10 @@
     height: 420px;
   }
 }
-/* Скрываем mobile описание на desktop */
 .mobileDescription {
   display: none;
 }
 
-/* Показываем desktop описание */
 .desktopDescription {
   display: block;
 }
@@ -193,7 +188,6 @@
     margin-top: 0;
     margin-bottom: 0;
     padding-bottom: 0;
-    /* text-align: center; */
   }
 
   .serviceCard.reverse {
@@ -233,16 +227,13 @@
     letter-spacing: 0.04em;
   }
 
-  /* Скрываем desktop описание на мобильных */
   .desktopDescription {
     display: none;
   }
 
-  /* Показываем mobile описание под изображением */
   .mobileDescription {
     display: block;
     margin-top: 36px;
-    /* margin-bottom: 40px; */
   }
 }
 
@@ -274,7 +265,6 @@
   .description {
     font-size: 12px;
     margin-bottom: 16px;
-    /* max-width: 294px; */
     letter-spacing: 0.02em;
     line-height: 123%;
   }

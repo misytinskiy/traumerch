@@ -257,7 +257,7 @@
   border-radius: 6px;
   border: none;
   background: #f5f5f5;
-  padding: 0 14px 0 14px;
+  padding: 0 10px;
   color: #111;
   font-size: 16px;
   font-weight: 400;
@@ -266,7 +266,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 5px;
 }
 
 .dateTrigger:hover {
@@ -430,6 +430,13 @@
   gap: 20px;
 }
 
+.emptyQuote {
+  padding: 24px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0 0 16px;
+}
+
 .quoteCard {
   display: flex;
   gap: 12px;
@@ -562,6 +569,27 @@
   gap: 16px;
   padding-top: 36px;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.submitContent {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: contactSpin 0.8s linear infinite;
+}
+
+@keyframes contactSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 1536px) {
@@ -836,4 +864,3 @@ height: 24px;
 }
 
 }
-

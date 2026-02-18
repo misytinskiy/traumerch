@@ -197,25 +197,25 @@ export default function MobileHeader() {
                 className={styles.menuItem}
                 onClick={() => handleMenuNavigation("products")}
               >
-                {language === "de" ? "UNSER KATALOG" : "OUR CATALOGUE"}
+                {t.header.catalog}
               </button>
               <button
                 className={styles.menuItem}
                 onClick={() => handleMenuNavigation("services")}
               >
-                {language === "de" ? "DIENSTLEISTUNGEN" : "SERVICES"}
+                {t.header.servicesLong}
               </button>
               <button
                 className={styles.menuItem}
                 onClick={() => handleMenuNavigation("faq")}
               >
-                FAQ
+                {t.header.faq}
               </button>
               <button
                 className={styles.menuItem}
                 onClick={() => handleMenuNavigation("gallery")}
               >
-                PORTFOLIO
+                {t.header.portfolio}
               </button>
             </nav>
 
@@ -225,13 +225,13 @@ export default function MobileHeader() {
                 className={styles.secondaryMenuItem}
                 onClick={() => handleMenuNavigation("faq")}
               >
-                FAQ
+                {t.header.faq}
               </button>
               <button
                 className={styles.secondaryMenuItem}
                 onClick={() => handleMenuNavigation("policy")}
               >
-                POLICY
+                {t.header.policy}
               </button>
             </nav>
 
@@ -241,7 +241,7 @@ export default function MobileHeader() {
                 onClick={handleMenuQuoteAction}
                 hasCartItems={hasCartItems}
                 itemCount={items.length}
-                text={hasCartItems ? "CART" : "CONTACT US"}
+                text={hasCartItems ? t.header.cart : t.header.contact}
                 className={styles.menuQuoteButton}
               />
             </div>

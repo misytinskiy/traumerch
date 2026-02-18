@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { InlineWidget } from "react-calendly";
 import Button from "../Button/Button";
+import ThankYouOverlay from "../ThankYouOverlay/ThankYouOverlay";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "../../app/quote/quote.module.css";
 
@@ -26,10 +27,10 @@ const messengers = [
   { id: 4, name: "Other" },
 ];
 
-const servicesList = ["Service 1", "Service 2", "Service 3", "Service 4"];
-
 export default function QuoteForm({ onSubmit }: QuoteFormProps) {
   const { t } = useLanguage();
+  const serviceOptions =
+    t.quote.requestOptions as { value: string; label: string }[];
   const [formData, setFormData] = useState<QuoteFormData>({
     name: "",
     preferredMessenger: "",
@@ -65,52 +66,44 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
 
   if (showThankYou) {
     return (
-      <main className={styles.main}>
-        <div className={styles.thankYouContent}>
-          <h1 className={styles.thankYouTitle}>
-            {t.quote?.thankYouTitle || "Thank you"}
-          </h1>
-          <p className={styles.thankYouDescription}>
-            {t.quote?.thankYouDescription ||
-              "Let's bring your ideas to life — from first design to delivery, we make the process simple and reliable."}
-          </p>
-        </div>
-      </main>
+      <ThankYouOverlay
+        title={t.quote.thankYouTitle}
+        description={t.quote.thankYouDescription}
+        onClose={() => setShowThankYou(false)}
+      />
     );
   }
 
   return (
     <main className={styles.main}>
       <h1 className={styles.mainTitle}>
-        {t.quote?.mainTitle || "Talk or type"} <br />—{" "}
-        {t.quote?.mainTitleEnd || "it's up to you"}
+        {t.quote.mainTitle} <br />— {t.quote.mainTitleEnd}
       </h1>
 
       <div className={styles.content}>
         <div className={styles.leftColumn}>
           <h2 className={styles.formTitle}>
-            {t.quote?.formTitle ||
-              "From Messenger to Quote — it's that simple."}
+            {t.quote.formTitle}
           </h2>
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
               <label className={styles.label}>
-                {t.quote?.nameLabel || t.quote?.namePlaceholder || "Name"}
+                {t.quote.nameLabel}
               </label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                placeholder={t.quote?.namePlaceholder || "Name"}
+                placeholder={t.quote.namePlaceholder}
                 className={styles.input}
               />
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.label}>
-                {t.quote?.preferredMessenger || "Preferred Messenger"}
+                {t.quote.preferredMessenger}
               </label>
               <div className={styles.messengerButtons}>
                 {messengers.map((messenger) => (
@@ -130,7 +123,7 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
 
             <div className={styles.formGroup}>
               <label className={styles.label}>
-                {t.quote?.yourRequest || "Your request"}
+                {t.quote.yourRequest}
               </label>
               <div className={styles.toggleButtons}>
                 <button
@@ -147,7 +140,7 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
                     }))
                   }
                 >
-                  {(t.quote?.services || "Services").toUpperCase()}
+                  {t.quote.services.toUpperCase()}
                 </button>
                 <button
                   type="button"
@@ -163,7 +156,7 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
                     }))
                   }
                 >
-                  {t.quote?.merchandise || "MERCHANDISE"}
+                  {t.quote.merchandise}
                 </button>
               </div>
             </div>
@@ -171,21 +164,21 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
             {formData.requestType === "services" && (
               <div className={styles.formGroup}>
                 <label className={styles.label}>
-                  {t.quote?.services || "Services"}
+                  {t.quote.services}
                 </label>
                 <div className={styles.serviceButtons}>
-                  {servicesList.map((service) => (
+                  {serviceOptions.map((service) => (
                     <button
-                      key={service}
+                      key={service.value}
                       type="button"
                       className={`${styles.serviceButton} ${
-                        selectedService === service
+                        selectedService === service.value
                           ? styles.serviceButtonActive
                           : ""
                       }`}
-                      onClick={() => setSelectedService(service)}
+                      onClick={() => setSelectedService(service.value)}
                     >
-                      {service.toUpperCase()}
+                      {service.label.toUpperCase()}
                     </button>
                   ))}
                 </div>
@@ -197,7 +190,7 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                placeholder={t.quote?.description || "Description"}
+                placeholder={t.quote.description}
                 className={styles.textarea}
                 rows={6}
               />
@@ -222,7 +215,7 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
                   />
                 </svg>
                 <span className={styles.fileUploadText}>
-                  {t.quote?.fileUpload || "FILE UPLOAD"}
+                  {t.quote.fileUpload}
                 </span>
               </label>
               <input
@@ -241,14 +234,14 @@ export default function QuoteForm({ onSubmit }: QuoteFormProps) {
               arrow="white"
               className={styles.submitButton}
             >
-              {t.quote?.send || "SEND"}
+              {t.quote.send}
             </Button>
           </form>
         </div>
 
         <div className={styles.rightColumn}>
           <h2 className={styles.rightTitle}>
-            {t.quote?.rightTitle || "Let's talk it through"}
+            {t.quote.rightTitle}
           </h2>
           <div className={styles.calendlyWidget}>
             <InlineWidget url="https://calendly.com/traumerch/30min" />

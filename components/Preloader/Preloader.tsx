@@ -334,7 +334,7 @@ export default function Preloader() {
               <div className={styles.imageWrapper}>
                 <Image
                   src="/preloader/1.jpg"
-                  alt="Preloader 1"
+                  alt={t.preloader.alt1}
                   width={652}
                   height={420}
                   className={styles.image}
@@ -344,7 +344,7 @@ export default function Preloader() {
               <div className={styles.imageWrapper}>
                 <Image
                   src="/preloader/2.jpg"
-                  alt="Preloader 2"
+                  alt={t.preloader.alt2}
                   width={652}
                   height={420}
                   className={styles.image}
@@ -354,7 +354,7 @@ export default function Preloader() {
               <div ref={lastImageRef} className={styles.imageWrapper}>
                 <Image
                   src="/preloader/3.jpg"
-                  alt="Preloader 3"
+                  alt={t.preloader.alt3}
                   width={652}
                   height={420}
                   className={styles.image}
