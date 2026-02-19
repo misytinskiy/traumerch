@@ -330,12 +330,12 @@
 .pricePerUnitText,
 .leadTimeText {
   font-family: Inter;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 100%;
   color: rgba(0, 0, 0, 1);
   margin: 0 0 8px 0;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .fullWidthButton {
