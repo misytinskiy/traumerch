@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useCart } from "../../contexts/CartContext";
@@ -12,42 +12,50 @@ import styles from "./ProductDetails.module.css";
 
 const PALETTE_FIELD = "[WEB] Palette Hex Colours";
 const MAIN_PHOTO_FIELD = "Main Product Photo";
+const SECONDARY_PHOTOS_FIELD = "Secondary Product Photos";
 
-function getMainPhotoUrls(fields: Record<string, unknown> | undefined): {
+type PhotoVariants = {
   full: string | null;
   large: string | null;
   small: string | null;
   fallback: string | null;
-} {
-  const raw = fields?.[MAIN_PHOTO_FIELD];
-  if (!Array.isArray(raw) || raw.length === 0) {
-    return { full: null, large: null, small: null, fallback: null };
-  }
-  const first =
-    raw[0] && typeof raw[0] === "object"
-      ? (raw[0] as {
-          url?: string;
-          thumbnails?: {
-            small?: { url?: string };
-            large?: { url?: string };
-            full?: { url?: string };
-          };
-        })
-      : null;
+};
+
+type AirtableAttachment = {
+  url?: string;
+  thumbnails?: {
+    small?: { url?: string };
+    large?: { url?: string };
+    full?: { url?: string };
+  };
+};
+
+function normalizeAttachment(attachment: AirtableAttachment | null): PhotoVariants | null {
+  if (!attachment) return null;
   const full =
-    first?.url && typeof first.url === "string" ? first.url : null;
+    attachment.url && typeof attachment.url === "string" ? attachment.url : null;
   const large =
-    first?.thumbnails?.large?.url &&
-    typeof first.thumbnails.large.url === "string"
-      ? first.thumbnails.large.url
+    attachment.thumbnails?.large?.url &&
+    typeof attachment.thumbnails.large.url === "string"
+      ? attachment.thumbnails.large.url
       : null;
   const small =
-    first?.thumbnails?.small?.url &&
-    typeof first.thumbnails.small.url === "string"
-      ? first.thumbnails.small.url
+    attachment.thumbnails?.small?.url &&
+    typeof attachment.thumbnails.small.url === "string"
+      ? attachment.thumbnails.small.url
       : null;
   const fallback = large || small || full;
+  if (!fallback) return null;
   return { full, large, small, fallback };
+}
+
+function getAttachmentArray(
+  fields: Record<string, unknown> | undefined,
+  fieldName: string
+): AirtableAttachment[] {
+  const raw = fields?.[fieldName];
+  if (!Array.isArray(raw)) return [];
+  return raw.filter((item): item is AirtableAttachment => item && typeof item === "object");
 }
 
 function parsePaletteHex(fields: Record<string, unknown> | undefined): string[] {
@@ -117,9 +125,12 @@ export default function ProductDetails({
   const isLoading = Boolean(productId && !productRecord);
   const paletteColors = parsePaletteHex(productRecord?.fields);
   const paletteFieldRaw = productRecord?.fields?.[PALETTE_FIELD];
-  const mainPhoto = getMainPhotoUrls(productRecord?.fields);
-  const mainPhotoUrl = mainPhoto.full || mainPhoto.large || mainPhoto.small || null;
-  const thumbnailUrl = mainPhoto.small || mainPhoto.large || mainPhoto.full || null;
+  const [photoState, setPhotoState] = useState<{
+    all: PhotoVariants[];
+  }>({ all: [] });
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const scrollRafRef = useRef<number | null>(null);
   const [selectedColor, setSelectedColor] = useState("");
 
   useEffect(() => {
@@ -214,6 +225,32 @@ export default function ProductDetails({
     }
   };
 
+  // Keep main/thumbnail photos in sync with product fields
+  useEffect(() => {
+    if (!productRecord?.fields) {
+      setPhotoState({ all: [] });
+      return;
+    }
+    const mainAttachment = getAttachmentArray(productRecord.fields, MAIN_PHOTO_FIELD)[0] ?? null;
+    const secondaryAttachments = getAttachmentArray(
+      productRecord.fields,
+      SECONDARY_PHOTOS_FIELD
+    );
+    const mainPhoto = normalizeAttachment(mainAttachment);
+    const secondaryPhotos = secondaryAttachments
+      .map((attachment) => normalizeAttachment(attachment))
+      .filter((photo): photo is PhotoVariants => Boolean(photo));
+
+    const allPhotos = mainPhoto ? [mainPhoto, ...secondaryPhotos] : secondaryPhotos;
+    setPhotoState({ all: allPhotos });
+  }, [productRecord?.id]);
+
+  useEffect(() => {
+    if (photoState.all.length > 0) {
+      setSelectedPhotoIndex(0);
+    }
+  }, [photoState.all.length]);
+
   // When product/MOQ is set, set quantity to minQuantity so we never show below MOQ
   useEffect(() => {
     if (!productRecord || minQuantity <= 1) return;
@@ -253,30 +290,111 @@ export default function ProductDetails({
       ? String(leadTimeRaw)
       : null;
 
+  const selectedPhoto = photoState.all[selectedPhotoIndex] ?? null;
+  const mainPhotoUrl =
+    selectedPhoto?.full || selectedPhoto?.large || selectedPhoto?.small || null;
+  const thumbnailPhotos = photoState.all;
+
+  const handleThumbnailClick = (index: number) => {
+    setSelectedPhotoIndex(index);
+  };
+
+  const handleDotClick = (index: number) => {
+    setSelectedPhotoIndex(index);
+    const slider = sliderRef.current;
+    const slide = slider?.children[index] as HTMLElement | undefined;
+    slide?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+  };
+
+  const handleSliderScroll = () => {
+    if (scrollRafRef.current !== null) return;
+    scrollRafRef.current = window.requestAnimationFrame(() => {
+      scrollRafRef.current = null;
+      const slider = sliderRef.current;
+      if (!slider || slider.children.length === 0) return;
+      const firstSlide = slider.children[0] as HTMLElement;
+      const slideWidth = firstSlide.getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(slider).columnGap || getComputedStyle(slider).gap || "0");
+      const step = slideWidth + gap;
+      if (step <= 0) return;
+      const nextIndex = Math.round(slider.scrollLeft / step);
+      const clamped = Math.max(0, Math.min(nextIndex, slider.children.length - 1));
+      if (clamped !== selectedPhotoIndex) {
+        setSelectedPhotoIndex(clamped);
+      }
+    });
+  };
+
   return (
     <section className={styles.productDetails}>
       {/* Product Customizer Section */}
       <div className={styles.customizerSection}>
         <div className={styles.imageSection}>
           <div className={styles.mainImageContainer}>
-            {isLoading ? (
-              <div className={`${styles.mainImage} ${styles.skeletonBlock}`} />
-            ) : mainPhotoUrl ? (
-              <div className={`${styles.mainImage} ${styles.imageWrap}`}>
-                <Image
-                  src={mainPhotoUrl}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
-                  className={styles.imageContent}
-                  priority
+            <div className={styles.desktopMainImage}>
+              {isLoading ? (
+                <div className={`${styles.mainImage} ${styles.skeletonBlock}`} />
+              ) : mainPhotoUrl ? (
+                <div className={`${styles.mainImage} ${styles.imageWrap}`}>
+                  <Image
+                    src={mainPhotoUrl}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
+                    className={styles.imageContent}
+                    priority
+                  />
+                </div>
+              ) : (
+                <div
+                  className={styles.mainImage}
+                  style={{ backgroundColor: selectedColor }}
                 />
+              )}
+            </div>
+
+            <div
+              className={styles.mobileSlider}
+              ref={sliderRef}
+              onScroll={handleSliderScroll}
+            >
+              {isLoading ? (
+                <div className={`${styles.mobileSlide} ${styles.skeletonBlock}`} />
+              ) : thumbnailPhotos.length > 0 ? (
+                thumbnailPhotos.map((photo, index) => (
+                  <div key={index} className={`${styles.mobileSlide} ${styles.imageWrap}`}>
+                    <Image
+                      src={photo.large || photo.full || photo.small || ""}
+                      alt=""
+                      fill
+                      sizes="100vw"
+                      className={styles.imageContent}
+                      priority={index === 0}
+                    />
+                  </div>
+                ))
+              ) : (
+                <div
+                  className={styles.mobileSlide}
+                  style={{ backgroundColor: selectedColor }}
+                />
+              )}
+            </div>
+
+            {thumbnailPhotos.length > 1 && (
+              <div className={styles.mobileDots} aria-hidden>
+                {thumbnailPhotos.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className={`${styles.mobileDot} ${
+                      index === selectedPhotoIndex ? styles.mobileDotActive : ""
+                    }`}
+                    onClick={() => handleDotClick(index)}
+                    aria-label={`Slide ${index + 1}`}
+                  />
+                ))}
               </div>
-            ) : (
-              <div
-                className={styles.mainImage}
-                style={{ backgroundColor: selectedColor }}
-              />
             )}
           </div>
           <div className={styles.thumbnails}>
@@ -287,27 +405,30 @@ export default function ProductDetails({
                     className={`${styles.thumbnail} ${styles.skeletonBlock}`}
                   />
                 ))
-              : thumbnailUrl
-              ? Array.from({ length: 4 }, (_, index) => (
-                  <div
+              : thumbnailPhotos.length > 0
+              ? thumbnailPhotos.map((photo, index) => (
+                  <button
                     key={index}
+                    type="button"
                     className={`${styles.thumbnail} ${styles.imageWrap}`}
+                    onClick={() => handleThumbnailClick(index)}
+                    aria-label={`Secondary photo ${index + 1}`}
                   >
                     <Image
-                      src={thumbnailUrl}
+                      src={photo.large || photo.full || photo.small || ""}
                       alt=""
                       fill
                       sizes="(max-width: 768px) 25vw, 96px"
                       className={styles.imageContent}
                       loading="lazy"
                     />
-                  </div>
+                  </button>
                 ))
               : Array.from({ length: 4 }, (_, index) => (
                   <div
                     key={index}
                     className={styles.thumbnail}
-                    style={{ backgroundColor: selectedColor }}
+                    style={{ backgroundColor: "#e0e0e0" }}
                   />
                 ))}
           </div>

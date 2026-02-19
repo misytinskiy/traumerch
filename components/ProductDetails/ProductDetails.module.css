@@ -20,6 +20,18 @@
   flex-shrink: 0;
 }
 
+.desktopMainImage {
+  display: block;
+}
+
+.mobileSlider {
+  display: none;
+}
+
+.mobileDots {
+  display: none;
+}
+
 .mainImage {
   width: 37vw;
   height: 788px;
@@ -46,8 +58,12 @@
 
 .thumbnail {
   width: 7vw;
-  height: 147px;
+  height: 121px;
   border-radius: 20px;
+  border: none;
+  padding: 0;
+  background: transparent;
+  display: block;
   cursor: pointer;
   transition: all 0.3s ease;
   object-fit: cover;
@@ -557,6 +573,47 @@
     height: 120px;
   }
 
+  .desktopMainImage {
+    display: none;
+  }
+
+  .mobileSlider {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+  }
+
+  .mobileSlide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 608px;
+    border-radius: 20px;
+    scroll-snap-align: start;
+  }
+
+  .mobileDots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .mobileDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    border: none;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  .mobileDotActive {
+    background: rgba(0, 0, 0, 0.75);
+  }
+
   .productName {
     font-size: 26px;
   }
@@ -614,6 +671,8 @@
   .sliderSection {
     display: none;
   }
+
+  .optionsSection {    width: 100%;}
 }
 
 @media (max-width: 480px) {
@@ -622,6 +681,10 @@
   }
 
   .mainImage {
+    height: 374px;
+  }
+
+  .mobileSlide {
     height: 374px;
   }
 
@@ -661,6 +724,7 @@
   .optionsSection {
     margin-left: 0;
     min-width: 100%;
+ 
   }
 
   .optionButtons {
