@@ -211,12 +211,15 @@ export default function MobileHeader() {
               >
                 {t.header.faq}
               </button>
+
+              {/* Portfolio hidden
               <button
                 className={styles.menuItem}
                 onClick={() => handleMenuNavigation("gallery")}
               >
                 {t.header.portfolio}
               </button>
+              */}
             </nav>
 
             {/* Secondary Menu Items */}
