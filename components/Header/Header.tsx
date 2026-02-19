@@ -409,6 +409,7 @@ export default function Header() {
                 >
                   {t.header.faq}
                 </motion.button>
+                {/* Portfolio hidden
                 <motion.button
                   className={`${styles.menuItem} ${
                     activeSection === "gallery" ? styles.active : ""
@@ -422,6 +423,7 @@ export default function Header() {
                 >
                   {t.header.portfolio}
                 </motion.button>
+                */}
               </motion.div>
             )}
           </AnimatePresence>
