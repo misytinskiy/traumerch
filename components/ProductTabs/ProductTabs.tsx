@@ -12,6 +12,7 @@ interface Product {
   id: string;
   name: string;
   price: string;
+  outOfStock: boolean;
   size: "regular" | "large";
   imageUrl: string | null;
   isSkeleton?: boolean;
@@ -160,6 +161,7 @@ export default function ProductTabs({
         id: `skeleton-desktop-${index}`,
         name: "",
         price: "",
+        outOfStock: false,
         size,
         imageUrl: null,
         isSkeleton: true,
@@ -173,6 +175,7 @@ export default function ProductTabs({
         id: `skeleton-mobile-${index}`,
         name: "",
         price: "",
+        outOfStock: false,
         size: "regular" as const,
         imageUrl: null,
         isSkeleton: true,
@@ -187,13 +190,24 @@ export default function ProductTabs({
     ): Product => {
       const name =
         language === "de" ? record.nameDe : record.nameEn;
+      const imageUrl =
+        size === "large"
+          ? record.imageUrlFull ??
+            record.imageUrlLarge ??
+            record.imageUrlSmall ??
+            record.imageUrl
+          : record.imageUrlLarge ??
+            record.imageUrlSmall ??
+            record.imageUrlFull ??
+            record.imageUrl;
 
       return {
         id: record.id,
         name,
         price: record.price,
+        outOfStock: record.outOfStock,
         size,
-        imageUrl: record.imageUrlLarge ?? record.imageUrlSmall ?? record.imageUrl,
+        imageUrl,
       };
     },
     [language]
@@ -268,6 +282,9 @@ export default function ProductTabs({
   const renderProductCard = (product: Product) => {
     const isSkeleton = Boolean(product.isSkeleton);
     const priceText = (() => {
+      if (product.outOfStock) {
+        return "Out of stock";
+      }
       const raw = product.price?.trim() || "";
       if (!raw) return "";
       if (language === "de") {
@@ -304,6 +321,7 @@ export default function ProductTabs({
                   ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
                   : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
               }
+              quality={product.size === "large" ? 90 : 80}
               className={styles.productImageContent}
               loading="lazy"
             />

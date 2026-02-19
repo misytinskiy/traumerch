@@ -342,6 +342,17 @@
   width: 284px;
 }
 
+.outOfStockButton {
+  color: rgba(80, 80, 80, 1);
+  border-color: rgba(0, 0, 0, 1);
+  opacity: 1;
+  cursor: default;
+}
+
+.outOfStockButton:disabled {
+  opacity: 1;
+}
+
 .infoSection {
   display: flex;
   /* gap: 80px; */

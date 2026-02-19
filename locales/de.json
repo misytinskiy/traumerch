@@ -54,7 +54,8 @@
     "priceFrom": "Ab €6"
   },
   "common": {
-    "loadProductsError": "Produkte konnten nicht geladen werden."
+    "loadProductsError": "Produkte konnten nicht geladen werden.",
+    "outOfStock": "Ausverkauft"
   },
   "promise": {
     "title": "UNSER VERSPRECHEN. IHR VORTEIL."

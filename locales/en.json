@@ -54,7 +54,8 @@
     "priceFrom": "From €6"
   },
   "common": {
-    "loadProductsError": "Failed to load products."
+    "loadProductsError": "Failed to load products.",
+    "outOfStock": "Out of Stock"
   },
   "promise": {
     "title": "OUR PROMISE. YOUR ADVANTAGE."

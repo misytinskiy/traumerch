@@ -123,6 +123,12 @@ export default function ProductDetails({
   const { t } = useLanguage();
   const { addItem } = useCart();
   const isLoading = Boolean(productId && !productRecord);
+  const outOfStockRaw = productRecord?.fields?.["Out of stock"] ?? productRecord?.fields?.["Out of Stock"];
+  const isOutOfStock =
+    outOfStockRaw === true ||
+    outOfStockRaw === "true" ||
+    outOfStockRaw === 1 ||
+    outOfStockRaw === "1";
   const paletteColors = parsePaletteHex(productRecord?.fields);
   const paletteFieldRaw = productRecord?.fields?.[PALETTE_FIELD];
   const [photoState, setPhotoState] = useState<{
@@ -588,18 +594,18 @@ export default function ProductDetails({
             ) : (
               <>
                 <p className={styles.priceText}>
-                  {(t.design.price as string).replace("X", priceDisplay ?? "—")}
+                  {(t.design.price as string).replace("X", isOutOfStock ? "—" : priceDisplay ?? "—")}
                 </p>
                 <p className={styles.pricePerUnitText}>
                   {(t.design?.pricePerUnit ?? "Price per unit: X").replace(
                     "X",
-                    unitPriceDisplay ?? "—"
+                    isOutOfStock ? "—" : unitPriceDisplay ?? "—"
                   )}
                 </p>
                 <p className={styles.leadTimeText}>
                   {(t.design.leadTime as string).replace(
                     "Y",
-                    leadTimeDisplay
+                    !isOutOfStock && leadTimeDisplay
                       ? `${leadTimeDisplay} ${(t.design as { days?: string }).days ?? "days"}`
                       : "—"
                   )}
@@ -609,11 +615,12 @@ export default function ProductDetails({
           </div>
 
           <Button
-            variant="solid"
+            variant={isOutOfStock ? "transparent" : "solid"}
             padding="26px 44px"
-            arrow="white"
-            className={styles.fullWidthButton}
+            arrow={isOutOfStock ? "none" : "white"}
+            className={`${styles.fullWidthButton} ${isOutOfStock ? styles.outOfStockButton : ""}`}
             onClick={() => {
+              if (isOutOfStock) return;
               if (productId) {
                 addItem({
                   productId,
@@ -627,8 +634,9 @@ export default function ProductDetails({
                 });
               }
             }}
+            disabled={isOutOfStock}
           >
-            {t.design.seePromise}
+            {isOutOfStock ? t.common.outOfStock : t.design.seePromise}
           </Button>
         </div>
       </div>

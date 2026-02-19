@@ -9,6 +9,7 @@ export type NormalizedProduct = {
   imageUrlSmall: string | null;
   imageUrlLarge: string | null;
   imageUrlFull: string | null;
+  outOfStock: boolean;
   categories: string[];
 };
 
@@ -22,6 +23,8 @@ type PriceTier = "sample" | "bulk";
 const NAME_FIELDS = ["[WEB] Name ENG", "[WEB] Name DE", "Name"];
 const CATEGORY_FIELDS = ["Item Category"];
 const IMAGE_FIELD = "Main Product Photo";
+const OUT_OF_STOCK_FIELD = "Out of Stock";
+const OUT_OF_STOCK_FIELD_FALLBACK = "Out of stock";
 const PRICE_FIELDS_BY_TIER: Record<PriceTier, string[]> = {
   sample: ["1-24 pcs (Sample) | SALES", "Price", "[WEB] Price"],
   bulk: ["1000+ pcs | SALES", "Price", "[WEB] Price"],
@@ -80,6 +83,13 @@ const normalizeRecord = (
 
   const priceValue = pickFirstField(fields, PRICE_FIELDS_BY_TIER[priceTier]);
   const price = formatPrice(priceValue);
+  const outOfStockRaw =
+    fields[OUT_OF_STOCK_FIELD] ?? fields[OUT_OF_STOCK_FIELD_FALLBACK];
+  const outOfStock =
+    outOfStockRaw === true ||
+    outOfStockRaw === "true" ||
+    outOfStockRaw === 1 ||
+    outOfStockRaw === "1";
 
   const mainPhoto = fields[IMAGE_FIELD];
   const mainPhotoArr = Array.isArray(mainPhoto) ? mainPhoto : [];
@@ -123,14 +133,19 @@ const normalizeRecord = (
     imageUrlSmall,
     imageUrlLarge,
     imageUrlFull,
+    outOfStock,
     categories,
   };
 };
 
-export const buildNormalizedFields = (priceTier: PriceTier) => [
+export const buildNormalizedFields = (
+  priceTier: PriceTier,
+  includeOutOfStock = true
+) => [
   ...NAME_FIELDS,
   ...PRICE_FIELDS_QUERY[priceTier],
   IMAGE_FIELD,
+  ...(includeOutOfStock ? [OUT_OF_STOCK_FIELD] : []),
   ...CATEGORY_FIELDS,
 ];
 
@@ -160,19 +175,36 @@ export const fetchNormalizedProducts = async ({
   filterByFormula,
   revalidateSeconds = 300,
 }: FetchNormalizedOptions) => {
-  const fields = buildNormalizedFields(priceTier);
   const formula =
     filterByFormula || (category ? buildCategoryFormula(category) : undefined);
-  const url = buildAirtableListUrl({
-    fields,
-    view,
-    maxRecords,
-    pageSize,
-    filterByFormula: formula,
-  });
-  const response = await fetchAirtable(url, apiToken, {
-    revalidateSeconds,
-  });
+
+  const runFetch = async (includeOutOfStock: boolean) => {
+    const fields = buildNormalizedFields(priceTier, includeOutOfStock);
+    const url = buildAirtableListUrl({
+      fields,
+      view,
+      maxRecords,
+      pageSize,
+      filterByFormula: formula,
+    });
+    const response = await fetchAirtable(url, apiToken, {
+      revalidateSeconds,
+    });
+    return response;
+  };
+
+  let response = await runFetch(true);
+  if (!response.ok) {
+    const message = await response.text();
+    if (
+      message.includes("UNKNOWN_FIELD_NAME") &&
+      message.includes(OUT_OF_STOCK_FIELD)
+    ) {
+      response = await runFetch(false);
+    } else {
+      throw new Error(message);
+    }
+  }
 
   if (!response.ok) {
     const message = await response.text();
