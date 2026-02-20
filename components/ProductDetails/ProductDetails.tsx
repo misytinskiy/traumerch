@@ -11,6 +11,7 @@ import { getPriceForQuantity, getUnitPriceForQuantity } from "../../lib/pricing"
 import styles from "./ProductDetails.module.css";
 
 const PALETTE_FIELD = "[WEB] Palette Hex Colours";
+const PALETTE_RAINBOW_TOKEN = "rainbow";
 const MAIN_PHOTO_FIELD = "Main Product Photo";
 const SECONDARY_PHOTOS_FIELD = "Secondary Product Photos";
 
@@ -58,13 +59,19 @@ function getAttachmentArray(
   return raw.filter((item): item is AirtableAttachment => item && typeof item === "object");
 }
 
-function parsePaletteHex(fields: Record<string, unknown> | undefined): string[] {
+function parsePaletteData(fields: Record<string, unknown> | undefined) {
   const raw = fields?.[PALETTE_FIELD];
-  if (typeof raw !== "string" || !raw.trim()) return [];
-  return raw
-    .split(",")
-    .map((s) => s.trim())
-    .filter((s) => /^#[0-9A-Fa-f]{3}$|^#[0-9A-Fa-f]{6}$/.test(s));
+  if (typeof raw !== "string" || !raw.trim()) {
+    return { colors: [], hasRainbow: false };
+  }
+  const tokens = raw.split(",").map((s) => s.trim());
+  const colors = tokens.filter((s) =>
+    /^#[0-9A-Fa-f]{3}$|^#[0-9A-Fa-f]{6}$/.test(s)
+  );
+  const hasRainbow = tokens.some(
+    (token) => token.toLowerCase() === PALETTE_RAINBOW_TOKEN
+  );
+  return { colors, hasRainbow };
 }
 
 const PlusIcon = () => (
@@ -129,7 +136,9 @@ export default function ProductDetails({
     outOfStockRaw === "true" ||
     outOfStockRaw === 1 ||
     outOfStockRaw === "1";
-  const paletteColors = parsePaletteHex(productRecord?.fields);
+  const paletteData = parsePaletteData(productRecord?.fields);
+  const paletteColors = paletteData.colors;
+  const hasRainbowPalette = paletteData.hasRainbow;
   const paletteFieldRaw = productRecord?.fields?.[PALETTE_FIELD];
   const [photoState, setPhotoState] = useState<{
     all: PhotoVariants[];
@@ -138,13 +147,23 @@ export default function ProductDetails({
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const scrollRafRef = useRef<number | null>(null);
   const [selectedColor, setSelectedColor] = useState("");
+  const [customColorPicked, setCustomColorPicked] = useState(false);
+  const isCustomColor = hasRainbowPalette && customColorPicked;
 
   useEffect(() => {
-    if (paletteColors.length > 0 && (selectedColor === "" || !paletteColors.includes(selectedColor))) {
-      setSelectedColor(paletteColors[0]);
+    if (paletteColors.length > 0) {
+      if (
+        selectedColor === "" ||
+        (!paletteColors.includes(selectedColor) && !hasRainbowPalette)
+      ) {
+        setSelectedColor(paletteColors[0]);
+        setCustomColorPicked(false);
+      }
+    } else if (!hasRainbowPalette && selectedColor !== "") {
+      setCustomColorPicked(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- sync selectedColor when product/palette changes
-  }, [productRecord?.id, paletteFieldRaw]);
+  }, [productRecord?.id, paletteFieldRaw, hasRainbowPalette, paletteColors, selectedColor]);
   const [quantity, setQuantity] = useState(10);
   const [quantityInputValue, setQuantityInputValue] = useState("10");
   const [description, setDescription] = useState("");
@@ -461,17 +480,46 @@ export default function ProductDetails({
                       className={`${styles.colorOption} ${styles.skeletonBlock}`}
                     />
                   ))
-                : paletteColors.map((color, index) => (
-                    <button
-                      key={index}
-                      className={`${styles.colorOption} ${
-                        selectedColor === color ? styles.selected : ""
-                      }`}
-                      style={{ backgroundColor: color }}
-                      onClick={() => setSelectedColor(color)}
-                      aria-label={`Color ${index + 1}`}
-                    />
-                  ))}
+                : (
+                    <>
+                      {hasRainbowPalette && (
+                        <div
+                          className={`${styles.colorOption} ${styles.colorPickerOption} ${
+                            isCustomColor ? styles.selected : ""
+                          }`}
+                          style={{
+                            background: isCustomColor ? selectedColor : undefined,
+                          }}
+                          aria-label="Custom color"
+                        >
+                          <input
+                            type="color"
+                            className={styles.colorPickerInput}
+                            value={selectedColor || "#000000"}
+                            onChange={(event) => {
+                              setSelectedColor(event.target.value);
+                              setCustomColorPicked(true);
+                            }}
+                            aria-label="Custom color picker"
+                          />
+                        </div>
+                      )}
+                      {paletteColors.map((color, index) => (
+                        <button
+                          key={index}
+                          className={`${styles.colorOption} ${
+                            selectedColor === color ? styles.selected : ""
+                          }`}
+                          style={{ backgroundColor: color }}
+                          onClick={() => {
+                            setSelectedColor(color);
+                            setCustomColorPicked(false);
+                          }}
+                          aria-label={`Color ${index + 1}`}
+                        />
+                      ))}
+                    </>
+                  )}
             </div>
           </div>
 

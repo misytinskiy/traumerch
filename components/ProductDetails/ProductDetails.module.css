@@ -194,6 +194,30 @@
   transition: all 0.3s ease;
 }
 
+.colorPickerOption {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  background: conic-gradient(
+    #ff004c,
+    #ff7a00,
+    #ffe600,
+    #00d57d,
+    #00a4ff,
+    #6a00ff,
+    #ff004c
+  );
+}
+
+.colorPickerInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+}
+
+
 .colorOption.selected {
   /* border: 1px solid rgb(218, 218, 218); */
   transform: scale(1.15);
