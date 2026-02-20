@@ -1,5 +1,5 @@
 .faqSection {
-  padding: 280px 150px 160px;
+  padding: 180px 150px 160px;
   background: #f8f8f8;
 }
 
@@ -62,7 +62,7 @@
 
 @media (max-width: 1920px) and (max-height: 982px) {
   .faqSection {
-    padding: 200px 300px 100px;
+    padding: 148px 300px 100px;
   }
 
   .title {

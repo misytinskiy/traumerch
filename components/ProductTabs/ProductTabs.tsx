@@ -377,6 +377,10 @@ export default function ProductTabs({
       rowProducts.push(...sourceProducts.slice(currentIndex, currentIndex + 3));
     }
 
+    if (rowProducts.length === 0) {
+      return null;
+    }
+
     return (
       <div key={rowClass} className={styles[rowClass]}>
         {rowProducts.map(renderProductCard)}
