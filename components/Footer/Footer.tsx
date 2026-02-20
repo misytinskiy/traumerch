@@ -39,6 +39,9 @@ export default function Footer() {
       case "Impressum":
         window.location.href = "/policies";
         break;
+      case "Instagram":
+        window.open("https://www.instagram.com/traumerch", "_blank");
+        break;
       default:
         break;
     }
