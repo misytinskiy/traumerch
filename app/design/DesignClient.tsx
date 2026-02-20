@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense, useMemo } from "react";
+import { useMemo } from "react";
+import useSWR from "swr";
 import { useLanguage } from "../../contexts/LanguageContext";
 import ResponsiveHeader from "../../components/Header/ResponsiveHeader";
 import CTA from "../../components/CTA/CTA";
@@ -22,6 +23,14 @@ interface AirtableRecord {
   id: string;
   fields: Record<string, unknown>;
 }
+
+const fetcher = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch product: ${response.status}`);
+  }
+  return response.json();
+};
 
 function getProductNameFromRecord(
   record: AirtableRecord,
@@ -45,7 +54,20 @@ export default function DesignClient({
 }) {
   const { language } = useLanguage();
 
-  const productRecord = initialRecord ?? null;
+  const apiUrl = productId
+    ? `/api/airtable-products?recordId=${encodeURIComponent(productId)}`
+    : null;
+  const { data: swrRecord } = useSWR<AirtableRecord | null>(
+    apiUrl,
+    fetcher,
+    {
+      fallbackData: initialRecord ?? undefined,
+      revalidateOnMount: true,
+      revalidateIfStale: true,
+      revalidateOnFocus: true,
+    }
+  );
+  const productRecord = swrRecord ?? initialRecord ?? null;
   const productName = useMemo(() => {
     if (!productRecord) return null;
     return getProductNameFromRecord(productRecord, language ?? "en");

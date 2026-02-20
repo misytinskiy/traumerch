@@ -162,7 +162,6 @@ type FetchNormalizedOptions = {
   pageSize?: number;
   category?: string;
   filterByFormula?: string;
-  revalidateSeconds?: number;
 };
 
 export const fetchNormalizedProducts = async ({
@@ -173,7 +172,6 @@ export const fetchNormalizedProducts = async ({
   pageSize,
   category,
   filterByFormula,
-  revalidateSeconds = 300,
 }: FetchNormalizedOptions) => {
   const formula =
     filterByFormula || (category ? buildCategoryFormula(category) : undefined);
@@ -188,7 +186,6 @@ export const fetchNormalizedProducts = async ({
       filterByFormula: formula,
     });
     const response = await fetchAirtable(url, apiToken, {
-      revalidateSeconds,
     });
     return response;
   };

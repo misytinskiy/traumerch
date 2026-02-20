@@ -37,13 +37,13 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 type AirtableFetchOptions = {
   timeoutMs?: number;
   retries?: number;
-  revalidateSeconds?: number;
+  cache?: RequestCache;
 };
 
 export const fetchAirtable = async (
   url: string,
   apiToken: string,
-  { timeoutMs = 8000, retries = 1, revalidateSeconds = 300 }: AirtableFetchOptions = {}
+  { timeoutMs = 8000, retries = 1, cache = "no-store" }: AirtableFetchOptions = {}
 ) => {
   let attempt = 0;
 
@@ -57,7 +57,7 @@ export const fetchAirtable = async (
           Authorization: `Bearer ${apiToken}`,
         },
         signal: controller.signal,
-        next: { revalidate: revalidateSeconds },
+        cache,
       });
 
       if (

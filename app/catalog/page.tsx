@@ -18,7 +18,6 @@ export default async function Catalog() {
         await fetchNormalizedProducts({
           apiToken,
           priceTier: "bulk",
-          revalidateSeconds: 300,
         })
       ).records;
     } catch {

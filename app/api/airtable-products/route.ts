@@ -49,6 +49,8 @@ export async function GET(request: NextRequest) {
   const category = (searchParams.get("category") || "").toLowerCase().trim();
 
   const cacheSeconds = recordId ? 600 : 300;
+  const staleSeconds = Math.min(60, cacheSeconds);
+  const cacheControl = `s-maxage=${cacheSeconds}, stale-while-revalidate=${staleSeconds}, stale-if-error=60`;
 
   try {
     let data: unknown;
@@ -62,7 +64,6 @@ export async function GET(request: NextRequest) {
         pageSize,
         category: category || undefined,
         filterByFormula,
-        revalidateSeconds: cacheSeconds,
       });
     } else {
       const url = recordId
@@ -75,7 +76,6 @@ export async function GET(request: NextRequest) {
             filterByFormula,
           });
       const response = await fetchAirtable(url, apiToken, {
-        revalidateSeconds: cacheSeconds,
       });
       if (!response.ok) {
         const message = await response.text();
@@ -95,7 +95,8 @@ export async function GET(request: NextRequest) {
         status: 304,
         headers: {
           ETag: etag,
-          "Cache-Control": `s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 2}`,
+          "Cache-Control": cacheControl,
+          "X-Cache-Policy": cacheControl,
         },
       });
     }
@@ -108,8 +109,9 @@ export async function GET(request: NextRequest) {
     });
     nextResponse.headers.set(
       "Cache-Control",
-      `s-maxage=${cacheSeconds}, stale-while-revalidate=${cacheSeconds * 2}`
+      cacheControl
     );
+    nextResponse.headers.set("X-Cache-Policy", cacheControl);
     nextResponse.headers.set("ETag", etag);
     return nextResponse;
   } catch (error) {

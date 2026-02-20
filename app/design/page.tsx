@@ -18,9 +18,7 @@ export default async function Design({
   if (productId && apiToken) {
     try {
       const url = buildAirtableRecordUrl(productId);
-      const response = await fetchAirtable(url, apiToken, {
-        revalidateSeconds: 300,
-      });
+      const response = await fetchAirtable(url, apiToken);
       if (response.ok) {
         initialRecord = (await response.json()) as {
           id: string;
