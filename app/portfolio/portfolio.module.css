@@ -1,0 +1,179 @@
+.page {
+  font-family: var(--font-geist-sans);
+  min-height: 100vh;
+  background: #fff;
+}
+
+.main {
+  background: #fff;
+}
+
+.hero {
+  padding: 160px 150px 80px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.title {
+  font-family: var(--font-eb-garamond);
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: #000;
+  margin: 0;
+}
+
+.intro {
+  max-width: 860px;
+  font-size: 16px;
+  line-height: 1.6;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #111;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.gridSection {
+  padding: 0 150px 160px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 24px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardImageWrap {
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  background: #f6f6f6;
+}
+
+.cardImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.cardBody {
+  padding: 18px 22px 26px;
+}
+
+.cardLabel {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #000;
+  opacity: 0.45;
+  margin-bottom: 10px;
+}
+
+.cardTitle {
+  font-family: var(--font-eb-garamond);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #000;
+  margin: 0 0 12px 0;
+}
+
+.cardText {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #111;
+  opacity: 0.65;
+  margin: 0;
+}
+
+@media (max-width: 1536px) {
+  .hero {
+    padding: 140px 120px 70px;
+  }
+
+  .title {
+    font-size: 64px;
+  }
+
+  .gridSection {
+    padding: 0 120px 140px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .hero {
+    padding: 130px 80px 60px;
+  }
+
+  .gridSection {
+    padding: 0 80px 120px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding: 120px 40px 50px;
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 48px;
+  }
+
+  .intro {
+    font-size: 14px;
+  }
+
+  .gridSection {
+    padding: 0 40px 100px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 110px 20px 40px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .gridSection {
+    padding: 0 20px 80px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardImageWrap {
+    margin: 16px 16px 0;
+  }
+
+  .cardBody {
+    padding: 16px 18px 22px;
+  }
+}

@@ -42,6 +42,12 @@ export default function Footer() {
       case "Instagram":
         window.open("https://www.instagram.com/traumerch", "_blank");
         break;
+      case "TikTok":
+        window.open(
+          "https://www.tiktok.com/@traumerch?_r=1&_t=ZN-945FLVekMFi",
+          "_blank"
+        );
+        break;
       default:
         break;
     }
