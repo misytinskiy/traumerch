@@ -53,6 +53,11 @@ export default function Footer() {
     }
   };
 
+  const mapsUrl = "https://maps.app.goo.gl/MkuHJ3bGzUdgDAyi8";
+  const isAddressLink = (text: string) =>
+    text === "Stephansplatz 8, 1010, Vienna, Austria" ||
+    text === "Stephansplatz 8, 1010, Wien, Österreich";
+
   // Scroll functions for sections (used internally)
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -85,15 +90,27 @@ export default function Footer() {
             <div key={index} className={styles.column}>
               <h3 className={styles.columnTitle}>{column.title}</h3>
               <div className={styles.columnLinks}>
-                {column.links.map((link, linkIndex) => (
-                  <button
-                    key={linkIndex}
-                    onClick={() => handleFooterNavigation(link)}
-                    className={styles.columnLink}
-                  >
-                    {link}
-                  </button>
-                ))}
+                {column.links.map((link, linkIndex) =>
+                  isAddressLink(link) ? (
+                    <a
+                      key={linkIndex}
+                      href={mapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.columnLink}
+                    >
+                      {link}
+                    </a>
+                  ) : (
+                    <button
+                      key={linkIndex}
+                      onClick={() => handleFooterNavigation(link)}
+                      className={styles.columnLink}
+                    >
+                      {link}
+                    </button>
+                  )
+                )}
               </div>
             </div>
           ))}

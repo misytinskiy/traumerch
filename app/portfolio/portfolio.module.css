@@ -1,6 +1,5 @@
 .page {
   font-family: var(--font-geist-sans);
-  min-height: 100vh;
   background: #fff;
 }
 
@@ -9,171 +8,265 @@
 }
 
 .hero {
-  padding: 160px 150px 80px;
+  padding: 0 150px 0;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 40px;
+  height: 100vh;
+  justify-content: center;
+
 }
 
 .title {
   font-family: var(--font-eb-garamond);
-  font-size: 72px;
+  font-size: 80px;
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 98px;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.8px;
   color: #000;
   margin: 0;
 }
 
 .intro {
-  max-width: 860px;
-  font-size: 16px;
-  line-height: 1.6;
+  max-width: 1260px;
+  font-family: Inter;
+  font-size: 30px;
+  line-height: normal;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: -0.3px;
   color: #111;
   opacity: 0.7;
   margin: 0;
 }
 
 .gridSection {
-  padding: 0 150px 160px;
+  padding: 0 150px 98px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 32px;
+  gap: 50px;
 }
 
 .card {
   background: #fff;
-  border-radius: 24px;
-  border: 1px solid #f0f0f0;
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.06);
+  border-radius: 20px;
+  border: 1px solid #EBEBEB;
   display: flex;
   flex-direction: column;
 }
 
 .cardImageWrap {
-  border-radius: 18px 18px 0 0;
+  border-radius: 20px 20px 0 0;
   overflow: hidden;
   background: #f6f6f6;
+  width: 510px;
+height: 510px;
 }
 
 .cardImage {
   width: 100%;
   height: auto;
   display: block;
-  aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 
 .cardBody {
-  padding: 18px 22px 26px;
+  padding: 18px 10px 30px;
 }
 
 .cardLabel {
+  font-family: Inter;
   display: block;
-  font-size: 12px;
-  letter-spacing: 0.2em;
+  font-size: 16px;
   text-transform: uppercase;
   color: #000;
-  opacity: 0.45;
-  margin-bottom: 10px;
+  opacity: 0.3;
+  margin-bottom: 18px;
+  line-height: 24px;
 }
 
 .cardTitle {
-  font-family: var(--font-eb-garamond);
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.2;
+  font-family: "EB Garamond";
+  font-variant: all-small-caps;
+  font-size: 40px;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.4px;
   color: #000;
-  margin: 0 0 12px 0;
+  line-height: 32px;
+  margin: 0 0 16px 0;
+  max-width: 400px;
 }
 
 .cardText {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
-  color: #111;
-  opacity: 0.65;
+  color: #000;
+  opacity: 0.6;
   margin: 0;
+  line-height: 20px;
+  max-width: 465px;
 }
 
-@media (max-width: 1536px) {
+@media (max-width: 1540px) {
   .hero {
-    padding: 140px 120px 70px;
+    padding: 0 120px 0;
   }
 
   .title {
-    font-size: 64px;
+    font-size: 60px;
+    line-height: 70px;
+  }
+
+  .intro {
+    font-size: 20px;
+    letter-spacing: -0.26px;
+    max-width: 800px;
   }
 
   .gridSection {
-    padding: 0 120px 140px;
+    padding: 0 120px 90px;
+    
+  }
+
+  .grid {
+    gap: 40px;
+  }
+
+  .cardTitle {
+    font-size: 36px;
+  }
+
+  .cardImageWrap {
+    width: auto;
+    height: auto;
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .hero {
-    padding: 130px 80px 60px;
+    padding: 0 80px 0;
+  }
+
+  .title {
+    font-size: 50px;
+    line-height: 66px;
+
+  }
+
+  .intro {
+    font-size: 18px;
+    max-width: 719px;
   }
 
   .gridSection {
-    padding: 0 80px 120px;
+    padding: 0 80px 80px;
   }
 
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .cardImageWrap {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .cardBody {
+    padding: 16px 10px 24px;
+  }
+
+  .cardTitle {
+    font-size: 32px;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 755px) {
   .hero {
-    padding: 120px 40px 50px;
-    gap: 20px;
+    padding: 0 32px 0;
+    gap: 24px;
+    height: 100vh;
+    justify-content: center;
   }
 
   .title {
-    font-size: 48px;
+    font-size: 44px;
+    line-height: 54px;
   }
 
   .intro {
-    font-size: 14px;
+    font-size: 16px;
+    letter-spacing: -0.16px;
   }
 
   .gridSection {
-    padding: 0 40px 100px;
-  }
-}
-
-@media (max-width: 640px) {
-  .hero {
-    padding: 110px 20px 40px;
-  }
-
-  .title {
-    font-size: 36px;
-  }
-
-  .gridSection {
-    padding: 0 20px 80px;
+    padding: 0 32px 70px;
   }
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 
-  .cardImageWrap {
-    margin: 16px 16px 0;
+  .cardLabel {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 12px;
+  }
+
+  .cardTitle {
+    font-size: 28px;
+    line-height: 30px;
+    max-width: 100%;
+  }
+
+  .cardText {
+    font-size: 14px;
+    line-height: 18px;
+    max-width: 100%;
   }
 
   .cardBody {
-    padding: 16px 18px 22px;
+    padding: 14px 14px 20px;
   }
 }
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 0 20px 0;
+    gap: 18px;
+    height: 100vh;
+    justify-content: center;
+  }
+
+  .title {
+    font-size: 34px;
+    line-height: 42px;
+  }
+
+  .intro {
+    font-size: 13px;
+    letter-spacing: -0.12px;
+  }
+
+  .gridSection {
+    padding: 0 20px 60px;
+  }
+
+  .cardTitle {
+    font-size: 24px;
+    line-height: 26px;
+  }
+
+  .cardText {
+    line-height: 17px;
+  }
+}
+
