@@ -15,7 +15,6 @@ interface QuoteFormData {
   email: string;
   preferredMessenger: string;
   messengerContact: string;
-  requestType: "services" | "merchandise";
   service: string[];
   description: string;
   files: File[];
@@ -40,16 +39,16 @@ export default function QuoteOverlay() {
   const serviceOptions =
     (t.quote?.requestOptions as { value: string; label: string }[]) ??
     defaultServiceOptions;
-  const [formData, setFormData] = useState<QuoteFormData>({
+  const defaultFormData: QuoteFormData = {
     name: "",
     email: "",
     preferredMessenger: "Email",
     messengerContact: "",
-    requestType: "services",
     service: [],
     description: "",
     files: [],
-  });
+  };
+  const [formData, setFormData] = useState<QuoteFormData>(defaultFormData);
   const [selectedMessenger, setSelectedMessenger] = useState<number | null>(
     2
   );
@@ -61,6 +60,15 @@ export default function QuoteOverlay() {
     email?: string;
     messengerContact?: string;
   }>({});
+
+  const resetFormState = () => {
+    setFormData(defaultFormData);
+    setSelectedMessenger(2);
+    setSelectedServices([]);
+    setShowThankYou(false);
+    setErrors({});
+    setFileError("");
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -77,20 +85,7 @@ export default function QuoteOverlay() {
         window.scrollTo(0, parseInt(scrollY || "0") * -1);
       }
       // Reset form when closing
-      setFormData({
-        name: "",
-        email: "",
-        preferredMessenger: "Email",
-        messengerContact: "",
-        requestType: "services",
-        service: [],
-        description: "",
-        files: [],
-      });
-      setSelectedMessenger(2);
-      setSelectedServices([]);
-      setShowThankYou(false);
-      setErrors({});
+      resetFormState();
     }
     return () => {
       // Cleanup: restore scroll position if overlay is closed
@@ -216,7 +211,6 @@ export default function QuoteOverlay() {
           preferredMessenger:
             selectedMessengerName || formData.preferredMessenger,
           messengerContact: formData.messengerContact,
-          requestType: formData.requestType,
           service: selectedServices,
           description: formData.description,
         };
@@ -243,6 +237,7 @@ export default function QuoteOverlay() {
         const responsePayload = await submitResponse.json();
 
         if (submitResponse.ok) {
+          resetFormState();
           setShowThankYou(true);
         } else {
           console.error("QuoteOverlay submit error", {
@@ -531,7 +526,6 @@ export default function QuoteOverlay() {
                                     );
                                     setFormData((prev) => ({
                                       ...prev,
-                                      requestType: "services",
                                       service: prev.service.includes(service.value)
                                         ? prev.service.filter((item) => item !== service.value)
                                         : [...prev.service, service.value],

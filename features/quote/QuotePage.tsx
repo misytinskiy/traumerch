@@ -1,0 +1,19 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import QuoteForm from "../../components/QuoteForm/QuoteForm";
+import styles from "./quote.module.css";
+
+export default function QuotePage() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  return (
+    <div className={`${styles.page} ${isVisible ? styles.pageVisible : ""}`}>
+      <QuoteForm />
+    </div>
+  );
+}

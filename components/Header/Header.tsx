@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import { useCart } from "../../contexts/CartContext";
@@ -19,6 +19,7 @@ import styles from "./Header.module.css";
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const { language, country, setLanguage, t } = useLanguage();
   const { openQuote } = useQuoteOverlay();
   const { items, openCart } = useCart();
@@ -55,8 +56,11 @@ export default function Header() {
   // Framer Motion scroll animations
   const { scrollY } = useScroll();
 
+  const enableScrollEffects = ["/", "/portfolio", "/solutions", "/faq", "/policies", "/design"].includes(pathname);
+
   // Scroll logic with immediate hide/show
   useEffect(() => {
+    if (!enableScrollEffects) return;
     let ticking = false;
     let lastScrollY = 0;
     let isHeaderVisible = true;
@@ -107,29 +111,29 @@ export default function Header() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []); // Empty dependency array - only run once
+  }, [enableScrollEffects]);
 
   // Navigation functions for menu items
   const handleMenuNavigation = (itemId: string) => {
     switch (itemId) {
       case "faq":
         // FAQ - go to FAQ page
-        window.location.href = "/faq";
+        router.push("/faq");
         break;
       case "products":
         // Products - go to catalog page
-        window.location.href = "/catalog";
+        router.push("/catalog");
         break;
       case "services":
         // Services - go to solutions page
-        window.location.href = "/solutions";
+        router.push("/solutions");
         break;
       case "gallery":
         // Portfolio - scroll to gallery section (main page or navigate with hash)
-        if (window.location.pathname === "/") {
+        if (pathname === "/") {
           scrollToSection("gallery");
         } else {
-          window.location.href = "/#gallery";
+          router.push("/#gallery");
         }
         break;
       default:
@@ -178,6 +182,7 @@ export default function Header() {
 
   // Handle hash navigation on main page
   useEffect(() => {
+    if (typeof window === "undefined") return;
     if (window.location.pathname === "/" && window.location.hash) {
       const sectionId = window.location.hash.substring(1); // Remove # from hash
       const element = document.getElementById(sectionId);

@@ -42,7 +42,8 @@
     "titleLine5Small": "PUBLIKUM",
     "titleLine6Small": "VERBINDET",
     "titleLine7Small": "VERBINDET",
-    "cta": "UNSER VERSPRECHEN SEHEN"
+    "cta": "UNSER VERSPRECHEN SEHEN",
+    "scrollAria": "Zum nächsten Abschnitt scrollen"
   },
   "gallery": {
     "title": "Echte Erfahrungen. Echte Wirkung."
@@ -212,30 +213,40 @@
         "badge": "MERCH, DAS VERBINDET",
         "title": "Unternehmens- & Event-Merchandise",
         "description": "Wir entwickeln gebrandetes Merchandise für Mitarbeitende und Events, das Menschen verbindet. Von Welcome Kits und Team-Ausstattung bis zu Konferenz-Giveaways – unsere Lösungen stärken Zusammenhalt und Markenkultur mit jedem Produkt.",
+        "image": "/services/1.png",
+        "imageAlt": "Unternehmens- & Event-Merchandise",
         "buttonText": "Event-Merch entdecken"
       },
       {
         "badge": "GESCHENKE, DIE BLEIBEN",
         "title": "Geschäftsgeschenke",
         "description": "Wir gestalten und liefern durchdachte Geschenke für Kunden, Partner und Mitarbeitende. Von hochwertigen Produkten bis zu maßgeschneiderter Verpackung – jedes Geschenk hinterlässt Eindruck und baut stärkere Geschäftsbeziehungen auf.",
+        "image": "/services/2.png",
+        "imageAlt": "Geschäftsgeschenke",
         "buttonText": "Geschenkideen ansehen"
       },
       {
         "badge": "IHRE EIGENE MARKE",
         "title": "Private-Label-Kollektionen",
         "description": "Wir entwickeln exklusive Private-Label-Produkte, die individuell auf Ihre Marke zugeschnitten sind. Von Multi-SKU-Kollektionen und einzigartigen Designs bis zur Sekundärverpackung bringen wir Ideen zum Leben und erweitern Ihre Marktpräsenz mit unverwechselbarem Merchandise.",
+        "image": "/services/3.png",
+        "imageAlt": "Private-Label-Kollektionen",
         "buttonText": "Private Label entdecken"
       },
       {
         "badge": "PROGRAMME, DIE VERSTÄRKEN",
         "title": "Influencer-Aktivierung & Seeding",
         "description": "Wir entwickeln Influencer- und Brand-Seeding-Programme, die Wirkung erzielen. Mit maßgeschneiderter Verpackung, kuratiertem Merchandise und gezielter Distribution unterstützen wir Marken dabei, authentischen Content zu schaffen und die richtigen Zielgruppen zu erreichen.",
+        "image": "/services/4.png",
+        "imageAlt": "Influencer-Aktivierung & Seeding",
         "buttonText": "Influencer-Programme ansehen"
       },
       {
         "badge": "MERCH LEICHT GEMACHT",
         "title": "Smarte Plattform",
         "description": "Unsere digitale Plattform vereinfacht jeden Schritt im Merchandise-Management. Von Bestellung und Lagerverwaltung bis zur Distribution erhalten Marken die Werkzeuge, um ihre Programme effizient und transparent zu skalieren.",
+        "image": "/services/5.png",
+        "imageAlt": "Smarte Plattform",
         "buttonText": "Plattform ausprobieren"
       }
     ]
@@ -246,7 +257,18 @@
       "titleLine1": "LÖSUNGEN",
       "titleLine2": "MASSGESCHNEIDERT",
       "titleLine3": "FÜR IHRE MARKE"
-    }
+    },
+    "scrollAria": "Zum Servicebereich scrollen"
+  },
+  "policies": {
+    "items": [
+      { "title": "IMPRESSUM", "content": "Inhalt folgt." },
+      { "title": "DATENSCHUTZERKLÄRUNG", "content": "Inhalt folgt." },
+      { "title": "COOKIE-RICHTLINIE", "content": "Inhalt folgt." },
+      { "title": "AGB (ALLGEMEINE GESCHÄFTSBEDINGUNGEN)", "content": "Inhalt folgt." },
+      { "title": "VERSANDRICHTLINIE", "content": "Inhalt folgt." },
+      { "title": "RÜCKERSTATTUNGSRICHTLINIE", "content": "Inhalt folgt." }
+    ]
   },
   "design": {
     "productName": "Heavy Tote Bag",
@@ -410,28 +432,34 @@
     "columns": [
       {
         "title": "Entdecken",
-        "links": ["Leistungen", "Portfolio", "FAQ"]
+        "links": [
+          { "label": "Leistungen", "href": "/solutions" },
+          { "label": "Portfolio", "href": "/#gallery" },
+          { "label": "FAQ", "href": "/faq" }
+        ]
       },
       {
         "title": "Recht & Dokumente",
         "links": [
-          "Impressum",
-          "Datenschutzerklärung",
-          "Cookie-Richtlinie",
-          "AGB (Allgemeine Geschäftsbedingungen)"
+          { "label": "Impressum", "href": "/policies" },
+          { "label": "Datenschutzerklärung", "href": "/policies" },
+          { "label": "Cookie-Richtlinie", "href": "/policies" },
+          { "label": "AGB (Allgemeine Geschäftsbedingungen)", "href": "/policies" }
         ]
       },
       {
         "title": "Folgen Sie uns",
-        "links": ["LinkedIn", "Instagram", "TikTok", ""]
+        "links": [
+          { "label": "LinkedIn", "href": "https://www.linkedin.com/company/traumerch", "external": true },
+          { "label": "Instagram", "href": "https://www.instagram.com/traumerch", "external": true },
+          { "label": "TikTok", "href": "https://www.tiktok.com/@traumerch?_r=1&_t=ZN-945FLVekMFi", "external": true }
+        ]
       },
       {
         "title": "Kontakt aufnehmen",
         "links": [
-          "Stephansplatz 8, 1010, Wien, Österreich",
-          "sales@traumerch.com",
-          "",
-          ""
+          { "label": "Stephansplatz 8, 1010, Wien, Österreich", "href": "https://maps.app.goo.gl/MkuHJ3bGzUdgDAyi8", "external": true },
+          { "label": "sales@traumerch.com", "href": "mailto:sales@traumerch.com", "external": true }
         ]
       }
     ],
@@ -494,40 +522,57 @@
       {
         "heading": "TOTALE INDIVIDUALISIERUNG",
         "phrase": "Nichts von der Stange, alles deins.",
-        "description": "Wir arbeiten nicht mit Standardlösungen. Jedes Produkt wird an Ihre Markenidentität angepasst - von Designdetails bis zur Verpackung. Sie haben die Freiheit, jedes gewünschte Detail einzubringen - farbige Kordeln an Hoodies oder ein Lederriemen an Caps - alles ist möglich."
+        "description": "Wir arbeiten nicht mit Standardlösungen. Jedes Produkt wird an Ihre Markenidentität angepasst - von Designdetails bis zur Verpackung. Sie haben die Freiheit, jedes gewünschte Detail einzubringen - farbige Kordeln an Hoodies oder ein Lederriemen an Caps - alles ist möglich.",
+        "image": "/promises/1.png",
+        "imageAlt": "Totale Individualisierung"
       },
       {
         "heading": "RUNDUM-SUPPORT",
         "phrase": "Idee. Design. Lieferung. Gemeinsam.",
-        "description": "Wir begleiten Sie in jedem Schritt - von Idee und Design bis zu Mustern, Produktion und Lieferung. Anstatt mit vielen Lieferanten zu arbeiten, haben Sie einen zuverlässigen Partner. So bleibt alles übersichtlich und der Ablauf läuft reibungslos, ohne dass Sie sich um Koordination kümmern müssen."
+        "description": "Wir begleiten Sie in jedem Schritt - von Idee und Design bis zu Mustern, Produktion und Lieferung. Anstatt mit vielen Lieferanten zu arbeiten, haben Sie einen zuverlässigen Partner. So bleibt alles übersichtlich und der Ablauf läuft reibungslos, ohne dass Sie sich um Koordination kümmern müssen.",
+        "image": "/promises/2.png",
+        "imageAlt": "Rundum-Support"
       },
       {
         "heading": "LOKALE KONFORMITÄT",
         "phrase": "Ein Gründer. Ein Konzern. Immer korrekt.",
-        "description": "Ob Ein-Personen-Unternehmen oder multinationaler Konzern - wir kümmern uns um Rechnungen, Mehrwertsteuer und rechtliche Details nach EU-Standards. Unsere Erfahrung mit unterschiedlichen Unternehmensstrukturen zeigt, dass wir die Herausforderungen und Lösungen kennen. So ist die Einhaltung der Vorschriften immer klar und korrekt - unabhängig von Ihrer Unternehmensgröße."
+        "description": "Ob Ein-Personen-Unternehmen oder multinationaler Konzern - wir kümmern uns um Rechnungen, Mehrwertsteuer und rechtliche Details nach EU-Standards. Unsere Erfahrung mit unterschiedlichen Unternehmensstrukturen zeigt, dass wir die Herausforderungen und Lösungen kennen. So ist die Einhaltung der Vorschriften immer klar und korrekt - unabhängig von Ihrer Unternehmensgröße.",
+        "image": "/promises/3.png",
+        "imageAlt": "Lokale Konformität"
       },
       {
         "heading": "QUALITÄTSKONTROLLE",
         "phrase": "Nichts wird ungeprüft versendet. Niemals.",
-        "description": "Jede Produktionscharge wird geprüft, bevor sie das Werk verlässt. Unser Team kontrolliert Muster, Materialien und Verarbeitung, damit nichts unter Standard jemals bei Ihnen ankommt. Diese konsequente Qualität macht eine langfristige Zusammenarbeit verlässlich und planbar."
+        "description": "Jede Produktionscharge wird geprüft, bevor sie das Werk verlässt. Unser Team kontrolliert Muster, Materialien und Verarbeitung, damit nichts unter Standard jemals bei Ihnen ankommt. Diese konsequente Qualität macht eine langfristige Zusammenarbeit verlässlich und planbar.",
+        "image": "/promises/4.png",
+        "imageAlt": "Qualitätskontrolle"
       },
       {
         "heading": "FAST TRACK",
         "phrase": "1 Tag Angebot. 1 Woche Muster. 1 Monat Lieferung.",
-        "description": "Wir wissen, dass Geschwindigkeit entscheidend ist. Deshalb garantieren wir Angebote in 1 Tag, Muster in 1 Woche und Lieferungen in 1 Monat. Unsere optimierten Abläufe und unser Lieferantennetzwerk machen das möglich. *Typische Durchlaufzeiten unter Standardbedingungen. Größere Projekte können abweichen."
+        "description": "Wir wissen, dass Geschwindigkeit entscheidend ist. Deshalb garantieren wir Angebote in 1 Tag, Muster in 1 Woche und Lieferungen in 1 Monat. Unsere optimierten Abläufe und unser Lieferantennetzwerk machen das möglich. *Typische Durchlaufzeiten unter Standardbedingungen. Größere Projekte können abweichen.",
+        "image": "/promises/5.png",
+        "imageAlt": "Fast Track"
       },
       {
         "heading": "NACHHALTIGE OPTIONEN",
         "phrase": "Eco ist kein Extra. Es ist Standard.",
-        "description": "Nachhaltigkeit ist kein Zusatz, sondern Teil unserer Arbeit. Wir beziehen umweltfreundliche Materialien und bieten auf Wunsch umweltfreundlichere Produktionsmöglichkeiten. So können Sie Merchandise an Ihre Markenwerte und zukünftigen Erwartungen anpassen."
+        "description": "Nachhaltigkeit ist kein Zusatz, sondern Teil unserer Arbeit. Wir beziehen umweltfreundliche Materialien und bieten auf Wunsch umweltfreundlichere Produktionsmöglichkeiten. So können Sie Merchandise an Ihre Markenwerte und zukünftigen Erwartungen anpassen.",
+        "image": "/promises/6.png",
+        "imageAlt": "Nachhaltige Optionen"
       }
     ]
   },
   "preloader": {
     "text1": "TrauMerch",
     "text2": "Entfesseln Sie Ihre Marke",
+    "description": "Wir erstellen gebrandetes Merchandise für Mitarbeitende und Events, das Menschen verbindet. Von Welcome Kits und Team-Ausstattung bis zu Konferenz-Giveaways – unsere Lösungen stärken mit jedem Produkt Zusammenhalt und Markenkultur.",
     "alt1": "Preloader 1",
     "alt2": "Preloader 2",
     "alt3": "Preloader 3"
+  },
+  "glassBanner": {
+    "title": "Bereit, Merchandise für Ihre Marke zu gestalten?",
+    "button": "JETZT ANGEBOT ANFORDERN"
   }
 }

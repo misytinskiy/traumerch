@@ -49,8 +49,8 @@ export default function Services({ showAll = false }: ServicesProps) {
             <div className={styles.serviceImage}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`/services/${index + 1}.png`}
-                alt=""
+                src={service.image ?? `/services/${index + 1}.png`}
+                alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
                 className={styles.serviceImageImg}
               />
             </div>

@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import Button from "../Button/Button";
-import type { NormalizedProduct } from "../../lib/products";
+import type { NormalizedProduct } from "../../shared/types";
 import styles from "./Products.module.css";
 
 interface Product {
@@ -31,6 +32,7 @@ export default function Products({
   initialRecords?: NormalizedProduct[];
 }) {
   const { t, language } = useLanguage();
+  const router = useRouter();
   const url = "/api/airtable-products?format=normalized&priceTier=sample&maxRecords=4";
   const { data, error, isLoading } = useSWR(url, fetcher, {
     fallbackData: { records: initialRecords },
@@ -59,12 +61,12 @@ export default function Products({
 
   const handleProductClick = (productId: string) => {
     // Navigate to design page for the specific product
-    window.location.href = `/design?product=${productId}`;
+    router.push(`/design?product=${productId}`);
   };
 
   const handleSeeAllClick = () => {
     // Navigate to catalog page
-    window.location.href = "/catalog";
+    router.push("/catalog");
   };
 
   const renderProductCard = (product: Product) => {

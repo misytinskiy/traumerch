@@ -114,7 +114,7 @@ export default function Hero({
           showUpArrow ? styles.rotated : ""
         } ${isScrolling ? styles.scrolling : ""}`}
         onClick={onScrollButtonClick || onScrollClick}
-        aria-label="Scroll to next section"
+        aria-label={t.hero.scrollAria ?? "Scroll to next section"}
         disabled={isScrolling}
       >
         <svg

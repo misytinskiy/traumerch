@@ -100,8 +100,8 @@ export default function OurPromisesScroll() {
                 <div className={styles.imagePlaceholder}>
                   <div className={styles.promiseImage}>
                     <Image
-                      src={`/promises/${index + 1}.png`}
-                      alt={promise.heading}
+                      src={promise.image ?? `/promises/${index + 1}.png`}
+                      alt={promise.imageAlt ?? promise.heading}
                       width={400}
                       height={300}
                       className={styles.promiseImageTag}

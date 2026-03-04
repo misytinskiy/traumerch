@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import { useCart } from "../../contexts/CartContext";
@@ -13,6 +13,7 @@ import styles from "./MobileHeader.module.css";
 
 export default function MobileHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const { language, setLanguage, country, t } = useLanguage();
   const { openQuote } = useQuoteOverlay();
   const { items, openCart } = useCart();
@@ -50,26 +51,26 @@ export default function MobileHeader() {
   const handleMenuNavigation = (itemId: string) => {
     switch (itemId) {
       case "faq":
-        window.location.href = "/faq";
+        router.push("/faq");
         break;
       case "products":
-        window.location.href = "/catalog";
+        router.push("/catalog");
         break;
       case "services":
-        window.location.href = "/solutions";
+        router.push("/solutions");
         break;
       case "gallery":
-        if (window.location.pathname === "/") {
+        if (pathname === "/") {
           const element = document.getElementById("gallery");
           if (element) {
             element.scrollIntoView({ behavior: "smooth" });
           }
         } else {
-          window.location.href = "/#gallery";
+          router.push("/#gallery");
         }
         break;
       case "policy":
-        window.location.href = "/policies";
+        router.push("/policies");
         break;
       default:
         break;

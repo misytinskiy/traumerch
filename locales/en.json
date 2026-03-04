@@ -42,7 +42,8 @@
     "titleLine5Small": "CONNECTS",
     "titleLine6Small": "WITH YOUR",
     "titleLine7Small": "AUDIENCE",
-    "cta": "SEE OUR PROMISE"
+    "cta": "SEE OUR PROMISE",
+    "scrollAria": "Scroll to next section"
   },
   "gallery": {
     "title": "Real Experiences. Real Impact."
@@ -212,30 +213,40 @@
         "badge": "MERCH THAT UNITES",
         "title": "CORPORATE & EVENT MERCHANDISE",
         "description": "We create branded merchandise for employees and events that brings people together. From welcome kits and team gear to conference giveaways, our solutions ensure every item strengthens connection and brand culture.",
+        "image": "/services/1.png",
+        "imageAlt": "Corporate & event merchandise",
         "buttonText": "EXPLORE EVENT MERCH"
       },
       {
         "badge": "GIFTS THAT LAST",
         "title": "BUSINESS GIFTS",
         "description": "We design and deliver thoughtful gifts for clients, partners, and employees. From premium selections to tailored packaging, every gift leaves a lasting impression and builds stronger business relationships.",
+        "image": "/services/2.png",
+        "imageAlt": "Business gifts",
         "buttonText": "VIEW GIFT IDEAS"
       },
       {
         "badge": "OWN YOUR BRAND",
         "title": "PRIVATE LABEL COLLECTIONS",
         "description": "We develop exclusive private label products tailored to your brand. From multi-SKU collections and unique designs to secondary packaging, we bring ideas to life and expand your market presence with distinctive merchandise.",
+        "image": "/services/3.png",
+        "imageAlt": "Private label collections",
         "buttonText": "DISCOVER PRIVATE LABEL"
       },
       {
         "badge": "PROGRAMS THAT AMPLIFY",
         "title": "INFLUENCER ACTIVATION & SEEDING",
         "description": "We build influencer and brand seeding programs designed for impact. With custom packaging, curated merchandise, and targeted distribution, we help brands spark authentic content and reach the right audiences.",
+        "image": "/services/4.png",
+        "imageAlt": "Influencer activation & seeding",
         "buttonText": "SEE INFLUENCER PROGRAMS"
       },
       {
         "badge": "MERCH MADE EASY",
         "title": "SMART PLATFORM",
         "description": "Our digital platform simplifies every step of merchandise management. From ordering and stock control to distribution, it gives brands the tools to scale their merch programs efficiently and transparently.",
+        "image": "/services/5.png",
+        "imageAlt": "Smart platform",
         "buttonText": "TRY THE PLATFORM"
       }
     ]
@@ -247,6 +258,18 @@
       "titleLine2": "TAILORED",
       "titleLine3": "TO YOUR BRAND"
     }
+    ,
+    "scrollAria": "Scroll to services section"
+  },
+  "policies": {
+    "items": [
+      { "title": "IMPRINT", "content": "Content coming soon." },
+      { "title": "PRIVACY POLICY", "content": "Content coming soon." },
+      { "title": "COOKIE POLICY", "content": "Content coming soon." },
+      { "title": "TERMS & CONDITIONS", "content": "Content coming soon." },
+      { "title": "SHIPPING POLICY", "content": "Content coming soon." },
+      { "title": "REFUNDS POLICY", "content": "Content coming soon." }
+    ]
   },
   "design": {
     "productName": "Heavy Tote Bag",
@@ -410,24 +433,35 @@
     "columns": [
       {
         "title": "Explore",
-        "links": ["Services", "Portfolio", "FAQ"]
+        "links": [
+          { "label": "Services", "href": "/solutions" },
+          { "label": "Portfolio", "href": "/#gallery" },
+          { "label": "FAQ", "href": "/faq" }
+        ]
       },
       {
         "title": "Legal & Policies",
         "links": [
-          "Imprint",
-          "Privacy Policy",
-          "Cookie Policy",
-          "Terms & Conditions"
+          { "label": "Imprint", "href": "/policies" },
+          { "label": "Privacy Policy", "href": "/policies" },
+          { "label": "Cookie Policy", "href": "/policies" },
+          { "label": "Terms & Conditions", "href": "/policies" }
         ]
       },
       {
         "title": "Stay Connected",
-        "links": ["LinkedIn", "Instagram", "TikTok"]
+        "links": [
+          { "label": "LinkedIn", "href": "https://www.linkedin.com/company/traumerch", "external": true },
+          { "label": "Instagram", "href": "https://www.instagram.com/traumerch", "external": true },
+          { "label": "TikTok", "href": "https://www.tiktok.com/@traumerch?_r=1&_t=ZN-945FLVekMFi", "external": true }
+        ]
       },
       {
         "title": "Get in Touch",
-        "links": ["Stephansplatz 8, 1010, Vienna, Austria", "sales@traumerch.com"]
+        "links": [
+          { "label": "Stephansplatz 8, 1010, Vienna, Austria", "href": "https://maps.app.goo.gl/MkuHJ3bGzUdgDAyi8", "external": true },
+          { "label": "sales@traumerch.com", "href": "mailto:sales@traumerch.com", "external": true }
+        ]
       }
     ],
     "copyright": "2026 TrauMerch©",
@@ -489,40 +523,57 @@
       {
         "heading": "TOTAL CUSTOMISATION",
         "phrase": "Nothing standard, everything yours.",
-        "description": "We don't work with off-the-shelf solutions. Every product is adapted to your brand identity, from design details to packaging. You have the freedom to request any element you want—coloured drawstrings on hoodies or a leather strap on caps—everything is possible."
+        "description": "We don't work with off-the-shelf solutions. Every product is adapted to your brand identity, from design details to packaging. You have the freedom to request any element you want—coloured drawstrings on hoodies or a leather strap on caps—everything is possible.",
+        "image": "/promises/1.png",
+        "imageAlt": "Total customisation"
       },
       {
         "heading": "END-TO-END SUPPORT",
         "phrase": "Idea. Design. Delivery. Together",
-        "description": "We guide you through every step - from idea and design to sampling, production, and delivery. Instead of dealing with multiple suppliers, you work with one reliable partner. That way, things stay simple, and the process runs smoothly without you having to worry about coordination."
+        "description": "We guide you through every step - from idea and design to sampling, production, and delivery. Instead of dealing with multiple suppliers, you work with one reliable partner. That way, things stay simple, and the process runs smoothly without you having to worry about coordination.",
+        "image": "/promises/2.png",
+        "imageAlt": "End-to-end support"
       },
       {
         "heading": "LOCAL COMPLIANCE",
         "phrase": "One founder. One giant. Always correct.",
-        "description": "Whether you are a solo founder or a multinational, we handle invoices, VAT, and legal details according to EU standards. Our experience with different company structures means we know the challenges and solutions. This ensures that compliance is always clear and correct, no matter your size."
+        "description": "Whether you are a solo founder or a multinational, we handle invoices, VAT, and legal details according to EU standards. Our experience with different company structures means we know the challenges and solutions. This ensures that compliance is always clear and correct, no matter your size.",
+        "image": "/promises/3.png",
+        "imageAlt": "Local compliance"
       },
       {
         "heading": "QUALITY CONTROL",
         "phrase": "Nothing ships unchecked. Ever.",
-        "description": "Every production batch is checked before leaving the factory. Our team reviews samples, materials, and finishing to ensure nothing below standard ever reaches you. This consistent quality makes long-term cooperation reliable and predictable."
+        "description": "Every production batch is checked before leaving the factory. Our team reviews samples, materials, and finishing to ensure nothing below standard ever reaches you. This consistent quality makes long-term cooperation reliable and predictable.",
+        "image": "/promises/4.png",
+        "imageAlt": "Quality control"
       },
       {
         "heading": "FAST TRACK",
         "phrase": "1 Day Quote. 1 Week Samples. 1 Month Delivery.",
-        "description": "We know speed is critical. That's why we commit to quotes in 1 day, samples in 1 week, and deliveries in 1 month. Our streamlined workflows and supplier network make it possible. *Typical lead times under standard conditions. Larger projects may vary."
+        "description": "We know speed is critical. That's why we commit to quotes in 1 day, samples in 1 week, and deliveries in 1 month. Our streamlined workflows and supplier network make it possible. *Typical lead times under standard conditions. Larger projects may vary.",
+        "image": "/promises/5.png",
+        "imageAlt": "Fast track"
       },
       {
         "heading": "SUSTAINABLE OPTIONS",
         "phrase": "Eco isn't extra. It's standard.",
-        "description": "Sustainability isn't an add-on, it's part of how we work. We source eco-friendly materials and provide greener production choices on request. This allows you to align merchandise with your brand values and future expectations."
+        "description": "Sustainability isn't an add-on, it's part of how we work. We source eco-friendly materials and provide greener production choices on request. This allows you to align merchandise with your brand values and future expectations.",
+        "image": "/promises/6.png",
+        "imageAlt": "Sustainable options"
       }
     ]
   },
   "preloader": {
     "text1": "TrauMerch",
     "text2": "Unleashing your brand",
+    "description": "We create branded merchandise for employees and events that brings people together. From welcome kits and team gear to conference giveaways, our solutions ensure every item strengthens connection and brand culture.",
     "alt1": "Preloader 1",
     "alt2": "Preloader 2",
     "alt3": "Preloader 3"
+  },
+  "glassBanner": {
+    "title": "Ready to create merchandise for your brand?",
+    "button": "REQUEST QUOTE NOW"
   }
 }

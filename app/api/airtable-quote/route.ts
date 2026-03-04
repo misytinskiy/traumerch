@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BASE_ID = "appXSC0IhX502fj8d";
-const TABLE_ID = "tbl6uwZdrpWZHz9DD";
 const apiToken = process.env.API_TOKEN;
+const baseId = process.env.AIRTABLE_QUOTE_BASE_ID;
+const tableId = process.env.AIRTABLE_QUOTE_TABLE_ID;
 
 const fetchWithTimeout = async (
   url: string,
@@ -19,9 +19,9 @@ const fetchWithTimeout = async (
 };
 
 export async function POST(request: NextRequest) {
-  if (!apiToken) {
+  if (!apiToken || !baseId || !tableId) {
     return NextResponse.json(
-      { error: "Missing API_TOKEN configuration" },
+      { error: "Missing Airtable configuration" },
       { status: 500 }
     );
   }
@@ -219,7 +219,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create record in Airtable
-    const airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}`;
+    const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableId}`;
     const response = await fetchWithTimeout(airtableUrl, {
       method: "POST",
       headers: {
@@ -241,8 +241,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: "Failed to create record in Airtable",
-          details: errorText,
-          sentFields: airtableFields,
         },
         { status: response.status }
       );
@@ -253,7 +251,7 @@ export async function POST(request: NextRequest) {
     if (attachments.length > 0) {
       const recordId = data.id as string;
       const attachmentFieldName = "Attachments";
-      const uploadUrl = `https://content.airtable.com/v0/${BASE_ID}/${recordId}/${encodeURIComponent(
+      const uploadUrl = `https://content.airtable.com/v0/${baseId}/${recordId}/${encodeURIComponent(
         attachmentFieldName
       )}/uploadAttachment`;
 
@@ -278,10 +276,14 @@ export async function POST(request: NextRequest) {
 
         if (!uploadResponse.ok) {
           const uploadErrorText = await uploadResponse.text();
+          console.error("Airtable attachment upload error", {
+            status: uploadResponse.status,
+            details: uploadErrorText,
+            recordId,
+          });
           return NextResponse.json(
             {
               error: "Failed to upload attachment to Airtable",
-              details: uploadErrorText,
             },
             { status: uploadResponse.status }
           );

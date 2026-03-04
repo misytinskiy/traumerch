@@ -2,13 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, EB_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "../contexts/LanguageContext";
-import { QuoteOverlayProvider } from "../contexts/QuoteOverlayContext";
-import { PreloaderProvider } from "../contexts/PreloaderContext";
-import { CartProvider } from "../contexts/CartContext";
-import CartSidebar from "../components/CartSidebar/CartSidebar";
-import QuoteOverlay from "../components/QuoteOverlay/QuoteOverlay";
-import Preloader from "../components/Preloader/Preloader";
-import SWRProvider from "../components/SWRProvider/SWRProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,18 +46,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${ebGaramond.variable} ${inter.variable}`}
       >
         <LanguageProvider>
-          <PreloaderProvider>
-            <QuoteOverlayProvider>
-              <CartProvider>
-                <SWRProvider>
-                  <Preloader />
-                  {children}
-                  <QuoteOverlay />
-                  <CartSidebar />
-                </SWRProvider>
-              </CartProvider>
-            </QuoteOverlayProvider>
-          </PreloaderProvider>
+          {children}
         </LanguageProvider>
       </body>
     </html>

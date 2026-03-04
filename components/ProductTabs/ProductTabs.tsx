@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
-import type { NormalizedProduct } from "../../lib/products";
+import type { NormalizedProduct } from "../../shared/types";
 import styles from "./ProductTabs.module.css";
 
 interface Product {
@@ -96,13 +97,14 @@ export default function ProductTabs({
   initialRecords?: NormalizedProduct[];
 }) {
   const { t, language } = useLanguage();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("allProducts");
   const [isMobile, setIsMobile] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
   const handleProductClick = (productId: string) => {
     // Navigate to design page for the specific product
-    window.location.href = `/design?product=${productId}`;
+    router.push(`/design?product=${productId}`);
   };
 
   useEffect(() => {
@@ -314,7 +316,7 @@ export default function ProductTabs({
           <div className={`${styles.productImage} ${styles[product.size]} ${styles.imageWrap}`}>
             <Image
               src={product.imageUrl}
-              alt=""
+              alt={product.name}
               fill
               sizes={
                 product.size === "large"

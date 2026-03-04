@@ -1,22 +1,40 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import Button from "../Button/Button";
 import styles from "./GlassBanner.module.css";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 export default function GlassBanner() {
   const { openQuote } = useQuoteOverlay();
+  const { t } = useLanguage();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     setMounted(true);
+
+    const updateIsMobile = () => {
+      setIsMobile(window.innerWidth <= 744);
+    };
+    updateIsMobile();
+    window.addEventListener("resize", updateIsMobile);
+
+    return () => window.removeEventListener("resize", updateIsMobile);
   }, []);
+
+  const enableScrollEffects = pathname === "/";
 
   // Scroll logic for banner visibility (opposite of header)
   useEffect(() => {
+    if (!enableScrollEffects) return;
+    if (typeof window === "undefined") return;
     let ticking = false;
     let lastScrollY = 0;
     let isBannerVisible = false;
@@ -67,14 +85,11 @@ export default function GlassBanner() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [enableScrollEffects]);
 
-  if (!mounted) {
+  if (!mounted || !enableScrollEffects) {
     return null;
   }
-
-  // Check if we're on mobile - hide glass banner on mobile devices
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 744;
 
   // Don't render glass banner on mobile devices
   if (isMobile) {
@@ -97,7 +112,7 @@ export default function GlassBanner() {
     >
       <div className={styles.bannerContent}>
         <h2 className={styles.bannerText}>
-          Ready to create merchandise for your brand?
+          {t.glassBanner?.title ?? "Ready to create merchandise for your brand?"}
         </h2>
 
         <div className={styles.bannerButton}>
@@ -107,7 +122,7 @@ export default function GlassBanner() {
             padding="20px 32px"
             onClick={openQuote}
           >
-            REQUEST QUOTE NOW
+            {t.glassBanner?.button ?? "REQUEST QUOTE NOW"}
           </Button>
         </div>
       </div>

@@ -31,8 +31,12 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
 );
 
-// Function to detect country by IP
+const shouldUseGeoLookup =
+  process.env.NEXT_PUBLIC_ENABLE_GEO_LOOKUP === "true";
+
+// Function to detect country by IP (opt-in)
 const detectCountry = async (): Promise<Country> => {
+  if (!shouldUseGeoLookup) return "EN";
   try {
     // Using ipapi.co for geolocation (free service)
     const response = await fetch("https://ipapi.co/json/", {

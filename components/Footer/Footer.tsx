@@ -2,64 +2,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { normalizeFooterColumns } from "../../shared/footer";
+import type { FooterLink } from "../../shared/types";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
   const { t } = useLanguage();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // Navigation functions for footer links
-  const handleFooterNavigation = (linkText: string) => {
-    switch (linkText) {
-      case "Products":
-      case "Produkte":
-        window.location.href = "/catalog";
-        break;
-      case "Services":
-      case "Leistungen":
-        window.location.href = "/solutions";
-        break;
-      case "Portfolio":
-        if (window.location.pathname === "/") {
-          scrollToSection("gallery");
-        } else {
-          window.location.href = "/#gallery";
-        }
-        break;
-      case "FAQ":
-        window.location.href = "/faq";
-        break;
-      case "Privacy Policy":
-      case "Datenschutzerklärung":
-      case "Cookie Policy":
-      case "Cookie-Richtlinie":
-      case "Terms & Conditions":
-      case "AGB (Allgemeine Geschäftsbedingungen)":
-      case "Imprint":
-      case "Impressum":
-        window.location.href = "/policies";
-        break;
-      case "Instagram":
-        window.open("https://www.instagram.com/traumerch", "_blank");
-        break;
-      case "TikTok":
-        window.open(
-          "https://www.tiktok.com/@traumerch?_r=1&_t=ZN-945FLVekMFi",
-          "_blank"
-        );
-        break;
-      default:
-        break;
-    }
-  };
-
-  const mapsUrl = "https://maps.app.goo.gl/MkuHJ3bGzUdgDAyi8";
-  const isAddressLink = (text: string) =>
-    text === "Stephansplatz 8, 1010, Vienna, Austria" ||
-    text === "Stephansplatz 8, 1010, Wien, Österreich";
-
-  // Scroll functions for sections (used internally)
   const scrollToSection = (sectionId: string) => {
+    if (typeof window === "undefined") return;
     const element = document.getElementById(sectionId);
     if (element) {
       const headerHeight = 80;
@@ -70,6 +25,26 @@ export default function Footer() {
         behavior: "smooth",
       });
     }
+  };
+
+  const handleFooterNavigation = (link: FooterLink) => {
+    const href = link.href;
+    if (!href) return;
+    if (link.external) {
+      if (typeof window !== "undefined") {
+        window.open(href, "_blank", "noopener,noreferrer");
+      }
+      return;
+    }
+    if (href.startsWith("/#")) {
+      if (pathname === "/") {
+        scrollToSection(href.slice(2));
+      } else {
+        router.push(href);
+      }
+      return;
+    }
+    router.push(href);
   };
 
   return (
@@ -86,33 +61,36 @@ export default function Footer() {
         </Link>
 
         <div className={styles.columns}>
-          {t.footer.columns.map((column, index) => (
+          {normalizeFooterColumns(t.footer.columns).map((column, index) => (
             <div key={index} className={styles.column}>
               <h3 className={styles.columnTitle}>{column.title}</h3>
               <div className={styles.columnLinks}>
-                {column.links.map((link, linkIndex) =>
-                  isAddressLink(link) ? (
+              {column.links.map((link, linkIndex) => {
+                if (link.href && link.external) {
+                  return (
                     <a
                       key={linkIndex}
-                      href={mapsUrl}
+                      href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.columnLink}
                     >
-                      {link}
+                      {link.label}
                     </a>
-                  ) : (
-                    <button
-                      key={linkIndex}
-                      onClick={() => handleFooterNavigation(link)}
-                      className={styles.columnLink}
-                    >
-                      {link}
-                    </button>
-                  )
-                )}
-              </div>
+                  );
+                }
+                return (
+                  <button
+                    key={linkIndex}
+                    onClick={() => handleFooterNavigation(link)}
+                    className={styles.columnLink}
+                  >
+                    {link.label}
+                  </button>
+                );
+              })}
             </div>
+          </div>
           ))}
         </div>
       </div>

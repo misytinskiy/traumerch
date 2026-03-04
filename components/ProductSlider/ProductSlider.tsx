@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import styles from "./ProductSlider.module.css";
 
+const IMAGES = ["/inspiration/1.png", "/inspiration/2.png"];
+
 const LeftArrowIcon = () => (
   <svg
     width="36"
@@ -49,12 +51,14 @@ const RightArrowIcon = () => (
 );
 
 export default function ProductSlider() {
-  const images = ["/inspiration/1.png", "/inspiration/2.png"];
   const [currentSlide, setCurrentSlide] = useState(0);
   const [prevSlide, setPrevSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [loadedCount, setLoadedCount] = useState(0);
-  const totalSlides = images.length;
+  const [animationTimer, setAnimationTimer] = useState<ReturnType<
+    typeof setTimeout
+  > | null>(null);
+  const totalSlides = IMAGES.length;
   const allLoaded = loadedCount >= totalSlides;
 
   useEffect(() => {
@@ -67,21 +71,28 @@ export default function ProductSlider() {
         img.src = src;
       });
 
-    Promise.all(images.map(preload)).then(() => {
-      if (isMounted) setLoadedCount(images.length);
+    Promise.all(IMAGES.map(preload)).then(() => {
+      if (isMounted) setLoadedCount(IMAGES.length);
     });
 
     return () => {
       isMounted = false;
     };
-  }, [images]);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (animationTimer) clearTimeout(animationTimer);
+    };
+  }, [animationTimer]);
 
   const goToSlide = (nextIndex: number) => {
     if (!allLoaded || isAnimating || nextIndex === currentSlide) return;
     setPrevSlide(currentSlide);
     setCurrentSlide(nextIndex);
     setIsAnimating(true);
-    setTimeout(() => setIsAnimating(false), 320);
+    if (animationTimer) clearTimeout(animationTimer);
+    setAnimationTimer(setTimeout(() => setIsAnimating(false), 320));
   };
 
   const nextSlide = () => {
@@ -99,13 +110,13 @@ export default function ProductSlider() {
           className={`${styles.sliderImage} ${styles.sliderImagePrev} ${
             isAnimating ? styles.fadeOut : ""
           }`}
-          style={{ backgroundImage: `url("${images[prevSlide]}")` }}
+          style={{ backgroundImage: `url("${IMAGES[prevSlide]}")` }}
         />
         <div
           className={`${styles.sliderImage} ${styles.sliderImageCurrent} ${
             isAnimating ? styles.fadeIn : ""
           }`}
-          style={{ backgroundImage: `url("${images[currentSlide]}")` }}
+          style={{ backgroundImage: `url("${IMAGES[currentSlide]}")` }}
         />
       </div>
 

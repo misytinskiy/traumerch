@@ -68,13 +68,20 @@ const RightArrowIcon = () => (
 export default function ProductInfo() {
   const { t } = useLanguage();
   const [openedIdx, setOpenedIdx] = useState<number | null>(null);
-  const [, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const toggleItem = (idx: number) => {
     setOpenedIdx(openedIdx === idx ? null : idx);
   };
 
-  const totalSlides = 5;
+  const slides = [
+    "/inspiration/1.png",
+    "/inspiration/2.png",
+    "/gallery/1.jpg",
+    "/gallery/2.jpg",
+    "/gallery/3.jpg",
+  ];
+  const totalSlides = slides.length;
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
@@ -117,7 +124,10 @@ export default function ProductInfo() {
 
       <div className={styles.sliderSection}>
         <div className={styles.sliderContainer}>
-          <div className={styles.sliderImage} />
+          <div
+            className={styles.sliderImage}
+            style={{ backgroundImage: `url("${slides[currentSlide]}")` }}
+          />
 
           <button
             className={`${styles.sliderNav} ${styles.prev}`}

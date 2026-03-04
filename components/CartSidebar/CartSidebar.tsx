@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../../contexts/CartContext";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { getPriceForQuantity, getMinQuantity } from "../../lib/pricing";
-import { getMainPhotoUrl } from "../../lib/product";
+import { getPriceForQuantity, getMinQuantity } from "../../shared/pricing";
+import { getMainPhotoUrl } from "../../shared/product";
 import Button from "../Button/Button";
 import styles from "./CartSidebar.module.css";
 
@@ -229,7 +229,7 @@ export default function CartSidebar() {
                     <div className={styles.itemImage} aria-hidden>
                       {itemImageUrl ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
-                        <img src={itemImageUrl} alt="" />
+                        <img src={itemImageUrl} alt={item.productName} />
                       ) : null}
                     </div>
                     <div className={styles.itemContent}>

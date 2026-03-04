@@ -262,6 +262,8 @@ export default function Preloader() {
   }, [finishPreloader, hasShown, isHomePage]);
 
   const textString = t.preloader?.text1 || "TrauMerch";
+  const descriptionText =
+    t.preloader?.description || t.preloader?.text2 || "";
 
   const floatingX =
     floatingData && showFloatingText
@@ -319,10 +321,7 @@ export default function Preloader() {
               delay: 1.1,
             }}
           >
-            We create branded merchandise for employees and events that brings
-            people together. From welcome kits and team gear to conference
-            giveaways, our solutions ensure every item strengthens connection
-            and brand culture.
+            {descriptionText}
           </motion.div>
 
           {/* Images container */}

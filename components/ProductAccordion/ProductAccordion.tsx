@@ -20,7 +20,8 @@ export default function ProductAccordion({ productFields }: ProductAccordionProp
   const suffix = language === "de" ? " DE" : " EN";
 
   const accordionItems = t.design.accordion.map((item, index) => {
-    const fieldName = ACCORDION_FIELD_BASES[index] + suffix;
+    const base = ACCORDION_FIELD_BASES[index];
+    const fieldName = base ? base + suffix : null;
     const airtableValue = productFields && fieldName ? productFields[fieldName] : undefined;
     const content =
       airtableValue !== undefined && airtableValue !== null && airtableValue !== ""
