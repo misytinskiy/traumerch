@@ -1,6 +1,6 @@
 .promise {
   padding: 160px 150px;
-  background: rgba(245, 245, 245, 1);
+  background: var(--color-gray-f5);
 }
 
 .header {

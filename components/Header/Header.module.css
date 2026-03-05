@@ -7,9 +7,9 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  background: rgba(255, 255, 255, 1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: var(--color-header-bg);
+  backdrop-filter: var(--header-backdrop-blur);
+  -webkit-backdrop-filter: var(--header-backdrop-blur);
   z-index: 1000;
   border: 1px solid transparent;
   box-sizing: border-box;
@@ -17,10 +17,10 @@
 }
 
 .menu {
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 400;
   letter-spacing: 0;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-header-text);
   cursor: pointer;
   transition: opacity 0.2s ease;
   line-height: 1; /* Fixed line height to match logo */
@@ -36,7 +36,7 @@
   font-family: var(--font-eb-garamond);
   font-size: 36px;
   font-weight: 400;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-header-text);
   text-decoration: none;
   letter-spacing: 0;
   margin-left: 190px;
@@ -60,9 +60,9 @@
 .languageButton {
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 400;
-  color: #000;
+  color: var(--color-header-text);
   opacity: 0.4;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -70,7 +70,7 @@
 }
 
 .languageButton:hover {
-  color: #000;
+  color: var(--color-header-text);
 }
 
 .languageButton.active {
@@ -113,9 +113,9 @@
 .menuItem {
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 400;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-header-text);
   cursor: pointer;
   transition: opacity 0.2s ease;
   padding: 0;
@@ -136,15 +136,15 @@
 
 @media (max-width: 1536px) {
   .logo {
-    font-size: 26px;
+    font-size: var(--text-26);
   }
 
   .menu {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .languageButton {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .headerContent {
@@ -177,4 +177,3 @@
     margin-left: 27px !important;
   }
 }
-

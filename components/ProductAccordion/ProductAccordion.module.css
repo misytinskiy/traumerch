@@ -5,12 +5,12 @@
 }
 
 .accordionItem {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--color-black-10);
   transition: all 0.3s ease;
 }
 
 .accordionItem:first-child {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--color-black-10);
 }
 
 .questionButton {
@@ -31,10 +31,10 @@
 }
 
 .questionText {
-  font-size: 24px;
+  font-size: var(--text-24);
   font-weight: 400;
   line-height: 100%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   text-align: left;
   margin: 0;
 }
@@ -63,10 +63,10 @@
 }
 
 .answer {
-  font-size: 18px;
+  font-size: var(--text-18);
   font-weight: 400;
   line-height: 130%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   padding: 0 0 30px 0;
   margin: 0;
   letter-spacing: 0;

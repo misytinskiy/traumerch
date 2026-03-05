@@ -42,20 +42,20 @@
   -webkit-transform-origin: center center;
   
   /* Default solid state */
-  background: #000;
-  color: #fff;
-  border: 1px solid #000;
+  background: var(--color-black);
+  color: var(--color-white);
+  border: 1px solid var(--color-black);
 }
 
 .quoteButton:hover:not(:disabled) {
-  background: rgba(153, 153, 153, 1);
-  border-color: rgba(153, 153, 153, 1);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: var(--color-gray-999);
+  border-color: var(--color-gray-999);
+  box-shadow: 0 8px 25px var(--color-black-15);
 }
 
 .quoteButton:active:not(:disabled) {
   transform: scale(0.98);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px var(--color-black-20);
 }
 
 .quoteButton:disabled {
@@ -67,13 +67,13 @@
 .quoteButtonWithCart {
   background: transparent !important;
   border: none !important;
-  color: rgba(0, 0, 0, 1) !important;
+  color: var(--color-black) !important;
 }
 
 .quoteButtonWithCart:hover {
   background: transparent !important;
   border: none !important;
-  color: rgba(0, 0, 0, 0.7) !important;
+  color: var(--color-text-tertiary) !important;
 }
 
 /* Inner content wrapper */
@@ -92,9 +92,9 @@
   height: 22px;
   padding: 0 6px;
   border-radius: 14px;
-  background: #000;
-  color: #fff;
-  font-size: 14px;
+  background: var(--color-black);
+  color: var(--color-white);
+  font-size: var(--text-14);
   font-weight: 500;
   display: inline-flex;
   align-items: center;
@@ -107,7 +107,7 @@
 
 /* Mobile styles */
 .quoteButton.mobile {
-  font-size: 12px;
+  font-size: var(--text-12);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -125,7 +125,7 @@
   height: 22px;
   padding: 0 5px;
   border-radius: 11px;
-  font-size: 12px;
+  font-size: var(--text-12);
 }
 
 /* Responsive breakpoints */
@@ -134,13 +134,13 @@
     padding: 12px 40px;
     width: 200px;
     height: 53px;
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 }
 
 @media (max-width: 768px) {
   .quoteButton:not(.mobile) {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .quoteButton {
@@ -156,7 +156,7 @@
 
 @media (max-width: 480px) {
   .quoteButton:not(.mobile) {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 }
 

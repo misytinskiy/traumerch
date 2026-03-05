@@ -5,9 +5,9 @@
   transform: translateX(-50%);
   width: 100%;
   max-width: 1200px;
-  background: rgba(255, 255, 255, 1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: var(--color-header-bg);
+  backdrop-filter: var(--header-backdrop-blur);
+  -webkit-backdrop-filter: var(--header-backdrop-blur);
   z-index: 1000;
   border: 1px solid transparent;
   box-sizing: border-box;
@@ -27,9 +27,9 @@
 
 .logo {
   font-family: var(--font-eb-garamond);
-  font-size: 24px;
+  font-size: var(--text-24);
   font-weight: 400;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-header-text);
   text-decoration: none;
   letter-spacing: 0;
   margin: 0;
@@ -51,9 +51,9 @@
 }
 
 .languageButton {
-  font-size: 10px;
+  font-size: var(--text-10);
   font-weight: 400;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-header-text);
   opacity: 0.4;
   background: none;
   border: none;
@@ -89,7 +89,7 @@
 .burger span {
   width: 100%;
   height: 1.5px;
-  background: #000;
+  background: var(--color-header-text);
   border-radius: 1px;
   transition: all 0.3s ease;
 }
@@ -116,7 +116,7 @@
   }
 
   .languageButton {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .burger {
@@ -138,7 +138,7 @@
   }
 
   .logo {
-    font-size: 18px;
+    font-size: var(--text-18);
   }
 
   .rightSection {
@@ -150,7 +150,7 @@
   }
 
   .languageButton {
-    font-size: 12px;
+    font-size: var(--text-12);
     /* padding: 6px 10px; */
   }
 
@@ -171,7 +171,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(248, 248, 248, 1);
+  background: var(--color-mobile-menu-bg);
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -228,7 +228,7 @@
   font-family: var(--font-eb-garamond);
   font-size: 28px;
   font-weight: 400;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-header-text);
   text-decoration: none;
   letter-spacing: 0;
 }
@@ -249,7 +249,7 @@
   position: absolute;
   width: 30px;
   height: 2px;
-  background: #000;
+  background: var(--color-header-text);
   transition: all 0.3s ease;
 }
 
@@ -274,7 +274,7 @@
   font-size: 64px;
   font-weight: 400;
   line-height: 120%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-header-text);
   text-align: left;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -300,10 +300,10 @@
 
 .secondaryMenuItem {
   font-family: "Inter", sans-serif;
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
   line-height: 32px;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-header-text);
   text-align: left;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -327,7 +327,7 @@
 .menuQuoteButton {
   display: inline-flex !important;
   padding: 32px 60px;
-  font-size: 16px;
+  font-size: var(--text-16);
   width: auto;
   min-width: 0;
   max-width: none;
@@ -339,14 +339,14 @@
 }
 
 .menuQuoteButton[data-has-cart="true"] {
-  background: #000 !important;
-  color: #fff !important;
-  border: 1px solid #000 !important;
+  background: var(--color-black) !important;
+  color: var(--color-white) !important;
+  border: 1px solid var(--color-black) !important;
 }
 
 .menuQuoteButton[data-has-cart="true"] [data-quote-badge] {
-  background: #fff !important;
-  color: #000 !important;
+  background: var(--color-white) !important;
+  color: var(--color-black) !important;
 }
 
 /* Burger Animation */
@@ -369,7 +369,7 @@
   }
 
   .secondaryMenuItem {
-    font-size: 18px;
+    font-size: var(--text-18);
   }
 }
 
@@ -379,7 +379,7 @@
   }
 
   .menuLogo {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .menuHeader {
@@ -402,7 +402,7 @@
   }
 
   .secondaryMenuItem {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
 }

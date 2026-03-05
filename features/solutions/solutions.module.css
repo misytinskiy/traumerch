@@ -16,10 +16,10 @@
 
 .title {
   font-family: var(--font-eb-garamond);
-  font-size: 80px;
+  font-size: var(--text-80);
   font-weight: 300;
   line-height: 1.2;
-  color: #000;
+  color: var(--color-black);
   max-width: 900px;
   margin: 0 0 60px 0;
   letter-spacing: -0.01em;
@@ -65,14 +65,14 @@
 
 @media (max-width: 1920px) and (max-height: 982px) {
   .title {
-    font-size: 56px;
+    font-size: var(--text-56);
     max-width: 600px;
   }
 }
 
 @media (max-width: 1536px) {
   .title {
-    font-size: 56px;
+    font-size: var(--text-56);
     max-width: 600px;
   }
 }
@@ -83,7 +83,7 @@
   }
 
   .title {
-    font-size: 64px;
+    font-size: var(--text-64);
     margin-bottom: 40px;
   }
 
@@ -98,7 +98,7 @@
   }
 
   .title {
-    font-size: 27px;
+    font-size: var(--text-27);
     margin-bottom: 30px;
   }
 

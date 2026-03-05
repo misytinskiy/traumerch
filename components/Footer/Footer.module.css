@@ -1,6 +1,6 @@
 .footer {
   padding: 120px 150px;
-  background: rgba(255, 255, 255, 1);
+  background: var(--color-footer-bg);
   position: relative;
 }
 
@@ -36,10 +36,10 @@
 }
 
 .columnTitle {
-  font-size: 24px;
+  font-size: var(--text-24);
   font-weight: 400;
   line-height: 100%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-footer-text);
   margin: 0 0 24px 0;
   letter-spacing: 0;
 }
@@ -53,10 +53,10 @@
 }
 
 .columnLink {
-  font-size: 14px;
+  font-size: var(--text-14);
   font-weight: 400;
   line-height: 130%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-footer-text);
   text-decoration: none;
   transition: opacity 0.2s ease;
   letter-spacing: 0;
@@ -78,20 +78,20 @@
 }
 
 .copyright {
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 400;
   line-height: 130%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-footer-text);
   margin: 0;
   letter-spacing: 0;
   opacity: 0.4;
 }
 
 .allRights {
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 400;
   line-height: 130%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-footer-text);
   margin: 0;
   letter-spacing: 0;
   text-align: right;
@@ -108,11 +108,11 @@
   }
 
   .columnTitle {
-    font-size: 20px;
+    font-size: var(--text-20);
   }
 
   .columnLink {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .columns {
@@ -148,11 +148,11 @@
   }
 
   .columnTitle {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .columnLink {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .columns {
@@ -295,7 +295,7 @@
   }
 
   .columnLink {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .columnLinks {
@@ -303,10 +303,10 @@
   }
 
   .copyright {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .allRights {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 }

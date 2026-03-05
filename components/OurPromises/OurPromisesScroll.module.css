@@ -1,5 +1,5 @@
 .ourPromisesScroll {
-  background-color: #fff;
+  background-color: var(--color-white);
   padding: 289px 150px 172px 150px;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .promiseItem:focus-visible {
-  outline: 1px solid rgba(217, 217, 217, 0.6);
+  outline: 1px solid var(--color-gray-d8-60);
   outline-offset: 3px;
 }
 
@@ -49,10 +49,10 @@
 
 .promiseTitle {
   font-family: "EB Garamond", serif;
-  font-size: 32px;
-  line-height: 42px;
+  font-size: var(--text-32);
+  line-height: var(--lh-42);
   font-weight: 400;
-  color: #000;
+  color: var(--color-black);
 }
 
 .rightSide {
@@ -99,19 +99,19 @@
 
 .phrase {
   font-family: "Inter", sans-serif;
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
-  line-height: 32px;
-  color: #000;
+  line-height: var(--lh-32);
+  color: var(--color-black);
   margin: 0;
   letter-spacing: 0.5px;
 }
 
 .description {
   font-family: "Inter", sans-serif;
-  font-size: 16px;
-  line-height: 20px;
-  color: #000;
+  font-size: var(--text-16);
+  line-height: var(--lh-20);
+  color: var(--color-black);
   margin: 0;
   opacity: 0.6;
   max-width: 621px;
@@ -186,8 +186,8 @@
 
 @media (max-width: 1200px) {
   .promiseTitle {
-    font-size: 30px;
-    line-height: 40px;
+    font-size: var(--text-30);
+    line-height: var(--lh-40);
   }
 
   .promiseImage {
@@ -210,16 +210,16 @@
   }
 
   .promiseTitle {
-    font-size: 27px;
-    line-height: 34px;
+    font-size: var(--text-27);
+    line-height: var(--lh-34);
   }
 
   .phrase {
-    font-size: 18px;
+    font-size: var(--text-18);
   }
 
   .description {
-    font-size: 14px;
+    font-size: var(--text-14);
     max-width: 376px;
   }
 
@@ -260,17 +260,17 @@
   }
 
   .promiseTitle {
-    font-size: 24px;
+    font-size: var(--text-24);
   }
 
   .phrase {
-    font-size: 18px;
-    line-height: 28px;
+    font-size: var(--text-18);
+    line-height: var(--lh-28);
   }
 
   .description {
-    font-size: 14px;
-    line-height: 18px;
+    font-size: var(--text-14);
+    line-height: var(--lh-18);
   }
 
   .promiseImage {
@@ -288,7 +288,7 @@
   }
 
   .promiseTitle {
-    font-size: 20px;
-    line-height: 26px;
+    font-size: var(--text-20);
+    line-height: var(--lh-26);
   }
 }

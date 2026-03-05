@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  background: #fafafa;
+  background: var(--color-gray-fa);
   display: flex;
   flex-direction: column;
 }
@@ -15,10 +15,10 @@
 
 .mainTitle {
   font-family: var(--font-eb-garamond);
-  font-size: 80px;
+  font-size: var(--text-80);
   font-weight: 400;
-  line-height: 98px;
-  color: #000000;
+  line-height: var(--lh-98);
+  color: var(--color-black);
   text-transform: uppercase;
   letter-spacing: -0.8px;
   margin: 0 0 120px 0;
@@ -34,7 +34,7 @@
 
 /* Left Column - Form */
 .leftColumn {
-  background: #ffffff;
+  background: var(--color-white);
   border-radius: 20px;
   padding: 48px 20px;
   min-height: 1134px;
@@ -42,10 +42,10 @@
 
 .formTitle {
   font-family: var(--font-eb-garamond);
-  font-size: 32px;
+  font-size: var(--text-32);
   font-weight: 400;
-  line-height: 42px;
-  color: #000000;
+  line-height: var(--lh-42);
+  color: var(--color-black);
   text-transform: uppercase;
   margin: 0 0 40px 0;
   max-width: 584px;
@@ -65,39 +65,39 @@
 
 .label {
   font-family: var(--font-geist-sans);
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
-  line-height: 32px;
-  color: #999999;
+  line-height: var(--lh-32);
+  color: var(--color-gray-999);
   letter-spacing: -0.2px;
 }
 
 .input,
 .textarea {
-  background: #f6f6f6;
+  background: var(--color-gray-f6);
   border: none;
   border-radius: 10px;
   padding: 15px;
   font-family: var(--font-geist-sans);
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 400;
-  line-height: 20px;
-  color: #000000;
+  line-height: var(--lh-20);
+  color: var(--color-black);
   width: 100%;
   box-sizing: border-box;
 }
 
 .input::placeholder {
-  color: #999999;
+  color: var(--color-gray-999);
 }
 
 .textarea::placeholder {
   font-family: var(--font-geist-sans);
-  font-size: 16px;
+  font-size: var(--text-16);
   font-style: normal;
   font-weight: 400;
-  line-height: 20px;
-  color: #999999;
+  line-height: var(--lh-20);
+  color: var(--color-gray-999);
 }
 
 .textarea {
@@ -117,14 +117,14 @@
   height: 36px;
   border-radius: 50%;
   border: none;
-  background: #999999;
+  background: var(--color-gray-999);
   opacity: 0.4;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .messengerButtonActive {
-  background: #000000;
+  background: var(--color-black);
   opacity: 1;
 }
 
@@ -144,12 +144,12 @@
   height: 46px;
   border-radius: 20px;
   border: none;
-  background: #f6f6f6;
+  background: var(--color-gray-f6);
   font-family: var(--font-geist-sans);
-  font-size: 14px;
+  font-size: var(--text-14);
   font-weight: 500;
-  line-height: 24px;
-  color: #999999;
+  line-height: var(--lh-24);
+  color: var(--color-gray-999);
   text-transform: uppercase;
   letter-spacing: 0.14px;
   cursor: pointer;
@@ -157,8 +157,8 @@
 }
 
 .toggleButtonActive {
-  color: #000000;
-  border: 1px solid #000000;
+  color: var(--color-black);
+  border: 1px solid var(--color-black);
 }
 
 .toggleButton:hover {
@@ -176,12 +176,12 @@
   height: 46px;
   border-radius: 20px;
   border: none;
-  background: #f6f6f6;
+  background: var(--color-gray-f6);
   font-family: var(--font-geist-sans);
-  font-size: 14px;
+  font-size: var(--text-14);
   font-weight: 500;
-  line-height: 24px;
-  color: #999999;
+  line-height: var(--lh-24);
+  color: var(--color-gray-999);
   text-transform: uppercase;
   letter-spacing: 0.14px;
   cursor: pointer;
@@ -189,8 +189,8 @@
 }
 
 .serviceButtonActive {
-  color: #000000;
-  border: 1px solid #000000;
+  color: var(--color-black);
+  border: 1px solid var(--color-black);
 }
 
 .serviceButton:hover {
@@ -214,10 +214,10 @@
 
 .fileUploadText {
   font-family: var(--font-geist-sans);
-  font-size: 14px;
+  font-size: var(--text-14);
   font-weight: 500;
-  line-height: 24px;
-  color: #999999;
+  line-height: var(--lh-24);
+  color: var(--color-gray-999);
   text-transform: uppercase;
   letter-spacing: 0.14px;
   text-decoration: underline;
@@ -242,26 +242,26 @@
 
 .thankYouTitle {
   font-family: var(--font-eb-garamond);
-  font-size: 80px;
+  font-size: var(--text-80);
   font-weight: 400;
-  line-height: 98px;
-  color: #000000;
+  line-height: var(--lh-98);
+  color: var(--color-black);
   text-transform: uppercase;
   letter-spacing: -0.8px;
   margin: 0;
 }
 
 .thankYouDescription {
-  font-size: 24px;
+  font-size: var(--text-24);
   font-weight: 400;
   line-height: 150%;
-  color: rgba(0, 0, 0, 0.8);
+  color: var(--color-text-quaternary);
   max-width: 650px;
 }
 
 /* Right Column */
 .rightColumn {
-  background: #eeeeee;
+  background: var(--color-gray-eee);
   border-radius: 20px;
   padding: 48px 20px;
   min-height: 1134px;
@@ -271,10 +271,10 @@
 
 .rightTitle {
   font-family: var(--font-eb-garamond);
-  font-size: 32px;
+  font-size: var(--text-32);
   font-weight: 400;
-  line-height: 42px;
-  color: #000000;
+  line-height: var(--lh-42);
+  color: var(--color-black);
   text-transform: uppercase;
   margin: 0 0 40px 0;
   max-width: 568px;
@@ -333,11 +333,11 @@
   }
 
   .formTitle {
-    font-size: 26px;
+    font-size: var(--text-26);
   }
 
   .mainTitle {
-    font-size: 42px;
+    font-size: var(--text-42);
     line-height: normal;
   }
 
@@ -352,7 +352,7 @@
   }
 
   .label {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 }
 
@@ -362,15 +362,15 @@
   }
 
   .mainTitle {
-    font-size: 48px;
-    line-height: 58px;
+    font-size: var(--text-48);
+    line-height: var(--lh-58);
     margin-bottom: 60px;
   }
 
   .formTitle,
   .rightTitle {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: var(--text-24);
+    line-height: var(--lh-32);
   }
 
   .leftColumn {
@@ -408,18 +408,18 @@
   }
 
   .mainTitle {
-    font-size: 36px;
-    line-height: 44px;
+    font-size: var(--text-36);
+    line-height: var(--lh-44);
   }
 
   .formTitle,
   .rightTitle {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: var(--text-20);
+    line-height: var(--lh-28);
   }
 
   .label {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: var(--text-16);
+    line-height: var(--lh-24);
   }
 }

@@ -1,10 +1,10 @@
 .page {
   font-family: var(--font-geist-sans);
-  background: #fff;
+  background: var(--color-white);
 }
 
 .main {
-  background: #fff;
+  background: var(--color-white);
 }
 
 .hero {
@@ -21,23 +21,23 @@
 
 .title {
   font-family: var(--font-eb-garamond);
-  font-size: 80px;
+  font-size: var(--text-80);
   font-weight: 400;
-  line-height: 98px;
+  line-height: var(--lh-98);
   text-transform: uppercase;
   letter-spacing: -0.8px;
-  color: #000;
+  color: var(--color-black);
   margin: 0;
 }
 
 .intro {
   max-width: 1260px;
-  font-family: Inter;
-  font-size: 30px;
+  font-family: var(--font-ui);
+  font-size: var(--text-30);
   line-height: normal;
   text-transform: uppercase;
   letter-spacing: -0.3px;
-  color: #111;
+  color: var(--color-gray-111);
   opacity: 0.7;
   margin: 0;
 }
@@ -53,9 +53,9 @@
 }
 
 .card {
-  background: #fff;
+  background: var(--color-white);
   border-radius: 20px;
-  border: 1px solid #EBEBEB;
+  border: 1px solid var(--color-gray-eb);
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -64,14 +64,14 @@
 
 .card:hover {
   transform: translateY(-4px);
-  border-color: #e2e2e2;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-gray-e2);
+  box-shadow: 0 10px 30px var(--color-black-08);
 }
 
 .cardImageWrap {
   border-radius: 20px 20px 0 0;
   overflow: hidden;
-  background: #f6f6f6;
+  background: var(--color-gray-f6);
 height: 510px;
 }
 
@@ -87,36 +87,36 @@ height: 510px;
 }
 
 .cardLabel {
-  font-family: Inter;
+  font-family: var(--font-ui);
   display: block;
-  font-size: 16px;
+  font-size: var(--text-16);
   text-transform: uppercase;
-  color: #000;
+  color: var(--color-black);
   opacity: 0.3;
   margin-bottom: 18px;
-  line-height: 24px;
+  line-height: var(--lh-24);
 }
 
 .cardTitle {
-  font-family: "EB Garamond";
+  font-family: var(--font-eb-garamond);
   font-variant: all-small-caps;
-  font-size: 40px;
+  font-size: var(--text-40);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: -0.4px;
-  color: #000;
-  line-height: 32px;
+  color: var(--color-black);
+  line-height: var(--lh-32);
   margin: 0 0 16px 0;
   max-width: 400px;
 }
 
 .cardText {
-  font-size: 16px;
+  font-size: var(--text-16);
   line-height: 1.5;
-  color: #000;
+  color: var(--color-black);
   opacity: 0.6;
   margin: 0;
-  line-height: 20px;
+  line-height: var(--lh-20);
   max-width: 465px;
 }
 
@@ -126,12 +126,12 @@ height: 510px;
   }
 
   .title {
-    font-size: 60px;
-    line-height: 70px;
+    font-size: var(--text-60);
+    line-height: var(--lh-70);
   }
 
   .intro {
-    font-size: 20px;
+    font-size: var(--text-20);
     letter-spacing: -0.26px;
     max-width: 800px;
   }
@@ -146,7 +146,7 @@ height: 510px;
   }
 
   .cardTitle {
-    font-size: 36px;
+    font-size: var(--text-36);
   }
 
   .cardImageWrap {
@@ -161,13 +161,13 @@ height: 510px;
   }
 
   .title {
-    font-size: 50px;
-    line-height: 66px;
+    font-size: var(--text-50);
+    line-height: var(--lh-66);
 
   }
 
   .intro {
-    font-size: 18px;
+    font-size: var(--text-18);
     max-width: 719px;
   }
 
@@ -191,7 +191,7 @@ height: 510px;
   }
 
   .cardTitle {
-    font-size: 32px;
+    font-size: var(--text-32);
   }
 }
 
@@ -204,12 +204,12 @@ height: 510px;
   }
 
   .title {
-    font-size: 44px;
-    line-height: 54px;
+    font-size: var(--text-44);
+    line-height: var(--lh-54);
   }
 
   .intro {
-    font-size: 16px;
+    font-size: var(--text-16);
     letter-spacing: -0.16px;
   }
 
@@ -223,20 +223,20 @@ height: 510px;
   }
 
   .cardLabel {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: var(--text-14);
+    line-height: var(--lh-20);
     margin-bottom: 12px;
   }
 
   .cardTitle {
-    font-size: 28px;
-    line-height: 30px;
+    font-size: var(--text-28);
+    line-height: var(--lh-30);
     max-width: 100%;
   }
 
   .cardText {
-    font-size: 14px;
-    line-height: 18px;
+    font-size: var(--text-14);
+    line-height: var(--lh-18);
     max-width: 100%;
   }
 
@@ -254,12 +254,12 @@ height: 510px;
   }
 
   .title {
-    font-size: 34px;
-    line-height: 42px;
+    font-size: var(--text-34);
+    line-height: var(--lh-42);
   }
 
   .intro {
-    font-size: 13px;
+    font-size: var(--text-13);
     letter-spacing: -0.12px;
   }
 
@@ -268,11 +268,11 @@ height: 510px;
   }
 
   .cardTitle {
-    font-size: 24px;
-    line-height: 26px;
+    font-size: var(--text-24);
+    line-height: var(--lh-26);
   }
 
   .cardText {
-    line-height: 17px;
+    line-height: var(--lh-17);
   }
 }

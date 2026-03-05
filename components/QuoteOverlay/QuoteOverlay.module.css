@@ -1,7 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--color-quote-overlay-bg);
   z-index: 1100;
   display: flex;
   justify-content: center;
@@ -11,7 +11,7 @@
 .panel {
   width: 100%;
   max-width: 1920px;
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 0;
   overflow-y: auto;
   max-height: 100vh;
@@ -29,10 +29,10 @@
 .closeButton {
   border: none;
   background: transparent;
-  font-size: 12px;
-  letter-spacing: 0.2em;
+  font-size: var(--text-12);
+  letter-spacing: var(--ls-wider);
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--color-text-secondary);
   flex-shrink: 0;
   margin-left: 20px;
 }
@@ -52,14 +52,13 @@
 
 .mainTitle {
   font-family: var(--font-eb-garamond);
-  font-size: 60px;
-
-  line-height: 76px;
+  font-size: var(--text-60);
+  line-height: var(--lh-76);
   font-weight: 400;
 
-  color: #000000;
+  color: var(--color-text-primary);
   text-transform: uppercase;
-  letter-spacing: -0.8px;
+  letter-spacing: var(--ls-tight);
   margin: 0;
   /* max-width: 800px; */
   flex: 1;
@@ -74,10 +73,10 @@
 
 /* Left Column - Form */
 .leftColumn {
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 20px;
   padding: 48px 20px;
-  border: 1px solid #ebebeb;
+  border: 1px solid var(--color-border-soft);
   display: flex;
   flex-direction: column;
   margin-top: -70px;
@@ -86,10 +85,10 @@
 
 .formTitle {
   font-family: var(--font-eb-garamond);
-  font-size: 32px;
+  font-size: var(--text-32);
   font-weight: 400;
-  line-height: 42px;
-  color: #000000;
+  line-height: var(--lh-42);
+  color: var(--color-text-primary);
   text-transform: uppercase;
   margin: 0 0 40px 0;
   max-width: 584px;
@@ -109,39 +108,39 @@
 
 .label {
   font-family: var(--font-geist-sans);
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
-  line-height: 32px;
-  color: #000;
+  line-height: var(--lh-32);
+  color: var(--color-text-primary);
   letter-spacing: -0.2px;
 }
 
 .input,
 .textarea {
-  background: #f6f6f6;
+  background: var(--color-surface-muted);
   border: none;
   border-radius: 10px;
   padding: 15px;
   font-family: var(--font-geist-sans);
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 400;
-  line-height: 20px;
-  color: #000000;
+  line-height: var(--lh-20);
+  color: var(--color-text-primary);
   width: 100%;
   box-sizing: border-box;
 }
 
 .input::placeholder {
-  color: #999999;
+  color: var(--color-gray-999);
 }
 
 .textarea::placeholder {
   font-family: var(--font-geist-sans);
-  font-size: 16px;
+  font-size: var(--text-16);
   font-style: normal;
   font-weight: 400;
-  line-height: 20px;
-  color: #999999;
+  line-height: var(--lh-20);
+  color: var(--color-gray-999);
 }
 
 .textarea {
@@ -151,13 +150,13 @@
 }
 
 .inputError {
-  border: 1px solid #ff0000 !important;
+  border: 1px solid var(--color-danger) !important;
 }
 
 .errorMessage {
   font-family: var(--font-geist-sans);
-  font-size: 12px;
-  color: #ff0000;
+  font-size: var(--text-12);
+  color: var(--color-danger);
   margin-top: 4px;
   display: block;
 }
@@ -181,7 +180,7 @@
   height: 48px;
   border-radius: 19%;
   border: none;
-  background: #f5f5f5;
+  background: var(--color-surface-soft);
   -webkit-appearance: none;
   appearance: none;
 
@@ -190,7 +189,7 @@
 }
 
 .messengerButtonActive {
-  background: #171717;
+  background: var(--color-accent-strong);
   opacity: 1;
   transition: all 0.2s ease;
 }
@@ -250,24 +249,24 @@
   border-radius: 20px;
   border: 1px solid transparent;
   box-sizing: border-box;
-  background: #f6f6f6;
+  background: var(--color-surface-muted);
   font-family: var(--font-geist-sans);
-  color: #999999;
+  color: var(--color-gray-999);
   text-transform: uppercase;
-  letter-spacing: 0.14px;
+  letter-spacing: var(--ls-wide);
   cursor: pointer;
   transition: border-color 0.25s ease, color 0.25s ease,
     background-color 0.25s ease, box-shadow 0.25s ease;
 
-  font-size: 12px;
+  font-size: var(--text-12);
   padding: 0 10px;
   font-weight: 400;
-  line-height: 15px;
+  line-height: var(--lh-15);
 }
 
 .toggleButtonActive {
-  color: #000000;
-  border-color: #000000;
+  color: var(--color-text-primary);
+  border-color: var(--color-text-primary);
 }
 
 .toggleButton:hover {
@@ -285,21 +284,21 @@
   height: 46px;
   border-radius: 20px;
   border: none;
-  background: #f6f6f6;
+  background: var(--color-surface-muted);
   font-family: var(--font-geist-sans);
-  font-size: 14px;
+  font-size: var(--text-14);
   font-weight: 500;
-  line-height: 24px;
-  color: #999999;
+  line-height: var(--lh-24);
+  color: var(--color-gray-999);
   text-transform: uppercase;
-  letter-spacing: 0.14px;
+  letter-spacing: var(--ls-wide);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .serviceButtonActive {
-  color: #000000;
-  border: 1px solid #000000;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-text-primary);
 }
 
 .serviceButton:hover {
@@ -323,12 +322,12 @@
 
 .fileUploadText {
   font-family: var(--font-geist-sans);
-  font-size: 14px;
+  font-size: var(--text-14);
   font-weight: 500;
-  line-height: 24px;
-  color: #999999;
+  line-height: var(--lh-24);
+  color: var(--color-gray-999);
   text-transform: uppercase;
-  letter-spacing: 0.14px;
+  letter-spacing: var(--ls-wide);
   text-decoration: underline;
 }
 
@@ -338,8 +337,8 @@
 
 .fileError {
   margin-top: 8px;
-  font-size: 12px;
-  color: #ff0000;
+  font-size: var(--text-12);
+  color: var(--color-danger);
 }
 
 .fileList {
@@ -358,8 +357,8 @@
 }
 
 .fileName {
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.7);
+  font-size: var(--text-12);
+  color: var(--color-text-tertiary);
 }
 
 .fileRemove {
@@ -367,14 +366,14 @@
   background: none;
   padding: 0;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: 10px;
+  font-size: var(--text-10);
 }
 
 .fileRemove:hover {
-  color: rgba(0, 0, 0, 0.9);
+  color: var(--color-text-primary);
 }
 
 .submitButton {
@@ -391,8 +390,8 @@
 .spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: #ffffff;
+  border: 2px solid var(--color-spinner-border);
+  border-top-color: var(--color-white);
   border-radius: 50%;
   animation: quoteOverlaySpin 0.8s linear infinite;
 }
@@ -421,21 +420,21 @@
 
 .thankYouTitle {
   font-family: var(--font-eb-garamond);
-  font-size: 80px;
+  font-size: var(--text-80);
   font-weight: 400;
-  line-height: 98px;
-  color: #000000;
+  line-height: var(--lh-98);
+  color: var(--color-text-primary);
   text-transform: uppercase;
-  letter-spacing: -0.8px;
+  letter-spacing: var(--ls-tight);
   margin: 0;
   flex: 1;
 }
 
 .thankYouDescription {
-  font-size: 24px;
+  font-size: var(--text-24);
   font-weight: 400;
   line-height: 150%;
-  color: rgba(0, 0, 0, 0.8);
+  color: var(--color-text-quaternary);
   max-width: 650px;
 }
 
@@ -457,7 +456,7 @@
   padding: 48px 20px;
   display: flex;
   flex-direction: column;
-  border: 1px solid #ebebeb;
+  border: 1px solid var(--color-border-soft);
   align-self: stretch;
   margin-top: -70px;
   margin-bottom: -70px;
@@ -465,10 +464,10 @@
 
 .rightTitle {
   font-family: var(--font-eb-garamond);
-  font-size: 32px;
+  font-size: var(--text-32);
   font-weight: 400;
-  line-height: 42px;
-  color: #000000;
+  line-height: var(--lh-42);
+  color: var(--color-text-primary);
   text-transform: uppercase;
   margin: 0 0 40px 0;
   max-width: 568px;
@@ -521,13 +520,13 @@
   }
 
   .mainTitle {
-    font-size: 56px;
-    line-height: 64px;
+    font-size: var(--text-56);
+    line-height: var(--lh-64);
     /* max-width: 809px; */
   }
 
   .formTitle {
-    font-size: 32px;
+    font-size: var(--text-32);
   }
   .rightColumn {
     padding: 48px 20px 4px;
@@ -543,8 +542,8 @@
   }
 
   .thankYouTitle {
-    font-size: 60px;
-    line-height: 72px;
+    font-size: var(--text-60);
+    line-height: var(--lh-72);
   }
 }
 
@@ -567,13 +566,13 @@
   }
 
   .mainTitle {
-    font-size: 42px;
+    font-size: var(--text-42);
     line-height: normal;
     /* max-width: 609px; */
   }
 
   .formTitle {
-    font-size: 32px;
+    font-size: var(--text-32);
     margin-bottom: 36px;
   }
 
@@ -600,7 +599,7 @@
   }
 
   .label {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .thankYouContent {
@@ -612,8 +611,8 @@
   }
 
   .thankYouTitle {
-    font-size: 56px;
-    line-height: 68px;
+    font-size: var(--text-56);
+    line-height: var(--lh-68);
   }
 
   .calendlyWidget {
@@ -645,11 +644,11 @@
   }
 
   .formTitle {
-    font-size: 25px;
+    font-size: var(--text-25);
   }
 
   .rightTitle {
-    font-size: 26px;
+    font-size: var(--text-26);
     margin: 0 0 36px 0;
   }
 
@@ -670,8 +669,8 @@
   }
 
   .thankYouTitle {
-    font-size: 48px;
-    line-height: 58px;
+    font-size: var(--text-48);
+    line-height: var(--lh-58);
   }
 
   .calendlyWidget {
@@ -728,14 +727,14 @@
   }
 
   .mainTitle {
-    font-size: 48px;
-    line-height: 58px;
+    font-size: var(--text-48);
+    line-height: var(--lh-58);
   }
 
   .formTitle,
   .rightTitle {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: var(--text-24);
+    line-height: var(--lh-32);
   }
   .formTitle {
     max-width: 359px;
@@ -785,8 +784,8 @@
   }
 
   .thankYouTitle {
-    font-size: 48px;
-    line-height: 58px;
+    font-size: var(--text-48);
+    line-height: var(--lh-58);
   }
 
   .closeButton svg {
@@ -855,15 +854,15 @@
   }
 
   .mainTitle {
-    font-size: 32px;
-    line-height: 44px;
+    font-size: var(--text-32);
+    line-height: var(--lh-44);
     padding-left: 10px;
   }
 
   .formTitle,
   .rightTitle {
-    font-size: 16px;
-    line-height: 20px;
+    font-size: var(--text-16);
+    line-height: var(--lh-20);
   }
 
   .formTitle {
@@ -871,12 +870,12 @@
   }
 
   .input {
-    font-size: 12px;
+    font-size: var(--text-12);
     padding: 12px;
   }
 
   .label {
-    font-size: 12px;
+    font-size: var(--text-12);
     line-height: normal;
   }
 
@@ -911,13 +910,13 @@
   }
 
   .thankYouTitle {
-    font-size: 40px;
-    line-height: 48px;
-    letter-spacing: -0.4px;
+    font-size: var(--text-40);
+    line-height: var(--lh-48);
+    letter-spacing: var(--ls-tight-sm);
   }
 
   .thankYouDescription {
-    font-size: 18px;
+    font-size: var(--text-18);
     line-height: 150%;
   }
 
@@ -933,16 +932,16 @@
 
   .serviceButton {
     height: 40px;
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .toggleButton {
     height: 40px;
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .textarea::placeholder {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .fileUploadLabel {
@@ -952,7 +951,7 @@
   }
 
   .fileUploadText {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .uploadIcon {

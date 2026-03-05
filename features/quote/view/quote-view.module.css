@@ -1,7 +1,7 @@
 .page {
   min-height: 100vh;
-  background: #fff;
-  color: #111;
+  background: var(--color-white);
+  color: var(--color-gray-111);
 }
 
 .main {
@@ -13,7 +13,7 @@ margin: 0 auto;
 .title {
   font-family: var(--font-eb-garamond);
   font-weight: 400;
-  font-size: 56px;
+  font-size: var(--text-56);
   text-transform: uppercase;
   margin: 0 0 80px;
 }
@@ -26,8 +26,8 @@ margin: 0 auto;
 
 .empty {
   padding: 40px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
-  color: rgba(0, 0, 0, 0.6);
+  border-top: 1px solid var(--color-black-15);
+  color: var(--color-text-secondary);
 }
 
 .card {
@@ -45,8 +45,8 @@ margin: 0 auto;
 .imagePlaceholder {
   width: 100%;
   aspect-ratio: 1 / 1.15;
-  border-radius: 10px;
-  background: #9c9c9c;
+  border-radius: var(--radius-10);
+  background: var(--color-gray-9c);
   object-fit: cover;
 }
 
@@ -69,7 +69,7 @@ margin: 0 auto;
 }
 
 .productName {
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -82,8 +82,8 @@ margin: 0 auto;
   gap: 4px;
   border: none;
   background: none;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 16px;
+  color: var(--color-text-secondary);
+  font-size: var(--text-16);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
@@ -99,10 +99,10 @@ margin: 0 auto;
   flex-direction: column;
   gap: 16px;
   padding: 27px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid var(--color-black-12);
+  border-bottom: 1px solid var(--color-black-12);
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--color-text-tertiary);
 }
 
 .metaRow {
@@ -113,8 +113,8 @@ margin: 0 auto;
 }
 
 .metaLabel {
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 16px;
+  color: var(--color-text-secondary);
+  font-size: var(--text-16);
   text-transform: none;
 }
 
@@ -122,14 +122,14 @@ margin: 0 auto;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 16px;
+  font-size: var(--text-16);
 }
 
 .colorSwatch {
   width: 14px;
   height: 14px;
   border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-black-20);
 }
 
 .quantityControls {
@@ -146,20 +146,20 @@ margin: 0 auto;
   height: 32px;
   border: none;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--color-black-04);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   line-height: 1;
-  color: #000;
+  color: var(--color-black);
   transition: background 0.2s ease;
   cursor: pointer;
 }
 
 .quantityButton:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--color-black-20);
 }
 
 .quantityButton:disabled {
@@ -168,17 +168,17 @@ margin: 0 auto;
 }
 
 .quantityInput {
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 400;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   width: 52px;
   height: 32px;
   padding: 0;
   border: none;
   outline: none;
   text-align: center;
-  background-color: #f5f5f5;
-  border-radius: 500000px;
+  background-color: var(--color-surface-soft);
+  border-radius: var(--radius-pill-oversize);
   font-family: inherit;
   -moz-appearance: textfield;
   appearance: textfield;
@@ -193,8 +193,8 @@ margin: 0 auto;
 
 .metaRight {
   justify-self: end;
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.45);
+  font-size: var(--text-16);
+  color: var(--color-black-45);
 }
 
 .descriptionBlock {
@@ -206,27 +206,27 @@ margin: 0 auto;
   min-height: 211px;
   resize: vertical;
   border: none;
-  border-radius: 10px;
-  background: #f5f5f5;
+  border-radius: var(--radius-10);
+  background: var(--color-surface-soft);
   padding: 16px;
-  font-size: 16px;
-  color: #111;
-  font-family: Inter;
+  font-size: var(--text-16);
+  color: var(--color-gray-111);
+  font-family: var(--font-ui);
   
 }
 
 .descriptionInput::placeholder {
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--color-black-40);
 }
 
 .uploadRow {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 14px;
+  font-size: var(--text-14);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--color-text-secondary);
 }
 
 .uploadLabel {
@@ -248,15 +248,15 @@ margin: 0 auto;
 .fileName {
   text-transform: none;
   letter-spacing: 0;
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.6);
+  font-size: var(--text-12);
+  color: var(--color-text-secondary);
 }
 
 .fileError {
   text-transform: none;
   letter-spacing: 0;
-  font-size: 12px;
-  color: #ff0000;
+  font-size: var(--text-12);
+  color: var(--color-danger);
 }
 
 .fileList {
@@ -279,14 +279,14 @@ margin: 0 auto;
   background: none;
   padding: 0;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-size: 10px;
 }
 
 .fileRemove:hover {
-  color: rgba(0, 0, 0, 0.9);
+  color: var(--color-text-primary);
 }
 
 .footerBar {
@@ -296,7 +296,7 @@ margin: 0 auto;
   gap: 16px;
   padding-top: 24px;
   margin-top: 100px;
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  border-top: 1px solid var(--color-black-15);
 }
 
 @media (max-width: 900px) {
@@ -332,7 +332,7 @@ margin: 0 auto;
   }
 
   .title {
-    font-size: 44px;
+    font-size: var(--text-44);
     margin-bottom: 64px;
   }
 
@@ -350,11 +350,11 @@ margin: 0 auto;
   }
 
   .productName {
-    font-size: 18px;
+    font-size: var(--text-18);
   }
 
   .deleteButton {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .metaBlock {
@@ -365,28 +365,28 @@ margin: 0 auto;
   .metaLabel,
   .colorValue,
   .metaRight {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .quantityButton {
     width: 28px;
     height: 28px;
-    font-size: 18px;
+    font-size: var(--text-18);
   }
 
   .quantityInput {
     width: 46px;
     height: 28px;
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .descriptionInput {
     min-height: 170px;
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .uploadRow {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .footerBar {
@@ -414,7 +414,7 @@ margin: 0 auto;
   }
 
   .productName {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .deleteButton {
@@ -430,7 +430,7 @@ margin: 0 auto;
   .quantityButton {
     width: 26px;
     height: 26px;
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .quantityInput {
@@ -464,14 +464,14 @@ margin: 0 auto;
   }
 
   .metaBlock {
-    border-top: 1px solid #999;
-    border-bottom: 1px solid #999;
+    border-top: 1px solid var(--color-gray-999);
+    border-bottom: 1px solid var(--color-gray-999);
   }
 
   .metaLabel,
   .colorValue,
   .metaRight {
-    color: #000;
+    color: var(--color-black);
   }
 
 
@@ -505,11 +505,11 @@ margin: 0 auto;
   }
 
   .productName {
-     font-size: 12px;
+     font-size: var(--text-12);
   }
 
   .deleteButton {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .deleteButton svg {
@@ -520,7 +520,7 @@ height: 20px;
   .metaLabel,
   .colorValue,
   .metaRight {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .details {
@@ -547,13 +547,13 @@ height: 20px;
   .quantityButton {
     width: 28px;
     height: 28px;
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .quantityInput {
     width: 45px;
     height: 28px;
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .descriptionInput {

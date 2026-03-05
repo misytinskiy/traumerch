@@ -1,7 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--color-black-40);
   z-index: 1100;
   display: flex;
   justify-content: flex-end;
@@ -11,8 +11,8 @@
 .panel {
   width: 100%;
   max-width: 42%;
-  background: #fff;
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+  background: var(--color-white);
+  box-shadow: -4px 0 24px var(--color-black-12);
   overflow-y: auto;
   max-height: 100vh;
   display: flex;
@@ -32,9 +32,9 @@
 
 .title {
   font-family: var(--font-eb-garamond);
-  font-size: 32px;
+  font-size: var(--text-32);
   font-weight: 400;
-  color: #000;
+  color: var(--color-black);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   margin: 0;
@@ -49,7 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000;
+  color: var(--color-black);
   align-self: flex-end;
   order: 1;
 }
@@ -74,8 +74,8 @@
   align-items: flex-start;
   gap: 33px;
   padding: 20px 0 ;
-  border-top: 1px solid rgba(153, 153, 153, 0.2);
-  border-bottom: 1px solid rgba(153, 153, 153, 0.2);
+  border-top: 1px solid var(--color-gray-999-20);
+  border-bottom: 1px solid var(--color-gray-999-20);
 }
 
 .removeButton {
@@ -85,7 +85,7 @@
   background: none;
   cursor: pointer;
   padding: 0;
-  color: #000;
+  color: var(--color-black);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,7 +105,7 @@
   height: 112px;
   min-width: 64px;
   border-radius: 12px;
-  background: #e5e5e5;
+  background: var(--color-gray-e5);
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -128,9 +128,9 @@
 }
 
 .itemName {
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
-  color: #000;
+  color: var(--color-black);
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -140,8 +140,8 @@
 
 .itemPrice,
 .itemColor {
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.6);
+  font-size: var(--text-16);
+  color: var(--color-text-secondary);
   margin: 0;
   line-height: 1.3;
 }
@@ -152,10 +152,10 @@
   height: 1em;
   min-width: 14px;
   min-height: 14px;
-  border-radius: 4px;
+  border-radius: var(--radius-4);
   vertical-align: middle;
   margin-left: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--color-black-15);
 }
 
 /* Счётчик как в ProductDetails: справа по верхнему краю */
@@ -173,19 +173,19 @@
   height: 32px;
   border: none;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--color-black-04);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   line-height: 1;
-  color: #000;
+  color: var(--color-black);
   transition: background 0.2s ease;
 }
 
 .quantityButton:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--color-black-20);
 }
 
 .quantityButton:disabled {
@@ -194,9 +194,9 @@
 }
 
 .quantityValue {
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 400;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
  width: 52px;
 
   height: 32px;
@@ -204,7 +204,7 @@
   border: none;
   outline: none;
   text-align: center;
-  background-color: #f5f5f5;
+  background-color: var(--color-surface-soft);
   border-radius: 500000px;
   font-family: inherit;
   -moz-appearance: textfield;
@@ -229,8 +229,8 @@
 .empty {
   padding: 40px 20px;
   text-align: center;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  font-size: var(--text-14);
+  color: var(--color-black-50);
 }
 
 /* --- 1536px: desktop --- */
@@ -260,7 +260,7 @@
     min-width: 56px;
   }
   .itemName {
-    font-size: 18px;
+    font-size: var(--text-18);
     margin-bottom: 2px;
   }
   .itemPrice,
@@ -301,7 +301,7 @@
     margin-bottom: 32px;
   }
   .title {
-    font-size: 24px;
+    font-size: var(--text-24);
   }
   .closeButton svg {
     width: 34px;
@@ -318,23 +318,23 @@
     border-radius: 10px;
   }
   .itemName {
-    font-size: 16px;
+    font-size: var(--text-16);
     margin-bottom: 2px;
   }
   .itemPrice,
   .itemColor {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
   .quantityButton {
     width: 26px;
     height: 26px;
-    font-size: 16px;
+    font-size: var(--text-16);
     border-radius: 18px;
   }
   .quantityValue {
     width: 42px;
     height: 26px;
-    font-size: 14px;
+    font-size: var(--text-14);
   }
   .quantityControl {
     gap: 3px;
@@ -365,7 +365,7 @@
     margin-bottom: 40px;
   }
   .title {
-    font-size: 32px;
+    font-size: var(--text-32);
     align-self: flex-start;
     order: 1;
   }
@@ -388,12 +388,12 @@
     border-radius: 8px;
   }
   .itemName {
-    font-size: 16px;
+    font-size: var(--text-16);
     margin-bottom: 2px;
   }
   .itemPrice,
   .itemColor {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
   .quantityButton {
     width: 36px;
@@ -404,7 +404,7 @@
   .quantityValue {
     width: 52px;
     height: 36px;
-    font-size: 16px;
+    font-size: var(--text-16);
   }
   .quantityControl {
     gap: 4px;
@@ -419,7 +419,7 @@
   }
   .empty {
     padding: 28px 14px;
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 }
 
@@ -434,7 +434,7 @@
     margin-bottom: 40px;
   }
   .title {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
   .closeButton svg {
     width: 20px;
@@ -451,23 +451,23 @@
     border-radius: 8px;
   }
   .itemName {
-    font-size: 12px;
+    font-size: var(--text-12);
     margin-bottom: 1px;
   }
   .itemPrice,
   .itemColor {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
   .quantityButton {
     width: 24px;
     height: 24px;
-    font-size: 14px;
+    font-size: var(--text-14);
     border-radius: 14px;
   }
   .quantityValue {
     width: 30px;
     height: 24px;
-    font-size: 12px;
+    font-size: var(--text-12);
   }
   .quantityControl {
     gap: 2px;
@@ -482,6 +482,6 @@
   }
   .empty {
     padding: 24px 12px;
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 }

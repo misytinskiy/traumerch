@@ -9,15 +9,15 @@
   z-index: 1000;
 
   /* Glass effect */
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--color-white-15);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--color-white-20);
   border-radius: 24px;
 
   /* Shadow for depth */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px var(--color-black-10), 0 2px 8px var(--color-black-05),
+    inset 0 1px 0 var(--color-white-20);
 
   /* Animation is now handled by Framer Motion */
   opacity: 1;
@@ -43,9 +43,9 @@
   bottom: 0;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
-    rgba(0, 0, 0, 0.02) 100%
+    var(--color-white-10) 0%,
+    var(--color-white-05) 50%,
+    var(--color-black-02) 100%
   );
   border-radius: 24px;
   pointer-events: none;
@@ -53,14 +53,14 @@
 
 .bannerText {
   /* font-family: var(--font-geist-sans); */
-  font-size: 18px;
+  font-size: var(--text-18);
   font-weight: 500;
   line-height: 100%;
-  color: rgba(0, 0, 0, 0.9);
+  color: var(--color-black-90);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   margin: 0;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 1px 2px var(--color-white-50);
 }
 
 .bannerButton {
@@ -70,10 +70,10 @@
 
 /* Enhanced glass effect on hover */
 .glassBanner:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: var(--color-white-20);
+  border-color: var(--color-white-30);
+  box-shadow: 0 12px 40px var(--color-black-15), 0 4px 12px var(--color-black-08),
+    inset 0 1px 0 var(--color-white-30);
 }
 
 @media (max-width: 1536px) {
@@ -82,7 +82,7 @@
   }
 
   .bannerText {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 }
 
@@ -98,7 +98,7 @@
   }
 
   .bannerText {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 }
 
@@ -122,7 +122,7 @@
   }
 
   .bannerText {
-    font-size: 16px;
+    font-size: var(--text-16);
     line-height: 120%;
   }
 }
@@ -139,14 +139,14 @@
   }
 
   .bannerText {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 }
 
 /* Safari specific enhancements */
 @supports (-webkit-backdrop-filter: blur(20px)) {
   .glassBanner {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--color-white-10);
     -webkit-backdrop-filter: blur(20px) saturate(1.8);
     backdrop-filter: blur(20px) saturate(1.8);
   }

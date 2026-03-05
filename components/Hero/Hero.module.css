@@ -18,10 +18,10 @@
 
 .title {
   font-family: var(--font-eb-garamond);
-  font-size: 80px;
+  font-size: var(--text-80);
   font-weight: 400;
   line-height: 1.2;
-  color: #000;
+  color: var(--color-black);
   max-width: 1200px;
   margin: 0 0 52px 0;
   text-transform: uppercase;
@@ -120,7 +120,7 @@
   }
 
   .title {
-    font-size: 56px;
+    font-size: var(--text-56);
     max-width: 825px;
     margin-bottom: 48px;
   }
@@ -144,7 +144,7 @@
 
 @media (max-width: 1536px) and (max-height: 1400px) {
   .title {
-    font-size: 56px;
+    font-size: var(--text-56);
     margin: 69px 0 40px 0;
     letter-spacing: -0.025em;
     max-width: 800px;
@@ -162,7 +162,7 @@
   }
 
   .quoteText {
-    font-size: 21px;
+    font-size: var(--text-21);
     line-height: 34px;
   }
 }
@@ -198,10 +198,10 @@
   }
 
   .title {
-    font-size: 32px;
+    font-size: var(--text-32);
     margin: 50px 0 92px 0;
     letter-spacing: -0.02em;
-    line-height: 40px;
+    line-height: var(--lh-40);
     max-width: 300px;
   }
 

@@ -2,12 +2,12 @@
   padding: 160px 150px;
   background: linear-gradient(
       180deg,
-      rgba(212, 254, 231, 0) 0%,
-      #dcf3e9 40.5%,
-      #dcf3e8 64%,
-      rgba(212, 254, 251, 0) 100%
+      var(--color-cta-bg-top) 0%,
+      var(--color-cta-bg-mid) 40.5%,
+      var(--color-cta-bg-mid-2) 64%,
+      var(--color-cta-bg-bottom) 100%
     ),
-    #fff;
+    var(--color-white);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 32px;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   margin: 0 0 52px 0;
   letter-spacing: 0;
   max-width: 595px;

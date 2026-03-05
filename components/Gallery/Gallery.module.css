@@ -1,6 +1,6 @@
 .gallery {
   padding: 100px 150px;
-  background: rgba(255, 255, 255, 1);
+  background: var(--color-white);
 }
 
 .header {
@@ -31,23 +31,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: var(--color-black);
 }
 
 .navButton:hover {
-  color: rgba(153, 153, 153, 1);
+  color: var(--color-gray-999);
 }
 
 .navButton:active {
   transform: scale(0.95);
-  color: rgba(102, 102, 102, 1);
+  color: var(--color-gray-666);
 }
 
 .navButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none !important;
-  color: rgba(153, 153, 153, 0.5);
+  color: var(--color-gray-999-20);
 }
 
 .swiperContainer {
@@ -95,13 +95,13 @@
 .imagePlaceholder {
   position: absolute;
   inset: 0;
-  background: #e5e5e5;
+  background: var(--color-gray-e5);
   z-index: 0;
   border-radius: inherit;
 }
 
 .imageItem:hover .imagePlaceholder {
-  background: #d8d8d8;
+  background: var(--color-gray-d8);
 }
 
 .overlay {
@@ -110,7 +110,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--color-black-60);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,11 +134,11 @@
   font-family: "EB Garamond", serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 25px;
-  line-height: 39px;
+  font-size: var(--text-25);
+  line-height: var(--lh-39);
   letter-spacing: 0%;
   text-transform: uppercase;
-  color: white;
+  color: var(--color-white);
   margin: 0 0 18px 0;
 }
 
@@ -146,10 +146,10 @@
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 18px;
-  line-height: 32px;
+  font-size: var(--text-18);
+  line-height: var(--lh-32);
   letter-spacing: -1%;
-  color: white;
+  color: var(--color-white);
   margin: 0;
   margin-top: 24px;
 }
@@ -178,12 +178,12 @@
   }
 
   .quoteText {
-    font-size: 16px;
-    line-height: 29px;
+    font-size: var(--text-16);
+    line-height: var(--lh-29);
   }
 
   .quoteAuthor {
-    font-size: 12px;
+    font-size: var(--text-12);
     margin-top: 17px;
   }
 }
@@ -194,12 +194,12 @@
   }
 
   .quoteText {
-    font-size: 16px;
-    line-height: 26px;
+    font-size: var(--text-16);
+    line-height: var(--lh-26);
   }
 
   .quoteAuthor {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .navButton {
@@ -230,13 +230,13 @@
   }
 
   .quoteText {
-    font-size: 16px;
-    line-height: 27px;
+    font-size: var(--text-16);
+    line-height: var(--lh-27);
     margin-bottom: 10px;
   }
 
   .quoteAuthor {
-    font-size: 12px;
+    font-size: var(--text-12);
     margin-top: 10px;
   }
 }
@@ -269,13 +269,13 @@
   }
 
   .quoteText {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: var(--text-20);
+    line-height: var(--lh-28);
   }
 
   .quoteAuthor {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: var(--text-16);
+    line-height: var(--lh-24);
     margin-top: 24px;
   }
 }
@@ -316,13 +316,13 @@
   }
 
   .quoteText {
-    font-size: 16px;
-    line-height: 22px;
+    font-size: var(--text-16);
+    line-height: var(--lh-22);
   }
 
   .quoteAuthor {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: var(--text-14);
+    line-height: var(--lh-20);
     margin-top: 20px;
   }
 }

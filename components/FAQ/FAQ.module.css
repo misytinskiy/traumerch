@@ -1,6 +1,6 @@
 .faq {
   padding: 100px 150px;
-  background: rgba(255, 255, 255, 1);
+  background: var(--color-white);
 }
 
 .header {
@@ -16,12 +16,12 @@
 }
 
 .faqItem {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--color-black-10);
   transition: all 0.3s ease;
 }
 
 .faqItem:first-child {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--color-black-10);
 }
 
 .questionButton {
@@ -42,10 +42,10 @@
 
 .questionText {
   /* font-family: Inter; */
-  font-size: 24px;
+  font-size: var(--text-24);
   font-weight: 400;
   line-height: 100%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   text-align: left;
   text-transform: uppercase;
   letter-spacing: 0;
@@ -78,10 +78,10 @@
 
 .answer {
   /* font-family: Inter; */
-  font-size: 24px;
+  font-size: var(--text-24);
   font-weight: 400;
   line-height: 130%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   padding: 0 0 40px 0;
   margin: 0;
   letter-spacing: 0;
@@ -147,7 +147,7 @@
 
   .questionText,
   .answer {
-    font-size: 24px;
+    font-size: var(--text-24);
   }
 
   .questionButton {
@@ -180,7 +180,7 @@
   }
 
   .questionText {
-    font-size: 14px;
+    font-size: var(--text-14);
     max-width: 230px;
     letter-spacing: -0.02em;
   }
@@ -190,7 +190,7 @@
   }
 
   .answer {
-    font-size: 14px;
+    font-size: var(--text-14);
     opacity: 0.6;
     letter-spacing: 0.02em;
     line-height: 17px;

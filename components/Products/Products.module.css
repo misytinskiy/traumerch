@@ -1,6 +1,6 @@
 .products {
   padding: 100px 150px;
-  background: rgba(255, 255, 255, 1);
+  background: var(--color-white);
 }
 
 .header {
@@ -24,27 +24,27 @@
 .productImage {
   width: 100%;
   height: 452px;
-  background: rgba(200, 200, 200, 1);
-  border-radius: 20px;
+  background: var(--color-gray-200);
+  border-radius: var(--radius-20);
   margin-bottom: 26px;
 }
 
 .productName {
   /* font-family: Inter; */
-  font-size: 24px;
+  font-size: var(--text-24);
   font-weight: 400;
   line-height: 100%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   margin: 0 0 12px 0;
   letter-spacing: 0.03em;
 }
 
 .productPrice {
   /* font-family: Inter; */
-  font-size: 24px;
+  font-size: var(--text-24);
   font-weight: 400;
   line-height: 100%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   margin: 0;
   opacity: 0.5;
 }
@@ -63,16 +63,16 @@
 .skeletonText {
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.04) 0%,
-    rgba(0, 0, 0, 0.12) 50%,
-    rgba(0, 0, 0, 0.04) 100%
+    var(--color-black-04) 0%,
+    var(--color-black-12) 50%,
+    var(--color-black-04) 100%
   );
   background-size: 300% 100%;
   animation: skeletonShimmer 2.4s ease-in-out infinite;
 }
 
 .skeletonBlock {
-  border-radius: 20px;
+  border-radius: var(--radius-20);
 }
 
 .skeletonText {
@@ -101,7 +101,7 @@
 .fetchError {
   grid-column: 1 / -1;
   text-align: center;
-  color: rgba(255, 0, 0, 0.7);
+  color: var(--color-error-soft);
   padding: 20px;
 }
 
@@ -120,12 +120,12 @@
   }
 
   .productName {
-    font-size: 20px;
+    font-size: var(--text-20);
     margin: 0 0 6px 0;
   }
 
   .productPrice {
-    font-size: 20px;
+    font-size: var(--text-20);
   }
 
   .grid {
@@ -148,11 +148,11 @@
   }
 
   .productName {
-    font-size: 20px;
+    font-size: var(--text-20);
   }
 
   .productPrice {
-    font-size: 20px;
+    font-size: var(--text-20);
   }
 }
 
@@ -196,7 +196,7 @@
 
   .productName,
   .productPrice {
-    font-size: 24px;
+    font-size: var(--text-24);
   }
 }
 
@@ -225,11 +225,11 @@
   }
 
   .productName {
-    font-size: 12px;
+    font-size: var(--text-12);
     margin: 0 0 5px 0;
   }
 
   .productPrice {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 }

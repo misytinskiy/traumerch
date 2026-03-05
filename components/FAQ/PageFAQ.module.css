@@ -1,14 +1,14 @@
 .faqSection {
   padding: 180px 150px 160px;
-  background: #f8f8f8;
+  background: var(--color-gray-f8);
 }
 
 .title {
   font-family: var(--font-eb-garamond);
-  font-size: 80px;
+  font-size: var(--text-80);
   font-weight: 400;
   line-height: 120%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   letter-spacing: -0.01em;
   text-transform: uppercase;
   margin: 0;
@@ -32,10 +32,10 @@
   border: none;
   border-bottom: 1px solid transparent;
   padding: 0 0 14px 0;
-  font-size: 14px;
+  font-size: var(--text-14);
   letter-spacing: 0.015em;
   font-weight: 400;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   opacity: 0.4;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -52,7 +52,7 @@
 
 .tab.active {
   opacity: 1;
-  border-bottom-color: rgba(0, 0, 0, 1);
+  border-bottom-color: var(--color-black);
 }
 
 .accordionContainer {
@@ -66,7 +66,7 @@
   }
 
   .title {
-    font-size: 56px;
+    font-size: var(--text-56);
     max-width: 600px;
   }
 
@@ -90,7 +90,7 @@
   }
 
   .tab {
-    font-size: 14px;
+    font-size: var(--text-14);
     padding: 0 0 8px 0;
   }
 
@@ -99,7 +99,7 @@
   }
 
   .title {
-    font-size: 56px;
+    font-size: var(--text-56);
     max-width: 565px;
   }
 }
@@ -116,7 +116,7 @@
   }
 
   .title {
-    font-size: 64px;
+    font-size: var(--text-64);
     line-height: 117%;
   }
 
@@ -135,7 +135,7 @@
 
   .tab {
     padding: 9px 3px;
-    font-size: 14px;
+    font-size: var(--text-14);
     letter-spacing: 0;
     gap: 16px;
   }
@@ -156,11 +156,11 @@
   }
 
   .title {
-    font-size: 32px;
+    font-size: var(--text-32);
   }
 
   .tab {
-    font-size: 12px;
+    font-size: var(--text-12);
     padding: 0;
     letter-spacing: 0.02em;
   }

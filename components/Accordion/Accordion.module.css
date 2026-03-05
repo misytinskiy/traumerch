@@ -6,12 +6,12 @@
 }
 
 .accordionItem {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--color-black-10);
   transition: all 0.3s ease;
 }
 
 .accordionItem:first-child {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--color-black-10);
 }
 
 .questionButton {
@@ -31,10 +31,10 @@
 }
 
 .questionText {
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
   line-height: 100%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   text-align: left;
   text-transform: uppercase;
   letter-spacing: 0;
@@ -70,10 +70,10 @@
 }
 
 .answerText {
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
   line-height: 130%;
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-black);
   margin: 0 0 0.5em 0;
 }
 
@@ -90,7 +90,7 @@
 }
 
 .compact .questionText {
-  font-size: 20px;
+  font-size: var(--text-20);
   text-transform: none;
   letter-spacing: 0.02em;
 }
@@ -106,7 +106,7 @@
 }
 
 .compact .answerText {
-  font-size: 20px;
+  font-size: var(--text-20);
   line-height: 140%;
   opacity: 0.8;
   max-width: 570px;
@@ -142,11 +142,11 @@
   }
 
   .compact .questionText {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .compact .answerText {
-    font-size: 16px;
+    font-size: var(--text-16);
     max-width: 510px;
   }
 
@@ -161,7 +161,7 @@
 
   .questionText,
   .answerText {
-    font-size: 20px;
+    font-size: var(--text-20);
     max-width: 546px;
   }
 
@@ -191,7 +191,7 @@
 
 @media (max-width: 480px) {
   .questionText {
-    font-size: 12px;
+    font-size: var(--text-12);
     max-width: 230px;
     letter-spacing: -0.02em;
   }
@@ -201,7 +201,7 @@
   }
 
   .answerText {
-    font-size: 14px;
+    font-size: var(--text-14);
     opacity: 0.6;
     letter-spacing: 0.02em;
     line-height: 17px;
@@ -217,11 +217,11 @@
 /* Responsive styles for compact variant */
 @media (max-width: 768px) {
   .compact .questionText {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .compact .answerText {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .compact .questionButton {
@@ -235,11 +235,11 @@
 
 @media (max-width: 480px) {
   .compact .questionText {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .compact .answerText {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .compact .answerContent {
@@ -248,7 +248,7 @@
   }
 
   .answerText {
-    font-size: 12px;
+    font-size: var(--text-12);
     padding: 0;
 
   }

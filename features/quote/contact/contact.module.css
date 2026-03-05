@@ -1,7 +1,7 @@
 .page {
   min-height: 100vh;
-  background: #fff;
-  color: #111;
+  background: var(--color-white);
+  color: var(--color-gray-111);
 }
 
 .main {
@@ -12,10 +12,10 @@
 .title {
   font-family: var(--font-eb-garamond);
   font-weight: 400;
-  font-size: 56px;
+  font-size: var(--text-56);
   text-transform: uppercase;
   margin: 0 0 83px;
-  line-height: 64px;
+  line-height: var(--lh-64);
 }
 
 .layout {
@@ -26,15 +26,15 @@
 }
 
 .sectionTitle {
-  font-family: 'Inter';
-  font-size: 20px;
+  font-family: var(--font-ui);
+  font-size: var(--text-20);
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--color-text-tertiary);
   margin: 0 0 29px;
 }
 
 .sectionSubtitle {
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
   margin: 0 0 8px;
 }
@@ -63,16 +63,16 @@
   height: 46px;
   border-radius: 10px;
   border: none;
-  background: #f5f5f5;
+  background: var(--color-gray-f5);
   padding: 0 26px;
-  font-size: 16px;
-  color: #999;
+  font-size: var(--text-16);
+  color: var(--color-gray-999);
   outline: none;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .input::placeholder {
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--color-black-40);
 }
 
 .inputWrapper {
@@ -80,13 +80,13 @@
 }
 
 .inputError {
-  background: #fff5f5 !important;
-  border: 1px solid #ff4444 !important;
-  color: #111 !important;
+  background: var(--color-error-soft) !important;
+  border: 1px solid var(--color-error-strong) !important;
+  color: var(--color-gray-111) !important;
 }
 
 .inputError::placeholder {
-  color: #ff4444 !important;
+  color: var(--color-error-strong) !important;
 }
 
 .selectWrap {
@@ -106,10 +106,10 @@
   height: 46px;
   border-radius: 10px;
   border: none;
-  background: #f5f5f5;
+  background: var(--color-gray-f5);
   padding: 0 26px 0 26px;
-  font-size: 16px;
-  color: #999;
+  font-size: var(--text-16);
+  color: var(--color-gray-999);
   outline: none;
   cursor: pointer;
   display: flex;
@@ -157,9 +157,9 @@
   margin: 0;
   padding: 6px 0;
   list-style: none;
-  background: #f5f5f5;
+  background: var(--color-gray-f5);
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px var(--color-black-10);
   z-index: 100;
   max-height: 240px;
   overflow-y: auto;
@@ -177,27 +177,27 @@
 
 .selectOption {
   padding: 12px 26px;
-  font-size: 16px;
-  color: #999;
+  font-size: var(--text-16);
+  color: var(--color-gray-999);
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
 
 .selectOption:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.7);
+  background: var(--color-black-05);
+  color: var(--color-text-tertiary);
 }
 
 .selectOption[aria-selected="true"] {
-  background: rgba(0, 0, 0, 0.06);
-  color: rgba(0, 0, 0, 0.8);
+  background: var(--color-black-06);
+  color: var(--color-text-quaternary);
 }
 
 .checkboxRow {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 16px;
+  font-size: var(--text-16);
   margin: 24px 0;
   cursor: pointer;
 }
@@ -211,7 +211,7 @@
   -webkit-appearance: none;
   border: none;
   border-radius: 4px;
-  background: rgba(246, 246, 246, 1);
+  background: var(--color-gray-f6);
   cursor: pointer;
   background-image: none;
   background-repeat: no-repeat;
@@ -231,17 +231,17 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 16px;
+  font-size: var(--text-16);
 }
 
 .dateInput {
   height: 44px;
   border-radius: 3px;
   border: none;
-  background: #f5f5f5;
+  background: var(--color-gray-f5);
   padding: 0 12px;
-  color: #111;
-  font-size: 16px;
+  color: var(--color-gray-111);
+  font-size: var(--text-16);
   font-weight: 400;
   font-family: inherit;
 }
@@ -256,10 +256,10 @@
   width: 154px;
   border-radius: 6px;
   border: none;
-  background: #f5f5f5;
+  background: var(--color-gray-f5);
   padding: 0 10px;
-  color: #111;
-  font-size: 16px;
+  color: var(--color-gray-111);
+  font-size: var(--text-16);
   font-weight: 400;
   font-family: inherit;
   cursor: pointer;
@@ -270,7 +270,7 @@
 }
 
 .dateTrigger:hover {
-  background: #eeeeee;
+  background: var(--color-gray-eee);
 }
 
 .dateTriggerText {
@@ -284,7 +284,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: var(--color-gray-999);
 }
 
 .dateTriggerIcon svg {
@@ -298,9 +298,9 @@
   left: 0;
   top: calc(100% + 6px);
   padding: 16px;
-  background: #f5f5f5;
+  background: var(--color-gray-f5);
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px var(--color-black-10);
   z-index: 100;
   min-width: 280px;
   opacity: 0;
@@ -324,9 +324,9 @@
 }
 
 .dateCalendarTitle {
-  font-size: 16px;
+  font-size: var(--text-16);
   font-weight: 500;
-  color: #111;
+  color: var(--color-gray-111);
 }
 
 .dateCalendarNav {
@@ -334,9 +334,9 @@
   height: 32px;
   border: none;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.06);
-  color: #111;
-  font-size: 18px;
+  background: var(--color-black-06);
+  color: var(--color-gray-111);
+  font-size: var(--text-18);
   line-height: 1;
   cursor: pointer;
   display: flex;
@@ -346,7 +346,7 @@
 }
 
 .dateCalendarNav:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--color-black-10);
 }
 
 .dateWeekdays {
@@ -357,9 +357,9 @@
 }
 
 .dateWeekday {
-  font-size: 11px;
+  font-size: var(--text-11);
   font-weight: 500;
-  color: #999;
+  color: var(--color-gray-999);
   text-align: center;
 }
 
@@ -380,8 +380,8 @@
   border: none;
   border-radius: 6px;
   background: transparent;
-  color: #111;
-  font-size: 14px;
+  color: var(--color-gray-111);
+  font-size: var(--text-14);
   font-family: inherit;
   cursor: pointer;
   display: flex;
@@ -391,22 +391,22 @@
 }
 
 .dateDay:hover {
-  background: rgba(0, 0, 0, 0.08);
+  background: var(--color-black-08);
 }
 
 .dateDayToday {
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--color-black-06);
   font-weight: 500;
 }
 
 .dateDaySelected {
-  background: #111;
-  color: #fff;
+  background: var(--color-gray-111);
+  color: var(--color-white);
 }
 
 .dateDaySelected:hover {
-  background: #333;
-  color: #fff;
+  background: var(--color-gray-333);
+  color: var(--color-white);
 }
 
 .dateDayDisabled {
@@ -432,8 +432,8 @@
 
 .emptyQuote {
   padding: 24px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
-  color: rgba(0, 0, 0, 0.6);
+  border-top: 1px solid var(--color-black-15);
+  color: var(--color-text-secondary);
   margin: 0 0 16px;
 }
 
@@ -441,15 +441,15 @@
   display: flex;
   gap: 12px;
   padding: 20px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid var(--color-black-15);
 }
 
 .quoteCard:first-child {
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  border-top: 1px solid var(--color-black-15);
 }
 
 .quoteCard:last-child {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid var(--color-black-15);
 }
 
 .quoteMedia {
@@ -463,7 +463,7 @@
   height: 100%;
   border-radius: 10px;
   object-fit: cover;
-  background: #9c9c9c;
+  background: var(--color-gray-9c);
 }
 
 .quoteInfo {
@@ -487,7 +487,7 @@
 }
 
 .quoteName {
-  font-size: 20px;
+  font-size: var(--text-20);
   font-weight: 400;
 }
 
@@ -495,8 +495,8 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.6);
+  font-size: var(--text-16);
+  color: var(--color-text-secondary);
 }
 
 .quoteMetaGroup {
@@ -509,7 +509,7 @@
   width: 12px;
   height: 12px;
   border-radius: 2px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-black-20);
 }
 
 .quantityControls {
@@ -524,19 +524,19 @@
   height: 32px;
   border: none;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--color-black-04);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: var(--text-16);
   line-height: 1;
-  color: #000;
+  color: var(--color-black);
   transition: background 0.2s ease;
 }
 
 .quantityButton:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--color-black-20);
 }
 
 .quantityButton:disabled {
@@ -549,9 +549,9 @@
   height: 32px;
   border: none;
   border-radius: 999px;
-  background: #f5f5f5;
+  background: var(--color-gray-f5);
   text-align: center;
-  font-size: 12px;
+  font-size: var(--text-12);
   outline: none;
   appearance: textfield;
 }
@@ -568,7 +568,7 @@
   justify-content: space-between;
   gap: 16px;
   padding-top: 36px;
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  border-top: 1px solid var(--color-black-15);
 }
 
 .submitContent {
@@ -580,8 +580,8 @@
 .spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: #ffffff;
+  border: 2px solid var(--color-white-40);
+  border-top-color: var(--color-white);
   border-radius: 50%;
   animation: contactSpin 0.8s linear infinite;
 }
@@ -598,14 +598,14 @@
   }
 
   .title {
-    font-size: 44px;
+    font-size: var(--text-44);
     margin-bottom: 64px;
     line-height: 54px;
   }
 
   .sectionTitle,
   .sectionSubtitle {
-    font-size: 18px;
+    font-size: var(--text-18);
   }
 
   .layout {
@@ -616,12 +616,12 @@
   .select,
   .selectTrigger {
     height: 42px;
-    font-size: 14px;
+    font-size: var(--text-14);
     padding: 0 20px;
   }
 
   .checkboxRow {
-    font-size: 14px;
+    font-size: var(--text-14);
     margin: 20px 0;
   }
 
@@ -635,13 +635,13 @@
   }
 
   .deliveryRow {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .dateInput,
   .dateTrigger {
     height: 40px;
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .quoteMedia {
@@ -650,17 +650,17 @@
   }
 
   .quoteName {
-    font-size: 18px;
+    font-size: var(--text-18);
   }
 
   .quoteMeta {
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .quantityButton {
     width: 28px;
     height: 28px;
-    font-size: 14px;
+    font-size: var(--text-14);
   }
 
   .quantityInput {
@@ -692,21 +692,21 @@
   }
 
   .title {
-    font-size: 38px;
+    font-size: var(--text-38);
     margin-bottom: 52px;
     line-height: 48px;
   }
 
   .sectionTitle,
   .sectionSubtitle {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .input,
   .select,
   .selectTrigger {
     height: 40px;
-    font-size: 14px;
+    font-size: var(--text-14);
     padding: 0 18px;
   }
 
@@ -716,11 +716,11 @@
   }
 
   .quoteName {
-    font-size: 16px;
+    font-size: var(--text-16);
   }
 
   .quoteMeta {
-    font-size: 13px;
+    font-size: var(--text-13);
   }
 
   .quantityInput {
@@ -772,13 +772,13 @@
   }
 
   .title {
-    font-size: 28px;
+    font-size: var(--text-28);
     margin-bottom: 50px;
     line-height: 40px;
   }
 
   .sectionTitle {
-    font-size: 12px;
+    font-size: var(--text-12);
     margin-bottom: 20px
   }
 
@@ -786,18 +786,18 @@
   .select,
   .selectTrigger {
     height: 46px;
-    font-size: 12px;
+    font-size: var(--text-12);
     padding: 0 24px;
   }
 
   .checkboxRow {
-    font-size: 13px;
+    font-size: var(--text-13);
   }
 
   .dateInput,
   .dateTrigger {
     height: 38px;
-    font-size: 13px;
+    font-size: var(--text-13);
   }
 
   .quoteCard {
@@ -811,7 +811,7 @@
   }
 
   .quoteName {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .quoteTextStack {
@@ -819,38 +819,38 @@
   }
 
   .quoteMeta {
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .quantityButton {
     width: 28px;
     height: 28px;
-    font-size: 13px;
+    font-size: var(--text-13);
   }
 
   .quantityInput {
     width: 34px;
     height: 28px;
-    font-size: 12px;
+    font-size: var(--text-12);
   }
 
   .deliveryBlock {
-    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    border-top: 1px solid var(--color-black-15);
     margin-top: 24px
   }
 
   .sectionSubtitle {
-    font-size: 12px;
+    font-size: var(--text-12);
     margin-bottom: 16px;
   }
 
   .deliveryRow {
-    font-size: 12px;
+    font-size: var(--text-12);
     gap: 6px
   }
 .dateTrigger {
   height: 44px;
-        font-size: 12px;
+        font-size: var(--text-12);
         padding: 0 24px 0 24px;
 }
 
