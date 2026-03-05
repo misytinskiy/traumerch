@@ -3,6 +3,45 @@ import { NextRequest, NextResponse } from "next/server";
 const apiToken = process.env.API_TOKEN;
 const baseId = process.env.AIRTABLE_QUOTE_BASE_ID;
 const tableId = process.env.AIRTABLE_QUOTE_TABLE_ID;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+const siteHost = siteUrl
+  .replace(/^https?:\/\//, "")
+  .replace(/\/$/, "")
+  .toLowerCase();
+
+const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000;
+const RATE_LIMIT_MAX = 8;
+const rateLimitStore = new Map<
+  string,
+  { count: number; resetAt: number }
+>();
+
+const getClientKey = (request: NextRequest) => {
+  const forwardedFor = request.headers.get("x-forwarded-for") || "";
+  const ip = forwardedFor.split(",")[0]?.trim() || "unknown";
+  const ua = request.headers.get("user-agent") || "unknown";
+  return `${ip}:${ua}`;
+};
+
+const isAllowedOrigin = (request: NextRequest) => {
+  const origin = request.headers.get("origin");
+  const referer = request.headers.get("referer");
+  const allowedHosts = new Set(
+    [siteHost, "localhost:3000", "127.0.0.1:3000"].filter(Boolean)
+  );
+
+  const matchesHost = (value: string | null) => {
+    if (!value) return false;
+    try {
+      const host = new URL(value).host.toLowerCase();
+      return allowedHosts.has(host);
+    } catch {
+      return false;
+    }
+  };
+
+  return matchesHost(origin) || matchesHost(referer);
+};
 
 const fetchWithTimeout = async (
   url: string,
@@ -24,6 +63,25 @@ export async function POST(request: NextRequest) {
       { error: "Missing Airtable configuration" },
       { status: 500 }
     );
+  }
+
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const key = getClientKey(request);
+  const now = Date.now();
+  const entry = rateLimitStore.get(key);
+  if (!entry || entry.resetAt <= now) {
+    rateLimitStore.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+  } else {
+    entry.count += 1;
+    if (entry.count > RATE_LIMIT_MAX) {
+      return NextResponse.json(
+        { error: "Too many requests" },
+        { status: 429 }
+      );
+    }
   }
 
   try {
@@ -236,7 +294,6 @@ export async function POST(request: NextRequest) {
       console.error("Airtable create error", {
         status: response.status,
         details: errorText,
-        sentFields: airtableFields,
       });
       return NextResponse.json(
         {
@@ -294,7 +351,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       recordId: data.id,
-      data: data,
     });
   } catch (error) {
     return NextResponse.json(
