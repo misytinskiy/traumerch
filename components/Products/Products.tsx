@@ -34,16 +34,19 @@ export default function Products({
   const { t, language } = useLanguage();
   const router = useRouter();
   const url = "/api/airtable-products?format=normalized&priceTier=sample&maxRecords=4";
+  const hasInitial = initialRecords.length > 0;
   const { data, error, isLoading } = useSWR(url, fetcher, {
-    fallbackData: { records: initialRecords },
+    fallbackData: hasInitial ? { records: initialRecords } : undefined,
     revalidateOnMount: true,
     revalidateIfStale: true,
   });
   const fetchError = error ? t.common.loadProductsError : null;
-  const records = data?.records as NormalizedProduct[] | undefined;
+  const records = (data?.records ?? initialRecords) as
+    | NormalizedProduct[]
+    | undefined;
 
   const products = useMemo(() => {
-    if (isLoading) {
+    if (isLoading && !hasInitial) {
       return Array.from({ length: SKELETON_COUNT }, (_, index) => ({
         id: `skeleton-${index}`,
         name: "",

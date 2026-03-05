@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import styles from "./ProductSlider.module.css";
 
 const IMAGES = ["/inspiration/1.png", "/inspiration/2.png"];
@@ -65,7 +66,7 @@ export default function ProductSlider() {
     let isMounted = true;
     const preload = (src: string) =>
       new Promise<void>((resolve) => {
-        const img = new Image();
+        const img = new window.Image();
         img.onload = () => resolve();
         img.onerror = () => resolve();
         img.src = src;
@@ -110,14 +111,30 @@ export default function ProductSlider() {
           className={`${styles.sliderImage} ${styles.sliderImagePrev} ${
             isAnimating ? styles.fadeOut : ""
           }`}
-          style={{ backgroundImage: `url("${IMAGES[prevSlide]}")` }}
-        />
+        >
+          <Image
+            src={IMAGES[prevSlide]}
+            alt="Previous product inspiration"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 600px"
+            className={styles.sliderImageContent}
+            priority={prevSlide === 0}
+          />
+        </div>
         <div
           className={`${styles.sliderImage} ${styles.sliderImageCurrent} ${
             isAnimating ? styles.fadeIn : ""
           }`}
-          style={{ backgroundImage: `url("${IMAGES[currentSlide]}")` }}
-        />
+        >
+          <Image
+            src={IMAGES[currentSlide]}
+            alt="Product inspiration"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 600px"
+            className={styles.sliderImageContent}
+            priority={currentSlide === 0}
+          />
+        </div>
       </div>
 
       <button

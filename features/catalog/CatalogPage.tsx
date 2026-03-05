@@ -4,6 +4,7 @@ import { fetchNormalizedProducts } from "../../server/products/products";
 
 export default async function CatalogPage() {
   const apiToken = process.env.API_TOKEN;
+  const catalogViewId = process.env.AIRTABLE_CATALOG_VIEW_ID;
   let initialRecords = [] as Awaited<
     ReturnType<typeof fetchNormalizedProducts>
   >["records"];
@@ -13,9 +14,11 @@ export default async function CatalogPage() {
         await fetchNormalizedProducts({
           apiToken,
           priceTier: "bulk",
+          view: catalogViewId || undefined,
         })
       ).records;
-    } catch {
+    } catch (error) {
+      console.error("[CatalogPage] Failed to fetch initial records", error);
       initialRecords = [];
     }
   }

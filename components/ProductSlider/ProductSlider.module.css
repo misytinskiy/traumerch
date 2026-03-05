@@ -55,6 +55,11 @@
   will-change: opacity, transform, filter;
 }
 
+.sliderImageContent {
+  object-fit: cover;
+  border-radius: inherit;
+}
+
 .sliderImagePrev {
   z-index: 1;
   opacity: 1;

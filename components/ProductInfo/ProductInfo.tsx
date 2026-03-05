@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./ProductInfo.module.css";
 
@@ -124,10 +125,16 @@ export default function ProductInfo() {
 
       <div className={styles.sliderSection}>
         <div className={styles.sliderContainer}>
-          <div
-            className={styles.sliderImage}
-            style={{ backgroundImage: `url("${slides[currentSlide]}")` }}
-          />
+          <div className={styles.sliderImage}>
+            <Image
+              src={slides[currentSlide]}
+              alt={t.design.knowYourProduct}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 50vw"
+              className={styles.sliderImageContent}
+              priority={currentSlide === 0}
+            />
+          </div>
 
           <button
             className={`${styles.sliderNav} ${styles.prev}`}

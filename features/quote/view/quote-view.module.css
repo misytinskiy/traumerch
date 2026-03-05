@@ -39,6 +39,7 @@ margin: 0 auto;
 .media {
   width: 422px;
   height: 475px;
+  position: relative;
 }
 
 .image,

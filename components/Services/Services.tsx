@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "../../contexts/LanguageContext";
+import Image from "next/image";
 import ServiceTitle from "../ServiceTitle/ServiceTitle";
 // import Button from "../Button/Button";
 import styles from "./Services.module.css";
@@ -47,10 +48,11 @@ export default function Services({ showAll = false }: ServicesProps) {
 
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={service.image ?? `/services/${index + 1}.png`}
                 alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
+                fill
+                sizes="(max-width: 900px) 100vw, (max-width: 1280px) 50vw, 40vw"
                 className={styles.serviceImageImg}
               />
             </div>

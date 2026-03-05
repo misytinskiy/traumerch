@@ -72,12 +72,13 @@
   border-radius: 20px 20px 0 0;
   overflow: hidden;
   background: var(--color-gray-f6);
+  position: relative;
 height: 510px;
 }
 
 .cardImage {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
 }

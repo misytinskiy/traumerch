@@ -455,6 +455,7 @@
 .quoteMedia {
   width: 106px;
   height: 112px;
+  position: relative;
 }
 
 .quoteImage,

@@ -122,14 +122,22 @@ export default function ProductTabs({
   const apiUrl = `/api/airtable-products?format=normalized&priceTier=bulk${
     categoryTerm ? `&category=${encodeURIComponent(categoryTerm)}` : ""
   }`;
-  const { data, error, isLoading } = useSWR(apiUrl, fetcher, {
+  const hasInitial = initialRecords.length > 0;
+  const shouldFetch = activeTab !== "allProducts" || !hasInitial;
+  const { data, error, isLoading } = useSWR(shouldFetch ? apiUrl : null, fetcher, {
     fallbackData:
-      activeTab === "allProducts" ? { records: initialRecords } : undefined,
-    revalidateOnMount: true,
+      activeTab === "allProducts" && hasInitial
+        ? { records: initialRecords }
+        : undefined,
+    revalidateOnMount: false,
     revalidateIfStale: true,
   });
   const fetchError = error ? t.common.loadProductsError : null;
-  const records = (data?.records ?? []) as NormalizedProduct[];
+  const records = (
+    activeTab === "allProducts"
+      ? initialRecords
+      : data?.records ?? []
+  ) as NormalizedProduct[];
 
   useEffect(() => {
     setShowAll(false);
@@ -245,7 +253,7 @@ export default function ProductTabs({
     return activeRecords.map((record) => mapRecordToProduct(record, "regular"));
   }, [activeRecords, mapRecordToProduct]);
 
-  const shouldShowSkeleton = isLoading;
+  const shouldShowSkeleton = shouldFetch && isLoading;
 
   const showEmptyState =
     !shouldShowSkeleton && !fetchError && activeRecords.length === 0;

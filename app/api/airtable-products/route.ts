@@ -77,8 +77,9 @@ export async function GET(request: NextRequest) {
   const filterByFormula = undefined;
   const category = (searchParams.get("category") || "").toLowerCase().trim();
 
-  const cacheSeconds = recordId ? 600 : 300;
-  const staleSeconds = Math.min(60, cacheSeconds);
+  const cacheSeconds =
+    format === "normalized" ? 60 : recordId ? 600 : 300;
+  const staleSeconds = Math.min(30, cacheSeconds);
   const cacheControl = `s-maxage=${cacheSeconds}, stale-while-revalidate=${staleSeconds}, stale-if-error=60`;
 
   try {

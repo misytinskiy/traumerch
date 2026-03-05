@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./portfolio.module.css";
 
 const cards = [
@@ -51,11 +52,12 @@ export default function PortfolioPage() {
             {cards.map((card) => (
               <article key={card.image} className={styles.card}>
                 <div className={styles.cardImageWrap}>
-                  <img
+                  <Image
                     src={card.image}
                     alt={card.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     className={styles.cardImage}
-                    loading="lazy"
                   />
                 </div>
                 <div className={styles.cardBody}>

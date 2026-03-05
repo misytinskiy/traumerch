@@ -74,7 +74,14 @@ export default function ThankYouOverlay({
           </div>
           <p className={styles.description}>{description}</p>
           <div className={styles.imageContainer}>
-            <video className={styles.thankYouImage} autoPlay muted playsInline>
+            <video
+              className={styles.thankYouImage}
+              autoPlay
+              muted
+              playsInline
+              preload="metadata"
+              poster="/thankYou.gif"
+            >
               <source src="/thankYou.webm" type="video/webm" />
             </video>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "../../../components/Button/Button";
 import { useCart } from "../../../contexts/CartContext";
@@ -190,9 +191,11 @@ export default function QuoteViewPage() {
               <article className={styles.card} key={`${item.productId}-${index}`}>
                 <div className={styles.media}>
                   {photoUrl ? (
-                    <img
+                    <Image
                       src={photoUrl}
                       alt={displayName}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 422px"
                       className={styles.image}
                     />
                   ) : (

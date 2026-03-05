@@ -34,6 +34,11 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 const shouldUseGeoLookup =
   process.env.NEXT_PUBLIC_ENABLE_GEO_LOOKUP === "true";
 
+const setCookie = (key: string, value: string) => {
+  if (typeof document === "undefined") return;
+  document.cookie = `${key}=${value}; path=/; max-age=31536000; samesite=lax`;
+};
+
 // Function to detect country by IP (opt-in)
 const detectCountry = async (): Promise<Country> => {
   if (!shouldUseGeoLookup) return "EN";
@@ -82,12 +87,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
       setCountry(detectedCountry);
       localStorage.setItem("country", detectedCountry);
+      setCookie("country", detectedCountry);
 
       if (!savedLanguage) {
         const newLanguage: Language =
           detectedCountry === "DE" || detectedCountry === "AT" ? "de" : "en";
         setLanguage(newLanguage);
         localStorage.setItem("language", newLanguage);
+        setCookie("language", newLanguage);
       }
     };
 
@@ -98,14 +105,22 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = language;
+    }
+  }, [language]);
+
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang);
     localStorage.setItem("language", lang);
+    setCookie("language", lang);
   };
 
   const handleSetCountry = (newCountry: Country) => {
     setCountry(newCountry);
     localStorage.setItem("country", newCountry);
+    setCookie("country", newCountry);
   };
 
   return (

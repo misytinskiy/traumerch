@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../../contexts/CartContext";
@@ -228,8 +229,13 @@ export default function CartSidebar() {
                     </button>
                     <div className={styles.itemImage} aria-hidden>
                       {itemImageUrl ? (
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                        <img src={itemImageUrl} alt={item.productName} />
+                        <Image
+                          src={itemImageUrl}
+                          alt={item.productName}
+                          fill
+                          sizes="100px"
+                          className={styles.itemImageContent}
+                        />
                       ) : null}
                     </div>
                     <div className={styles.itemContent}>

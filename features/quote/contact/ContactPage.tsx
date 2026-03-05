@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "../../../components/Button/Button";
 import ThankYouOverlay from "../../../components/ThankYouOverlay/ThankYouOverlay";
@@ -653,9 +654,11 @@ export default function QuoteContactPage() {
                   >
                     <div className={styles.quoteMedia}>
                       {photoUrl ? (
-                        <img
+                        <Image
                           src={photoUrl}
                           alt={displayName}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 106px"
                           className={styles.quoteImage}
                         />
                       ) : (
