@@ -36,12 +36,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieLang = cookies().get("language")?.value;
+  const cookieStore = await cookies();
+  const cookieLang = cookieStore.get("language")?.value;
   const lang = cookieLang === "de" ? "de" : "en";
 
   return (

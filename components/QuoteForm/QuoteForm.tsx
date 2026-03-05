@@ -5,7 +5,7 @@ import { InlineWidget } from "react-calendly";
 import Button from "../Button/Button";
 import ThankYouOverlay from "../ThankYouOverlay/ThankYouOverlay";
 import { useLanguage } from "../../contexts/LanguageContext";
-import styles from "../../app/quote/quote.module.css";
+import styles from "../../features/quote/quote.module.css";
 
 interface QuoteFormData {
   name: string;

@@ -22,7 +22,7 @@ export default function ProductGallery({
   selectedPhotoIndex: number;
   onThumbnailClick: (index: number) => void;
   onDotClick: (index: number) => void;
-  sliderRef: React.RefObject<HTMLDivElement>;
+  sliderRef: React.RefObject<HTMLDivElement | null>;
   onSliderScroll: () => void;
   selectedColor: string;
   imageAlt: string;
