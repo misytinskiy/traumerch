@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const apiToken = process.env.API_TOKEN;
-const baseId = process.env.AIRTABLE_QUOTE_BASE_ID;
-const tableId = process.env.AIRTABLE_QUOTE_TABLE_ID;
+const baseId = process.env.AIRTABLE_QUOTE_BASE_ID || process.env.QUOTE_BASE_ID;
+const tableId = process.env.AIRTABLE_QUOTE_TABLE_ID || process.env.QUOTE_TABLE_ID;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
 const siteHost = siteUrl
   .replace(/^https?:\/\//, "")

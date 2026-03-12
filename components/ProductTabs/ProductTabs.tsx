@@ -70,6 +70,7 @@ const DESKTOP_LAYOUT_PATTERN: Product["size"][] = [
 ];
 
 const MOBILE_SKELETON_COUNT = 12;
+const COMPACT_GRID_BREAKPOINT = 900;
 
 const TAB_CATEGORY_TERM: Record<TabKey, string | null> = {
   allProducts: null,
@@ -109,7 +110,7 @@ export default function ProductTabs({
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= COMPACT_GRID_BREAKPOINT);
     };
 
     checkScreenSize();

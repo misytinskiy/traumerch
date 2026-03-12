@@ -109,7 +109,7 @@
   margin-top: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .ourPromisesMobile {
     padding: 93px 30px 88px;
   }

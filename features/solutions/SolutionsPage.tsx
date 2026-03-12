@@ -21,7 +21,6 @@ export default function SolutionsPage() {
   return (
     <div className={styles.page}>
       <main>
-        {/* Hero-like section */}
         <section className={styles.hero}>
           <h1 className={styles.title}>{t.solutions.hero.title}</h1>
 
@@ -55,7 +54,7 @@ export default function SolutionsPage() {
           </button>
         </section>
 
-        {/* Extended Services section with all 5 services */}
+  
         <section ref={servicesRef}>
           <Services showAll={true} />
         </section>

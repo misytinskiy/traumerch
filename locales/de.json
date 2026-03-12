@@ -213,7 +213,7 @@
         "badge": "MERCH, DAS VERBINDET",
         "title": "Unternehmens- & Event-Merchandise",
         "description": "Wir entwickeln gebrandetes Merchandise für Mitarbeitende und Events, das Menschen verbindet. Von Welcome Kits und Team-Ausstattung bis zu Konferenz-Giveaways – unsere Lösungen stärken Zusammenhalt und Markenkultur mit jedem Produkt.",
-        "image": "/services/1.png",
+        "image": "/services/1.jpg",
         "imageAlt": "Unternehmens- & Event-Merchandise",
         "buttonText": "Event-Merch entdecken"
       },
@@ -221,7 +221,7 @@
         "badge": "GESCHENKE, DIE BLEIBEN",
         "title": "Geschäftsgeschenke",
         "description": "Wir gestalten und liefern durchdachte Geschenke für Kunden, Partner und Mitarbeitende. Von hochwertigen Produkten bis zu maßgeschneiderter Verpackung – jedes Geschenk hinterlässt Eindruck und baut stärkere Geschäftsbeziehungen auf.",
-        "image": "/services/2.png",
+        "image": "/services/2.jpg",
         "imageAlt": "Geschäftsgeschenke",
         "buttonText": "Geschenkideen ansehen"
       },
@@ -229,7 +229,7 @@
         "badge": "IHRE EIGENE MARKE",
         "title": "Private-Label-Kollektionen",
         "description": "Wir entwickeln exklusive Private-Label-Produkte, die individuell auf Ihre Marke zugeschnitten sind. Von Multi-SKU-Kollektionen und einzigartigen Designs bis zur Sekundärverpackung bringen wir Ideen zum Leben und erweitern Ihre Marktpräsenz mit unverwechselbarem Merchandise.",
-        "image": "/services/3.png",
+        "image": "/services/3.jpg",
         "imageAlt": "Private-Label-Kollektionen",
         "buttonText": "Private Label entdecken"
       },
@@ -237,7 +237,7 @@
         "badge": "PROGRAMME, DIE VERSTÄRKEN",
         "title": "Influencer-Aktivierung & Seeding",
         "description": "Wir entwickeln Influencer- und Brand-Seeding-Programme, die Wirkung erzielen. Mit maßgeschneiderter Verpackung, kuratiertem Merchandise und gezielter Distribution unterstützen wir Marken dabei, authentischen Content zu schaffen und die richtigen Zielgruppen zu erreichen.",
-        "image": "/services/4.png",
+        "image": "/services/4.jpg",
         "imageAlt": "Influencer-Aktivierung & Seeding",
         "buttonText": "Influencer-Programme ansehen"
       },
@@ -245,7 +245,7 @@
         "badge": "MERCH LEICHT GEMACHT",
         "title": "Smarte Plattform",
         "description": "Unsere digitale Plattform vereinfacht jeden Schritt im Merchandise-Management. Von Bestellung und Lagerverwaltung bis zur Distribution erhalten Marken die Werkzeuge, um ihre Programme effizient und transparent zu skalieren.",
-        "image": "/services/5.png",
+        "image": "/services/5.jpg",
         "imageAlt": "Smarte Plattform",
         "buttonText": "Plattform ausprobieren"
       }
@@ -262,12 +262,30 @@
   },
   "policies": {
     "items": [
-      { "title": "IMPRESSUM", "content": "Inhalt folgt." },
-      { "title": "DATENSCHUTZERKLÄRUNG", "content": "Inhalt folgt." },
-      { "title": "COOKIE-RICHTLINIE", "content": "Inhalt folgt." },
-      { "title": "AGB (ALLGEMEINE GESCHÄFTSBEDINGUNGEN)", "content": "Inhalt folgt." },
-      { "title": "VERSANDRICHTLINIE", "content": "Inhalt folgt." },
-      { "title": "RÜCKERSTATTUNGSRICHTLINIE", "content": "Inhalt folgt." }
+      {
+        "title": "IMPRESSUM",
+        "content": "Traumerch\u2122\n\nEine Marke der Montelux Merchandise GmbH\n\nTuchlauben 7A, 1010 Wien, Österreich\nE-Mail: sales@traumerch.com\nTelefon: +43 660 557 5836\nFirmenbuchnummer: FN 673409h\nGeschäftsführer: Ihor Konstantinovskyi\n\nSofern nicht anders angegeben, beziehen sich Hinweise in diesen Richtlinien auf \"wir\", \"uns\" oder \"Traumerch\" auf die Montelux Merchandise GmbH, die unter der Marke Traumerch\u2122 auftritt."
+      },
+      {
+        "title": "DATENSCHUTZERKLÄRUNG",
+        "content": "Traumerch\u2122 verarbeitet personenbezogene Daten nur, soweit dies erforderlich ist, um diese Website zu betreiben, geschäftliche Anfragen zu beantworten, Angebote zu erstellen, Bestellungen abzuwickeln und laufende Geschäftsbeziehungen zu pflegen.\n\nVerantwortlicher ist die Montelux Merchandise GmbH, Tuchlauben 7A, 1010 Wien, Österreich, E-Mail: sales@traumerch.com.\n\nWir können Kontaktdaten, Unternehmensdaten, Inhalte von Anfragen, auftragsbezogene Informationen, Rechnungs- und Lieferdaten sowie technische Nutzungsdaten verarbeiten. Die Verarbeitung erfolgt ausschließlich zum Zweck der Leistungserbringung, der Kommunikation, der Angebotserstellung, der Auftragsabwicklung und der Pflege laufender Geschäftsbeziehungen.\n\nSoweit gesetzlich erforderlich, holen wir vor der Verarbeitung eine Einwilligung ein. Daten können an sorgfältig ausgewählte Dienstleister weitergegeben werden, soweit dies für unsere Geschäftstätigkeit erforderlich ist; die Speicherung erfolgt nur so lange, wie es erforderlich oder gesetzlich vorgeschrieben ist.\n\nSie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie – soweit anwendbar – Widerspruch gegen die Verarbeitung. Zur Ausübung Ihrer Rechte oder bei Fragen zur Verarbeitung Ihrer personenbezogenen Daten kontaktieren Sie uns bitte unter sales@traumerch.com."
+      },
+      {
+        "title": "COOKIE-RICHTLINIE",
+        "content": "Diese Website verwendet Cookies und ähnliche Technologien, um Funktionalität, Sicherheit und Leistung zu gewährleisten.\n\nNotwendige Cookies werden automatisch gesetzt und sind für den grundlegenden Betrieb der Website erforderlich. Nicht notwendige Cookies werden nur verwendet, soweit dies nach geltendem Recht zulässig ist.\n\nSie können Ihre Cookie-Einstellungen über die Einstellungen Ihres Browsers oder – soweit implementiert – über das Cookie-Banner auf dieser Website verwalten."
+      },
+      {
+        "title": "AGB (ALLGEMEINE GESCHÄFTSBEDINGUNGEN)",
+        "content": "Diese Website und unsere Leistungen richten sich ausschließlich an Geschäftskunden.\n\nAlle Informationen, Angebote, Visualisierungen und Produktbeschreibungen auf dieser Website dienen allgemeinen geschäftlichen Informationszwecken und können jederzeit ohne vorherige Ankündigung geändert werden.\n\nAlle Bestellungen, Angebote, Produktionszeiten, Spezifikationen und kaufmännischen Bedingungen werden gesondert schriftlich bestätigt. Die Produktion kundenspezifischer Aufträge beginnt erst nach Freigabe der relevanten Bestelldetails, Druckdaten und Spezifikationen.\n\nGeringfügige Abweichungen in Farbe, Material, Maßen oder Veredelung können im Rahmen üblicher produktionstechnischer Toleranzen auftreten.\n\nSofern nicht ausdrücklich anders schriftlich vereinbart, gilt österreichisches Recht, und Gerichtsstand ist Wien, Österreich."
+      },
+      {
+        "title": "VERSANDRICHTLINIE",
+        "content": "Versandbedingungen, Lieferzeiten und Versandkosten werden im jeweiligen Angebot, in der Auftragsbestätigung oder in der Rechnung festgelegt.\n\nLieferzeiten sind Richtwerte, sofern sie nicht ausdrücklich schriftlich zugesichert werden. Produktion und Versand beginnen erst nach endgültiger Freigabe der Bestelldaten und gegebenenfalls nach Zahlungseingang.\n\nZölle, Einfuhrabgaben und sonstige Gebühren außerhalb der EU liegen – sofern nicht anders schriftlich vereinbart – in der Verantwortung des Kunden."
+      },
+      {
+        "title": "RÜCKERSTATTUNGSRICHTLINIE",
+        "content": "Da Traumerch\u2122 überwiegend im B2B-Bereich und auftragsbezogen (made-to-order) arbeitet, sind Stornierungen, Rücksendungen und Rückerstattungen in der Regel nach Produktionsbeginn nicht möglich, sofern nicht ausdrücklich schriftlich etwas anderes vereinbart wurde.\n\nSollten Waren mangelhaft, unvollständig oder nicht vertragsgemäß geliefert werden, ist uns der Mangel unverzüglich schriftlich an sales@traumerch.com mitzuteilen.\n\nSoweit ein Anspruch anerkannt wird, können wir nach unserem Ermessen Ersatz liefern, nachbessern, eine Gutschrift erteilen oder eine Rückerstattung vornehmen – abhängig vom jeweiligen Einzelfall."
+      }
     ]
   },
   "design": {
@@ -450,7 +468,7 @@
       {
         "title": "Folgen Sie uns",
         "links": [
-          { "label": "LinkedIn", "href": "https://www.linkedin.com/company/traumerch", "external": true },
+          { "label": "LinkedIn", "href": "https://www.linkedin.com/company/traumerch/", "external": true },
           { "label": "Instagram", "href": "https://www.instagram.com/traumerch", "external": true },
           { "label": "TikTok", "href": "https://www.tiktok.com/@traumerch?_r=1&_t=ZN-945FLVekMFi", "external": true }
         ]
@@ -458,7 +476,7 @@
       {
         "title": "Kontakt aufnehmen",
         "links": [
-          { "label": "Stephansplatz 8, 1010, Wien, Österreich", "href": "https://maps.app.goo.gl/MkuHJ3bGzUdgDAyi8", "external": true },
+          { "label": "Tuchlauben 7A, 1010, Wien, Österreich", "href": "https://maps.app.goo.gl/n2F6nZ6xLehWRodw6", "external": true },
           { "label": "sales@traumerch.com", "href": "mailto:sales@traumerch.com", "external": true }
         ]
       }

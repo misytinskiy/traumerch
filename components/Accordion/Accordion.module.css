@@ -62,7 +62,8 @@
 }
 
 .accordionItem.open .answerContainer {
-  max-height: 200px;
+  /* Большой лимит, чтобы длинные политики полностью влезали */
+  max-height: 2000px;
 }
 
 .answerContent {
@@ -80,8 +81,23 @@
 .answerText:last-child {
   margin-bottom: 0;
   letter-spacing: 0;
-  opacity: 0.6;
   max-width: 1013px;
+}
+
+.tmBadgeInline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.45em;
+  line-height: 1;
+  margin-left: 0.12em;
+  vertical-align: super;
+  position: relative;
+  top: -0.08em;
 }
 
 /* Compact variant for ProductDetails */
@@ -153,7 +169,7 @@
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .questionText {
     max-width: 600px;
     line-height: 113%;
@@ -185,7 +201,7 @@
   }
 
   .accordionItem.open .answerContainer {
-    max-height: 600px;
+    max-height: 2000px;
   }
 }
 
@@ -215,7 +231,7 @@
 }
 
 /* Responsive styles for compact variant */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .compact .questionText {
     font-size: var(--text-16);
   }
@@ -250,8 +266,9 @@
   .answerText {
     font-size: var(--text-12);
     padding: 0;
-
   }
+
+  .answerText:last-child {max-width: 406px;}
 
   
 }
@@ -260,21 +277,30 @@
   .compact .answerText {
   max-width: 350px;
 }
+
+.answerText:last-child {max-width: 350px;}
 }
 
 @media ( max-width: 415px){ 
   .compact .answerText {
   max-width: 310px;
 }
+
+.answerText:last-child {max-width: 310px;}
 }
 
 @media ( max-width: 360px){ 
   .compact .answerText {
   max-width: 270px;
-} }
+}
+
+.answerText:last-child {max-width: 270px;}
+}
 
 @media ( max-width: 330px){ 
   .compact .answerText {
   max-width: 240px;
 }
+
+.answerText:last-child {max-width: 240px;}
 }

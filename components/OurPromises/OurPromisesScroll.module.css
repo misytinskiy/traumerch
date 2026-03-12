@@ -229,18 +229,7 @@
   }
 }
 
-@media (max-width: 1000px) {
-  .promisesList {
-    display: none;
-  }
-  .mainContent {
-    justify-content: center;
-  }
 
-  .promiseImage {
-    width: 100%;
-  }
-}
 
 @media (max-width: 900px) {
   .ourPromisesScroll {

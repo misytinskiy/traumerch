@@ -213,7 +213,7 @@
         "badge": "MERCH THAT UNITES",
         "title": "CORPORATE & EVENT MERCHANDISE",
         "description": "We create branded merchandise for employees and events that brings people together. From welcome kits and team gear to conference giveaways, our solutions ensure every item strengthens connection and brand culture.",
-        "image": "/services/1.png",
+        "image": "/services/1.jpg",
         "imageAlt": "Corporate & event merchandise",
         "buttonText": "EXPLORE EVENT MERCH"
       },
@@ -221,7 +221,7 @@
         "badge": "GIFTS THAT LAST",
         "title": "BUSINESS GIFTS",
         "description": "We design and deliver thoughtful gifts for clients, partners, and employees. From premium selections to tailored packaging, every gift leaves a lasting impression and builds stronger business relationships.",
-        "image": "/services/2.png",
+        "image": "/services/2.jpg",
         "imageAlt": "Business gifts",
         "buttonText": "VIEW GIFT IDEAS"
       },
@@ -229,7 +229,7 @@
         "badge": "OWN YOUR BRAND",
         "title": "PRIVATE LABEL COLLECTIONS",
         "description": "We develop exclusive private label products tailored to your brand. From multi-SKU collections and unique designs to secondary packaging, we bring ideas to life and expand your market presence with distinctive merchandise.",
-        "image": "/services/3.png",
+        "image": "/services/3.jpg",
         "imageAlt": "Private label collections",
         "buttonText": "DISCOVER PRIVATE LABEL"
       },
@@ -237,7 +237,7 @@
         "badge": "PROGRAMS THAT AMPLIFY",
         "title": "INFLUENCER ACTIVATION & SEEDING",
         "description": "We build influencer and brand seeding programs designed for impact. With custom packaging, curated merchandise, and targeted distribution, we help brands spark authentic content and reach the right audiences.",
-        "image": "/services/4.png",
+        "image": "/services/4.jpg",
         "imageAlt": "Influencer activation & seeding",
         "buttonText": "SEE INFLUENCER PROGRAMS"
       },
@@ -245,7 +245,7 @@
         "badge": "MERCH MADE EASY",
         "title": "SMART PLATFORM",
         "description": "Our digital platform simplifies every step of merchandise management. From ordering and stock control to distribution, it gives brands the tools to scale their merch programs efficiently and transparently.",
-        "image": "/services/5.png",
+        "image": "/services/5.jpg",
         "imageAlt": "Smart platform",
         "buttonText": "TRY THE PLATFORM"
       }
@@ -263,12 +263,30 @@
   },
   "policies": {
     "items": [
-      { "title": "IMPRINT", "content": "Content coming soon." },
-      { "title": "PRIVACY POLICY", "content": "Content coming soon." },
-      { "title": "COOKIE POLICY", "content": "Content coming soon." },
-      { "title": "TERMS & CONDITIONS", "content": "Content coming soon." },
-      { "title": "SHIPPING POLICY", "content": "Content coming soon." },
-      { "title": "REFUNDS POLICY", "content": "Content coming soon." }
+      {
+        "title": "IMPRINT",
+        "content": "Traumerch\u2122\n\nA brand of Montelux Merchandise GmbH\n\nTuchlauben 7A, 1010 Vienna, Austria\nEmail: sales@traumerch.com\nPhone: +43 660 557 5836\nCompany Register No: FN 673409h\nManaging Director: Ihor Konstantinovskyi\n\nUnless stated otherwise, references in these policies to \"we\", \"us\" or \"Traumerch\" refer to Montelux Merchandise GmbH operating under the brand Traumerch\u2122."
+      },
+      {
+        "title": "PRIVACY POLICY",
+        "content": "Traumerch\u2122 processes personal data only as necessary to operate this website, respond to business enquiries, prepare quotations, manage orders, and maintain business relationships.\n\nThe controller is Montelux Merchandise GmbH, Tuchlauben 7A, 1010 Vienna, Austria, email: sales@traumerch.com.\n\nWe may process contact details, company details, request contents, order-related information, billing and delivery information, and technical usage data. Data is processed solely to provide our services, communicate, prepare quotations, manage orders, and maintain ongoing business relationships.\n\nWhere required by law, we obtain consent before processing. We may share data with carefully selected service providers where necessary for business operations; data is retained only for as long as necessary or legally required.\n\nYou have the right to request information, rectification, deletion, portability, and, where applicable, restriction or objection to processing. To exercise your rights, or if you have questions about processing of your personal data, please contact us at sales@traumerch.com."
+      },
+      {
+        "title": "COOKIE POLICY",
+        "content": "This website uses cookies and similar technologies to ensure functionality, security, and performance.\n\nEssential cookies are used automatically and are strictly necessary for the basic operation of the website. Any non-essential cookies are only used where permitted by applicable law.\n\nYou can manage cookie preferences through your browser settings or, where implemented, through the cookie banner on this website."
+      },
+      {
+        "title": "TERMS & CONDITIONS",
+        "content": "This website and our services are intended for business customers only.\n\nAll information, offers, visuals, and product descriptions on this website are provided for general business purposes and may be updated at any time without prior notice.\n\nAll orders, quotations, production timelines, specifications, and commercial agreements must be confirmed separately in writing. Custom production begins only after approval of the relevant order details, artwork, and specifications.\n\nMinor variations in colour, materials, dimensions, or finishing may occur as part of normal production tolerances.\n\nUnless explicitly agreed otherwise in writing, Austrian law applies and the place of jurisdiction is Vienna, Austria."
+      },
+      {
+        "title": "SHIPPING POLICY",
+        "content": "Shipping terms, lead times, and delivery costs are specified in the relevant quotation, order confirmation, or invoice.\n\nDelivery timelines are estimates unless expressly confirmed otherwise in writing. Production and dispatch begin only after final approval of order details and, where applicable, receipt of payment.\n\nAny customs duties, import taxes, or related charges outside the EU are the responsibility of the customer, unless agreed otherwise in writing."
+      },
+      {
+        "title": "REFUNDS POLICY",
+        "content": "As Traumerch\u2122 works on a B2B and primarily made-to-order basis, cancellations, returns, and refunds are generally not available once production has started, unless otherwise agreed in writing.\n\nIf goods arrive defective, incomplete, or not in accordance with the confirmed order, the customer must notify us in writing without undue delay at sales@traumerch.com.\n\nWhere a claim is accepted, we may provide replacement, correction, credit, or refund at our discretion and subject to the specific case."
+      }
     ]
   },
   "design": {
@@ -451,7 +469,7 @@
       {
         "title": "Stay Connected",
         "links": [
-          { "label": "LinkedIn", "href": "https://www.linkedin.com/company/traumerch", "external": true },
+          { "label": "LinkedIn", "href": "https://www.linkedin.com/company/traumerch/", "external": true },
           { "label": "Instagram", "href": "https://www.instagram.com/traumerch", "external": true },
           { "label": "TikTok", "href": "https://www.tiktok.com/@traumerch?_r=1&_t=ZN-945FLVekMFi", "external": true }
         ]
@@ -459,7 +477,7 @@
       {
         "title": "Get in Touch",
         "links": [
-          { "label": "Stephansplatz 8, 1010, Vienna, Austria", "href": "https://maps.app.goo.gl/MkuHJ3bGzUdgDAyi8", "external": true },
+          { "label": "Tuchlauben 7A, 1010, Vienna, Austria", "href": "https://maps.app.goo.gl/n2F6nZ6xLehWRodw6", "external": true },
           { "label": "sales@traumerch.com", "href": "mailto:sales@traumerch.com", "external": true }
         ]
       }

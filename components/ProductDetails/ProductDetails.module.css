@@ -576,7 +576,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .productDetails {
     padding: 140px 30px 88px;
   }

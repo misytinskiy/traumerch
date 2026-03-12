@@ -214,14 +214,16 @@
 @media (max-width: 900px) {
   .footer {
     padding: 109px 30px;
+
   }
 
 
 
   .content {
-    flex-direction: row-reverse;
-    gap: 0;
+
     margin-bottom: 51px;
+    flex-direction: column;
+    gap: 80px;
   }
 
   .columns {
@@ -237,7 +239,7 @@
   }
 
   .logo {
-    align-self: end;
+    align-self: start;
   }
 
   .logoImage {

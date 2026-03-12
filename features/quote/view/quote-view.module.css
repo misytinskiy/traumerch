@@ -446,18 +446,20 @@ margin: 0 auto;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .main {
-    padding: 140px 48px 80px;
+    padding: 130px 48px 80px;
   }
 
   .card {
     flex-direction: column;
   }
 
+  .title {margin-bottom: 38px;}
+
   .media {
     width: 100%;
-    height: auto;
+    height: 500px;
   }
 
   .headerRow {

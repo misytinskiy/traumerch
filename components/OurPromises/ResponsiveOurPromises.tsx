@@ -15,7 +15,7 @@ export default function ResponsiveOurPromises() {
     const checkDevice = () => {
       const width = window.innerWidth;
       setIsMobile(width <= 480);
-      setIsTablet(width <= 744);
+      setIsTablet(width <= 900);
     };
 
     checkDevice();

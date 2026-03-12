@@ -24,26 +24,66 @@ interface AccordionItem {
   content: string;
 }
 
-/** Splits content by bullet separators (• ∙ ·) and returns JSX: one paragraph per point. */
+function renderInlineTmBadge(text: string) {
+  const parts = text.split("[[TM_BADGE]]");
+  if (parts.length === 1) return text;
+
+  return parts.flatMap((part, idx) =>
+    idx < parts.length - 1
+      ? [
+          part,
+          <span
+            key={`tm-${idx}`}
+            className={styles.tmBadgeInline}
+            aria-label="Trademark"
+          >
+            TM
+          </span>,
+        ]
+      : [part]
+  );
+}
+
+/** Formats content into paragraphs and optional bullet-style lines. */
 function formatBulletList(content: string) {
-  // Split on "bullet with spaces" only when preceded by something (so we don't split the leading "• ")
-  const parts = content
-    .split(/(?<=.)\s*[•∙·]\s+/)
-    .map((s) => s.trim())
+  // First split into logical paragraphs by blank lines
+  const paragraphs = content
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
     .filter(Boolean);
-  if (parts.length <= 1) {
-    return <p className={styles.answerText}>{content}</p>;
+
+  const renderParagraph = (text: string, keyPrefix: number) => {
+    // Then split paragraph into bullet-like segments if it uses "•" style separators
+    const parts = text
+      .split(/(?<=.)\s*[•∙·]\s+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    if (parts.length <= 1) {
+      return (
+        <p key={keyPrefix} className={styles.answerText}>
+          {renderInlineTmBadge(text)}
+        </p>
+      );
+    }
+
+    return parts.map((line, idx) => {
+      const bulletText = /^[•∙·]\s*/.test(line) ? line : `• ${line}`;
+      return (
+        <p key={`${keyPrefix}-${idx}`} className={styles.answerText}>
+          {renderInlineTmBadge(bulletText)}
+        </p>
+      );
+    });
+  };
+
+  if (paragraphs.length <= 1) {
+    return renderParagraph(content, 0);
   }
+
   return (
     <>
-      {parts.map((line, i) => {
-        const text = /^[•∙·]\s*/.test(line) ? line : "• " + line;
-        return (
-          <p key={i} className={styles.answerText}>
-            {text}
-          </p>
-        );
-      })}
+      {paragraphs.map((para, idx) => renderParagraph(para, idx))}
     </>
   );
 }

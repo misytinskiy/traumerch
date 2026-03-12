@@ -409,7 +409,7 @@
 
   .productImage.regular,
   .productImage.large {
-    height: 343px !important;
+    height: 443px !important;
   }
 
   .productName,
@@ -457,7 +457,7 @@
 
   .productImage.regular,
   .productImage.large {
-    height: 176px !important;
+    height: 284px !important;
   }
 
   .mobileRow {

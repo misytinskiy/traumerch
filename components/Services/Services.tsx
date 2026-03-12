@@ -3,7 +3,6 @@
 import { useLanguage } from "../../contexts/LanguageContext";
 import Image from "next/image";
 import ServiceTitle from "../ServiceTitle/ServiceTitle";
-// import Button from "../Button/Button";
 import styles from "./Services.module.css";
 
 interface ServicesProps {
@@ -34,22 +33,14 @@ export default function Services({ showAll = false }: ServicesProps) {
             </div>
             <div className={styles.desktopDescription}>
               <p className={styles.description}>{service.description}</p>
-              {/* <Button
-                variant="solid"
-                padding="31px 84px"
-                padding1536="20px 48px"
-                padding768="30px 72px"
-                arrow="white"
-              >
-                SEE MORE
-              </Button> */}
+        
             </div>
           </div>
 
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
               <Image
-                src={service.image ?? `/services/${index + 1}.png`}
+                src={service.image ?? `/services/${index + 1}.jpg`}
                 alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
                 fill
                 sizes="(max-width: 900px) 100vw, (max-width: 1280px) 50vw, 40vw"
@@ -58,15 +49,7 @@ export default function Services({ showAll = false }: ServicesProps) {
             </div>
             <div className={styles.mobileDescription}>
               <p className={styles.description}>{service.description}</p>
-              {/* <Button
-                variant="solid"
-                padding="31px 40px"
-                padding768="42px 114px"
-                padding480="24px 65px"
-                arrow="white"
-              >
-                SEE MORE
-              </Button> */}
+      
             </div>
           </div>
         </div>
