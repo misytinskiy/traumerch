@@ -85,19 +85,11 @@
 }
 
 .tmBadgeInline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2em;
-  height: 2em;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  font-size: 0.45em;
+  display: inline;
+  font-size: 0.6em;
   line-height: 1;
-  margin-left: 0.12em;
+  margin-left: 0.08em;
   vertical-align: super;
-  position: relative;
-  top: -0.08em;
 }
 
 /* Compact variant for ProductDetails */
