@@ -260,6 +260,14 @@
     },
     "scrollAria": "Zum Servicebereich scrollen"
   },
+  "inspiration": {
+    "titleLine1": "Unsere Inspiration.",
+    "titleLine2": "Ihre Ideen",
+    "textCardOne": "Gebrandete Objekte. Echte Emotion.",
+    "textCardTwo": "Inspiration, die man berühren kann.",
+    "textCardThree": "Von Marken inspiriert. Für Menschen gemacht.",
+    "textCardFour": "Von Konzeptboards bis zu Brand-Produkten."
+  },
   "policies": {
     "items": [
       {
@@ -476,7 +484,7 @@
       {
         "title": "Kontakt aufnehmen",
         "links": [
-          { "label": "Tuchlauben 7A, 1010, Wien, Österreich", "href": "https://maps.app.goo.gl/n2F6nZ6xLehWRodw6", "external": true },
+          { "label": "Stephansplatz 8/20, 1010, Wien, Österreich", "href": "https://maps.app.goo.gl/U8Uq5MZqgs6khEXy8", "external": true },
           { "label": "sales@traumerch.com", "href": "mailto:sales@traumerch.com", "external": true }
         ]
       }

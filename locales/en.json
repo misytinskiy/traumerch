@@ -261,6 +261,14 @@
     ,
     "scrollAria": "Scroll to services section"
   },
+  "inspiration": {
+    "titleLine1": "Our inspiration.",
+    "titleLine2": "Your ideas",
+    "textCardOne": "Branded objects. Real emotion.",
+    "textCardTwo": "Inspiration you can touch.",
+    "textCardThree": "Inspired by brands. Built for people.",
+    "textCardFour": "From concept boards to branded goods."
+  },
   "policies": {
     "items": [
       {
@@ -477,7 +485,7 @@
       {
         "title": "Get in Touch",
         "links": [
-          { "label": "Tuchlauben 7A, 1010, Vienna, Austria", "href": "https://maps.app.goo.gl/n2F6nZ6xLehWRodw6", "external": true },
+          { "label": "Stephansplatz 8/20, 1010, Vienna, Austria", "href": "https://maps.app.goo.gl/U8Uq5MZqgs6khEXy8", "external": true },
           { "label": "sales@traumerch.com", "href": "mailto:sales@traumerch.com", "external": true }
         ]
       }

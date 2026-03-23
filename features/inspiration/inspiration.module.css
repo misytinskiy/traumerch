@@ -1,0 +1,855 @@
+.page {
+  background: var(--color-white);
+}
+
+.main {
+  padding: 0 151px 80px;
+  background: var(--color-white);
+}
+
+.header {
+  padding-top: 382px;
+  margin-bottom: 215px;
+  display: flex;
+  justify-content: center;
+}
+
+.headerTitle {
+  margin: 0;
+  font-family: var(--font-eb-garamond);
+  font-size: 80px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 98px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.gridSection {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 350px);
+  gap: 20px;
+}
+
+.cardOne,
+.cardTwo,
+.cardThree,
+.cardFour,
+.cardFive,
+.cardSix,
+.cardSeven,
+.cardEight,
+.cardNine,
+.cardTen,
+.cardEleven,
+.cardTwelve,
+.cardThirteen,
+.cardFourteen,
+.cardFifteen,
+.cardSixteen,
+.cardSeventeen,
+.cardEighteen,
+.cardNineteen,
+.cardTwenty,
+.cardTwentyOne,
+.cardTwentyTwo,
+.cardTwentyThree,
+.cardTwentyFour,
+.cardTwentyFive,
+.cardTwentySix,
+.cardTwentySeven,
+.cardTwentyEight,
+.cardTwentyNine,
+.cardThirty,
+.cardThirtyOne,
+.cardThirtyTwo,
+.cardThirtyThree,
+.cardThirtyFour {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 350px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cardOne {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.cardTwo {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.cardFour {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.cardThree {
+  grid-column: 3 / 5;
+  grid-row: 1 / 3;
+}
+
+.gridSecond {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 350px);
+  gap: 20px;
+}
+
+.cardFive {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.cardSix {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.cardSeven {
+  grid-column: 2 / 4;
+  grid-row: 1 / 3;
+}
+
+.cardEight {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.cardNine {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+.gridThird {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 350px);
+  gap: 20px;
+}
+
+.cardTen {
+  grid-column: 1 / 3;
+  grid-row: 1;
+}
+
+.cardEleven {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.cardTwelve {
+  grid-column: 3 / 5;
+  grid-row: 1 / 3;
+}
+
+.gridFourth {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 350px);
+  gap: 20px;
+}
+
+.cardThirteen {
+  grid-column: 1 / 3;
+  grid-row: 1;
+}
+
+.cardFourteen {
+  grid-column: 3 / 5;
+  grid-row: 1;
+}
+
+.cardFifteen {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.cardSixteen {
+  grid-column: 2 / 4;
+  grid-row: 2;
+}
+
+.cardSeventeen {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+.gridFifth {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 350px);
+  gap: 20px;
+}
+
+.cardEighteen {
+  grid-column: 1 / 3;
+  grid-row: 1;
+}
+
+.cardNineteen {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.cardTwenty {
+  grid-column: 4;
+  grid-row: 1 / 3;
+}
+
+.cardTwentyOne {
+  grid-column: 1 / 3;
+  grid-row: 2;
+}
+
+.gridSixth {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 350px);
+  gap: 20px;
+}
+
+.cardTwentyTwo {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.cardTwentyThree {
+  grid-column: 2;
+  grid-row: 1 / 3;
+}
+
+.cardTwentyFour {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.cardTwentyFive {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.cardTwentySix {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.cardTwentySeven {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+.gridSeventh {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 350px);
+  gap: 20px;
+}
+
+.cardTwentyEight {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.cardTwentyNine {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.cardThirty {
+  grid-column: 3 / 5;
+  grid-row: 1;
+}
+
+.cardThirtyOne {
+  grid-column: 2 / 4;
+  grid-row: 2;
+}
+
+.cardThirtyTwo {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+.gridEighth {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 350px);
+  gap: 20px;
+}
+
+.cardThirtyThree {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.cardThirtyFour {
+  grid-column: 2 / 5;
+  grid-row: 1 / 3;
+}
+
+.textCard {
+  grid-column: 1;
+  grid-row: 2;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.textCard p {
+  margin: 0;
+  font-family: var(--font-eb-garamond);
+  font-size: 42px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: var(--color-black);
+  max-width: 400px;
+}
+
+.textCardSecond {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+}
+
+.textCardSecond p {
+  margin: 0;
+  font-family: var(--font-eb-garamond);
+  font-size: 42px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: var(--color-black);
+  max-width: 400px;
+}
+
+.textCardThird {
+  grid-column: 3;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+}
+
+.textCardThird p {
+  margin: 0;
+  font-family: var(--font-eb-garamond);
+  font-size: 42px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: var(--color-black);
+  max-width: 400px;
+}
+
+.textCardFourth {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+}
+
+.textCardFourth p {
+  margin: 0;
+  font-family: var(--font-eb-garamond);
+  font-size: 42px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: var(--color-black);
+  max-width: 400px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.cardOne:hover,
+.cardTwo:hover,
+.cardThree:hover,
+.cardFour:hover,
+.cardFive:hover,
+.cardSix:hover,
+.cardSeven:hover,
+.cardEight:hover,
+.cardNine:hover,
+.cardTen:hover,
+.cardEleven:hover,
+.cardTwelve:hover,
+.cardThirteen:hover,
+.cardFourteen:hover,
+.cardFifteen:hover,
+.cardSixteen:hover,
+.cardSeventeen:hover,
+.cardEighteen:hover,
+.cardNineteen:hover,
+.cardTwenty:hover,
+.cardTwentyOne:hover,
+.cardTwentyTwo:hover,
+.cardTwentyThree:hover,
+.cardTwentyFour:hover,
+.cardTwentyFive:hover,
+.cardTwentySix:hover,
+.cardTwentySeven:hover,
+.cardTwentyEight:hover,
+.cardTwentyNine:hover,
+.cardThirty:hover,
+.cardThirtyOne:hover,
+.cardThirtyTwo:hover,
+.cardThirtyThree:hover,
+.cardThirtyFour:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
+}
+
+.cardOne:hover .image,
+.cardTwo:hover .image,
+.cardThree:hover .image,
+.cardFour:hover .image,
+.cardFive:hover .image,
+.cardSix:hover .image,
+.cardSeven:hover .image,
+.cardEight:hover .image,
+.cardNine:hover .image,
+.cardTen:hover .image,
+.cardEleven:hover .image,
+.cardTwelve:hover .image,
+.cardThirteen:hover .image,
+.cardFourteen:hover .image,
+.cardFifteen:hover .image,
+.cardSixteen:hover .image,
+.cardSeventeen:hover .image,
+.cardEighteen:hover .image,
+.cardNineteen:hover .image,
+.cardTwenty:hover .image,
+.cardTwentyOne:hover .image,
+.cardTwentyTwo:hover .image,
+.cardTwentyThree:hover .image,
+.cardTwentyFour:hover .image,
+.cardTwentyFive:hover .image,
+.cardTwentySix:hover .image,
+.cardTwentySeven:hover .image,
+.cardTwentyEight:hover .image,
+.cardTwentyNine:hover .image,
+.cardThirty:hover .image,
+.cardThirtyOne:hover .image,
+.cardThirtyTwo:hover .image,
+.cardThirtyThree:hover .image,
+.cardThirtyFour:hover .image {
+  transform: scale(1.03);
+}
+
+@media (max-width: 900px), (hover: none) {
+  .cardOne:hover,
+  .cardTwo:hover,
+  .cardThree:hover,
+  .cardFour:hover,
+  .cardFive:hover,
+  .cardSix:hover,
+  .cardSeven:hover,
+  .cardEight:hover,
+  .cardNine:hover,
+  .cardTen:hover,
+  .cardEleven:hover,
+  .cardTwelve:hover,
+  .cardThirteen:hover,
+  .cardFourteen:hover,
+  .cardFifteen:hover,
+  .cardSixteen:hover,
+  .cardSeventeen:hover,
+  .cardEighteen:hover,
+  .cardNineteen:hover,
+  .cardTwenty:hover,
+  .cardTwentyOne:hover,
+  .cardTwentyTwo:hover,
+  .cardTwentyThree:hover,
+  .cardTwentyFour:hover,
+  .cardTwentyFive:hover,
+  .cardTwentySix:hover,
+  .cardTwentySeven:hover,
+  .cardTwentyEight:hover,
+  .cardTwentyNine:hover,
+  .cardThirty:hover,
+  .cardThirtyOne:hover,
+  .cardThirtyTwo:hover,
+  .cardThirtyThree:hover,
+  .cardThirtyFour:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .cardOne:hover .image,
+  .cardTwo:hover .image,
+  .cardThree:hover .image,
+  .cardFour:hover .image,
+  .cardFive:hover .image,
+  .cardSix:hover .image,
+  .cardSeven:hover .image,
+  .cardEight:hover .image,
+  .cardNine:hover .image,
+  .cardTen:hover .image,
+  .cardEleven:hover .image,
+  .cardTwelve:hover .image,
+  .cardThirteen:hover .image,
+  .cardFourteen:hover .image,
+  .cardFifteen:hover .image,
+  .cardSixteen:hover .image,
+  .cardSeventeen:hover .image,
+  .cardEighteen:hover .image,
+  .cardNineteen:hover .image,
+  .cardTwenty:hover .image,
+  .cardTwentyOne:hover .image,
+  .cardTwentyTwo:hover .image,
+  .cardTwentyThree:hover .image,
+  .cardTwentyFour:hover .image,
+  .cardTwentyFive:hover .image,
+  .cardTwentySix:hover .image,
+  .cardTwentySeven:hover .image,
+  .cardTwentyEight:hover .image,
+  .cardTwentyNine:hover .image,
+  .cardThirty:hover .image,
+  .cardThirtyOne:hover .image,
+  .cardThirtyTwo:hover .image,
+  .cardThirtyThree:hover .image,
+  .cardThirtyFour:hover .image {
+    transform: none;
+  }
+}
+
+@media (max-width: 1540px) {
+  .main {
+    padding: 0 120px 64px;
+  }
+
+  .header {
+    padding-top: 300px;
+    margin-bottom: 170px;
+  }
+
+  .headerTitle {
+    font-size: 64px;
+    line-height: 78px;
+  }
+
+  .gridSection {
+    margin-bottom: 16px;
+  }
+
+  .grid,
+  .gridSecond,
+  .gridThird,
+  .gridFourth,
+  .gridFifth,
+  .gridSixth,
+  .gridSeventh,
+  .gridEighth {
+    grid-template-rows: repeat(2, 300px);
+    gap: 16px;
+  }
+
+  .cardOne,
+  .cardTwo,
+  .cardThree,
+  .cardFour,
+  .cardFive,
+  .cardSix,
+  .cardSeven,
+  .cardEight,
+  .cardNine,
+  .cardTen,
+  .cardEleven,
+  .cardTwelve,
+  .cardThirteen,
+  .cardFourteen,
+  .cardFifteen,
+  .cardSixteen,
+  .cardSeventeen,
+  .cardEighteen,
+  .cardNineteen,
+  .cardTwenty,
+  .cardTwentyOne,
+  .cardTwentyTwo,
+  .cardTwentyThree,
+  .cardTwentyFour,
+  .cardTwentyFive,
+  .cardTwentySix,
+  .cardTwentySeven,
+  .cardTwentyEight,
+  .cardTwentyNine,
+  .cardThirty,
+  .cardThirtyOne,
+  .cardThirtyTwo,
+  .cardThirtyThree,
+  .cardThirtyFour {
+    min-height: 300px;
+    border-radius: 14px;
+  }
+
+  .textCard p,
+  .textCardSecond p,
+  .textCardThird p,
+  .textCardFourth p {
+    font-size: 34px;
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .main {
+    padding: 0 90px 56px;
+  }
+
+  .header {
+    padding-top: 240px;
+    margin-bottom: 130px;
+  }
+
+  .headerTitle {
+    font-size: 52px;
+    line-height: 64px;
+  }
+
+  .grid,
+  .gridSecond,
+  .gridThird,
+  .gridFourth,
+  .gridFifth,
+  .gridSixth,
+  .gridSeventh,
+  .gridEighth {
+    grid-template-rows: repeat(2, 250px);
+    gap: 12px;
+  }
+
+  .cardOne,
+  .cardTwo,
+  .cardThree,
+  .cardFour,
+  .cardFive,
+  .cardSix,
+  .cardSeven,
+  .cardEight,
+  .cardNine,
+  .cardTen,
+  .cardEleven,
+  .cardTwelve,
+  .cardThirteen,
+  .cardFourteen,
+  .cardFifteen,
+  .cardSixteen,
+  .cardSeventeen,
+  .cardEighteen,
+  .cardNineteen,
+  .cardTwenty,
+  .cardTwentyOne,
+  .cardTwentyTwo,
+  .cardTwentyThree,
+  .cardTwentyFour,
+  .cardTwentyFive,
+  .cardTwentySix,
+  .cardTwentySeven,
+  .cardTwentyEight,
+  .cardTwentyNine,
+  .cardThirty,
+  .cardThirtyOne,
+  .cardThirtyTwo,
+  .cardThirtyThree,
+  .cardThirtyFour {
+    min-height: 250px;
+    border-radius: 12px;
+  }
+
+  .textCard p,
+  .textCardSecond p,
+  .textCardThird p,
+  .textCardFourth p {
+    font-size: 28px;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 900px) {
+  .main {
+    padding: 72px 29px 40px;
+  }
+
+  .header {
+    padding-top: 50px;
+    margin-bottom: 48px;
+  }
+
+  .headerTitle {
+    font-size: 42px;
+    line-height: 52px;
+  }
+
+  .grid,
+  .gridSecond,
+  .gridThird,
+  .gridFourth,
+  .gridFifth,
+  .gridSixth,
+  .gridSeventh,
+  .gridEighth {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+    gap: 12px;
+    grid-auto-flow: dense;
+  }
+
+  .cardOne,
+  .cardTwo,
+  .cardThree,
+  .cardFour,
+  .cardFive,
+  .cardSix,
+  .cardSeven,
+  .cardEight,
+  .cardNine,
+  .cardTen,
+  .cardEleven,
+  .cardTwelve,
+  .cardThirteen,
+  .cardFourteen,
+  .cardFifteen,
+  .cardSixteen,
+  .cardSeventeen,
+  .cardEighteen,
+  .cardNineteen,
+  .cardTwenty,
+  .cardTwentyOne,
+  .cardTwentyTwo,
+  .cardTwentyThree,
+  .cardTwentyFour,
+  .cardTwentyFive,
+  .cardTwentySix,
+  .cardTwentySeven,
+  .cardTwentyEight,
+  .cardTwentyNine,
+  .cardThirty,
+  .cardThirtyOne,
+  .cardThirtyTwo,
+  .cardThirtyThree,
+  .cardThirtyFour,
+  .textCard,
+  .textCardSecond,
+  .textCardThird,
+  .textCardFourth {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 380px;
+  }
+
+  .textCard,
+  .textCardSecond,
+  .textCardThird,
+  .textCardFourth {
+    min-height: 180px;
+  }
+
+  .textCard p,
+  .textCardSecond p,
+  .textCardThird p,
+  .textCardFourth p {
+    font-size: 33px;
+    max-width: 100%;
+  }
+
+  .grid > article:last-child:nth-child(odd),
+  .gridSecond > article:last-child:nth-child(odd),
+  .gridThird > article:last-child:nth-child(odd),
+  .gridFourth > article:last-child:nth-child(odd),
+  .gridFifth > article:last-child:nth-child(odd),
+  .gridSixth > article:last-child:nth-child(odd),
+  .gridSeventh > article:last-child:nth-child(odd),
+  .gridEighth > article:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 72px 10px 30px;
+  }
+
+  .header {
+    margin-bottom: 32px;
+  }
+
+  .headerTitle {
+    font-size: 34px;
+    line-height: 42px;
+  }
+
+  .grid,
+  .gridSecond,
+  .gridThird,
+  .gridFourth,
+  .gridFifth,
+  .gridSixth,
+  .gridSeventh,
+  .gridEighth {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .cardOne,
+  .cardTwo,
+  .cardThree,
+  .cardFour,
+  .cardFive,
+  .cardSix,
+  .cardSeven,
+  .cardEight,
+  .cardNine,
+  .cardTen,
+  .cardEleven,
+  .cardTwelve,
+  .cardThirteen,
+  .cardFourteen,
+  .cardFifteen,
+  .cardSixteen,
+  .cardSeventeen,
+  .cardEighteen,
+  .cardNineteen,
+  .cardTwenty,
+  .cardTwentyOne,
+  .cardTwentyTwo,
+  .cardTwentyThree,
+  .cardTwentyFour,
+  .cardTwentyFive,
+  .cardTwentySix,
+  .cardTwentySeven,
+  .cardTwentyEight,
+  .cardTwentyNine,
+  .cardThirty,
+  .cardThirtyOne,
+  .cardThirtyTwo,
+  .cardThirtyThree,
+  .cardThirtyFour,
+  .textCard,
+  .textCardSecond,
+  .textCardThird,
+  .textCardFourth {
+    min-height: 350px;
+    border-radius: 10px;
+  }
+
+  .textCard p,
+  .textCardSecond p,
+  .textCardThird p,
+  .textCardFourth p {
+    font-size: 44px;
+  }
+}
+
