@@ -56,7 +56,15 @@ export default function Header() {
   // Framer Motion scroll animations
   const { scrollY } = useScroll();
 
-  const enableScrollEffects = ["/", "/portfolio", "/solutions", "/faq", "/policies", "/design"].includes(pathname);
+  const enableScrollEffects = [
+    "/",
+    "/portfolio",
+    "/solutions",
+    "/inspiration",
+    "/faq",
+    "/policies",
+    "/design",
+  ].includes(pathname);
 
   // Scroll logic with immediate hide/show
   useEffect(() => {
@@ -127,6 +135,9 @@ export default function Header() {
       case "services":
         // Services - go to solutions page
         router.push("/solutions");
+        break;
+      case "inspiration":
+        router.push("/inspiration");
         break;
       case "gallery":
         // Portfolio - scroll to gallery section (main page or navigate with hash)
@@ -403,6 +414,19 @@ export default function Header() {
                 </motion.button>
                 <motion.button
                   className={`${styles.menuItem} ${
+                    activeSection === "inspiration" ? styles.active : ""
+                  }`}
+                  onClick={() => handleMenuNavigation("inspiration")}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  whileHover={{ opacity: 0.7 }}
+                  transition={{ delay: 0.2, duration: 0.2 }}
+                >
+                  {t.header.inspiration}
+                </motion.button>
+                <motion.button
+                  className={`${styles.menuItem} ${
                     activeSection === "faq" ? styles.active : ""
                   }`}
                   onClick={() => handleMenuNavigation("faq")}
@@ -410,7 +434,7 @@ export default function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   whileHover={{ opacity: 0.7 }}
-                  transition={{ delay: 0.2, duration: 0.2 }}
+                  transition={{ delay: 0.25, duration: 0.2 }}
                 >
                   {t.header.faq}
                 </motion.button>

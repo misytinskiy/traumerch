@@ -5,6 +5,7 @@
     "catalog": "OUR CATALOGUE",
     "services": "SERVICES",
     "servicesLong": "SERVICES",
+    "inspiration": "INSPIRATION",
     "faq": "FAQ",
     "portfolio": "PORTFOLIO",
     "policy": "POLICY",
@@ -461,6 +462,7 @@
         "title": "Explore",
         "links": [
           { "label": "Services", "href": "/solutions" },
+          { "label": "Inspiration", "href": "/inspiration" },
           { "label": "Portfolio", "href": "/#gallery" },
           { "label": "FAQ", "href": "/faq" }
         ]

@@ -59,6 +59,9 @@ export default function MobileHeader() {
       case "services":
         router.push("/solutions");
         break;
+      case "inspiration":
+        router.push("/inspiration");
+        break;
       case "gallery":
         if (pathname === "/") {
           const element = document.getElementById("gallery");
@@ -205,6 +208,12 @@ export default function MobileHeader() {
                 onClick={() => handleMenuNavigation("services")}
               >
                 {t.header.servicesLong}
+              </button>
+              <button
+                className={styles.menuItem}
+                onClick={() => handleMenuNavigation("inspiration")}
+              >
+                {t.header.inspiration}
               </button>
               <button
                 className={styles.menuItem}

@@ -5,6 +5,7 @@
     "catalog": "UNSER KATALOG",
     "services": "LEISTUNGEN",
     "servicesLong": "DIENSTLEISTUNGEN",
+    "inspiration": "INSPIRATION",
     "faq": "FAQ",
     "portfolio": "PORTFOLIO",
     "policy": "RICHTLINIEN",
@@ -460,6 +461,7 @@
         "title": "Entdecken",
         "links": [
           { "label": "Leistungen", "href": "/solutions" },
+          { "label": "Inspiration", "href": "/inspiration" },
           { "label": "Portfolio", "href": "/#gallery" },
           { "label": "FAQ", "href": "/faq" }
         ]
