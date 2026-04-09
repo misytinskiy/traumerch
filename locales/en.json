@@ -473,7 +473,8 @@
           { "label": "Imprint", "href": "/policies" },
           { "label": "Privacy Policy", "href": "/policies" },
           { "label": "Cookie Policy", "href": "/policies" },
-          { "label": "Terms & Conditions", "href": "/policies" }
+          { "label": "Terms & Conditions", "href": "/policies" },
+          { "label": "Cookie Settings", "href": "cookie-settings" }
         ]
       },
       {
@@ -603,5 +604,11 @@
   "glassBanner": {
     "title": "Ready to create merchandise for your brand?",
     "button": "REQUEST QUOTE NOW"
+  },
+  "cookieBanner": {
+    "title": "We use cookies",
+    "text": "We use essential cookies and analytics cookies to improve website functionality and performance.",
+    "accept": "Accept Cookies",
+    "reject": "Reject"
   }
 }

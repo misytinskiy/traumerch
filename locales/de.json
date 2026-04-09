@@ -472,7 +472,8 @@
           { "label": "Impressum", "href": "/policies" },
           { "label": "Datenschutzerklärung", "href": "/policies" },
           { "label": "Cookie-Richtlinie", "href": "/policies" },
-          { "label": "AGB (Allgemeine Geschäftsbedingungen)", "href": "/policies" }
+          { "label": "AGB (Allgemeine Geschäftsbedingungen)", "href": "/policies" },
+          { "label": "Cookie-Einstellungen", "href": "cookie-settings" }
         ]
       },
       {
@@ -602,5 +603,11 @@
   "glassBanner": {
     "title": "Bereit, Merchandise für Ihre Marke zu gestalten?",
     "button": "JETZT ANGEBOT ANFORDERN"
+  },
+  "cookieBanner": {
+    "title": "Wir verwenden Cookies",
+    "text": "Wir verwenden notwendige Cookies und Analyse-Cookies, um Funktionalität und Leistung der Website zu verbessern.",
+    "accept": "Cookies akzeptieren",
+    "reject": "Ablehnen"
   }
 }

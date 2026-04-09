@@ -30,6 +30,12 @@ export default function Footer() {
   const handleFooterNavigation = (link: FooterLink) => {
     const href = link.href;
     if (!href) return;
+    if (href === "cookie-settings") {
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("open-cookie-settings"));
+      }
+      return;
+    }
     if (link.external) {
       if (typeof window !== "undefined") {
         window.open(href, "_blank", "noopener,noreferrer");

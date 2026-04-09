@@ -4,7 +4,6 @@ import { useRef, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import type { Swiper as SwiperRef } from "swiper";
-import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import styles from "./Gallery.module.css";
@@ -212,19 +211,23 @@ export default function Gallery() {
             swiperRef.current = swiper;
             // Update navigation after Swiper is initialized
             setTimeout(() => {
-              const navigation = swiper?.params?.navigation;
-              if (!swiper || typeof navigation === "boolean" || !navigation) return;
+              const navigation = swiper.params.navigation;
+              if (typeof navigation !== "boolean" && navigation) {
+                const prevEl = isMobile
+                  ? mobilePrevRef.current
+                  : prevRef.current;
+                const nextEl = isMobile
+                  ? mobileNextRef.current
+                  : nextRef.current;
 
-              const prevEl = isMobile ? mobilePrevRef.current : prevRef.current;
-              const nextEl = isMobile ? mobileNextRef.current : nextRef.current;
-
-              if (!prevEl || !nextEl || !swiper.navigation) return;
-
-              navigation.prevEl = prevEl;
-              navigation.nextEl = nextEl;
-              swiper.navigation.destroy();
-              swiper.navigation.init();
-              swiper.navigation.update();
+                if (prevEl && nextEl) {
+                  navigation.prevEl = prevEl;
+                  navigation.nextEl = nextEl;
+                  swiper.navigation.destroy();
+                  swiper.navigation.init();
+                  swiper.navigation.update();
+                }
+              }
             }, 0);
           }}
           modules={[Navigation, Autoplay]}
@@ -275,11 +278,10 @@ export default function Gallery() {
           {images.map((image) => (
             <SwiperSlide key={image.id} className={styles.swiperSlide}>
               <div className={styles.imageItem}>
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={image.src}
-                  alt={`Gallery image ${image.id}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  alt=""
                   className={styles.galleryImage}
                 />
                 <div className={styles.imagePlaceholder} aria-hidden />
@@ -301,25 +303,7 @@ export default function Gallery() {
         </Swiper>
       </div>
 
-      {/* Mobile navigation is commented out */}
-      {/* <div className={styles.mobileNavigation}>
-        <button
-          ref={mobilePrevRef}
-          className={styles.navButton}
-          onClick={handlePrevClick}
-          aria-label="Previous images"
-        >
-          <LeftArrow />
-        </button>
-        <button
-          ref={mobileNextRef}
-          className={styles.navButton}
-          onClick={handleNextClick}
-          aria-label="Next images"
-        >
-          <RightArrow />
-        </button>
-      </div> */}
+     
     </section>
   );
 }
