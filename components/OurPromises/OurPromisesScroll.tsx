@@ -104,6 +104,9 @@ export default function OurPromisesScroll() {
                       alt={promise.imageAlt ?? promise.heading}
                       width={400}
                       height={300}
+                      sizes="(max-width: 480px) calc(100vw - 40px), (max-width: 900px) calc(100vw - 80px), (max-width: 1400px) 37vw, 800px"
+                      quality={100}
+                      unoptimized
                       className={styles.promiseImageTag}
                       priority={index === 0}
                     />

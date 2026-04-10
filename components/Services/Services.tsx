@@ -17,6 +17,17 @@ export default function Services({ showAll = false }: ServicesProps) {
     ? t.services.items
     : t.services.items.slice(0, 3);
 
+  const getServiceImageSrc = (rawImage: string | undefined, index: number) => {
+    const fallback = `/services/${index + 1}.png`;
+    if (!rawImage) return fallback;
+
+    if (rawImage.startsWith("/services/") && rawImage.endsWith(".jpg")) {
+      return rawImage.replace(/\.jpg$/i, ".png");
+    }
+
+    return rawImage;
+  };
+
   return (
     <section className={styles.services}>
       {servicesToShow.map((service, index) => (
@@ -40,10 +51,12 @@ export default function Services({ showAll = false }: ServicesProps) {
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
               <Image
-                src={service.image ?? `/services/${index + 1}.jpg`}
+                src={getServiceImageSrc(service.image, index)}
                 alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
                 fill
                 sizes="(max-width: 900px) 100vw, (max-width: 1280px) 50vw, 40vw"
+                quality={100}
+                unoptimized
                 className={styles.serviceImageImg}
               />
             </div>

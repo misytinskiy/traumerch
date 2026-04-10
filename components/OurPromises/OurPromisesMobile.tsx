@@ -40,6 +40,9 @@ export default function OurPromisesMobile() {
                   alt={promise.imageAlt ?? promise.heading}
                   width={400}
                   height={300}
+                  sizes="(max-width: 900px) 100vw, 400px"
+                  quality={100}
+                  unoptimized
                   className={styles.promiseImageTag}
                   priority={index === 0}
                 />

@@ -26,6 +26,8 @@ export default function InspirationPage() {
                 alt="Branded cap with pencil"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -36,6 +38,8 @@ export default function InspirationPage() {
                 alt="Branded tag"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -50,6 +54,8 @@ export default function InspirationPage() {
                 alt="Earbuds case"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -60,6 +66,8 @@ export default function InspirationPage() {
                 alt="Branded brush"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -74,6 +82,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 5"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -84,6 +94,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 6"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -94,6 +106,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 7"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -104,6 +118,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 8"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -114,6 +130,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 9"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -128,6 +146,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 10"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -138,6 +158,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 11"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -152,6 +174,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 12"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -166,6 +190,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 13"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -176,6 +202,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 14"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -186,6 +214,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 15"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -196,6 +226,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 16"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -206,6 +238,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 17"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -220,6 +254,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 18"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -230,6 +266,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 19"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -240,6 +278,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 20"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -250,6 +290,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 21"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -268,6 +310,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 22"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -278,6 +322,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 23"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -288,6 +334,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 24"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -298,6 +346,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 25"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -308,6 +358,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 26"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -318,6 +370,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 27"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -332,6 +386,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 28"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -342,6 +398,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 29"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -352,6 +410,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 30"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -366,6 +426,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 31"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -376,6 +438,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 32"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -390,6 +454,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 33"
                 fill
                 sizes="(max-width: 900px) 100vw, 25vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
@@ -400,6 +466,8 @@ export default function InspirationPage() {
                 alt="Inspiration photo 34"
                 fill
                 sizes="(max-width: 900px) 100vw, 75vw"
+                quality={100}
+                unoptimized
                 className={styles.image}
               />
             </article>
