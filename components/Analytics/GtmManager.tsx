@@ -1,49 +1,8 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Script from "next/script";
 
-const COOKIE_CONSENT_KEY = "cookie_consent";
-const COOKIE_CONSENT_ACCEPTED = "accepted";
 const GTM_ID = "GTM-PQJMHCXQ";
 
-const getCookieConsentValue = () => {
-  if (typeof document === "undefined") return null;
-  const pair = document.cookie
-    .split(";")
-    .map((part) => part.trim())
-    .find((part) => part.startsWith(`${COOKIE_CONSENT_KEY}=`));
-  if (!pair) return null;
-  return pair.split("=")[1] ?? null;
-};
-
 export default function GtmManager() {
-  const [enabled, setEnabled] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const syncConsent = () => {
-      const consent =
-        getCookieConsentValue() || localStorage.getItem(COOKIE_CONSENT_KEY);
-      setEnabled(consent === COOKIE_CONSENT_ACCEPTED);
-    };
-
-    const handleConsentUpdated = (event: Event) => {
-      const customEvent = event as CustomEvent<string>;
-      setEnabled(customEvent.detail === COOKIE_CONSENT_ACCEPTED);
-    };
-
-    syncConsent();
-    window.addEventListener("cookie-consent-updated", handleConsentUpdated);
-
-    return () => {
-      window.removeEventListener("cookie-consent-updated", handleConsentUpdated);
-    };
-  }, []);
-
-  if (!enabled) return null;
-
   return (
     <>
       <Script id="gtm-script" strategy="afterInteractive">

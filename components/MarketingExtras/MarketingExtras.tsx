@@ -5,52 +5,51 @@ import { usePathname } from "next/navigation";
 import GlassBanner from "../GlassBanner/GlassBanner";
 
 const COOKIE_CONSENT_KEY = "cookie_consent";
-const COOKIE_CONSENT_ACCEPTED = "accepted";
-const COOKIE_CONSENT_REJECTED = "rejected";
+const COOKIEBOT_CONSENT_KEY = "CookieConsent";
 
-const getCookieConsentValue = () => {
+const hasCookiebotConsentDecision = () => {
   if (typeof document === "undefined") return null;
-  const pair = document.cookie
+  return document.cookie
     .split(";")
     .map((part) => part.trim())
-    .find((part) => part.startsWith(`${COOKIE_CONSENT_KEY}=`));
-  if (!pair) return null;
-  return pair.split("=")[1] ?? null;
+    .some((part) => part.startsWith(`${COOKIEBOT_CONSENT_KEY}=`));
 };
 
 export default function MarketingExtras() {
   const pathname = usePathname();
   const [consentResolved, setConsentResolved] = useState(false);
-  const [consentValue, setConsentValue] = useState<string | null>(null);
+  const [hasDecision, setHasDecision] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const syncConsent = () => {
-      const consent = getCookieConsentValue() || localStorage.getItem(COOKIE_CONSENT_KEY);
-      setConsentValue(consent);
-      setConsentResolved(true);
-    };
-
-    const handleConsentUpdated = (event: Event) => {
-      const customEvent = event as CustomEvent<string>;
-      setConsentValue(customEvent.detail);
+      const legacyConsent =
+        document.cookie
+          .split(";")
+          .map((part) => part.trim())
+          .some((part) => part.startsWith(`${COOKIE_CONSENT_KEY}=`)) ||
+        Boolean(localStorage.getItem(COOKIE_CONSENT_KEY));
+      setHasDecision(hasCookiebotConsentDecision() || legacyConsent);
       setConsentResolved(true);
     };
 
     syncConsent();
-    window.addEventListener("cookie-consent-updated", handleConsentUpdated);
+    window.addEventListener("CookiebotOnConsentReady", syncConsent);
+    window.addEventListener("CookiebotOnAccept", syncConsent);
+    window.addEventListener("CookiebotOnDecline", syncConsent);
+    window.addEventListener("cookie-consent-updated", syncConsent);
 
     return () => {
-      window.removeEventListener("cookie-consent-updated", handleConsentUpdated);
+      window.removeEventListener("CookiebotOnConsentReady", syncConsent);
+      window.removeEventListener("CookiebotOnAccept", syncConsent);
+      window.removeEventListener("CookiebotOnDecline", syncConsent);
+      window.removeEventListener("cookie-consent-updated", syncConsent);
     };
   }, []);
 
   if (pathname !== "/") return null;
   if (!consentResolved) return null;
-  if (
-    consentValue !== COOKIE_CONSENT_ACCEPTED &&
-    consentValue !== COOKIE_CONSENT_REJECTED
-  ) {
+  if (!hasDecision) {
     return null;
   }
   return <GlassBanner />;

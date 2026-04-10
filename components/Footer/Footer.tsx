@@ -32,7 +32,14 @@ export default function Footer() {
     if (!href) return;
     if (href === "cookie-settings") {
       if (typeof window !== "undefined") {
-        window.dispatchEvent(new Event("open-cookie-settings"));
+        const cookiebotWindow = window as Window & {
+          Cookiebot?: { renew?: () => void };
+        };
+        if (cookiebotWindow.Cookiebot?.renew) {
+          cookiebotWindow.Cookiebot.renew();
+        } else {
+          window.dispatchEvent(new Event("open-cookie-settings"));
+        }
       }
       return;
     }
