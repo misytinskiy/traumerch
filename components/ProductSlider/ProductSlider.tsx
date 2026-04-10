@@ -117,6 +117,8 @@ export default function ProductSlider() {
             alt="Previous product inspiration"
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 600px"
+            quality={100}
+            unoptimized
             className={styles.sliderImageContent}
             priority={prevSlide === 0}
           />
@@ -131,6 +133,8 @@ export default function ProductSlider() {
             alt="Product inspiration"
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 600px"
+            quality={100}
+            unoptimized
             className={styles.sliderImageContent}
             priority={currentSlide === 0}
           />

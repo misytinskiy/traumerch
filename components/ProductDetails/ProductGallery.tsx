@@ -40,6 +40,8 @@ export default function ProductGallery({
                 alt={imageAlt}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
+                quality={100}
+                unoptimized
                 className={styles.imageContent}
                 priority
               />
@@ -67,6 +69,8 @@ export default function ProductGallery({
                   alt={imageAlt}
                   fill
                   sizes="100vw"
+                  quality={100}
+                  unoptimized
                   className={styles.imageContent}
                   priority={index === 0}
                 />
@@ -118,6 +122,8 @@ export default function ProductGallery({
                   alt={imageAlt}
                   fill
                   sizes="(max-width: 768px) 25vw, 96px"
+                  quality={100}
+                  unoptimized
                   className={styles.imageContent}
                   loading="lazy"
                 />

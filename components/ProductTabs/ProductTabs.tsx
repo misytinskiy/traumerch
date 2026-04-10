@@ -332,7 +332,8 @@ export default function ProductTabs({
                   ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
                   : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
               }
-              quality={product.size === "large" ? 90 : 80}
+              quality={100}
+              unoptimized
               className={styles.productImageContent}
               loading="lazy"
             />
