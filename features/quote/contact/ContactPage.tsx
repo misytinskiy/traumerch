@@ -664,6 +664,7 @@ export default function QuoteContactPage() {
             {t.quoteContact.backToShopping}
           </Button>
           <Button
+            id="quote-contact-submit-btn"
             variant="solid"
             size="medium"
             padding="31px 93px"

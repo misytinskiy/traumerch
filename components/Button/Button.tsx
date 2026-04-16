@@ -28,6 +28,7 @@ interface ButtonProps {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   className?: string;
+  id?: string;
 }
 
 const WhiteArrow = () => (
@@ -79,6 +80,7 @@ export default function Button({
   disabled = false,
   type = "button",
   className = "",
+  id,
   padding,
   padding1536,
   padding768,
@@ -181,6 +183,7 @@ export default function Button({
 
   return (
     <button
+      id={id}
       className={buttonClasses}
       style={buttonStyle}
       onClick={onClick}
