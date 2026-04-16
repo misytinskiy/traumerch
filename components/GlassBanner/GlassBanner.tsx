@@ -120,7 +120,7 @@ export default function GlassBanner() {
             size="medium"
             variant="transparent"
             padding="20px 32px"
-            onClick={openQuote}
+            onClick={() => openQuote("glass_banner")}
           >
             {t.glassBanner?.button ?? "REQUEST QUOTE NOW"}
           </Button>

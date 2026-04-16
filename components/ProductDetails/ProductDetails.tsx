@@ -13,6 +13,7 @@ import {
   parsePaletteData,
   SECONDARY_PHOTOS_FIELD,
 } from "../../shared/productDetails";
+import { pushDataLayerEvent } from "../../shared/analytics";
 import styles from "./ProductDetails.module.css";
 import ProductGallery from "./ProductGallery";
 import QuantityControl from "./QuantityControl";
@@ -369,6 +370,12 @@ export default function ProductDetails({
             onClick={() => {
               if (isOutOfStock || isLoading || !productRecord) return;
               if (productId) {
+                pushDataLayerEvent("quote_product_add", {
+                  product_id: productId,
+                  quantity: Math.max(minQuantity, getEffectiveQuantity()),
+                  has_description: Boolean(description.trim()),
+                  has_custom_color: hasRainbowPalette && customColorPicked,
+                });
                 addItem({
                   productId,
                   productName: productName ?? t.design.productName,

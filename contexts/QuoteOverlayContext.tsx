@@ -7,11 +7,12 @@ import {
   useState,
   ReactNode,
 } from "react";
+import { pushDataLayerEvent } from "../shared/analytics";
 
 interface QuoteOverlayContextType {
   isOpen: boolean;
-  openQuote: () => void;
-  closeQuote: () => void;
+  openQuote: (source?: string) => void;
+  closeQuote: (source?: string) => void;
 }
 
 const QuoteOverlayContext =
@@ -24,14 +25,20 @@ export function QuoteOverlayProvider({
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openQuote = useCallback(() => {
+  const openQuote = useCallback((source?: string) => {
     if (typeof window === "undefined" || isOpen) return;
     setIsOpen(true);
+    pushDataLayerEvent("quote_overlay_open", {
+      source: source ?? "unknown",
+    });
   }, [isOpen]);
 
-  const closeQuote = useCallback(() => {
+  const closeQuote = useCallback((source?: string) => {
     if (!isOpen) return;
     setIsOpen(false);
+    pushDataLayerEvent("quote_overlay_close", {
+      source: source ?? "unknown",
+    });
   }, [isOpen]);
 
   return (

@@ -10,6 +10,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { getMainPhotoUrl, getProductNameFromFields } from "../../../shared/product";
 import { getMinQuantity, getPriceForQuantity } from "../../../shared/pricing";
 import { getSwatchColor } from "../../../shared/quote";
+import { pushDataLayerEvent } from "../../../shared/analytics";
 import styles from "./contact.module.css";
 
 export default function QuoteContactPage() {
@@ -38,6 +39,7 @@ export default function QuoteContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [showThankYou, setShowThankYou] = useState(false);
+  const touchedFieldsRef = useRef<Set<string>>(new Set());
 
   const displayItems = useMemo(() => items, [items]);
 
@@ -81,6 +83,13 @@ export default function QuoteContactPage() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    pushDataLayerEvent("quote_step_view", {
+      step: "quote_contact",
+      item_count: items.length,
+    });
+  }, [items.length]);
 
   // Ensure deliveryDate is never before minimum date
   useEffect(() => {
@@ -132,7 +141,12 @@ export default function QuoteContactPage() {
     const y = String(year);
     const m = String(month + 1).padStart(2, "0");
     const d = String(day).padStart(2, "0");
-    setDeliveryDate(`${y}-${m}-${d}`);
+    const nextDate = `${y}-${m}-${d}`;
+    setDeliveryDate(nextDate);
+    pushDataLayerEvent("quote_delivery_date_select", {
+      step: "quote_contact",
+      selected_date: nextDate,
+    });
     setCalendarOpen(false);
   };
 
@@ -213,6 +227,14 @@ export default function QuoteContactPage() {
         [name]: type === "checkbox" ? checked : value,
       }));
     }
+
+    if (!touchedFieldsRef.current.has(name)) {
+      touchedFieldsRef.current.add(name);
+      pushDataLayerEvent("quote_form_field_input", {
+        form_context: "quote_contact",
+        field_name: name,
+      });
+    }
     
     // Clear error when user starts typing
     if (errors[name]) {
@@ -253,10 +275,17 @@ export default function QuoteContactPage() {
 
     // Validate required fields
     if (!validateForm()) {
+      pushDataLayerEvent("quote_form_validation_error", {
+        form_context: "quote_contact",
+      });
       return;
     }
 
     setIsSubmitting(true);
+    pushDataLayerEvent("quote_form_submit_attempt", {
+      form_context: "quote_contact",
+      item_count: items.length,
+    });
 
     try {
       const combinedDescription = items
@@ -317,12 +346,23 @@ export default function QuoteContactPage() {
       const result = await submitResponse.json();
 
       if (submitResponse.ok) {
+        pushDataLayerEvent("quote_form_submit_success", {
+          form_context: "quote_contact",
+        });
         clearCart();
         setShowThankYou(true);
       } else {
+        pushDataLayerEvent("quote_form_submit_error", {
+          form_context: "quote_contact",
+          status_code: submitResponse.status,
+        });
         alert(t.quoteContact.submitFailed);
       }
     } catch (error) {
+      pushDataLayerEvent("quote_form_submit_error", {
+        form_context: "quote_contact",
+        status_code: "network",
+      });
       alert(t.quoteContact.submitError);
     } finally {
       setIsSubmitting(false);
@@ -330,6 +370,9 @@ export default function QuoteContactPage() {
   };
 
   const handleThankYouClose = () => {
+    pushDataLayerEvent("quote_thank_you_close", {
+      form_context: "quote_contact",
+    });
     setShowThankYou(false);
     setFormData(initialFormData);
     setErrors({});
@@ -337,6 +380,7 @@ export default function QuoteContactPage() {
     setSelectedCountry("");
     setSelectOpen(false);
     setCalendarOpen(false);
+    touchedFieldsRef.current.clear();
     const freshMinDate = getMinDate();
     setDeliveryDate(formatDateToISO(freshMinDate));
     setCalendarView({
@@ -475,6 +519,10 @@ export default function QuoteContactPage() {
                         onClick={() => {
                           setSelectedCountry(option);
                           setSelectOpen(false);
+                          pushDataLayerEvent("quote_country_select", {
+                            step: "quote_contact",
+                            country: option || "empty",
+                          });
                         }}
                       >
                         {option || t.quoteContact.countryPlaceholder}
@@ -605,7 +653,13 @@ export default function QuoteContactPage() {
             size="medium"
             padding="31px 84px"
             padding480="26px 70px"
-            onClick={() => router.push("/catalog")}
+            onClick={() => {
+              pushDataLayerEvent("quote_step_back", {
+                step: "quote_contact",
+                destination: "catalog",
+              });
+              router.push("/catalog");
+            }}
           >
             {t.quoteContact.backToShopping}
           </Button>

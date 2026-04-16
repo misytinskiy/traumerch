@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InlineWidget } from "react-calendly";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import Button from "../Button/Button";
 import ThankYouOverlay from "../ThankYouOverlay/ThankYouOverlay";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { pushDataLayerEvent } from "../../shared/analytics";
 import styles from "./QuoteOverlay.module.css";
 
 interface QuoteFormData {
@@ -60,6 +61,7 @@ export default function QuoteOverlay() {
     email?: string;
     messengerContact?: string;
   }>({});
+  const touchedFieldsRef = useRef<Set<string>>(new Set());
 
   const resetFormState = () => {
     setFormData(defaultFormData);
@@ -68,10 +70,14 @@ export default function QuoteOverlay() {
     setShowThankYou(false);
     setErrors({});
     setFileError("");
+    touchedFieldsRef.current.clear();
   };
 
   useEffect(() => {
     if (isOpen) {
+      pushDataLayerEvent("quote_overlay_view", {
+        form_context: "overlay",
+      });
       // Save current scroll position
       const scrollY = window.scrollY;
       document.body.style.top = `-${scrollY}px`;
@@ -103,6 +109,13 @@ export default function QuoteOverlay() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (!touchedFieldsRef.current.has(name)) {
+      touchedFieldsRef.current.add(name);
+      pushDataLayerEvent("quote_form_field_input", {
+        form_context: "overlay",
+        field_name: name,
+      });
+    }
     // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
@@ -168,12 +181,20 @@ export default function QuoteOverlay() {
     const next = [...formData.files, ...incoming];
 
     if (next.length > MAX_FILES) {
+      pushDataLayerEvent("quote_form_file_error", {
+        form_context: "overlay",
+        reason: "max_files",
+      });
       setFileError(t.quote.fileErrors.maxFiles.replace("X", String(MAX_FILES)));
       e.currentTarget.value = "";
       return;
     }
 
     if (getTotalSize(next) > MAX_TOTAL_BYTES) {
+      pushDataLayerEvent("quote_form_file_error", {
+        form_context: "overlay",
+        reason: "max_total_size",
+      });
       setFileError(
         t.quote.fileErrors.maxTotalSize.replace("X", String(15))
       );
@@ -183,15 +204,24 @@ export default function QuoteOverlay() {
 
     setFormData((prev) => ({ ...prev, files: next }));
     setFileError("");
+    pushDataLayerEvent("quote_form_file_add", {
+      form_context: "overlay",
+      file_count: next.length,
+    });
     e.currentTarget.value = "";
   };
 
   const handleRemoveFile = (fileIndex: number) => {
+    const nextCount = Math.max(0, formData.files.length - 1);
     setFormData((prev) => ({
       ...prev,
       files: prev.files.filter((_, i) => i !== fileIndex),
     }));
     setFileError("");
+    pushDataLayerEvent("quote_form_file_remove", {
+      form_context: "overlay",
+      file_count: nextCount,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -199,6 +229,11 @@ export default function QuoteOverlay() {
     if (isSubmitting) return;
     if (validateForm()) {
       setIsSubmitting(true);
+      pushDataLayerEvent("quote_form_submit_attempt", {
+        form_context: "overlay",
+        has_files: formData.files.length > 0,
+        service_count: selectedServices.length,
+      });
       try {
         // Get selected messenger name
         const selectedMessengerName =
@@ -237,9 +272,16 @@ export default function QuoteOverlay() {
         const responsePayload = await submitResponse.json();
 
         if (submitResponse.ok) {
+          pushDataLayerEvent("quote_form_submit_success", {
+            form_context: "overlay",
+          });
           resetFormState();
           setShowThankYou(true);
         } else {
+          pushDataLayerEvent("quote_form_submit_error", {
+            form_context: "overlay",
+            status_code: submitResponse.status,
+          });
           console.error("QuoteOverlay submit error", {
             status: submitResponse.status,
             payload: responsePayload,
@@ -247,21 +289,33 @@ export default function QuoteOverlay() {
           alert(t.quote.submitFailed);
         }
       } catch {
+        pushDataLayerEvent("quote_form_submit_error", {
+          form_context: "overlay",
+          status_code: "network",
+        });
         alert(t.quote.submitError);
       } finally {
         setIsSubmitting(false);
       }
+    } else {
+      pushDataLayerEvent("quote_form_validation_error", {
+        form_context: "overlay",
+      });
     }
   };
 
   const handleMessengerSelect = (messengerId: number) => {
+    const messengerName = messengers.find((m) => m.id === messengerId)?.name || "";
     setSelectedMessenger(messengerId);
     setFormData((prev) => ({
       ...prev,
       messengerContact: "",
-      preferredMessenger:
-        messengers.find((m) => m.id === messengerId)?.name || "",
+      preferredMessenger: messengerName,
     }));
+    pushDataLayerEvent("quote_form_messenger_select", {
+      form_context: "overlay",
+      messenger: messengerName || "unknown",
+    });
     if (errors.messengerContact) {
       setErrors((prev) => ({ ...prev, messengerContact: undefined }));
     }
@@ -295,7 +349,7 @@ export default function QuoteOverlay() {
             description={
               t.quote.thankYouDescription
             }
-            onClose={closeQuote}
+            onClose={() => closeQuote("thank_you_overlay")}
           />
         ) : (
           <motion.div
@@ -303,7 +357,7 @@ export default function QuoteOverlay() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={closeQuote}
+          onClick={() => closeQuote("overlay_backdrop")}
         >
           <motion.div
             className={styles.panel}
@@ -321,7 +375,7 @@ export default function QuoteOverlay() {
                   </h1>
                   <button
                     className={styles.closeButton}
-                    onClick={closeQuote}
+                    onClick={() => closeQuote("overlay_close_button")}
                     aria-label={t.quote.closeAria}
                   >
                     <svg
@@ -519,6 +573,8 @@ export default function QuoteOverlay() {
                                       : ""
                                   }`}
                                   onClick={() => {
+                                    const isActive =
+                                      selectedServices.includes(service.value);
                                     setSelectedServices((prev) =>
                                       prev.includes(service.value)
                                         ? prev.filter((item) => item !== service.value)
@@ -530,6 +586,11 @@ export default function QuoteOverlay() {
                                         ? prev.service.filter((item) => item !== service.value)
                                         : [...prev.service, service.value],
                                     }));
+                                    pushDataLayerEvent("quote_form_service_toggle", {
+                                      form_context: "overlay",
+                                      service: service.value,
+                                      action: isActive ? "remove" : "add",
+                                    });
                                   }}
                                 >
                                   {service.label.toUpperCase()}

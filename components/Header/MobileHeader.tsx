@@ -94,7 +94,7 @@ export default function MobileHeader() {
       if (hasCartItems) {
         openCart();
       } else {
-        openQuote();
+        openQuote("mobile_menu");
       }
     }, 300);
   };
@@ -148,7 +148,9 @@ export default function MobileHeader() {
             </div>
 
             <QuoteButton
-              onClick={hasCartItems ? openCart : openQuote}
+              onClick={
+                hasCartItems ? openCart : () => openQuote("header_mobile")
+              }
               hasCartItems={hasCartItems}
               itemCount={items.length}
               text={t.header.quote}

@@ -525,7 +525,9 @@ export default function Header() {
           </div>
 
           <QuoteButton
-            onClick={hasCartItems ? openCart : openQuote}
+            onClick={
+              hasCartItems ? openCart : () => openQuote("header_desktop")
+            }
             hasCartItems={hasCartItems}
             itemCount={items.length}
             text={t.header.quote}

@@ -25,7 +25,7 @@ export default function CTA() {
         padding768="42px 73px"
         padding480="24px 48px"
         arrow="white"
-        onClick={openQuote}
+        onClick={() => openQuote("cta_section")}
       >
         {t.cta.buttonText}
       </Button>

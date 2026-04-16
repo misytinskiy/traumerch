@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import type { NormalizedProduct } from "../../shared/types";
+import { pushDataLayerEvent } from "../../shared/analytics";
 import styles from "./ProductTabs.module.css";
 
 interface Product {
@@ -104,6 +105,10 @@ export default function ProductTabs({
   const [showAll, setShowAll] = useState(false);
 
   const handleProductClick = (productId: string) => {
+    pushDataLayerEvent("catalog_product_select", {
+      product_id: productId,
+      category: TAB_CATEGORY_TERM[activeTab] ?? "all_products",
+    });
     // Navigate to design page for the specific product
     router.push(`/design?product=${productId}`);
   };

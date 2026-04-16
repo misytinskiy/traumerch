@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "../../../components/Button/Button";
@@ -9,6 +9,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { getMainPhotoUrl, getProductNameFromFields } from "../../../shared/product";
 import { getMinQuantity } from "../../../shared/pricing";
 import { getSwatchColor, MAX_FILES, MAX_TOTAL_BYTES } from "../../../shared/quote";
+import { pushDataLayerEvent } from "../../../shared/analytics";
 import styles from "./quote-view.module.css";
 
 const TrashIcon = () => (
@@ -76,6 +77,13 @@ export default function QuoteViewPage() {
     Record<number, string>
   >({});
 
+  useEffect(() => {
+    pushDataLayerEvent("quote_step_view", {
+      step: "quote_view",
+      item_count: items.length,
+    });
+  }, [items.length]);
+
   const displayItems = useMemo(() => {
     return items.map((item) => ({
       ...item,
@@ -142,6 +150,10 @@ export default function QuoteViewPage() {
     const next = [...existing, ...incoming];
 
     if (next.length > MAX_FILES) {
+      pushDataLayerEvent("quote_item_file_error", {
+        step: "quote_view",
+        reason: "max_files",
+      });
       setFileErrorsByIndex((prev) => ({
         ...prev,
         [index]: t.quoteView.maxFilesError.replace("X", String(MAX_FILES)),
@@ -150,6 +162,10 @@ export default function QuoteViewPage() {
     }
 
     if (getTotalSize(next) > MAX_TOTAL_BYTES) {
+      pushDataLayerEvent("quote_item_file_error", {
+        step: "quote_view",
+        reason: "max_total_size",
+      });
       setFileErrorsByIndex((prev) => ({
         ...prev,
         [index]: t.quoteView.maxTotalSizeError.replace("X", String(15)),
@@ -158,6 +174,10 @@ export default function QuoteViewPage() {
     }
 
     updateItemFiles(index, next);
+    pushDataLayerEvent("quote_item_file_add", {
+      step: "quote_view",
+      file_count: next.length,
+    });
     setFileErrorsByIndex((prev) => ({ ...prev, [index]: "" }));
   };
 
@@ -165,6 +185,10 @@ export default function QuoteViewPage() {
     const existing = items[index]?.files ?? [];
     const next = existing.filter((_, i) => i !== fileIndex);
     updateItemFiles(index, next);
+    pushDataLayerEvent("quote_item_file_remove", {
+      step: "quote_view",
+      file_count: next.length,
+    });
     setFileErrorsByIndex((prev) => ({ ...prev, [index]: "" }));
   };
 
@@ -353,7 +377,13 @@ export default function QuoteViewPage() {
             size="medium"
             padding="31px 84px"
             padding480="26px 70px"
-            onClick={() => router.push("/catalog")}
+            onClick={() => {
+              pushDataLayerEvent("quote_step_back", {
+                step: "quote_view",
+                destination: "catalog",
+              });
+              router.push("/catalog");
+            }}
           >
             {t.quoteView.backToShopping}
           </Button>
@@ -363,7 +393,14 @@ export default function QuoteViewPage() {
             padding="31px 94px"
             padding480="26px 70px"
             arrow="white"
-            onClick={() => router.push("/quote/contact")}
+            onClick={() => {
+              pushDataLayerEvent("quote_step_continue", {
+                step: "quote_view",
+                destination: "quote_contact",
+                item_count: items.length,
+              });
+              router.push("/quote/contact");
+            }}
           >
             {t.quoteView.continue}
           </Button>
