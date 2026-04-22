@@ -480,15 +480,15 @@
         "title": "Folgen Sie uns",
         "links": [
           { "label": "LinkedIn", "href": "https://www.linkedin.com/company/traumerch/", "external": true },
-          { "label": "Instagram", "href": "https://www.instagram.com/traumerch", "external": true },
-          { "label": "TikTok", "href": "https://www.tiktok.com/@traumerch?_r=1&_t=ZN-945FLVekMFi", "external": true }
+          { "label": "Instagram", "href": "https://www.instagram.com/traumerch", "external": true }
         ]
       },
       {
         "title": "Kontakt aufnehmen",
         "links": [
-          { "label": "Stephansplatz 8/20, 1010, Wien, Österreich", "href": "https://maps.app.goo.gl/U8Uq5MZqgs6khEXy8", "external": true },
-          { "label": "sales@traumerch.com", "href": "mailto:sales@traumerch.com", "external": true }
+          { "label": "Tuchlauben 7A, 1010, Vienna, Austria", "href": "https://share.google/LeoWdgSC5cJk5gHtI", "external": true },
+          { "label": "sales@traumerch.com", "href": "mailto:sales@traumerch.com", "external": true },
+          { "label": "operations@traumerch.com", "href": "mailto:operations@traumerch.com", "external": true }
         ]
       }
     ],
