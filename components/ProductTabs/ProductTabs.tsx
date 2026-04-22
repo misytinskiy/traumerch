@@ -20,19 +20,7 @@ interface Product {
   isSkeleton?: boolean;
 }
 
-const TAB_KEYS = [
-  "allProducts",
-  "bags",
-  "customProduct",
-  "drinkware",
-  "footwear",
-  "headwear",
-  "homewareAppliances",
-  "wearableAccessories",
-  "wearableTextile",
-] as const;
-
-type TabKey = (typeof TAB_KEYS)[number];
+const ALL_PRODUCTS_TAB_KEY = "allProducts";
 
 const DESKTOP_LAYOUT_PATTERN: Product["size"][] = [
   "regular",
@@ -73,17 +61,7 @@ const DESKTOP_LAYOUT_PATTERN: Product["size"][] = [
 const MOBILE_SKELETON_COUNT = 12;
 const COMPACT_GRID_BREAKPOINT = 900;
 
-const TAB_CATEGORY_TERM: Record<TabKey, string | null> = {
-  allProducts: null,
-  bags: "bags",
-  customProduct: "custom product",
-  drinkware: "drinkware",
-  footwear: "footwear",
-  headwear: "headwear",
-  homewareAppliances: "homeware appliances",
-  wearableAccessories: "wearable accessories",
-  wearableTextile: "wearable textile",
-};
+const normalizeCategoryTerm = (value: string) => value.trim().toLowerCase();
 
 const fetcher = async (url: string) => {
   const response = await fetch(url);
@@ -100,14 +78,88 @@ export default function ProductTabs({
 }) {
   const { t, language } = useLanguage();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<TabKey>("allProducts");
+  const [activeTab, setActiveTab] = useState<string>(ALL_PRODUCTS_TAB_KEY);
   const [isMobile, setIsMobile] = useState(false);
   const [showAll, setShowAll] = useState(false);
+
+  const hasInitial = initialRecords.length > 0;
+  const allProductsApiUrl = "/api/airtable-products?format=normalized&priceTier=bulk";
+  const { data: allProductsData } = useSWR(
+    allProductsApiUrl,
+    fetcher,
+    {
+      fallbackData: hasInitial ? { records: initialRecords } : undefined,
+      revalidateOnMount: !hasInitial,
+      revalidateIfStale: true,
+    }
+  );
+
+  const knownCategoryLabels = useMemo(
+    () => ({
+      bags: t.catalog.tabs.bags,
+      "custom product": t.catalog.tabs.customProduct,
+      drinkware: t.catalog.tabs.drinkware,
+      footwear: t.catalog.tabs.footwear,
+      headwear: t.catalog.tabs.headwear,
+      "homeware appliances": t.catalog.tabs.homewareAppliances,
+      "wearable accessories": t.catalog.tabs.wearableAccessories,
+      "wearable textile": t.catalog.tabs.wearableTextile,
+    }),
+    [t]
+  );
+
+  const dynamicCategoryTabs = useMemo(() => {
+    const records = (allProductsData?.records ?? []) as NormalizedProduct[];
+    const seen = new Set<string>();
+    const tabs: { key: string; label: string; categoryTerm: string }[] = [];
+
+    for (const record of records) {
+      const categories = Array.isArray(record.categories) ? record.categories : [];
+      for (const category of categories) {
+        const normalized = normalizeCategoryTerm(category);
+        if (!normalized || seen.has(normalized)) continue;
+        seen.add(normalized);
+        tabs.push({
+          key: normalized,
+          label: knownCategoryLabels[normalized as keyof typeof knownCategoryLabels] || category,
+          categoryTerm: normalized,
+        });
+      }
+    }
+
+    tabs.sort((a, b) =>
+      a.label.localeCompare(b.label, language === "de" ? "de" : "en", {
+        sensitivity: "base",
+      })
+    );
+
+    return tabs;
+  }, [allProductsData?.records, knownCategoryLabels, language]);
+
+  const tabs = useMemo(
+    () => [
+      {
+        key: ALL_PRODUCTS_TAB_KEY,
+        label: t.catalog.tabs.allProducts,
+        categoryTerm: null,
+      },
+      ...dynamicCategoryTabs,
+    ],
+    [dynamicCategoryTabs, t.catalog.tabs.allProducts]
+  );
+
+  useEffect(() => {
+    if (tabs.some((tab) => tab.key === activeTab)) return;
+    setActiveTab(ALL_PRODUCTS_TAB_KEY);
+  }, [tabs, activeTab]);
+
+  const activeCategoryTerm =
+    tabs.find((tab) => tab.key === activeTab)?.categoryTerm ?? null;
 
   const handleProductClick = (productId: string) => {
     pushDataLayerEvent("catalog_product_select", {
       product_id: productId,
-      category: TAB_CATEGORY_TERM[activeTab] ?? "all_products",
+      category: activeCategoryTerm ?? "all_products",
     });
     // Navigate to design page for the specific product
     router.push(`/design?product=${productId}`);
@@ -124,15 +176,13 @@ export default function ProductTabs({
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const categoryTerm = TAB_CATEGORY_TERM[activeTab];
   const apiUrl = `/api/airtable-products?format=normalized&priceTier=bulk${
-    categoryTerm ? `&category=${encodeURIComponent(categoryTerm)}` : ""
+    activeCategoryTerm ? `&category=${encodeURIComponent(activeCategoryTerm)}` : ""
   }`;
-  const hasInitial = initialRecords.length > 0;
-  const shouldFetch = activeTab !== "allProducts" || !hasInitial;
+  const shouldFetch = activeTab !== ALL_PRODUCTS_TAB_KEY || !hasInitial;
   const { data, error, isLoading } = useSWR(shouldFetch ? apiUrl : null, fetcher, {
     fallbackData:
-      activeTab === "allProducts" && hasInitial
+      activeTab === ALL_PRODUCTS_TAB_KEY && hasInitial
         ? { records: initialRecords }
         : undefined,
     revalidateOnMount: false,
@@ -140,8 +190,10 @@ export default function ProductTabs({
   });
   const fetchError = error ? t.common.loadProductsError : null;
   const records = (
-    activeTab === "allProducts"
-      ? initialRecords
+    activeTab === ALL_PRODUCTS_TAB_KEY
+      ? hasInitial
+        ? initialRecords
+        : data?.records ?? []
       : data?.records ?? []
   ) as NormalizedProduct[];
 
@@ -151,22 +203,9 @@ export default function ProductTabs({
 
   const activeRecords = records;
 
-  const tabLabels: Record<TabKey, string> = {
-    allProducts: t.catalog.tabs.allProducts,
-    bags: t.catalog.tabs.bags,
-    customProduct: t.catalog.tabs.customProduct,
-    drinkware: t.catalog.tabs.drinkware,
-    footwear: t.catalog.tabs.footwear,
-    headwear: t.catalog.tabs.headwear,
-    homewareAppliances: t.catalog.tabs.homewareAppliances,
-    wearableAccessories: t.catalog.tabs.wearableAccessories,
-    wearableTextile: t.catalog.tabs.wearableTextile,
-  };
-
-  const tabs = TAB_KEYS.map((key) => ({
-    key,
-    label: tabLabels[key],
-    count: key === activeTab ? activeRecords.length : 0,
+  const tabsWithCount = tabs.map((tab) => ({
+    ...tab,
+    count: tab.key === activeTab ? activeRecords.length : 0,
   }));
 
   const initialDesktopCapacity = DESKTOP_LAYOUT_PATTERN.length;
@@ -414,7 +453,7 @@ export default function ProductTabs({
       </div>
 
       <div className={styles.tabList}>
-        {tabs.map((tab) => (
+        {tabsWithCount.map((tab) => (
           <button
             key={tab.key}
             className={`${styles.tab} ${
