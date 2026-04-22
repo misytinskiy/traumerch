@@ -84,15 +84,20 @@ export default function ProductTabs({
 
   const hasInitial = initialRecords.length > 0;
   const allProductsApiUrl = "/api/airtable-products?format=normalized&priceTier=bulk";
-  const { data: allProductsData } = useSWR(
-    allProductsApiUrl,
+  const { data: allProductsData, error, isLoading } = useSWR(
+    hasInitial ? null : allProductsApiUrl,
     fetcher,
     {
       fallbackData: hasInitial ? { records: initialRecords } : undefined,
-      revalidateOnMount: !hasInitial,
-      revalidateIfStale: true,
+      revalidateOnMount: false,
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     }
   );
+  const allRecords = (
+    hasInitial ? initialRecords : allProductsData?.records ?? []
+  ) as NormalizedProduct[];
 
   const knownCategoryLabels = useMemo(
     () => ({
@@ -109,11 +114,10 @@ export default function ProductTabs({
   );
 
   const dynamicCategoryTabs = useMemo(() => {
-    const records = (allProductsData?.records ?? []) as NormalizedProduct[];
     const seen = new Set<string>();
     const tabs: { key: string; label: string; categoryTerm: string }[] = [];
 
-    for (const record of records) {
+    for (const record of allRecords) {
       const categories = Array.isArray(record.categories) ? record.categories : [];
       for (const category of categories) {
         const normalized = normalizeCategoryTerm(category);
@@ -134,7 +138,7 @@ export default function ProductTabs({
     );
 
     return tabs;
-  }, [allProductsData?.records, knownCategoryLabels, language]);
+  }, [allRecords, knownCategoryLabels, language]);
 
   const tabs = useMemo(
     () => [
@@ -176,26 +180,18 @@ export default function ProductTabs({
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const apiUrl = `/api/airtable-products?format=normalized&priceTier=bulk${
-    activeCategoryTerm ? `&category=${encodeURIComponent(activeCategoryTerm)}` : ""
-  }`;
-  const shouldFetch = activeTab !== ALL_PRODUCTS_TAB_KEY || !hasInitial;
-  const { data, error, isLoading } = useSWR(shouldFetch ? apiUrl : null, fetcher, {
-    fallbackData:
-      activeTab === ALL_PRODUCTS_TAB_KEY && hasInitial
-        ? { records: initialRecords }
-        : undefined,
-    revalidateOnMount: false,
-    revalidateIfStale: true,
-  });
-  const fetchError = error ? t.common.loadProductsError : null;
-  const records = (
-    activeTab === ALL_PRODUCTS_TAB_KEY
-      ? hasInitial
-        ? initialRecords
-        : data?.records ?? []
-      : data?.records ?? []
-  ) as NormalizedProduct[];
+  const fetchError = !hasInitial && error ? t.common.loadProductsError : null;
+  const records =
+    activeTab === ALL_PRODUCTS_TAB_KEY || !activeCategoryTerm
+      ? allRecords
+      : allRecords.filter((record) => {
+          const categories = Array.isArray(record.categories)
+            ? record.categories
+            : [];
+          return categories.some(
+            (category) => normalizeCategoryTerm(category) === activeCategoryTerm
+          );
+        });
 
   useEffect(() => {
     setShowAll(false);
@@ -298,7 +294,7 @@ export default function ProductTabs({
     return activeRecords.map((record) => mapRecordToProduct(record, "regular"));
   }, [activeRecords, mapRecordToProduct]);
 
-  const shouldShowSkeleton = shouldFetch && isLoading;
+  const shouldShowSkeleton = !hasInitial && isLoading;
 
   const showEmptyState =
     !shouldShowSkeleton && !fetchError && activeRecords.length === 0;
