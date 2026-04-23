@@ -25,6 +25,7 @@ export default function MobileHeader() {
   const closeMenuTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
+  const scrollLockYRef = useRef(0);
 
   // Determine display labels based on country and language
   const getLanguageLabels = () => {
@@ -107,22 +108,36 @@ export default function MobileHeader() {
   };
 
   useEffect(() => {
-    if (!isMenuOpen || isClosing) return;
+    if (!isMenuOpen) return;
 
-    let hasClosed = false;
-
-    const handleScrollClose = () => {
-      if (hasClosed) return;
-      hasClosed = true;
-      closeMenu();
+    const { body } = document;
+    const previousStyles = {
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      overflow: body.style.overflow,
     };
 
-    window.addEventListener("scroll", handleScrollClose, { passive: true });
+    scrollLockYRef.current = window.scrollY;
+    body.style.position = "fixed";
+    body.style.top = `-${scrollLockYRef.current}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
 
     return () => {
-      window.removeEventListener("scroll", handleScrollClose);
+      body.style.position = previousStyles.position;
+      body.style.top = previousStyles.top;
+      body.style.left = previousStyles.left;
+      body.style.right = previousStyles.right;
+      body.style.width = previousStyles.width;
+      body.style.overflow = previousStyles.overflow;
+      window.scrollTo(0, scrollLockYRef.current);
     };
-  }, [isMenuOpen, isClosing, closeMenu]);
+  }, [isMenuOpen]);
 
   useEffect(() => {
     return () => {

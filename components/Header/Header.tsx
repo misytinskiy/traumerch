@@ -18,7 +18,6 @@ import QuoteButton from "../QuoteButton/QuoteButton";
 import styles from "./Header.module.css";
 
 export default function Header() {
-  const DEBUG_HEADER = process.env.NODE_ENV !== "production";
   const SCROLL_CLOSE_MIN_DELTA_PX = 8;
   const pathname = usePathname();
   const router = useRouter();
@@ -33,7 +32,6 @@ export default function Header() {
   const [showLogo, setShowLogo] = useState(true);
   const [showMenuButton, setShowMenuButton] = useState(true);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const lastScrollCloseAtRef = useRef<number>(0);
   const menuOpenScrollYRef = useRef<number>(0);
 
   const [isSmallDesktop, setIsSmallDesktop] = useState(false);
@@ -47,20 +45,6 @@ export default function Header() {
   };
 
   const labels = getLanguageLabels();
-
-  const debugLog = useCallback(
-    (event: string, payload?: Record<string, unknown>) => {
-      if (!DEBUG_HEADER) return;
-      const now = new Date();
-      const time = now.toISOString().slice(11, 23);
-      if (payload) {
-        console.log(`[Header ${time}] ${event}`, payload);
-      } else {
-        console.log(`[Header ${time}] ${event}`);
-      }
-    },
-    [DEBUG_HEADER]
-  );
 
   useEffect(() => {
     const updateBreakpoint = () => {
@@ -84,22 +68,10 @@ export default function Header() {
     "/design",
   ].includes(pathname);
 
-  const closeMenu = useCallback(
-    (source: "default" | "scroll" = "default") => {
-      debugLog("closeMenu:source", { source });
-
-      debugLog("closeMenu:start", {
-        isMenuOpen,
-        scrollY:
-          typeof window !== "undefined"
-            ? Math.round(window.scrollY)
-            : undefined,
-      });
-      setIsHeaderVisible(true);
-      setIsMenuOpen(false);
-    },
-    [debugLog, isMenuOpen]
-  );
+  const closeMenu = useCallback(() => {
+    setIsHeaderVisible(true);
+    setIsMenuOpen(false);
+  }, []);
 
   // Scroll logic with immediate hide/show
   useEffect(() => {
@@ -120,11 +92,6 @@ export default function Header() {
           if (!isHeaderVisibleLocal) {
             isHeaderVisibleLocal = true;
             setIsHeaderVisible(true);
-            debugLog("scroll:forceHeaderVisible:menuActive", {
-              currentScrollY: Math.round(currentScrollY),
-              diff: Math.round(diff),
-              isMenuOpen,
-            });
           }
           lastScrollY = currentScrollY;
           ticking = false;
@@ -156,10 +123,6 @@ export default function Header() {
           if (isHeaderVisibleLocal) {
             isHeaderVisibleLocal = false;
             setIsHeaderVisible(false);
-            debugLog("scroll:hideHeader", {
-              currentScrollY: Math.round(currentScrollY),
-              diff: Math.round(diff),
-            });
           }
         }
 
@@ -173,7 +136,7 @@ export default function Header() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [enableScrollEffects, isMenuOpen, debugLog]);
+  }, [enableScrollEffects, isMenuOpen]);
 
   // Navigation functions for menu items
   const handleMenuNavigation = (itemId: string) => {
@@ -224,16 +187,13 @@ export default function Header() {
 
   const handleMenuClick = () => {
     if (!isMenuOpen) {
-      debugLog("menuClick:open:start");
       // Opening menu - hide logo and menu button immediately
       setShowLogo(false);
       setShowMenuButton(false);
       menuOpenScrollYRef.current =
         typeof window !== "undefined" ? window.scrollY : 0;
       setIsMenuOpen(true);
-      debugLog("menuClick:open:applied");
     } else {
-      debugLog("menuClick:close:start");
       closeMenu();
     }
   };
@@ -249,26 +209,12 @@ export default function Header() {
       const deltaFromOpen = Math.abs(currentScrollY - menuOpenScrollYRef.current);
 
       if (deltaFromOpen < SCROLL_CLOSE_MIN_DELTA_PX) {
-        debugLog("scrollClose:ignored:smallDelta", {
-          currentScrollY: Math.round(currentScrollY),
-          openScrollY: Math.round(menuOpenScrollYRef.current),
-          deltaFromOpen: Math.round(deltaFromOpen),
-          minDelta: SCROLL_CLOSE_MIN_DELTA_PX,
-        });
         return;
       }
 
       if (hasClosed) return;
       hasClosed = true;
-      const now = Date.now();
-      const delta = now - lastScrollCloseAtRef.current;
-      lastScrollCloseAtRef.current = now;
-      debugLog("scrollClose:trigger", {
-        scrollY: Math.round(currentScrollY),
-        deltaFromOpen: Math.round(deltaFromOpen),
-        deltaSinceLastMs: delta,
-      });
-      closeMenu("scroll");
+      closeMenu();
     };
 
     window.addEventListener("scroll", handleScrollClose, { passive: true });
@@ -279,7 +225,6 @@ export default function Header() {
   }, [
     isMenuOpen,
     closeMenu,
-    debugLog,
     SCROLL_CLOSE_MIN_DELTA_PX,
   ]);
 
@@ -314,7 +259,6 @@ export default function Header() {
       const isClickOnMenu = target.closest(".header-menu-container");
 
       if (isMenuOpen && !isClickOnMenu) {
-        debugLog("outsideClick:close");
         closeMenu();
       }
     };
@@ -330,22 +274,7 @@ export default function Header() {
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }
-  }, [isMenuOpen, closeMenu, debugLog]);
-
-  useEffect(() => {
-    debugLog("state:update", {
-      isMenuOpen,
-      showLogo,
-      showMenuButton,
-      isHeaderVisible,
-    });
-  }, [
-    isMenuOpen,
-    showLogo,
-    showMenuButton,
-    isHeaderVisible,
-    debugLog,
-  ]);
+  }, [isMenuOpen, closeMenu]);
 
   // Responsive values based on original CSS
   const initialPadding = isSmallDesktop ? "20px 29px" : "20px 60px";
@@ -477,7 +406,6 @@ export default function Header() {
             onExitComplete={() => {
               setShowLogo(true);
               setShowMenuButton(true);
-              debugLog("menuItems:exitComplete:showControls");
             }}
           >
             {isMenuOpen && (
