@@ -13,6 +13,7 @@ type PriceTier = "sample" | "bulk";
 const NAME_FIELDS = ["[WEB] Name ENG", "[WEB] Name DE", "Name"];
 const CATEGORY_FIELDS = ["Item Category"];
 const IMAGE_FIELD = "Main Product Photo";
+const SECONDARY_IMAGE_FIELD = "Secondary Product Photos";
 const OUT_OF_STOCK_FIELD = "Out of Stock";
 const OUT_OF_STOCK_FIELD_FALLBACK = "Out of stock";
 const PRICE_FIELDS_BY_TIER: Record<PriceTier, string[]> = {
@@ -110,6 +111,45 @@ const normalizeRecord = (
       : null;
   const imageUrl = imageUrlLarge || imageUrlSmall || imageUrlFull;
 
+  const secondaryPhoto = fields[SECONDARY_IMAGE_FIELD];
+  const secondaryPhotoArr = Array.isArray(secondaryPhoto) ? secondaryPhoto : [];
+  const hoverAttachment =
+    secondaryPhotoArr[0] && typeof secondaryPhotoArr[0] === "object"
+      ? (secondaryPhotoArr[0] as {
+          url?: string;
+          thumbnails?: {
+            small?: { url?: string };
+            large?: { url?: string };
+            full?: { url?: string };
+          };
+        })
+      : mainPhotoArr[1] && typeof mainPhotoArr[1] === "object"
+        ? (mainPhotoArr[1] as {
+            url?: string;
+            thumbnails?: {
+              small?: { url?: string };
+              large?: { url?: string };
+              full?: { url?: string };
+            };
+          })
+      : null;
+  const hoverImageUrlFull =
+    hoverAttachment?.url && typeof hoverAttachment.url === "string"
+      ? hoverAttachment.url
+      : null;
+  const hoverImageUrlLarge =
+    hoverAttachment?.thumbnails?.large?.url &&
+    typeof hoverAttachment.thumbnails.large.url === "string"
+      ? hoverAttachment.thumbnails.large.url
+      : null;
+  const hoverImageUrlSmall =
+    hoverAttachment?.thumbnails?.small?.url &&
+    typeof hoverAttachment.thumbnails.small.url === "string"
+      ? hoverAttachment.thumbnails.small.url
+      : null;
+  const hoverImageUrl =
+    hoverImageUrlLarge || hoverImageUrlSmall || hoverImageUrlFull;
+
   const categories = CATEGORY_FIELDS.flatMap((field) =>
     extractStringValues(fields[field])
   );
@@ -120,6 +160,7 @@ const normalizeRecord = (
     nameDe,
     price,
     imageUrl,
+    hoverImageUrl,
     imageUrlSmall,
     imageUrlLarge,
     imageUrlFull,
@@ -135,6 +176,7 @@ export const buildNormalizedFields = (
   ...NAME_FIELDS,
   ...PRICE_FIELDS_QUERY[priceTier],
   IMAGE_FIELD,
+  SECONDARY_IMAGE_FIELD,
   ...(includeOutOfStock ? [OUT_OF_STOCK_FIELD] : []),
   ...CATEGORY_FIELDS,
 ];

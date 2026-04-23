@@ -169,6 +169,18 @@
   object-fit: cover;
 }
 
+.productImageHover {
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.22s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .productCard:hover .productImageHover {
+    opacity: 1;
+  }
+}
+
 .productImage.regular {
   height: 452px;
 }

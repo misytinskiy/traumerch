@@ -25,6 +25,7 @@ const ALLOWED_FIELDS = new Set([
   "Name",
   "Item Category",
   "Main Product Photo",
+  "Secondary Product Photos",
   "Out of Stock",
   "Out of stock",
   "1-24 pcs (Sample) | SALES",

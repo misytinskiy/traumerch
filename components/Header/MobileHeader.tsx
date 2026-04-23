@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
@@ -22,6 +22,9 @@ export default function MobileHeader() {
   const isHomePage = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const closeMenuTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
 
   // Determine display labels based on country and language
   const getLanguageLabels = () => {
@@ -33,16 +36,28 @@ export default function MobileHeader() {
 
   const labels = getLanguageLabels();
 
+  const closeMenu = useCallback((onAfterClose?: () => void) => {
+    setIsClosing(true);
+    if (closeMenuTimeoutRef.current) {
+      clearTimeout(closeMenuTimeoutRef.current);
+    }
+    closeMenuTimeoutRef.current = setTimeout(() => {
+      setIsMenuOpen(false);
+      setIsClosing(false);
+      closeMenuTimeoutRef.current = null;
+      onAfterClose?.();
+    }, 300);
+  }, []);
+
   const toggleMenu = () => {
     if (isMenuOpen) {
-      // Closing menu - start closing animation
-      setIsClosing(true);
-      setTimeout(() => {
-        setIsMenuOpen(false);
-        setIsClosing(false);
-      }, 300); // Match animation duration
+      closeMenu();
     } else {
       // Opening menu
+      if (closeMenuTimeoutRef.current) {
+        clearTimeout(closeMenuTimeoutRef.current);
+        closeMenuTimeoutRef.current = null;
+      }
       setIsMenuOpen(true);
       setIsClosing(false);
     }
@@ -78,26 +93,44 @@ export default function MobileHeader() {
       default:
         break;
     }
-    // Close menu with animation
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsMenuOpen(false);
-      setIsClosing(false);
-    }, 300);
+    closeMenu();
   };
 
   const handleMenuQuoteAction = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsMenuOpen(false);
-      setIsClosing(false);
+    closeMenu(() => {
       if (hasCartItems) {
         openCart();
       } else {
         openQuote("mobile_menu");
       }
-    }, 300);
+    });
   };
+
+  useEffect(() => {
+    if (!isMenuOpen || isClosing) return;
+
+    let hasClosed = false;
+
+    const handleScrollClose = () => {
+      if (hasClosed) return;
+      hasClosed = true;
+      closeMenu();
+    };
+
+    window.addEventListener("scroll", handleScrollClose, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollClose);
+    };
+  }, [isMenuOpen, isClosing, closeMenu]);
+
+  useEffect(() => {
+    return () => {
+      if (closeMenuTimeoutRef.current) {
+        clearTimeout(closeMenuTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -182,7 +215,7 @@ export default function MobileHeader() {
               <Link
                 href="/"
                 className={styles.menuLogo}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => closeMenu()}
               >
                 TRAUMERCH
               </Link>

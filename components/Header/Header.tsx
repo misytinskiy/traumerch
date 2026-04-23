@@ -8,7 +8,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
@@ -18,6 +18,8 @@ import QuoteButton from "../QuoteButton/QuoteButton";
 import styles from "./Header.module.css";
 
 export default function Header() {
+  const DEBUG_HEADER = process.env.NODE_ENV !== "production";
+  const SCROLL_CLOSE_MIN_DELTA_PX = 8;
   const pathname = usePathname();
   const router = useRouter();
   const { language, country, setLanguage, t } = useLanguage();
@@ -31,6 +33,8 @@ export default function Header() {
   const [showLogo, setShowLogo] = useState(true);
   const [showMenuButton, setShowMenuButton] = useState(true);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const lastScrollCloseAtRef = useRef<number>(0);
+  const menuOpenScrollYRef = useRef<number>(0);
 
   const [isSmallDesktop, setIsSmallDesktop] = useState(false);
 
@@ -43,6 +47,20 @@ export default function Header() {
   };
 
   const labels = getLanguageLabels();
+
+  const debugLog = useCallback(
+    (event: string, payload?: Record<string, unknown>) => {
+      if (!DEBUG_HEADER) return;
+      const now = new Date();
+      const time = now.toISOString().slice(11, 23);
+      if (payload) {
+        console.log(`[Header ${time}] ${event}`, payload);
+      } else {
+        console.log(`[Header ${time}] ${event}`);
+      }
+    },
+    [DEBUG_HEADER]
+  );
 
   useEffect(() => {
     const updateBreakpoint = () => {
@@ -66,12 +84,29 @@ export default function Header() {
     "/design",
   ].includes(pathname);
 
+  const closeMenu = useCallback(
+    (source: "default" | "scroll" = "default") => {
+      debugLog("closeMenu:source", { source });
+
+      debugLog("closeMenu:start", {
+        isMenuOpen,
+        scrollY:
+          typeof window !== "undefined"
+            ? Math.round(window.scrollY)
+            : undefined,
+      });
+      setIsHeaderVisible(true);
+      setIsMenuOpen(false);
+    },
+    [debugLog, isMenuOpen]
+  );
+
   // Scroll logic with immediate hide/show
   useEffect(() => {
     if (!enableScrollEffects) return;
     let ticking = false;
     let lastScrollY = 0;
-    let isHeaderVisible = true;
+    let isHeaderVisibleLocal = true;
 
     const handleScroll = () => {
       if (ticking) return;
@@ -81,6 +116,21 @@ export default function Header() {
         const currentScrollY = window.scrollY;
         const diff = currentScrollY - lastScrollY;
 
+        if (isMenuOpen) {
+          if (!isHeaderVisibleLocal) {
+            isHeaderVisibleLocal = true;
+            setIsHeaderVisible(true);
+            debugLog("scroll:forceHeaderVisible:menuActive", {
+              currentScrollY: Math.round(currentScrollY),
+              diff: Math.round(diff),
+              isMenuOpen,
+            });
+          }
+          lastScrollY = currentScrollY;
+          ticking = false;
+          return;
+        }
+
         // Ignore very small movements to prevent flickering
         if (Math.abs(diff) < 5) {
           ticking = false;
@@ -89,23 +139,27 @@ export default function Header() {
 
         // Always show header at the top
         if (currentScrollY <= 100) {
-          if (!isHeaderVisible) {
-            isHeaderVisible = true;
+          if (!isHeaderVisibleLocal) {
+            isHeaderVisibleLocal = true;
             setIsHeaderVisible(true);
           }
         }
         // Show header if scrolling up (any amount)
         else if (diff < 0) {
-          if (!isHeaderVisible) {
-            isHeaderVisible = true;
+          if (!isHeaderVisibleLocal) {
+            isHeaderVisibleLocal = true;
             setIsHeaderVisible(true);
           }
         }
         // Hide header immediately when scrolling down past threshold
         else if (diff > 10 && currentScrollY > 200) {
-          if (isHeaderVisible) {
-            isHeaderVisible = false;
+          if (isHeaderVisibleLocal) {
+            isHeaderVisibleLocal = false;
             setIsHeaderVisible(false);
+            debugLog("scroll:hideHeader", {
+              currentScrollY: Math.round(currentScrollY),
+              diff: Math.round(diff),
+            });
           }
         }
 
@@ -119,7 +173,7 @@ export default function Header() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [enableScrollEffects]);
+  }, [enableScrollEffects, isMenuOpen, debugLog]);
 
   // Navigation functions for menu items
   const handleMenuNavigation = (itemId: string) => {
@@ -170,26 +224,64 @@ export default function Header() {
 
   const handleMenuClick = () => {
     if (!isMenuOpen) {
+      debugLog("menuClick:open:start");
       // Opening menu - hide logo and menu button immediately
       setShowLogo(false);
       setShowMenuButton(false);
+      menuOpenScrollYRef.current =
+        typeof window !== "undefined" ? window.scrollY : 0;
       setIsMenuOpen(true);
+      debugLog("menuClick:open:applied");
     } else {
-      // Closing menu - close menu first, then show elements after delay
-      setIsMenuOpen(false);
-      setTimeout(() => {
-        setShowLogo(true);
-        setShowMenuButton(true);
-      }, 400); // Wait for menu to fully close (duration: 0.4s)
+      debugLog("menuClick:close:start");
+      closeMenu();
     }
   };
 
-  // Ensure logo is visible on non-home pages (but not when menu is open)
   useEffect(() => {
-    if (!isHomePage && !showLogo && !isMenuOpen) {
-      setShowLogo(true);
-    }
-  }, [isHomePage, showLogo, isMenuOpen]);
+    if (!isMenuOpen) return;
+
+    menuOpenScrollYRef.current = window.scrollY;
+    let hasClosed = false;
+
+    const handleScrollClose = () => {
+      const currentScrollY = window.scrollY;
+      const deltaFromOpen = Math.abs(currentScrollY - menuOpenScrollYRef.current);
+
+      if (deltaFromOpen < SCROLL_CLOSE_MIN_DELTA_PX) {
+        debugLog("scrollClose:ignored:smallDelta", {
+          currentScrollY: Math.round(currentScrollY),
+          openScrollY: Math.round(menuOpenScrollYRef.current),
+          deltaFromOpen: Math.round(deltaFromOpen),
+          minDelta: SCROLL_CLOSE_MIN_DELTA_PX,
+        });
+        return;
+      }
+
+      if (hasClosed) return;
+      hasClosed = true;
+      const now = Date.now();
+      const delta = now - lastScrollCloseAtRef.current;
+      lastScrollCloseAtRef.current = now;
+      debugLog("scrollClose:trigger", {
+        scrollY: Math.round(currentScrollY),
+        deltaFromOpen: Math.round(deltaFromOpen),
+        deltaSinceLastMs: delta,
+      });
+      closeMenu("scroll");
+    };
+
+    window.addEventListener("scroll", handleScrollClose, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollClose);
+    };
+  }, [
+    isMenuOpen,
+    closeMenu,
+    debugLog,
+    SCROLL_CLOSE_MIN_DELTA_PX,
+  ]);
 
   // Handle hash navigation on main page
   useEffect(() => {
@@ -222,11 +314,8 @@ export default function Header() {
       const isClickOnMenu = target.closest(".header-menu-container");
 
       if (isMenuOpen && !isClickOnMenu) {
-        setIsMenuOpen(false);
-        setTimeout(() => {
-          setShowLogo(true);
-          setShowMenuButton(true);
-        }, 400); // Wait for menu to fully close
+        debugLog("outsideClick:close");
+        closeMenu();
       }
     };
 
@@ -241,7 +330,22 @@ export default function Header() {
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }
-  }, [isMenuOpen]);
+  }, [isMenuOpen, closeMenu, debugLog]);
+
+  useEffect(() => {
+    debugLog("state:update", {
+      isMenuOpen,
+      showLogo,
+      showMenuButton,
+      isHeaderVisible,
+    });
+  }, [
+    isMenuOpen,
+    showLogo,
+    showMenuButton,
+    isHeaderVisible,
+    debugLog,
+  ]);
 
   // Responsive values based on original CSS
   const initialPadding = isSmallDesktop ? "20px 29px" : "20px 60px";
@@ -326,7 +430,7 @@ export default function Header() {
     <motion.header
       className={styles.header}
       animate={{
-        top: isHeaderVisible ? 20 : -100,
+        top: isHeaderVisible || isMenuOpen ? 20 : -100,
       }}
       transition={{
         duration: 0.2,
@@ -343,43 +447,52 @@ export default function Header() {
         transform,
         maxWidth,
         borderColor,
-        pointerEvents: isHeaderVisible ? "auto" : "none",
+        pointerEvents: isHeaderVisible || isMenuOpen ? "auto" : "none",
       }}
     >
       <div className={`${styles.headerContent} header-menu-container`}>
         {/* Left side - Menu button and animated menu items */}
         <div className={styles.leftSide}>
           {/* Menu Button */}
-          <AnimatePresence>
-            {showMenuButton && (
-              <motion.div
-                className={styles.menu}
-                initial={{ opacity: 0, x: -20, scale: 0.9 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -20, scale: 0.9 }}
-                whileHover={{ opacity: 0.7 }}
-                transition={{
-                  duration: 0.3,
-                  ease: "easeOut",
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 20,
-                }}
-                onClick={handleMenuClick}
-              >
-                {t.header.menu}
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div
+            className={styles.menu}
+            style={{
+              opacity: showMenuButton ? 1 : 0,
+              transform: showMenuButton
+                ? "translateX(0) scale(1)"
+                : "translateX(-20px) scale(0.95)",
+              pointerEvents: showMenuButton ? "auto" : "none",
+              transition: showMenuButton
+                ? "none"
+                : "opacity 120ms ease-out, transform 120ms ease-out",
+              willChange: "opacity, transform",
+            }}
+            onClick={handleMenuClick}
+          >
+            {t.header.menu}
+          </div>
 
           {/* Animated Menu Items - slide out from left */}
-          <AnimatePresence>
+          <AnimatePresence
+            onExitComplete={() => {
+              setShowLogo(true);
+              setShowMenuButton(true);
+              debugLog("menuItems:exitComplete:showControls");
+            }}
+          >
             {isMenuOpen && (
               <motion.div
                 className={styles.menuItems}
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
+                exit={{
+                  opacity: 0,
+                  x: -30,
+                  transition: {
+                    duration: 0.22,
+                    ease: "easeInOut",
+                  },
+                }}
                 transition={{
                   duration: 0.4,
                   ease: "easeOut",
@@ -459,33 +572,31 @@ export default function Header() {
         </div>
 
         {/* Center - Logo */}
-        <AnimatePresence>
-          {showLogo && (
-            <motion.div
-              initial={{ opacity: 0, scale: 1, filter: "blur(0px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 0.9, filter: "blur(8px)" }}
-              transition={{
-                duration: 0.3,
-                ease: "easeInOut" as const,
-              }}
-            >
-              <Link
-                href="/"
-                className={styles.logo}
-                id="header-logo-anchor"
-                style={{
-                  visibility:
-                    isPreloaderActive && isHomePage ? "hidden" : "visible",
-                  pointerEvents:
-                    isPreloaderActive && isHomePage ? "none" : "auto",
-                }}
-              >
-                TRAUMERCH
-              </Link>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <motion.div
+          initial={false}
+          animate={{
+            opacity: showLogo ? 1 : 0,
+            scale: showLogo ? 1 : 0.98,
+            filter: showLogo ? "blur(0px)" : "blur(6px)",
+          }}
+          transition={{
+            duration: 0.2,
+            ease: "easeOut",
+          }}
+          style={{ pointerEvents: showLogo ? "auto" : "none" }}
+        >
+          <Link
+            href="/"
+            className={styles.logo}
+            id="header-logo-anchor"
+            style={{
+              visibility: isPreloaderActive && isHomePage ? "hidden" : "visible",
+              pointerEvents: isPreloaderActive && isHomePage ? "none" : "auto",
+            }}
+          >
+            TRAUMERCH
+          </Link>
+        </motion.div>
 
         {/* Right Section - Languages and Quote Button */}
         <motion.div

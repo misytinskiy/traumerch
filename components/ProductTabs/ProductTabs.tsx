@@ -17,6 +17,7 @@ interface Product {
   outOfStock: boolean;
   size: "regular" | "large";
   imageUrl: string | null;
+  hoverImageUrl: string | null;
   isSkeleton?: boolean;
 }
 
@@ -215,6 +216,7 @@ export default function ProductTabs({
         outOfStock: false,
         size,
         imageUrl: null,
+        hoverImageUrl: null,
         isSkeleton: true,
       })),
     []
@@ -229,6 +231,7 @@ export default function ProductTabs({
         outOfStock: false,
         size: "regular" as const,
         imageUrl: null,
+        hoverImageUrl: null,
         isSkeleton: true,
       })),
     []
@@ -259,6 +262,7 @@ export default function ProductTabs({
         outOfStock: record.outOfStock,
         size,
         imageUrl,
+        hoverImageUrl: record.hoverImageUrl ?? null,
       };
     },
     [language]
@@ -332,6 +336,8 @@ export default function ProductTabs({
 
   const renderProductCard = (product: Product) => {
     const isSkeleton = Boolean(product.isSkeleton);
+    const hasHoverImage =
+      Boolean(product.hoverImageUrl) && product.hoverImageUrl !== product.imageUrl;
     const priceText = (() => {
       if (product.outOfStock) {
         return "Out of stock";
@@ -377,6 +383,22 @@ export default function ProductTabs({
               className={styles.productImageContent}
               loading="lazy"
             />
+            {hasHoverImage && (
+              <Image
+                src={product.hoverImageUrl as string}
+                alt={product.name}
+                fill
+                sizes={
+                  product.size === "large"
+                    ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
+                    : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                }
+                quality={100}
+                unoptimized
+                className={`${styles.productImageContent} ${styles.productImageHover}`}
+                loading="lazy"
+              />
+            )}
           </div>
         ) : (
           <div

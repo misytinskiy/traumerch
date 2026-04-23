@@ -18,7 +18,7 @@ const getCachedCatalogRecords = unstable_cache(
       })
     ).records;
   },
-  ["catalog-records-bulk"],
+  ["catalog-records-bulk-hover-image-v2"],
   { revalidate: 300 }
 );
 

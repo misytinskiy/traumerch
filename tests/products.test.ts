@@ -38,6 +38,13 @@ describe("products normalization", () => {
                     small: { url: "https://cdn.example.com/small.jpg" },
                   },
                 },
+                {
+                  url: "https://cdn.example.com/full-hover.jpg",
+                  thumbnails: {
+                    large: { url: "https://cdn.example.com/large-hover.jpg" },
+                    small: { url: "https://cdn.example.com/small-hover.jpg" },
+                  },
+                },
               ],
             },
           },
@@ -63,6 +70,7 @@ describe("products normalization", () => {
       price: "From €6",
       outOfStock: true,
       imageUrl: "https://cdn.example.com/large.jpg",
+      hoverImageUrl: "https://cdn.example.com/large-hover.jpg",
       categories: ["Basics", "Summer"],
     });
   });

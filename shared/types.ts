@@ -4,6 +4,7 @@ export type NormalizedProduct = {
   nameDe: string;
   price: string;
   imageUrl: string | null;
+  hoverImageUrl?: string | null;
   imageUrlSmall: string | null;
   imageUrlLarge: string | null;
   imageUrlFull: string | null;
