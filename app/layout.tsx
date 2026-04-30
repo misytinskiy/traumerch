@@ -61,6 +61,11 @@ export default async function RootLayout({
           />
         ) : null}
         <Script
+          id="gtag-src"
+          src="https://www.googletagmanager.com/gtag/js?id=G-L0E8LG3KVT"
+          strategy="afterInteractive"
+        />
+        <Script
           id="gtag-consent-default"
           data-cookieconsent="ignore"
           strategy="beforeInteractive"
@@ -79,6 +84,14 @@ gtag('consent', 'default', {
 });
 gtag('set', 'ads_data_redaction', true);
 gtag('set', 'url_passthrough', false);`,
+          }}
+        />
+        <Script
+          id="gtag-config"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `gtag('js', new Date());
+gtag('config', 'G-L0E8LG3KVT');`,
           }}
         />
       </head>
