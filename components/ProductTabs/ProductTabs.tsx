@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import Image from "next/image";
@@ -61,11 +61,12 @@ const DESKTOP_LAYOUT_PATTERN: Product["size"][] = [
 
 const MOBILE_SKELETON_COUNT = 12;
 const COMPACT_GRID_BREAKPOINT = 900;
+const IMAGE_REFRESH_DEBOUNCE_MS = 3000;
 
 const normalizeCategoryTerm = (value: string) => value.trim().toLowerCase();
 
 const fetcher = async (url: string) => {
-  const response = await fetch(url);
+  const response = await fetch(url, { cache: "no-store" });
   if (!response.ok) {
     throw new Error(`Failed to fetch products: ${response.status}`);
   }
@@ -82,23 +83,29 @@ export default function ProductTabs({
   const [activeTab, setActiveTab] = useState<string>(ALL_PRODUCTS_TAB_KEY);
   const [isMobile, setIsMobile] = useState(false);
   const [showAll, setShowAll] = useState(false);
-
+  const [failedImageUrls, setFailedImageUrls] = useState<string[]>([]);
   const hasInitial = initialRecords.length > 0;
+  const lastImageRefreshAtRef = useRef(0);
+
   const allProductsApiUrl = "/api/airtable-products?format=normalized&priceTier=bulk";
-  const { data: allProductsData, error, isLoading } = useSWR(
-    hasInitial ? null : allProductsApiUrl,
+  const { data: allProductsData, error, isLoading, mutate } = useSWR(
+    allProductsApiUrl,
     fetcher,
     {
-      fallbackData: hasInitial ? { records: initialRecords } : undefined,
-      revalidateOnMount: false,
-      revalidateIfStale: false,
+      fallbackData: { records: initialRecords },
+      revalidateOnMount: initialRecords.length > 0,
+      revalidateIfStale: true,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     }
   );
-  const allRecords = (
-    hasInitial ? initialRecords : allProductsData?.records ?? []
-  ) as NormalizedProduct[];
+  const allRecords = (allProductsData?.records ?? initialRecords) as
+    | NormalizedProduct[]
+    | [];
+
+  useEffect(() => {
+    setFailedImageUrls([]);
+  }, [allRecords]);
 
   const knownCategoryLabels = useMemo(
     () => ({
@@ -170,6 +177,28 @@ export default function ProductTabs({
     router.push(`/design?product=${productId}`);
   };
 
+  const refreshExpiredImageUrls = useCallback(() => {
+    const now = Date.now();
+    if (now - lastImageRefreshAtRef.current < IMAGE_REFRESH_DEBOUNCE_MS) {
+      return;
+    }
+
+    lastImageRefreshAtRef.current = now;
+    void mutate();
+  }, [mutate]);
+
+  const handleImageError = useCallback(
+    (url: string | null) => {
+      if (!url) return;
+
+      setFailedImageUrls((current) =>
+        current.includes(url) ? current : [...current, url]
+      );
+      refreshExpiredImageUrls();
+    },
+    [refreshExpiredImageUrls]
+  );
+
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth <= COMPACT_GRID_BREAKPOINT);
@@ -181,7 +210,7 @@ export default function ProductTabs({
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const fetchError = !hasInitial && error ? t.common.loadProductsError : null;
+  const fetchError = error ? t.common.loadProductsError : null;
   const records =
     activeTab === ALL_PRODUCTS_TAB_KEY || !activeCategoryTerm
       ? allRecords
@@ -337,7 +366,12 @@ export default function ProductTabs({
   const renderProductCard = (product: Product) => {
     const isSkeleton = Boolean(product.isSkeleton);
     const hasHoverImage =
-      Boolean(product.hoverImageUrl) && product.hoverImageUrl !== product.imageUrl;
+      !isMobile &&
+      Boolean(product.hoverImageUrl) &&
+      product.hoverImageUrl !== product.imageUrl;
+    const hasFailedMainImage =
+      product.imageUrl !== null && failedImageUrls.includes(product.imageUrl);
+    const hasRenderableMainImage = Boolean(product.imageUrl) && !hasFailedMainImage;
     const priceText = (() => {
       if (product.outOfStock) {
         return "Out of stock";
@@ -367,10 +401,10 @@ export default function ProductTabs({
           <div
             className={`${styles.productImage} ${styles[product.size]} ${styles.skeletonBlock}`}
           />
-        ) : product.imageUrl ? (
+        ) : hasRenderableMainImage ? (
           <div className={`${styles.productImage} ${styles[product.size]} ${styles.imageWrap}`}>
             <Image
-              src={product.imageUrl}
+              src={product.imageUrl as string}
               alt={product.name}
               fill
               sizes={
@@ -378,10 +412,10 @@ export default function ProductTabs({
                   ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
                   : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
               }
-              quality={100}
-              unoptimized
+              quality={85}
               className={styles.productImageContent}
               loading="lazy"
+              onError={() => handleImageError(product.imageUrl)}
             />
             {hasHoverImage && (
               <Image
@@ -393,10 +427,10 @@ export default function ProductTabs({
                     ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
                     : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
                 }
-                quality={100}
-                unoptimized
+                quality={85}
                 className={`${styles.productImageContent} ${styles.productImageHover}`}
                 loading="lazy"
+                onError={() => handleImageError(product.hoverImageUrl)}
               />
             )}
           </div>

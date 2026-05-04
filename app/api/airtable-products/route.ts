@@ -78,10 +78,12 @@ export async function GET(request: NextRequest) {
   const filterByFormula = undefined;
   const category = (searchParams.get("category") || "").toLowerCase().trim();
 
-  const cacheSeconds =
-    format === "normalized" ? 60 : recordId ? 600 : 300;
-  const staleSeconds = Math.min(30, cacheSeconds);
-  const cacheControl = `s-maxage=${cacheSeconds}, stale-while-revalidate=${staleSeconds}, stale-if-error=60`;
+  const cacheControl =
+    format === "normalized"
+      ? "no-store, max-age=0"
+      : recordId
+        ? "s-maxage=600, stale-while-revalidate=30, stale-if-error=60"
+        : "s-maxage=300, stale-while-revalidate=30, stale-if-error=60";
 
   try {
     let data: unknown;

@@ -87,30 +87,7 @@ describe("ProductTabs", () => {
 
   it("switches tab and renders category products", () => {
     useLanguageMock.mockReturnValue({ t: en, language: "en" });
-    useSWRMock.mockImplementation((key: string) => {
-      if (key.includes("category=bags")) {
-        return {
-          data: {
-            records: [
-              {
-                id: "bag1",
-                nameEn: "Bag",
-                nameDe: "Tasche",
-                price: "From €8",
-                imageUrl: null,
-                imageUrlSmall: null,
-                imageUrlLarge: null,
-                imageUrlFull: null,
-                outOfStock: false,
-                categories: [],
-              },
-            ],
-          },
-          error: undefined,
-          isLoading: false,
-        };
-      }
-
+    useSWRMock.mockImplementation(() => {
       return {
         data: {
           records: [
@@ -124,7 +101,19 @@ describe("ProductTabs", () => {
               imageUrlLarge: null,
               imageUrlFull: null,
               outOfStock: false,
-              categories: [],
+              categories: ["custom product"],
+            },
+            {
+              id: "bag1",
+              nameEn: "Bag",
+              nameDe: "Tasche",
+              price: "From €8",
+              imageUrl: null,
+              imageUrlSmall: null,
+              imageUrlLarge: null,
+              imageUrlFull: null,
+              outOfStock: false,
+              categories: ["bags"],
             },
           ],
         },
