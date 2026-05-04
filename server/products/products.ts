@@ -16,6 +16,11 @@ const IMAGE_FIELD = "Main Product Photo";
 const SECONDARY_IMAGE_FIELD = "Secondary Product Photos";
 const OUT_OF_STOCK_FIELD = "Out of Stock";
 const OUT_OF_STOCK_FIELD_FALLBACK = "Out of stock";
+const CATALOG_FEATURED_FIELDS = [
+  "[WEB] Catalog Starring",
+  "Catalog Starring",
+  "Starring",
+];
 const PRICE_FIELDS_BY_TIER: Record<PriceTier, string[]> = {
   sample: ["1-24 pcs (Sample) | SALES", "Price", "[WEB] Price"],
   bulk: ["1000+ pcs | SALES", "Price", "[WEB] Price"],
@@ -58,6 +63,12 @@ const pickFirstField = (
   return undefined;
 };
 
+const parseBooleanField = (value: unknown) =>
+  value === true ||
+  value === "true" ||
+  value === "1" ||
+  value === 1;
+
 const normalizeRecord = (
   record: AirtableRecord,
   priceTier: PriceTier
@@ -76,11 +87,10 @@ const normalizeRecord = (
   const price = formatPrice(priceValue);
   const outOfStockRaw =
     fields[OUT_OF_STOCK_FIELD] ?? fields[OUT_OF_STOCK_FIELD_FALLBACK];
-  const outOfStock =
-    outOfStockRaw === true ||
-    outOfStockRaw === "true" ||
-    outOfStockRaw === 1 ||
-    outOfStockRaw === "1";
+  const outOfStock = parseBooleanField(outOfStockRaw);
+  const catalogFeatured = parseBooleanField(
+    pickFirstField(fields, CATALOG_FEATURED_FIELDS)
+  );
 
   const mainPhoto = fields[IMAGE_FIELD];
   const mainPhotoArr = Array.isArray(mainPhoto) ? mainPhoto : [];
@@ -166,17 +176,20 @@ const normalizeRecord = (
     imageUrlFull,
     outOfStock,
     categories,
+    catalogFeatured,
   };
 };
 
 export const buildNormalizedFields = (
   priceTier: PriceTier,
-  includeOutOfStock = true
+  includeOutOfStock = true,
+  catalogFeaturedField?: string
 ) => [
   ...NAME_FIELDS,
   ...PRICE_FIELDS_QUERY[priceTier],
   IMAGE_FIELD,
   SECONDARY_IMAGE_FIELD,
+  ...(catalogFeaturedField ? [catalogFeaturedField] : []),
   ...(includeOutOfStock ? [OUT_OF_STOCK_FIELD] : []),
   ...CATEGORY_FIELDS,
 ];
@@ -208,8 +221,15 @@ export const fetchNormalizedProducts = async ({
   const formula =
     filterByFormula || (category ? buildCategoryFormula(category) : undefined);
 
-  const runFetch = async (includeOutOfStock: boolean) => {
-    const fields = buildNormalizedFields(priceTier, includeOutOfStock);
+  const runFetch = async (
+    includeOutOfStock: boolean,
+    catalogFeaturedField?: string
+  ) => {
+    const fields = buildNormalizedFields(
+      priceTier,
+      includeOutOfStock,
+      catalogFeaturedField
+    );
     const url = buildAirtableListUrl({
       fields,
       view,
@@ -222,21 +242,42 @@ export const fetchNormalizedProducts = async ({
     return response;
   };
 
-  let response = await runFetch(true);
-  if (!response.ok) {
+  let includeOutOfStock = true;
+  let catalogFeaturedFieldIndex = 0;
+  let response = await runFetch(
+    includeOutOfStock,
+    CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex]
+  );
+
+  while (!response.ok) {
     const message = await response.text();
-    if (
-      message.includes("UNKNOWN_FIELD_NAME") &&
-      message.includes(OUT_OF_STOCK_FIELD)
-    ) {
-      response = await runFetch(false);
-    } else {
+    if (!message.includes("UNKNOWN_FIELD_NAME")) {
       throw new Error(message);
     }
-  }
 
-  if (!response.ok) {
-    const message = await response.text();
+    if (includeOutOfStock && message.includes(OUT_OF_STOCK_FIELD)) {
+      includeOutOfStock = false;
+      response = await runFetch(
+        includeOutOfStock,
+        CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex]
+      );
+      continue;
+    }
+
+    const activeCatalogFeaturedField =
+      CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex];
+    if (
+      activeCatalogFeaturedField &&
+      message.includes(activeCatalogFeaturedField)
+    ) {
+      catalogFeaturedFieldIndex += 1;
+      response = await runFetch(
+        includeOutOfStock,
+        CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex]
+      );
+      continue;
+    }
+
     throw new Error(message);
   }
 

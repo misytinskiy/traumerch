@@ -73,6 +73,7 @@ describe("ProductTabs", () => {
             imageUrlFull: null,
             outOfStock: false,
             categories: [],
+            catalogFeatured: false,
           },
         ],
       },
@@ -102,6 +103,7 @@ describe("ProductTabs", () => {
               imageUrlFull: null,
               outOfStock: false,
               categories: ["custom product"],
+              catalogFeatured: false,
             },
             {
               id: "bag1",
@@ -114,6 +116,7 @@ describe("ProductTabs", () => {
               imageUrlFull: null,
               outOfStock: false,
               categories: ["bags"],
+              catalogFeatured: false,
             },
           ],
         },

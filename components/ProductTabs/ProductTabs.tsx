@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import Image from "next/image";
@@ -8,6 +9,12 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import type { NormalizedProduct } from "../../shared/types";
 import { pushDataLayerEvent } from "../../shared/analytics";
+import {
+  buildDesktopLayoutItems,
+  DESKTOP_LAYOUT_PATTERN,
+  DESKTOP_ROW_PATTERNS,
+  getDesktopLayoutCapacity,
+} from "./catalogLayout";
 import styles from "./ProductTabs.module.css";
 
 interface Product {
@@ -23,45 +30,11 @@ interface Product {
 
 const ALL_PRODUCTS_TAB_KEY = "allProducts";
 
-const DESKTOP_LAYOUT_PATTERN: Product["size"][] = [
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "large",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "large",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "large",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-  "regular",
-];
-
 const MOBILE_SKELETON_COUNT = 12;
 const COMPACT_GRID_BREAKPOINT = 900;
 const IMAGE_REFRESH_DEBOUNCE_MS = 3000;
+const INITIAL_DESKTOP_ROW_COUNT = 9;
+const EXPAND_ANIMATION_DURATION = 0.7;
 
 const normalizeCategoryTerm = (value: string) => value.trim().toLowerCase();
 
@@ -234,8 +207,6 @@ export default function ProductTabs({
     count: tab.key === activeTab ? activeRecords.length : 0,
   }));
 
-  const initialDesktopCapacity = DESKTOP_LAYOUT_PATTERN.length;
-
   const desktopSkeletonProducts = useMemo<Product[]>(
     () =>
       DESKTOP_LAYOUT_PATTERN.map((size, index) => ({
@@ -299,13 +270,8 @@ export default function ProductTabs({
 
   const buildDesktopProducts = useCallback(
     (sourceRecords: NormalizedProduct[]) => {
-      const sizes = [...DESKTOP_LAYOUT_PATTERN];
-      while (sizes.length < sourceRecords.length) {
-        sizes.push("regular");
-      }
-
-      return sourceRecords.map((record, index) =>
-        mapRecordToProduct(record, sizes[index] ?? "regular")
+      return buildDesktopLayoutItems(sourceRecords).map(({ record, size }) =>
+        mapRecordToProduct(record, size)
       );
     },
     [mapRecordToProduct]
@@ -332,31 +298,17 @@ export default function ProductTabs({
   const showEmptyState =
     !shouldShowSkeleton && !fetchError && activeRecords.length === 0;
 
-  const extraDesktopProducts = useMemo(() => {
-    if (!desktopProducts.length || showEmptyState) {
-      return [];
-    }
-    if (desktopProducts.length <= initialDesktopCapacity) {
-      return [];
-    }
-    return desktopProducts.slice(initialDesktopCapacity);
-  }, [desktopProducts, initialDesktopCapacity, showEmptyState]);
-
-  const visibleDesktopProducts = useMemo(() => {
-    if (!desktopProducts.length || showEmptyState) {
-      return [];
-    }
-    return desktopProducts.slice(0, initialDesktopCapacity);
-  }, [desktopProducts, initialDesktopCapacity, showEmptyState]);
-
-  const showExtraGrid =
-    !shouldShowSkeleton && showAll && extraDesktopProducts.length > 0;
+  const initialDesktopCapacity = getDesktopLayoutCapacity(
+    INITIAL_DESKTOP_ROW_COUNT
+  );
+  const visibleDesktopProducts = desktopProducts.slice(0, initialDesktopCapacity);
+  const extraDesktopProducts = desktopProducts.slice(initialDesktopCapacity);
   const canShowMore =
     !shouldShowSkeleton &&
     !isMobile &&
     !showAll &&
     !showEmptyState &&
-    extraDesktopProducts.length > 0;
+    desktopProducts.length > initialDesktopCapacity;
 
   const emptyStateMessage =
     language === "de"
@@ -468,32 +420,41 @@ export default function ProductTabs({
     return rows;
   };
 
-  const renderRow = (
+  const renderDesktopRows = (
     sourceProducts: Product[],
-    startIndex: number,
-    pattern: string,
-    rowClass: string
+    rowOffset = 0,
+    keyPrefix = "desktop-row"
   ) => {
-    const currentIndex = startIndex;
-    const rowProducts: Product[] = [];
+    const rows = [];
+    let currentIndex = 0;
+    let rowIndex = rowOffset;
 
-    if (pattern === "4regular") {
-      rowProducts.push(...sourceProducts.slice(currentIndex, currentIndex + 4));
-    } else if (pattern === "2regular1large") {
-      rowProducts.push(...sourceProducts.slice(currentIndex, currentIndex + 3));
-    } else if (pattern === "1large2regular") {
-      rowProducts.push(...sourceProducts.slice(currentIndex, currentIndex + 3));
+    while (currentIndex < sourceProducts.length) {
+      const rowPattern =
+        DESKTOP_ROW_PATTERNS[rowIndex % DESKTOP_ROW_PATTERNS.length];
+      const rowProducts = sourceProducts.slice(
+        currentIndex,
+        currentIndex + rowPattern.sizes.length
+      );
+
+      if (!rowProducts.length) {
+        break;
+      }
+
+      rows.push(
+        <div
+          key={`${keyPrefix}-${rowIndex}`}
+          className={styles[rowPattern.className]}
+        >
+          {rowProducts.map(renderProductCard)}
+        </div>
+      );
+
+      currentIndex += rowPattern.sizes.length;
+      rowIndex += 1;
     }
 
-    if (rowProducts.length === 0) {
-      return null;
-    }
-
-    return (
-      <div key={rowClass} className={styles[rowClass]}>
-        {rowProducts.map(renderProductCard)}
-      </div>
-    );
+    return rows;
   };
 
   return (
@@ -527,17 +488,7 @@ export default function ProductTabs({
           isMobile ? (
             renderMobileGrid(mobileSkeletonProducts)
           ) : (
-            <>
-              {renderRow(desktopSkeletonProducts, 0, "4regular", "row1")}
-              {renderRow(desktopSkeletonProducts, 4, "2regular1large", "row2")}
-              {renderRow(desktopSkeletonProducts, 7, "4regular", "row3")}
-              {renderRow(desktopSkeletonProducts, 11, "1large2regular", "row4")}
-              {renderRow(desktopSkeletonProducts, 14, "4regular", "row5")}
-              {renderRow(desktopSkeletonProducts, 18, "2regular1large", "row6")}
-              {renderRow(desktopSkeletonProducts, 21, "4regular", "row7")}
-              {renderRow(desktopSkeletonProducts, 25, "4regular", "row8")}
-              {renderRow(desktopSkeletonProducts, 29, "4regular", "row9")}
-            </>
+            renderDesktopRows(desktopSkeletonProducts)
           )
         ) : showEmptyState ? (
           <p className={styles.emptyState}>{emptyStateMessage}</p>
@@ -545,20 +496,77 @@ export default function ProductTabs({
           renderMobileGrid(mobileProducts)
         ) : (
           <>
-            {renderRow(visibleDesktopProducts, 0, "4regular", "row1")}
-            {renderRow(visibleDesktopProducts, 4, "2regular1large", "row2")}
-            {renderRow(visibleDesktopProducts, 7, "4regular", "row3")}
-            {renderRow(visibleDesktopProducts, 11, "1large2regular", "row4")}
-            {renderRow(visibleDesktopProducts, 14, "4regular", "row5")}
-            {renderRow(visibleDesktopProducts, 18, "2regular1large", "row6")}
-            {renderRow(visibleDesktopProducts, 21, "4regular", "row7")}
-            {renderRow(visibleDesktopProducts, 25, "4regular", "row8")}
-            {renderRow(visibleDesktopProducts, 29, "4regular", "row9")}
-            {showExtraGrid && (
-              <div className={styles.extraGrid}>
-                {extraDesktopProducts.map(renderProductCard)}
-              </div>
-            )}
+            {renderDesktopRows(visibleDesktopProducts, 0, "desktop-visible-row")}
+            <AnimatePresence initial={false}>
+              {showAll && extraDesktopProducts.length > 0 && (
+                <motion.div
+                  key="catalog-expanded-grid"
+                  className={styles.expandedRows}
+                  initial={{ height: 0, opacity: 0, y: 28 }}
+                  animate={{
+                    height: "auto",
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      height: {
+                        duration: EXPAND_ANIMATION_DURATION,
+                        ease: [0.22, 1, 0.36, 1],
+                      },
+                      opacity: { duration: 0.42, ease: "easeOut", delay: 0.08 },
+                      y: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+                    },
+                  }}
+                  exit={{
+                    height: 0,
+                    opacity: 0,
+                    y: 18,
+                    transition: {
+                      height: { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
+                      opacity: { duration: 0.2, ease: "easeIn" },
+                    },
+                  }}
+                >
+                  <motion.div
+                    className={styles.expandedRowsInner}
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      hidden: {},
+                      visible: {
+                        transition: {
+                          staggerChildren: 0.08,
+                          delayChildren: 0.08,
+                        },
+                      },
+                    }}
+                  >
+                    {renderDesktopRows(
+                      extraDesktopProducts,
+                      INITIAL_DESKTOP_ROW_COUNT,
+                      "desktop-expanded-row"
+                    ).map((row, index) => (
+                      <motion.div
+                        key={`desktop-expanded-row-motion-${index}`}
+                        variants={{
+                          hidden: { opacity: 0, y: 22, filter: "blur(4px)" },
+                          visible: {
+                            opacity: 1,
+                            y: 0,
+                            filter: "blur(0px)",
+                            transition: {
+                              duration: 0.5,
+                              ease: [0.22, 1, 0.36, 1],
+                            },
+                          },
+                        }}
+                      >
+                        {row}
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </>
         )}
       </div>

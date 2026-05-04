@@ -12,10 +12,16 @@ const { fetchAirtable } = airtableMocks;
 
 describe("products normalization", () => {
   it("builds normalized fields per tier", () => {
-    const fields = buildNormalizedFields("sample", true);
+    const fields = buildNormalizedFields(
+      "sample",
+      true,
+      "[WEB] Catalog Starring"
+    );
     expect(fields).toContain("[WEB] Name ENG");
     expect(fields).toContain("1-24 pcs (Sample) | SALES");
     expect(fields).toContain("Out of Stock");
+    expect(fields).toContain("[WEB] Catalog Starring");
+    expect(fields).not.toContain("Catalog Starring");
   });
 
   it("normalizes records into product data", async () => {
@@ -69,6 +75,7 @@ describe("products normalization", () => {
       nameDe: "T-Shirt",
       price: "From €6",
       outOfStock: true,
+      catalogFeatured: false,
       imageUrl: "https://cdn.example.com/large.jpg",
       hoverImageUrl: "https://cdn.example.com/large-hover.jpg",
       categories: ["Basics", "Summer"],
@@ -87,6 +94,35 @@ describe("products normalization", () => {
     (fetchAirtable as ReturnType<typeof vi.fn>)
       .mockResolvedValueOnce(first)
       .mockResolvedValueOnce(second);
+
+    const result = await fetchNormalizedProducts({
+      apiToken: "token",
+      priceTier: "sample",
+    });
+
+    expect(result.records).toEqual([]);
+  });
+
+  it("retries without catalog starring field when Airtable rejects it", async () => {
+    const first = new Response("UNKNOWN_FIELD_NAME: [WEB] Catalog Starring", {
+      status: 422,
+    });
+    const second = new Response("UNKNOWN_FIELD_NAME: Catalog Starring", {
+      status: 422,
+    });
+    const third = new Response("UNKNOWN_FIELD_NAME: Starring", {
+      status: 422,
+    });
+    const fourth = new Response(
+      JSON.stringify({ records: [], offset: undefined }),
+      { status: 200 }
+    );
+
+    (fetchAirtable as ReturnType<typeof vi.fn>)
+      .mockResolvedValueOnce(first)
+      .mockResolvedValueOnce(second)
+      .mockResolvedValueOnce(third)
+      .mockResolvedValueOnce(fourth);
 
     const result = await fetchNormalizedProducts({
       apiToken: "token",

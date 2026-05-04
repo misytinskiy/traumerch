@@ -10,6 +10,7 @@ export type NormalizedProduct = {
   imageUrlFull: string | null;
   outOfStock: boolean;
   categories: string[];
+  catalogFeatured?: boolean;
 };
 
 export type FooterLink = {

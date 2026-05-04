@@ -78,6 +78,33 @@
   margin-bottom: 80px;
 }
 
+.expandedRows {
+  overflow: hidden;
+  transform-origin: top center;
+}
+
+.expandedRowsInner {
+  display: grid;
+  gap: 81px;
+  padding-top: 10px;
+  position: relative;
+}
+
+.expandedRowsInner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
 .fetchError {
   color: var(--color-danger-dark);
   font-size: var(--text-16);
@@ -90,60 +117,27 @@
   margin: 0;
 }
 
-.extraGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 19px;
-}
-
-/* Row 1: 4 regular cards */
 .row1 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 19px;
 }
 
-/* Row 2: 2 regular + 1 large */
 .row2 {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
   gap: 19px;
 }
 
-/* Row 3: 4 regular cards */
 .row3 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 19px;
 }
 
-/* Row 4: 1 large + 2 regular */
 .row4 {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  gap: 19px;
-}
-
-/* Row 5: 4 regular cards */
-.row5 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 19px;
-}
-
-/* Row 6: 2 regular + 1 large */
-.row6 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 2fr;
-  gap: 19px;
-}
-
-/* Rows 7-9: 4 regular cards each */
-.row7,
-.row8,
-.row9 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: 19px;
 }
 
