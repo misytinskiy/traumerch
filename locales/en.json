@@ -347,6 +347,11 @@
       "wearableAccessories": "Wearable Accessories",
       "wearableTextile": "Wearable Textile"
     },
+    "search": {
+      "placeholder": "Search products",
+      "clearAria": "Clear search",
+      "noResults": "No products match your search."
+    },
     "seeMore": "SEE MORE"
   },
   "quoteView": {

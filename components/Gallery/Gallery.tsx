@@ -113,8 +113,8 @@ export default function Gallery() {
     },
   ];
 
-  // Create array of 5 gallery images (PNG from /gallery/ 1–5)
-  // 6th slide commented out — no 6.png in public/gallery yet
+  // Create array of 5 gallery images (JPG from /gallery/ 1–5)
+  // 6th slide commented out — not used in the gallery carousel yet
   const images = Array.from({ length: 5 }, (_, index) => {
     const quote = quotes[index];
     const currentLanguage = language || "en";
@@ -122,7 +122,7 @@ export default function Gallery() {
 
     return {
       id: index + 1,
-      src: `/gallery/${index + 1}.png`,
+      src: `/gallery/${index + 1}.jpg`,
       quote: quoteText,
       author: quote.author,
     };

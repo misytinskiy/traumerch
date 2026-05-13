@@ -1,6 +1,13 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+  useDeferredValue,
+} from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
@@ -37,6 +44,7 @@ const INITIAL_DESKTOP_ROW_COUNT = 9;
 const EXPAND_ANIMATION_DURATION = 0.7;
 
 const normalizeCategoryTerm = (value: string) => value.trim().toLowerCase();
+const normalizeSearchTerm = (value: string) => value.trim().toLowerCase();
 
 const fetcher = async (url: string) => {
   const response = await fetch(url, { cache: "no-store" });
@@ -56,9 +64,14 @@ export default function ProductTabs({
   const [activeTab, setActiveTab] = useState<string>(ALL_PRODUCTS_TAB_KEY);
   const [isMobile, setIsMobile] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [failedImageUrls, setFailedImageUrls] = useState<string[]>([]);
+  const [activatedHoverImageIds, setActivatedHoverImageIds] = useState<string[]>(
+    []
+  );
   const hasInitial = initialRecords.length > 0;
   const lastImageRefreshAtRef = useRef(0);
+  const deferredSearchQuery = useDeferredValue(searchQuery);
 
   const allProductsApiUrl = "/api/airtable-products?format=normalized&priceTier=bulk";
   const { data: allProductsData, error, isLoading, mutate } = useSWR(
@@ -79,6 +92,10 @@ export default function ProductTabs({
   useEffect(() => {
     setFailedImageUrls([]);
   }, [allRecords]);
+
+  useEffect(() => {
+    setActivatedHoverImageIds([]);
+  }, [allRecords, activeTab]);
 
   const knownCategoryLabels = useMemo(
     () => ({
@@ -172,6 +189,19 @@ export default function ProductTabs({
     [refreshExpiredImageUrls]
   );
 
+  const handleProductHoverStart = useCallback(
+    (product: Product) => {
+      if (isMobile || !product.hoverImageUrl || product.isSkeleton) {
+        return;
+      }
+
+      setActivatedHoverImageIds((current) =>
+        current.includes(product.id) ? current : [...current, product.id]
+      );
+    },
+    [isMobile]
+  );
+
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth <= COMPACT_GRID_BREAKPOINT);
@@ -184,7 +214,7 @@ export default function ProductTabs({
   }, []);
 
   const fetchError = error ? t.common.loadProductsError : null;
-  const records =
+  const categoryRecords =
     activeTab === ALL_PRODUCTS_TAB_KEY || !activeCategoryTerm
       ? allRecords
       : allRecords.filter((record) => {
@@ -195,10 +225,19 @@ export default function ProductTabs({
             (category) => normalizeCategoryTerm(category) === activeCategoryTerm
           );
         });
+  const normalizedSearchQuery = normalizeSearchTerm(deferredSearchQuery);
+  const records = normalizedSearchQuery
+    ? categoryRecords.filter((record) => {
+        const searchableName = `${record.nameEn} ${record.nameDe}`;
+        return normalizeSearchTerm(searchableName).includes(
+          normalizedSearchQuery
+        );
+      })
+    : categoryRecords;
 
   useEffect(() => {
     setShowAll(false);
-  }, [records.length, activeTab]);
+  }, [records.length, activeTab, normalizedSearchQuery]);
 
   const activeRecords = records;
 
@@ -311,9 +350,11 @@ export default function ProductTabs({
     desktopProducts.length > initialDesktopCapacity;
 
   const emptyStateMessage =
-    language === "de"
-      ? "In dieser Kategorie gibt es noch keine Produkte."
-      : "No products in this category yet.";
+    normalizedSearchQuery
+      ? t.catalog.search.noResults
+      : language === "de"
+        ? "In dieser Kategorie gibt es noch keine Produkte."
+        : "No products in this category yet.";
 
   const renderProductCard = (product: Product) => {
     const isSkeleton = Boolean(product.isSkeleton);
@@ -321,6 +362,8 @@ export default function ProductTabs({
       !isMobile &&
       Boolean(product.hoverImageUrl) &&
       product.hoverImageUrl !== product.imageUrl;
+    const shouldRenderHoverImage =
+      hasHoverImage && activatedHoverImageIds.includes(product.id);
     const hasFailedMainImage =
       product.imageUrl !== null && failedImageUrls.includes(product.imageUrl);
     const hasRenderableMainImage = Boolean(product.imageUrl) && !hasFailedMainImage;
@@ -347,6 +390,8 @@ export default function ProductTabs({
           isSkeleton ? styles.skeletonCard : ""
         }`}
         onClick={isSkeleton ? undefined : () => handleProductClick(product.id)}
+        onMouseEnter={isSkeleton ? undefined : () => handleProductHoverStart(product)}
+        onFocus={isSkeleton ? undefined : () => handleProductHoverStart(product)}
         style={{ cursor: isSkeleton ? "default" : "pointer" }}
       >
         {isSkeleton ? (
@@ -369,7 +414,7 @@ export default function ProductTabs({
               loading="lazy"
               onError={() => handleImageError(product.imageUrl)}
             />
-            {hasHoverImage && (
+            {shouldRenderHoverImage && (
               <Image
                 src={product.hoverImageUrl as string}
                 alt={product.name}
@@ -463,6 +508,29 @@ export default function ProductTabs({
         <h2 className={`${styles.title}`}>
           {t.catalog.hero.titleLine1} <br /> {t.catalog.hero.titleLine2}
         </h2>
+        <div className={styles.searchWrap}>
+          <label className={styles.searchField}>
+            <span className={styles.searchIcon} aria-hidden="true" />
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              className={styles.searchInput}
+              placeholder={t.catalog.search.placeholder}
+              aria-label={t.catalog.search.placeholder}
+            />
+            {searchQuery.trim() && (
+              <button
+                type="button"
+                className={styles.searchClear}
+                onClick={() => setSearchQuery("")}
+                aria-label={t.catalog.search.clearAria}
+              >
+                <span aria-hidden="true">+</span>
+              </button>
+            )}
+          </label>
+        </div>
       </div>
 
       <div className={styles.tabList}>

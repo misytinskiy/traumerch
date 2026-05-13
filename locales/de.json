@@ -346,6 +346,11 @@
       "wearableAccessories": "Tragbare Accessoires",
       "wearableTextile": "Tragbare Textilien"
     },
+    "search": {
+      "placeholder": "Produkte suchen",
+      "clearAria": "Suche löschen",
+      "noResults": "Keine Produkte entsprechen Ihrer Suche."
+    },
     "seeMore": "MEHR SEHEN"
   },
   "quoteView": {
