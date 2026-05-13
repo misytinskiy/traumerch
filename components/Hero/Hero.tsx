@@ -18,7 +18,7 @@ export default function Hero({
   showUpArrow = false,
   isScrolling = false,
 }: HeroProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -59,6 +59,7 @@ export default function Hero({
   }, [currentWordIndex, rotatingWords.length, rotationInterval]);
 
   const currentWord = rotatingWords[displayWordIndex] || "";
+  const rotatingSuffix = t.hero.rotatingSuffix || "";
 
   return (
     <section className={styles.hero}>
@@ -92,6 +93,7 @@ export default function Hero({
                   {currentWord}
                 </span>
               </span>
+              {language === "de" && rotatingSuffix ? ` ${rotatingSuffix}` : ""}
             </h1>
           )}
 

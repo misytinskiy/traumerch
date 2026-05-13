@@ -121,7 +121,7 @@
 
   .title {
     font-size: var(--text-56);
-    max-width: 825px;
+    max-width: 925px;
     margin-bottom: 48px;
   }
 }
@@ -194,7 +194,7 @@
 
 @media (max-width: 490px) {
   .hero {
-    padding: 60px 15px 40px;
+    padding: 60px 10px 40px;
   }
 
   .title {
@@ -202,7 +202,7 @@
     margin: 50px 0 92px 0;
     letter-spacing: -0.02em;
     line-height: var(--lh-40);
-    max-width: 300px;
+    max-width: 348px;
   }
 
   .title {

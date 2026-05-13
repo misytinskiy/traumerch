@@ -24,14 +24,15 @@
   },
   "hero": {
     "title": "MERCHANDISE, DAS IHRE MARKE MIT IHREM",
-    "titlePrefix": "Merchandise, das Ihre Marke mit Ihrem",
+    "titlePrefix": "Merchandise, das Ihre Marke mit",
     "rotatingWords": [
-      "Kundschaft",
-      "Community",
-      "Followers",
-      "Partnerteam",
-      "Zielgruppe"
+      "Ihrer Kundschaft",
+      "Ihrer Gemeinschaft",
+      "Ihren Followern",
+      "Ihrem Partnerteam",
+      "Ihrer Zielgruppe"
     ],
+    "rotatingSuffix": "Verbindet",
     "titleLine1": "Entfesseln Sie Ihre Marke",
     "titleLine2": "durch Merchandise, das",
     "titleLine3": "wirklich mit Ihrem",
