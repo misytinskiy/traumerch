@@ -45,6 +45,11 @@ const EXPAND_ANIMATION_DURATION = 0.7;
 
 const normalizeCategoryTerm = (value: string) => value.trim().toLowerCase();
 const normalizeSearchTerm = (value: string) => value.trim().toLowerCase();
+const tokenizeSearchTerm = (value: string) =>
+  normalizeSearchTerm(value)
+    .split(/[\s/(),.-]+/)
+    .map((token) => token.trim())
+    .filter(Boolean);
 
 const fetcher = async (url: string) => {
   const response = await fetch(url, { cache: "no-store" });
@@ -228,9 +233,13 @@ export default function ProductTabs({
   const normalizedSearchQuery = normalizeSearchTerm(deferredSearchQuery);
   const records = normalizedSearchQuery
     ? categoryRecords.filter((record) => {
-        const searchableName = `${record.nameEn} ${record.nameDe}`;
-        return normalizeSearchTerm(searchableName).includes(
-          normalizedSearchQuery
+        const searchableTokens = tokenizeSearchTerm(
+          `${record.nameEn} ${record.nameDe}`
+        );
+        const queryTokens = tokenizeSearchTerm(normalizedSearchQuery);
+
+        return queryTokens.every((queryToken) =>
+          searchableTokens.some((token) => token.startsWith(queryToken))
         );
       })
     : categoryRecords;
