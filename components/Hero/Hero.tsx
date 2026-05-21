@@ -60,12 +60,30 @@ export default function Hero({
 
   const currentWord = rotatingWords[displayWordIndex] || "";
   const rotatingSuffix = t.hero.rotatingSuffix || "";
+  const isGermanHero = language === "de";
 
   return (
     <section className={styles.hero}>
       <div className={styles.heroContainer}>
         <div className={styles.heroContent}>
-          {isSmallScreen ? (
+          {isGermanHero ? (
+            <h1 className={`${styles.title} ${styles.titleGerman}`}>
+              <span className={styles.germanLine}>Merchandise, das</span>
+              <span className={styles.germanLine}>Ihre Marke mit</span>
+              <span className={styles.germanLine}>
+                <span className={styles.wordContainerGerman}>
+                  <span
+                    className={`${styles.highlight} ${styles.rotatingWord} ${
+                      isAnimating ? styles.fadeOut : styles.fadeIn
+                    }`}
+                  >
+                    {currentWord}
+                  </span>
+                </span>
+              </span>
+              <span className={styles.germanLine}>{rotatingSuffix}</span>
+            </h1>
+          ) : isSmallScreen ? (
             <h1 className={styles.title}>
               {t.hero.titleLine1Small}
               <br />
@@ -93,7 +111,6 @@ export default function Hero({
                   {currentWord}
                 </span>
               </span>
-              {language === "de" && rotatingSuffix ? ` ${rotatingSuffix}` : ""}
             </h1>
           )}
 

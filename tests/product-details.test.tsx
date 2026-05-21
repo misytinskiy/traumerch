@@ -4,16 +4,21 @@ import React from "react";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import en from "../locales/en.json";
+import de from "../locales/de.json";
 import ProductDetails from "../components/ProductDetails/ProductDetails";
 
 const addItemMock = vi.fn();
+let currentLanguage: "en" | "de" = "en";
 
 vi.mock("../contexts/CartContext", () => ({
   useCart: () => ({ addItem: addItemMock }),
 }));
 
 vi.mock("../contexts/LanguageContext", () => ({
-  useLanguage: () => ({ t: en, language: "en" }),
+  useLanguage: () => ({
+    t: currentLanguage === "de" ? de : en,
+    language: currentLanguage,
+  }),
 }));
 
 vi.mock("next/image", () => ({
@@ -27,6 +32,7 @@ vi.mock("next/image", () => ({
 describe("ProductDetails", () => {
   beforeEach(() => {
     addItemMock.mockReset();
+    currentLanguage = "en";
   });
 
   afterEach(() => {
@@ -144,5 +150,30 @@ describe("ProductDetails", () => {
 
     const secondImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
     expect(secondImg.getAttribute("src")).toContain("https://cdn.example.com/b.jpg");
+  });
+
+  it("renders special field text only when enabled and uses current language", () => {
+    currentLanguage = "de";
+
+    const productRecord = {
+      id: "rec1",
+      fields: {
+        "[WEB] Product Special Field": true,
+        "[WEB] Product Special Field Text EN": "Custom English note",
+        "[WEB] Product Special Field Text DE": "Benutzerdefinierter Hinweis",
+      },
+    };
+
+    render(
+      <ProductDetails
+        productId="rec1"
+        productName="Cap"
+        productRecord={productRecord}
+      />
+    );
+
+    expect(screen.getByText(de.design.additionalDetails)).toBeInTheDocument();
+    expect(screen.getByText("Benutzerdefinierter Hinweis")).toBeInTheDocument();
+    expect(screen.queryByText("Custom English note")).not.toBeInTheDocument();
   });
 });

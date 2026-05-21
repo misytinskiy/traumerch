@@ -1,6 +1,9 @@
 export const PALETTE_FIELD = "[WEB] Palette Hex Colours";
 export const MAIN_PHOTO_FIELD = "Main Product Photo";
 export const SECONDARY_PHOTOS_FIELD = "Secondary Product Photos";
+export const PRODUCT_SPECIAL_FIELD = "[WEB] Product Special Field";
+export const PRODUCT_SPECIAL_FIELD_TEXT_EN = "[WEB] Product Special Field Text EN";
+export const PRODUCT_SPECIAL_FIELD_TEXT_DE = "[WEB] Product Special Field Text DE";
 
 const PALETTE_RAINBOW_TOKEN = "rainbow";
 const MOQ_KEYS = ["# MOQ | SALES", "MOQ | SALES", "# MOQ", "MOQ"];

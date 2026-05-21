@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 const BASE_ID = process.env.QUOTE_BASE_ID;
 const TABLE_ID = process.env.QUOTE_TABLE_ID;
 const apiToken = process.env.API_TOKEN;
+const LEAD_SOURCE_FIELD = "Lead Source";
+const WEBSITE_LEAD_SOURCE_VALUE = "Website";
 
 const fetchWithTimeout = async (
   url: string,
@@ -81,6 +83,10 @@ export async function POST(request: NextRequest) {
       | string[]
       | Array<{ url: string; filename?: string }>
     > = {};
+
+    // All requests hitting this endpoint originate from the website quote funnel.
+    // Keep the source tagging centralized here so every website lead is marked consistently.
+    airtableFields[LEAD_SOURCE_FIELD] = WEBSITE_LEAD_SOURCE_VALUE;
     
     // Contact form fields (from contact page)
     const nameStr = toStringField(name);
@@ -220,32 +226,52 @@ export async function POST(request: NextRequest) {
 
     // Create record in Airtable
     const airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}`;
-    const response = await fetchWithTimeout(airtableUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fields: airtableFields,
-      }),
-    });
+    const createRecord = async (fields: typeof airtableFields) =>
+      fetchWithTimeout(airtableUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fields,
+        }),
+      });
+
+    let response = await createRecord(airtableFields);
+    let sentFields = airtableFields;
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Airtable create error", {
-        status: response.status,
-        details: errorText,
-        sentFields: airtableFields,
-      });
-      return NextResponse.json(
-        {
-          error: "Failed to create record in Airtable",
-          details: errorText,
-          sentFields: airtableFields,
-        },
-        { status: response.status }
-      );
+      const canRetryWithoutLeadSource =
+        errorText.includes("UNKNOWN_FIELD_NAME") &&
+        errorText.includes(LEAD_SOURCE_FIELD);
+
+      if (canRetryWithoutLeadSource) {
+        const fallbackFields = { ...airtableFields };
+        delete fallbackFields[LEAD_SOURCE_FIELD];
+        response = await createRecord(fallbackFields);
+        sentFields = fallbackFields;
+      }
+
+      if (!response.ok) {
+        const finalErrorText = canRetryWithoutLeadSource
+          ? await response.text()
+          : errorText;
+        console.error("Airtable create error", {
+          status: response.status,
+          details: finalErrorText,
+          sentFields,
+        });
+        return NextResponse.json(
+          {
+            error: "Failed to create record in Airtable",
+            details: finalErrorText,
+            sentFields,
+          },
+          { status: response.status }
+        );
+      }
     }
 
     const data = await response.json();

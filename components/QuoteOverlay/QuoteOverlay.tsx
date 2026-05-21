@@ -4,6 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InlineWidget } from "react-calendly";
 import Image from "next/image";
+import PhoneInput, {
+  getCountries,
+  getCountryCallingCode,
+  isPossiblePhoneNumber,
+  type Country,
+} from "react-phone-number-input/input";
+import phoneInputFlags from "react-phone-number-input/flags";
+import phoneInputEnLabels from "react-phone-number-input/locale/en.json";
+import phoneInputDeLabels from "react-phone-number-input/locale/de.json";
 import Button from "../Button/Button";
 import ThankYouOverlay from "../ThankYouOverlay/ThankYouOverlay";
 import { useQuoteOverlay } from "../../contexts/QuoteOverlayContext";
@@ -36,7 +45,7 @@ const defaultServiceOptions = [
 
 export default function QuoteOverlay() {
   const { isOpen, closeQuote } = useQuoteOverlay();
-  const { t } = useLanguage();
+  const { t, language, country } = useLanguage();
   const serviceOptions =
     (t.quote?.requestOptions as { value: string; label: string }[]) ??
     defaultServiceOptions;
@@ -56,16 +65,43 @@ export default function QuoteOverlay() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [showThankYou, setShowThankYou] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedPhoneCountry, setSelectedPhoneCountry] = useState<Country>(() => {
+    if (country === "AT") return "AT";
+    return "DE";
+  });
+  const [phoneCountryOpen, setPhoneCountryOpen] = useState(false);
+  const [phoneCountrySearch, setPhoneCountrySearch] = useState("");
   const [errors, setErrors] = useState<{
     name?: string;
     email?: string;
     messengerContact?: string;
   }>({});
   const touchedFieldsRef = useRef<Set<string>>(new Set());
+  const phoneCountryWrapRef = useRef<HTMLDivElement>(null);
+
+  const phoneLabels = language === "de" ? phoneInputDeLabels : phoneInputEnLabels;
+  const phoneCountryOptions = getCountries()
+    .map((countryCode) => ({
+      code: countryCode,
+      name: phoneLabels[countryCode] || countryCode,
+      callingCode: `+${getCountryCallingCode(countryCode)}`,
+    }))
+    .filter((option) => {
+      const search = phoneCountrySearch.trim().toLowerCase();
+      if (!search) return true;
+      return (
+        option.name.toLowerCase().includes(search) ||
+        option.callingCode.includes(search.replace(/[^\d+]/g, "")) ||
+        option.code.toLowerCase().includes(search)
+      );
+    });
 
   const resetFormState = () => {
     setFormData(defaultFormData);
     setSelectedMessenger(2);
+    setSelectedPhoneCountry(country === "AT" ? "AT" : "DE");
+    setPhoneCountryOpen(false);
+    setPhoneCountrySearch("");
     setSelectedServices([]);
     setShowThankYou(false);
     setErrors({});
@@ -104,6 +140,20 @@ export default function QuoteOverlay() {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        phoneCountryWrapRef.current &&
+        !phoneCountryWrapRef.current.contains(event.target as Node)
+      ) {
+        setPhoneCountryOpen(false);
+        setPhoneCountrySearch("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -128,9 +178,7 @@ export default function QuoteOverlay() {
   };
 
   const validatePhone = (phone: string): boolean => {
-    // Basic phone validation - allows numbers, spaces, +, -, (, )
-    const phoneRegex = /^[\d\s\+\-\(\)]{7,}$/;
-    return phoneRegex.test(phone.replace(/\s/g, ""));
+    return isPossiblePhoneNumber(phone);
   };
 
   const validateForm = (): boolean => {
@@ -340,6 +388,9 @@ export default function QuoteOverlay() {
     return messenger?.name !== "Email" && messenger?.name !== "Teams";
   };
 
+  const isWhatsAppSelected =
+    messengers.find((m) => m.id === selectedMessenger)?.name === "WhatsApp";
+
   return (
     <AnimatePresence>
       {isOpen ? (
@@ -530,24 +581,203 @@ export default function QuoteOverlay() {
                                     },
                                   }}
                                 >
-                                  <input
-                                    type="text"
-                                    name="messengerContact"
-                                    value={formData.messengerContact}
-                                    onChange={handleInputChange}
-                                    placeholder={getMessengerPlaceholder(
-                                      messengers.find(
-                                        (m) => m.id === selectedMessenger
-                                      )?.name || ""
-                                    )}
-                                    className={`${styles.input} ${
-                                      styles.messengerInput
-                                    } ${
-                                      errors.messengerContact
-                                        ? styles.inputError
-                                        : ""
-                                    }`}
-                                  />
+                                  {isWhatsAppSelected ? (
+                                    <div className={`${styles.phoneRow} ${styles.messengerInput}`}>
+                                      <div
+                                        className={styles.phoneCountryWrap}
+                                        ref={phoneCountryWrapRef}
+                                      >
+                                        <button
+                                          type="button"
+                                          className={`${styles.phoneCountryTrigger} ${
+                                            errors.messengerContact ? styles.inputError : ""
+                                          }`}
+                                          onClick={() =>
+                                            setPhoneCountryOpen((open) => !open)
+                                          }
+                                          aria-expanded={phoneCountryOpen}
+                                          aria-haspopup="listbox"
+                                          aria-label={t.quote.phoneCountryLabel}
+                                        >
+                                          <span className={styles.phoneCountryFlag} aria-hidden>
+                                            {(() => {
+                                              const Flag = phoneInputFlags[selectedPhoneCountry];
+                                              return Flag ? (
+                                                <Flag
+                                                  title={
+                                                    phoneLabels[selectedPhoneCountry] ||
+                                                    selectedPhoneCountry
+                                                  }
+                                                />
+                                              ) : null;
+                                            })()}
+                                          </span>
+                                          <span className={styles.phoneCountryCode}>
+                                            +{getCountryCallingCode(selectedPhoneCountry)}
+                                          </span>
+                                          <span
+                                            className={`${styles.phoneCountryArrow} ${
+                                              phoneCountryOpen
+                                                ? styles.phoneCountryArrowOpen
+                                                : ""
+                                            }`}
+                                            aria-hidden
+                                          >
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              width="24"
+                                              height="24"
+                                              viewBox="0 0 24 24"
+                                              fill="none"
+                                            >
+                                              <path
+                                                d="M16.8582 8.95199L17.9182 10.013L12.1412 15.792C12.0487 15.8851 11.9386 15.9591 11.8173 16.0095C11.6961 16.06 11.5661 16.0859 11.4347 16.0859C11.3034 16.0859 11.1734 16.06 11.0521 16.0095C10.9309 15.9591 10.8208 15.8851 10.7282 15.792L4.94824 10.013L6.00824 8.95299L11.4332 14.377L16.8582 8.95199Z"
+                                                fill="#999999"
+                                              />
+                                            </svg>
+                                          </span>
+                                        </button>
+                                        <div
+                                          className={`${styles.phoneCountryDropdown} ${
+                                            phoneCountryOpen
+                                              ? styles.phoneCountryDropdownOpen
+                                              : ""
+                                          }`}
+                                        >
+                                          <div className={styles.phoneCountrySearchWrap}>
+                                            <input
+                                              className={styles.phoneCountrySearch}
+                                              value={phoneCountrySearch}
+                                              onChange={(event) =>
+                                                setPhoneCountrySearch(event.target.value)
+                                              }
+                                              placeholder={
+                                                t.quote.phoneCountrySearchPlaceholder
+                                              }
+                                              aria-label={
+                                                t.quote.phoneCountrySearchPlaceholder
+                                              }
+                                            />
+                                          </div>
+                                          <ul
+                                            className={styles.phoneCountryList}
+                                            role="listbox"
+                                            aria-label={t.quote.phoneCountryLabel}
+                                          >
+                                            {phoneCountryOptions.map((option) => {
+                                              const Flag = phoneInputFlags[option.code];
+                                              return (
+                                                <li
+                                                  key={option.code}
+                                                  role="option"
+                                                  aria-selected={
+                                                    selectedPhoneCountry === option.code
+                                                  }
+                                                  className={styles.phoneCountryOption}
+                                                  onClick={() => {
+                                                    setSelectedPhoneCountry(option.code);
+                                                    setPhoneCountryOpen(false);
+                                                    setPhoneCountrySearch("");
+                                                    setFormData((prev) => ({
+                                                      ...prev,
+                                                      messengerContact: "",
+                                                    }));
+                                                    if (errors.messengerContact) {
+                                                      setErrors((prev) => ({
+                                                        ...prev,
+                                                        messengerContact: undefined,
+                                                      }));
+                                                    }
+                                                  }}
+                                                >
+                                                  <span
+                                                    className={styles.phoneCountryOptionFlag}
+                                                    aria-hidden
+                                                  >
+                                                    {Flag ? <Flag title={option.name} /> : null}
+                                                  </span>
+                                                  <span
+                                                    className={styles.phoneCountryOptionName}
+                                                  >
+                                                    {option.name}
+                                                  </span>
+                                                  <span
+                                                    className={styles.phoneCountryOptionCode}
+                                                  >
+                                                    {option.callingCode}
+                                                  </span>
+                                                </li>
+                                              );
+                                            })}
+                                          </ul>
+                                        </div>
+                                      </div>
+                                      <PhoneInput
+                                        className={`${styles.input} ${styles.phoneInput} ${
+                                          errors.messengerContact
+                                            ? styles.inputError
+                                            : ""
+                                        }`}
+                                        country={selectedPhoneCountry}
+                                        international
+                                        withCountryCallingCode={false}
+                                        smartCaret={false}
+                                        value={formData.messengerContact || undefined}
+                                        onChange={(value) => {
+                                          setFormData((prev) => ({
+                                            ...prev,
+                                            messengerContact: value ?? "",
+                                          }));
+                                          if (
+                                            !touchedFieldsRef.current.has(
+                                              "messengerContact"
+                                            )
+                                          ) {
+                                            touchedFieldsRef.current.add(
+                                              "messengerContact"
+                                            );
+                                            pushDataLayerEvent(
+                                              "quote_form_field_input",
+                                              {
+                                                form_context: "overlay",
+                                                field_name: "messengerContact",
+                                              }
+                                            );
+                                          }
+                                          if (errors.messengerContact) {
+                                            setErrors((prev) => ({
+                                              ...prev,
+                                              messengerContact: undefined,
+                                            }));
+                                          }
+                                        }}
+                                        placeholder={
+                                          t.quote.phoneWithoutCountryCodePlaceholder
+                                        }
+                                        inputMode="tel"
+                                        autoComplete="tel-national"
+                                      />
+                                    </div>
+                                  ) : (
+                                    <input
+                                      type="text"
+                                      name="messengerContact"
+                                      value={formData.messengerContact}
+                                      onChange={handleInputChange}
+                                      placeholder={getMessengerPlaceholder(
+                                        messengers.find(
+                                          (m) => m.id === selectedMessenger
+                                        )?.name || ""
+                                      )}
+                                      className={`${styles.input} ${
+                                        styles.messengerInput
+                                      } ${
+                                        errors.messengerContact
+                                          ? styles.inputError
+                                          : ""
+                                      }`}
+                                    />
+                                  )}
                                 </motion.div>
                               )}
                             </AnimatePresence>

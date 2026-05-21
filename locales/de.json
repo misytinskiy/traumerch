@@ -302,6 +302,7 @@
     "productName": "Heavy Tote Bag",
     "color": "Farbe",
     "quantity": "Menge",
+    "additionalDetails": "Zusätzliche Details",
     "description": "Beschreibung",
     "customisationType": "Art der Personalisierung",
     "designPlacement": "Design Platzierung",
@@ -377,6 +378,9 @@
     "lastNamePlaceholder": "Nachname *",
     "emailPlaceholder": "E-Mail *",
     "phonePlaceholder": "Telefonnummer *",
+    "phoneWithoutCountryCodePlaceholder": "Rufnummer ohne Landesvorwahl",
+    "phoneCountryLabel": "Ländervorwahl",
+    "phoneCountrySearchPlaceholder": "Land oder Vorwahl suchen",
     "companyNamePlaceholder": "Firmenname",
     "addressPlaceholder": "Adresse",
     "apartmentPlaceholder": "Wohnung",
@@ -547,6 +551,9 @@
       "teams": "E-Mail-Adresse*",
       "default": ""
     },
+    "phoneWithoutCountryCodePlaceholder": "Rufnummer ohne Landesvorwahl",
+    "phoneCountryLabel": "Ländervorwahl",
+    "phoneCountrySearchPlaceholder": "Land oder Vorwahl suchen",
     "contact": {
       "price": "Geschätzter Preis: X"
     }

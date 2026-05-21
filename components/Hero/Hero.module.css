@@ -53,6 +53,25 @@
   box-sizing: content-box;
 }
 
+.titleGerman {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.germanLine {
+  display: block;
+}
+
+.wordContainerGerman {
+  display: inline-block;
+  position: relative;
+  min-width: 365px;
+  text-align: center;
+  overflow: visible;
+  box-sizing: content-box;
+}
+
 .rotatingWord.fadeIn {
   opacity: 1;
 }
@@ -182,6 +201,11 @@
     width: 0;
   }
 
+  .wordContainerGerman {
+    min-width: 0;
+    width: auto;
+  }
+
   .title {
     font-size: clamp(1.8rem, 6vw, 3rem);
     margin-bottom: 40px;
@@ -215,6 +239,13 @@
     max-width: none;
     overflow: visible;
     box-sizing: content-box;
+  }
+
+  .wordContainerGerman {
+    min-width: 0;
+    width: auto;
+    max-width: 100%;
+    overflow: visible;
   }
 
   .wordContainer span {

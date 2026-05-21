@@ -11,6 +11,9 @@ import {
   MAIN_PHOTO_FIELD,
   PALETTE_FIELD,
   parsePaletteData,
+  PRODUCT_SPECIAL_FIELD,
+  PRODUCT_SPECIAL_FIELD_TEXT_DE,
+  PRODUCT_SPECIAL_FIELD_TEXT_EN,
   SECONDARY_PHOTOS_FIELD,
 } from "../../shared/productDetails";
 import { pushDataLayerEvent } from "../../shared/analytics";
@@ -73,7 +76,7 @@ export default function ProductDetails({
   productName,
   productRecord,
 }: ProductDetailsProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { addItem } = useCart();
   const isLoading = Boolean(productId && !productRecord);
   const outOfStockRaw = productRecord?.fields?.["Out of stock"] ?? productRecord?.fields?.["Out of Stock"];
@@ -86,6 +89,19 @@ export default function ProductDetails({
   const paletteColors = paletteData.colors;
   const hasRainbowPalette = paletteData.hasRainbow;
   const paletteFieldRaw = productRecord?.fields?.[PALETTE_FIELD];
+  const specialFieldEnabledRaw = productRecord?.fields?.[PRODUCT_SPECIAL_FIELD];
+  const specialFieldEnabled =
+    specialFieldEnabledRaw === true ||
+    specialFieldEnabledRaw === "true" ||
+    specialFieldEnabledRaw === 1 ||
+    specialFieldEnabledRaw === "1";
+  const specialFieldTextRaw =
+    language === "de"
+      ? productRecord?.fields?.[PRODUCT_SPECIAL_FIELD_TEXT_DE]
+      : productRecord?.fields?.[PRODUCT_SPECIAL_FIELD_TEXT_EN];
+  const specialFieldText =
+    typeof specialFieldTextRaw === "string" ? specialFieldTextRaw.trim() : "";
+  const shouldShowSpecialField = specialFieldEnabled && specialFieldText.length > 0;
   const [photoState, setPhotoState] = useState<{
     all: PhotoVariants[];
   }>({ all: [] });
@@ -315,6 +331,17 @@ export default function ProductDetails({
           </div>
 
           <div className={styles.divider} />
+
+          {shouldShowSpecialField && (
+            <>
+              <div className={styles.optionGroup}>
+                <h3 className={styles.optionLabel}>{t.design.additionalDetails}</h3>
+                <p className={styles.specialFieldText}>{specialFieldText}</p>
+              </div>
+
+              <div className={styles.divider} />
+            </>
+          )}
 
           <QuantityControl
             isLoading={isLoading}
