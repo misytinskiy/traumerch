@@ -555,6 +555,11 @@ export default function QuoteOverlay() {
                             <AnimatePresence initial={false}>
                               {shouldShowMessengerInput(selectedMessenger) && (
                                 <motion.div
+                                  className={
+                                    isWhatsAppSelected && phoneCountryOpen
+                                      ? styles.messengerInputWrapOpen
+                                      : styles.messengerInputWrap
+                                  }
                                   layout
                                   initial={{
                                     height: 0,
@@ -564,6 +569,10 @@ export default function QuoteOverlay() {
                                   animate={{
                                     height: "auto",
                                     opacity: 1,
+                                    overflow:
+                                      isWhatsAppSelected && phoneCountryOpen
+                                        ? "visible"
+                                        : "hidden",
                                   }}
                                   exit={{
                                     height: 0,
@@ -584,7 +593,11 @@ export default function QuoteOverlay() {
                                   {isWhatsAppSelected ? (
                                     <div className={`${styles.phoneRow} ${styles.messengerInput}`}>
                                       <div
-                                        className={styles.phoneCountryWrap}
+                                        className={`${styles.phoneCountryWrap} ${
+                                          phoneCountryOpen
+                                            ? styles.phoneCountryWrapOpen
+                                            : ""
+                                        }`}
                                         ref={phoneCountryWrapRef}
                                       >
                                         <button
