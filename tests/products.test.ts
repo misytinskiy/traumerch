@@ -131,4 +131,53 @@ describe("products normalization", () => {
 
     expect(result.records).toEqual([]);
   });
+
+  it("fetches all Airtable pages when offset is present", async () => {
+    const firstPage = new Response(
+      JSON.stringify({
+        records: [
+          {
+            id: "rec1",
+            fields: {
+              "[WEB] Name ENG": "Pen One",
+              "[WEB] Name DE": "Stift Eins",
+              "1000+ pcs | SALES": "1.2",
+              "Main Product Photo": [],
+            },
+          },
+        ],
+        offset: "next-page-token",
+      }),
+      { status: 200 }
+    );
+
+    const secondPage = new Response(
+      JSON.stringify({
+        records: [
+          {
+            id: "rec2",
+            fields: {
+              "[WEB] Name ENG": "Wooden Pencil",
+              "[WEB] Name DE": "Holzbleistift",
+              "1000+ pcs | SALES": "0.9",
+              "Main Product Photo": [],
+            },
+          },
+        ],
+      }),
+      { status: 200 }
+    );
+
+    (fetchAirtable as ReturnType<typeof vi.fn>)
+      .mockResolvedValueOnce(firstPage)
+      .mockResolvedValueOnce(secondPage);
+
+    const result = await fetchNormalizedProducts({
+      apiToken: "token",
+      priceTier: "bulk",
+    });
+
+    expect(result.records).toHaveLength(2);
+    expect(result.records[1]?.nameEn).toBe("Wooden Pencil");
+  });
 });

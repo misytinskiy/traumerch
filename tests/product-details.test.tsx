@@ -152,6 +152,60 @@ describe("ProductDetails", () => {
     expect(secondImg.getAttribute("src")).toContain("https://cdn.example.com/b.jpg");
   });
 
+  it("uses palette photos for the selected color and switches main photo on color click", () => {
+    const productRecord = {
+      id: "rec1",
+      fields: {
+        "[WEB] Palette Hex Colours": "#111111, #00ff00",
+        "[WEB] Palette Photos": [
+          { url: "https://cdn.example.com/black.jpg" },
+          { url: "https://cdn.example.com/green.jpg" },
+        ],
+        "Main Product Photo": [{ url: "https://cdn.example.com/default.jpg" }],
+        "Secondary Product Photos": [{ url: "https://cdn.example.com/secondary.jpg" }],
+      },
+    };
+
+    render(
+      <ProductDetails
+        productId="rec1"
+        productName="Cap"
+        productRecord={productRecord}
+      />
+    );
+
+    const defaultMainImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
+    expect(defaultMainImg.getAttribute("src")).toContain("https://cdn.example.com/black.jpg");
+
+    const colorButtons = screen.getAllByLabelText(/Color \d+/);
+    fireEvent.click(colorButtons[1]);
+
+    const updatedMainImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
+    expect(updatedMainImg.getAttribute("src")).toContain("https://cdn.example.com/green.jpg");
+  });
+
+  it("falls back to main product photo when palette photos field is empty", () => {
+    const productRecord = {
+      id: "rec1",
+      fields: {
+        "[WEB] Palette Hex Colours": "#111111, #00ff00",
+        "[WEB] Palette Photos": [],
+        "Main Product Photo": [{ url: "https://cdn.example.com/default.jpg" }],
+      },
+    };
+
+    render(
+      <ProductDetails
+        productId="rec1"
+        productName="Cap"
+        productRecord={productRecord}
+      />
+    );
+
+    const mainImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
+    expect(mainImg.getAttribute("src")).toContain("https://cdn.example.com/default.jpg");
+  });
+
   it("renders special field text only when enabled and uses current language", () => {
     currentLanguage = "de";
 

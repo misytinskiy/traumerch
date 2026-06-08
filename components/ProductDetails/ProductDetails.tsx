@@ -10,6 +10,7 @@ import {
   getMinQuantity,
   MAIN_PHOTO_FIELD,
   PALETTE_FIELD,
+  PALETTE_PHOTOS_FIELD,
   parsePaletteData,
   PRODUCT_SPECIAL_FIELD,
   PRODUCT_SPECIAL_FIELD_TEXT_DE,
@@ -105,15 +106,18 @@ export default function ProductDetails({
   const [photoState, setPhotoState] = useState<{
     all: PhotoVariants[];
   }>({ all: [] });
+  const [selectedColor, setSelectedColor] = useState("");
+  const [customColorPicked, setCustomColorPicked] = useState(false);
   const {
     selectedPhotoIndex,
     sliderRef,
     handleThumbnailClick,
     handleDotClick,
     handleSliderScroll,
-  } = useProductGallery({ photos: photoState.all });
-  const [selectedColor, setSelectedColor] = useState("");
-  const [customColorPicked, setCustomColorPicked] = useState(false);
+  } = useProductGallery({
+    photos: photoState.all,
+    resetKey: `${productRecord?.id ?? "no-product"}:${selectedColor || paletteColors[0] || ""}`,
+  });
   const isCustomColor = hasRainbowPalette && customColorPicked;
 
   useEffect(() => {
@@ -194,21 +198,40 @@ export default function ProductDetails({
       setPhotoState({ all: [] });
       return;
     }
+    const effectiveSelectedColor = selectedColor || paletteColors[0] || "";
     const mainAttachment = getAttachmentArray(productRecord.fields, MAIN_PHOTO_FIELD)[0] ?? null;
+    const palettePhotoAttachments = getAttachmentArray(
+      productRecord.fields,
+      PALETTE_PHOTOS_FIELD
+    );
     const secondaryAttachments = getAttachmentArray(
       productRecord.fields,
       SECONDARY_PHOTOS_FIELD
     );
     const mainPhoto = normalizeAttachment(mainAttachment);
+    const palettePhotos = palettePhotoAttachments
+      .map((attachment) => normalizeAttachment(attachment))
+      .filter((photo): photo is PhotoVariants => Boolean(photo));
     const secondaryPhotos = secondaryAttachments
       .map((attachment) => normalizeAttachment(attachment))
       .filter((photo): photo is PhotoVariants => Boolean(photo));
+    const selectedPaletteIndex = paletteColors.indexOf(effectiveSelectedColor);
+    const selectedPalettePhoto =
+      palettePhotos.length > 0 && selectedPaletteIndex >= 0
+        ? palettePhotos[selectedPaletteIndex] ?? null
+        : null;
+    const activeMainPhoto = selectedPalettePhoto ?? mainPhoto;
 
-    const allPhotos = mainPhoto ? [mainPhoto, ...secondaryPhotos] : secondaryPhotos;
+    const allPhotos = activeMainPhoto
+      ? [activeMainPhoto, ...secondaryPhotos]
+      : secondaryPhotos;
     setPhotoState({ all: allPhotos });
   }, [
     productRecord?.id,
+    selectedColor,
+    paletteFieldRaw,
     productRecord?.fields?.[MAIN_PHOTO_FIELD],
+    productRecord?.fields?.[PALETTE_PHOTOS_FIELD],
     productRecord?.fields?.[SECONDARY_PHOTOS_FIELD],
   ]);
 

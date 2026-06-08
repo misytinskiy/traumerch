@@ -199,6 +199,37 @@ const buildCategoryFormula = (categoryTerm: string) => {
   return `FIND("${safe}", LOWER(ARRAYJOIN({Item Category})))`;
 };
 
+const fetchNormalizedPage = async ({
+  apiToken,
+  priceTier,
+  view,
+  maxRecords,
+  pageSize,
+  filterByFormula,
+  includeOutOfStock,
+  catalogFeaturedField,
+  offset,
+}: FetchNormalizedOptions & {
+  includeOutOfStock: boolean;
+  catalogFeaturedField?: string;
+  offset?: string;
+}) => {
+  const fields = buildNormalizedFields(
+    priceTier,
+    includeOutOfStock,
+    catalogFeaturedField
+  );
+  const url = buildAirtableListUrl({
+    fields,
+    view,
+    maxRecords,
+    pageSize,
+    filterByFormula,
+    offset,
+  });
+  return fetchAirtable(url, apiToken, {});
+};
+
 type FetchNormalizedOptions = {
   apiToken: string;
   priceTier: PriceTier;
@@ -221,33 +252,18 @@ export const fetchNormalizedProducts = async ({
   const formula =
     filterByFormula || (category ? buildCategoryFormula(category) : undefined);
 
-  const runFetch = async (
-    includeOutOfStock: boolean,
-    catalogFeaturedField?: string
-  ) => {
-    const fields = buildNormalizedFields(
-      priceTier,
-      includeOutOfStock,
-      catalogFeaturedField
-    );
-    const url = buildAirtableListUrl({
-      fields,
-      view,
-      maxRecords,
-      pageSize,
-      filterByFormula: formula,
-    });
-    const response = await fetchAirtable(url, apiToken, {
-    });
-    return response;
-  };
-
   let includeOutOfStock = true;
   let catalogFeaturedFieldIndex = 0;
-  let response = await runFetch(
+  let response = await fetchNormalizedPage({
+    apiToken,
+    priceTier,
+    view,
+    maxRecords,
+    pageSize,
+    filterByFormula: formula,
     includeOutOfStock,
-    CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex]
-  );
+    catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
+  });
 
   while (!response.ok) {
     const message = await response.text();
@@ -257,10 +273,16 @@ export const fetchNormalizedProducts = async ({
 
     if (includeOutOfStock && message.includes(OUT_OF_STOCK_FIELD)) {
       includeOutOfStock = false;
-      response = await runFetch(
+      response = await fetchNormalizedPage({
+        apiToken,
+        priceTier,
+        view,
+        maxRecords,
+        pageSize,
+        filterByFormula: formula,
         includeOutOfStock,
-        CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex]
-      );
+        catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
+      });
       continue;
     }
 
@@ -271,25 +293,61 @@ export const fetchNormalizedProducts = async ({
       message.includes(activeCatalogFeaturedField)
     ) {
       catalogFeaturedFieldIndex += 1;
-      response = await runFetch(
+      response = await fetchNormalizedPage({
+        apiToken,
+        priceTier,
+        view,
+        maxRecords,
+        pageSize,
+        filterByFormula: formula,
         includeOutOfStock,
-        CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex]
-      );
+        catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
+      });
       continue;
     }
 
     throw new Error(message);
   }
 
-  const data = (await response.json()) as {
+  const firstPage = (await response.json()) as {
     records?: AirtableRecord[];
     offset?: string;
   };
 
+  const allRecords = [...(firstPage.records ?? [])];
+  let nextOffset = firstPage.offset;
+  const limit = typeof maxRecords === "number" ? maxRecords : Infinity;
+
+  while (nextOffset && allRecords.length < limit) {
+    const nextResponse = await fetchNormalizedPage({
+      apiToken,
+      priceTier,
+      view,
+      maxRecords,
+      pageSize,
+      filterByFormula: formula,
+      includeOutOfStock,
+      catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
+      offset: nextOffset,
+    });
+
+    if (!nextResponse.ok) {
+      throw new Error(await nextResponse.text());
+    }
+
+    const nextPage = (await nextResponse.json()) as {
+      records?: AirtableRecord[];
+      offset?: string;
+    };
+
+    allRecords.push(...(nextPage.records ?? []));
+    nextOffset = nextPage.offset;
+  }
+
   return {
-    records: (data.records ?? []).map((record) =>
+    records: allRecords.slice(0, limit).map((record) =>
       normalizeRecord(record, priceTier)
     ),
-    offset: data.offset,
+    offset: nextOffset,
   };
 };

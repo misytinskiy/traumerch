@@ -25,6 +25,7 @@ const ALLOWED_FIELDS = new Set([
   "Name",
   "Item Category",
   "Main Product Photo",
+  "[WEB] Palette Photos",
   "Secondary Product Photos",
   "[WEB] Catalog Starring",
   "Catalog Starring",

@@ -86,6 +86,7 @@ type AirtableQueryOptions = {
   maxRecords?: number;
   pageSize?: number;
   filterByFormula?: string;
+  offset?: string;
 };
 
 export const buildAirtableListUrl = (options: AirtableQueryOptions = {}) => {
@@ -102,6 +103,10 @@ export const buildAirtableListUrl = (options: AirtableQueryOptions = {}) => {
 
   if (typeof options.pageSize === "number") {
     params.set("pageSize", String(options.pageSize));
+  }
+
+  if (options.offset) {
+    params.set("offset", options.offset);
   }
 
   if (options.fields?.length) {

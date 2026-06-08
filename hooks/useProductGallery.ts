@@ -5,8 +5,10 @@ import type { PhotoVariants } from "../components/ProductDetails/types";
 
 export default function useProductGallery({
   photos,
+  resetKey,
 }: {
   photos: PhotoVariants[];
+  resetKey?: string;
 }) {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
   const sliderRef = useRef<HTMLDivElement | null>(null);
@@ -16,7 +18,7 @@ export default function useProductGallery({
     if (photos.length > 0) {
       setSelectedPhotoIndex(0);
     }
-  }, [photos.length]);
+  }, [photos.length, resetKey]);
 
   const handleThumbnailClick = (index: number) => {
     setSelectedPhotoIndex(index);
