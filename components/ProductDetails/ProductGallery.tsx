@@ -65,7 +65,7 @@ export default function ProductGallery({
             thumbnailPhotos.map((photo, index) => (
               <div key={index} className={`${styles.mobileSlide} ${styles.imageWrap}`}>
                 <Image
-                  src={photo.large || photo.full || photo.small || ""}
+                  src={photo.full || photo.large || photo.small || ""}
                   alt={imageAlt}
                   fill
                   sizes="100vw"
