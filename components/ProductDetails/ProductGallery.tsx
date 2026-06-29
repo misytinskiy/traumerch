@@ -8,6 +8,7 @@ export default function ProductGallery({
   isLoading,
   mainPhotoUrl,
   thumbnailPhotos,
+  desktopThumbnailPhotos,
   selectedPhotoIndex,
   onThumbnailClick,
   onDotClick,
@@ -19,6 +20,7 @@ export default function ProductGallery({
   isLoading: boolean;
   mainPhotoUrl: string | null;
   thumbnailPhotos: PhotoVariants[];
+  desktopThumbnailPhotos: PhotoVariants[];
   selectedPhotoIndex: number;
   onThumbnailClick: (index: number) => void;
   onDotClick: (index: number) => void;
@@ -108,8 +110,8 @@ export default function ProductGallery({
                 className={`${styles.thumbnail} ${styles.skeletonBlock}`}
               />
             ))
-          : thumbnailPhotos.length > 0
-          ? thumbnailPhotos.map((photo, index) => (
+          : desktopThumbnailPhotos.length > 0
+          ? desktopThumbnailPhotos.map((photo, index) => (
               <button
                 key={index}
                 type="button"

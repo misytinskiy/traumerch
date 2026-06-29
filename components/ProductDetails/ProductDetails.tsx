@@ -64,6 +64,44 @@ function getAttachmentArray(
   return raw.filter((item): item is AirtableAttachment => item && typeof item === "object");
 }
 
+function getPalettePhotoForColorIndex({
+  colorIndex,
+  palettePhotos,
+  mainPhoto,
+  paletteColorCount,
+}: {
+  colorIndex: number;
+  palettePhotos: PhotoVariants[];
+  mainPhoto: PhotoVariants | null;
+  paletteColorCount: number;
+}) {
+  if (colorIndex < 0) return null;
+
+  if (palettePhotos.length === 0) {
+    return null;
+  }
+
+  // Case 1: palette photos include every color, including the default/main one.
+  if (palettePhotos.length >= paletteColorCount) {
+    return palettePhotos[colorIndex] ?? null;
+  }
+
+  // Case 2: main product photo already represents the first/default color,
+  // and palette photos start from the second color.
+  if (
+    mainPhoto &&
+    paletteColorCount > 0 &&
+    palettePhotos.length === paletteColorCount - 1
+  ) {
+    if (colorIndex === 0) {
+      return mainPhoto;
+    }
+    return palettePhotos[colorIndex - 1] ?? null;
+  }
+
+  return palettePhotos[colorIndex] ?? null;
+}
+
 
 
 interface ProductDetailsProps {
@@ -105,7 +143,8 @@ export default function ProductDetails({
   const shouldShowSpecialField = specialFieldEnabled && specialFieldText.length > 0;
   const [photoState, setPhotoState] = useState<{
     all: PhotoVariants[];
-  }>({ all: [] });
+    desktopThumbnails: PhotoVariants[];
+  }>({ all: [], desktopThumbnails: [] });
   const [selectedColor, setSelectedColor] = useState("");
   const [customColorPicked, setCustomColorPicked] = useState(false);
   const {
@@ -195,7 +234,7 @@ export default function ProductDetails({
   // Keep main/thumbnail photos in sync with product fields
   useEffect(() => {
     if (!productRecord?.fields) {
-      setPhotoState({ all: [] });
+      setPhotoState({ all: [], desktopThumbnails: [] });
       return;
     }
     const effectiveSelectedColor = selectedColor || paletteColors[0] || "";
@@ -216,16 +255,21 @@ export default function ProductDetails({
       .map((attachment) => normalizeAttachment(attachment))
       .filter((photo): photo is PhotoVariants => Boolean(photo));
     const selectedPaletteIndex = paletteColors.indexOf(effectiveSelectedColor);
-    const selectedPalettePhoto =
-      palettePhotos.length > 0 && selectedPaletteIndex >= 0
-        ? palettePhotos[selectedPaletteIndex] ?? null
-        : null;
+    const selectedPalettePhoto = getPalettePhotoForColorIndex({
+      colorIndex: selectedPaletteIndex,
+      palettePhotos,
+      mainPhoto,
+      paletteColorCount: paletteColors.length,
+    });
     const activeMainPhoto = selectedPalettePhoto ?? mainPhoto;
 
     const allPhotos = activeMainPhoto
       ? [activeMainPhoto, ...secondaryPhotos]
       : secondaryPhotos;
-    setPhotoState({ all: allPhotos });
+    const desktopThumbnails = mainPhoto
+      ? [mainPhoto, ...secondaryPhotos]
+      : allPhotos;
+    setPhotoState({ all: allPhotos, desktopThumbnails });
   }, [
     productRecord?.id,
     selectedColor,
@@ -269,6 +313,7 @@ export default function ProductDetails({
   const mainPhotoUrl =
     selectedPhoto?.full || selectedPhoto?.large || selectedPhoto?.small || null;
   const thumbnailPhotos = photoState.all;
+  const desktopThumbnailPhotos = photoState.desktopThumbnails;
   const imageAlt = productName ?? t.design.productName;
 
 
@@ -280,6 +325,7 @@ export default function ProductDetails({
           isLoading={isLoading}
           mainPhotoUrl={mainPhotoUrl}
           thumbnailPhotos={thumbnailPhotos}
+          desktopThumbnailPhotos={desktopThumbnailPhotos}
           selectedPhotoIndex={selectedPhotoIndex}
           onThumbnailClick={handleThumbnailClick}
           onDotClick={handleDotClick}

@@ -206,6 +206,48 @@ describe("ProductDetails", () => {
     expect(mainImg.getAttribute("src")).toContain("https://cdn.example.com/default.jpg");
   });
 
+  it("treats main product photo as the first color when palette photos start from the second color", () => {
+    const productRecord = {
+      id: "rec1",
+      fields: {
+        "[WEB] Palette Hex Colours": "#1A1A1A, #2E3192, #E60000, #BFBFBF, #F2F2F2",
+        "[WEB] Palette Photos": [
+          { url: "https://cdn.example.com/blue.jpg" },
+          { url: "https://cdn.example.com/red.jpg" },
+          { url: "https://cdn.example.com/gray.jpg" },
+          { url: "https://cdn.example.com/white.jpg" },
+        ],
+        "Main Product Photo": [{ url: "https://cdn.example.com/black.jpg" }],
+      },
+    };
+
+    render(
+      <ProductDetails
+        productId="rec1"
+        productName="Mints Box"
+        productRecord={productRecord}
+      />
+    );
+
+    const initialMainImg = screen.getAllByAltText("Mints Box")[0] as HTMLImageElement;
+    expect(initialMainImg.getAttribute("src")).toContain("https://cdn.example.com/black.jpg");
+
+    const colorButtons = screen.getAllByLabelText(/Color \d+/);
+    fireEvent.click(colorButtons[1]);
+    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("https://cdn.example.com/blue.jpg");
+    expect(
+      screen
+        .getAllByAltText("Mints Box")
+        .some((image) => image.getAttribute("src")?.includes("https://cdn.example.com/black.jpg"))
+    ).toBe(true);
+
+    fireEvent.click(colorButtons[2]);
+    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("https://cdn.example.com/red.jpg");
+
+    fireEvent.click(colorButtons[3]);
+    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("https://cdn.example.com/gray.jpg");
+  });
+
   it("renders special field text only when enabled and uses current language", () => {
     currentLanguage = "de";
 
