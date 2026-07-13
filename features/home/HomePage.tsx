@@ -3,6 +3,7 @@ import Gallery from "../../components/Gallery/Gallery";
 import FAQ from "../../components/FAQ/FAQ";
 import Services from "../../components/Services/Services";
 import ResponsiveOurPromises from "../../components/OurPromises/ResponsiveOurPromises";
+import OurTeam from "../../components/OurTeam/OurTeam";
 import styles from "./home.module.css";
 
 export default function HomePage() {
@@ -27,10 +28,13 @@ export default function HomePage() {
           <ResponsiveOurPromises />
         </div>
 
+        <div id="our-team">
+          <OurTeam />
+        </div>
+
         <div id="faq">
           <FAQ />
         </div>
-
       </main>
     </div>
   );

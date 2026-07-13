@@ -63,6 +63,41 @@
   "promise": {
     "title": "UNSER VERSPRECHEN. IHR VORTEIL."
   },
+  "ourTeam": {
+    "eyebrow": "Die Menschen hinter dem Merch",
+    "title": "Unser Team",
+    "photoPlaceholder": "Foto folgt",
+    "socialLabel": "Social-Links des Teammitglieds",
+    "members": [
+      {
+        "name": "Ihor Konstantinovskyi",
+        "role": "Founder & CEO",
+        "bio": "Gibt die Richtung vor und gibt jedes Sample frei.",
+        "image": "/ourTeam/1.jpg",
+        "imageAlt": "Porträt von Ihor Konstantinovskyi"
+      },
+      {
+        "name": "Lukas Berger",
+        "role": "Chief Business Dev.",
+        "bio": "Aus dem ersten Hallo macht er konkrete Aufträge.",
+        "image": "/ourTeam/2.jpg",
+        "imageAlt": "Porträt von Lukas Berger"
+      },
+      {
+        "name": "Sofia Novak",
+        "role": "Head of Production",
+        "bio": "Verwandelt freigegebene Mockups in gelieferte Boxen.",
+        "image": "/ourTeam/3.jpg",
+        "imageAlt": "Porträt von Sofia Novak"
+      },
+      {
+        "name": "Max Huber",
+        "role": "Creative Director",
+        "bio": "Verantwortet Branding, Mockups und den Look jedes Drops.",
+        "imagePending": true
+      }
+    ]
+  },
   "faq": {
     "title": "ALLES WAS SIE WISSEN MÜSSEN",
     "pageTitle": "Alle Fragen. Klare Antworten.",

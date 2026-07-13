@@ -63,6 +63,41 @@
   "promise": {
     "title": "OUR PROMISE. YOUR ADVANTAGE."
   },
+  "ourTeam": {
+    "eyebrow": "The people behind the merch",
+    "title": "Our Team",
+    "photoPlaceholder": "Drop photo",
+    "socialLabel": "Team member social links",
+    "members": [
+      {
+        "name": "Ihor Konstantinovskyi",
+        "role": "Founder & CEO",
+        "bio": "Sets the direction and signs off every sample.",
+        "image": "/ourTeam/1.jpg",
+        "imageAlt": "Portrait of Ihor Konstantinovskyi"
+      },
+      {
+        "name": "Lukas Berger",
+        "role": "Chief Business Dev.",
+        "bio": "The back you scanned, turns hellos into orders.",
+        "image": "/ourTeam/2.jpg",
+        "imageAlt": "Portrait of Lukas Berger"
+      },
+      {
+        "name": "Sofia Novak",
+        "role": "Head of Production",
+        "bio": "Turns approved mockups into delivered boxes.",
+        "image": "/ourTeam/3.jpg",
+        "imageAlt": "Portrait of Sofia Novak"
+      },
+      {
+        "name": "Max Huber",
+        "role": "Creative Director",
+        "bio": "Owns branding, mockups and the look of every drop.",
+        "imagePending": true
+      }
+    ]
+  },
   "faq": {
     "title": "ALL YOU NEED TO KNOW",
     "pageTitle": "All Questions. Clear Answers.",
