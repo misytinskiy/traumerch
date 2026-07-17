@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import styles from "./OurTeam.module.css";
@@ -111,6 +111,28 @@ export default function OurTeam() {
   const { t } = useLanguage();
   const members = t.ourTeam.members as TeamMember[];
   const gridRef = useRef<HTMLDivElement | null>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  useEffect(() => {
+    const element = gridRef.current;
+    if (!element) return;
+
+    const updateScrollState = () => {
+      const maxScrollLeft = element.scrollWidth - element.clientWidth;
+      setCanScrollLeft(element.scrollLeft > 4);
+      setCanScrollRight(element.scrollLeft < maxScrollLeft - 4);
+    };
+
+    updateScrollState();
+    element.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+
+    return () => {
+      element.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, [members.length]);
 
   const scrollCards = (direction: "left" | "right") => {
     const element = gridRef.current;
@@ -135,6 +157,7 @@ export default function OurTeam() {
           type="button"
           className={`${styles.arrowButton} ${styles.arrowLeft}`}
           aria-label="Scroll team left"
+          disabled={!canScrollLeft}
           onClick={() => scrollCards("left")}
         >
           <ArrowIcon direction="left" />
@@ -180,6 +203,7 @@ export default function OurTeam() {
           type="button"
           className={`${styles.arrowButton} ${styles.arrowRight}`}
           aria-label="Scroll team right"
+          disabled={!canScrollRight}
           onClick={() => scrollCards("right")}
         >
           <ArrowIcon direction="right" />
@@ -190,6 +214,7 @@ export default function OurTeam() {
             type="button"
             className={styles.bottomArrowButton}
             aria-label="Scroll team left"
+            disabled={!canScrollLeft}
             onClick={() => scrollCards("left")}
           >
             <ArrowIcon direction="left" />
@@ -198,6 +223,7 @@ export default function OurTeam() {
             type="button"
             className={styles.bottomArrowButton}
             aria-label="Scroll team right"
+            disabled={!canScrollRight}
             onClick={() => scrollCards("right")}
           >
             <ArrowIcon direction="right" />
