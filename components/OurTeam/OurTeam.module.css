@@ -28,6 +28,10 @@
   text-align: center;
 }
 
+.carousel {
+  position: relative;
+}
+
 .grid {
   display: flex;
   gap: 16px;
@@ -40,6 +44,64 @@
   scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
   padding-bottom: 12px;
   padding-top: 10px;
+}
+
+.arrowButton {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  color: rgba(0, 0, 0, 0.72);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.arrowButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.arrowLeft {
+  left: 72px;
+}
+
+.arrowRight {
+  right: 72px;
+}
+
+.bottomArrows {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.bottomArrowButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  color: rgba(0, 0, 0, 0.72);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.bottomArrowButton svg {
+  width: 20px;
+  height: 20px;
 }
 
 .card {
@@ -161,7 +223,7 @@
   height: 23px;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (min-width: 1281px) {
   .card:hover {
     transform: translate3d(0, -6px, 0);
   }
@@ -192,6 +254,14 @@
 
   .title {
     font-size: 56px;
+  }
+
+  .arrowLeft {
+    left: -72px;
+  }
+
+  .arrowRight {
+    right: -72px;
   }
 
   .grid {
@@ -242,13 +312,26 @@
     gap: 20px;
   }
 
+  .arrowButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .arrowLeft {
+    left: -12px;
+  }
+
+  .arrowRight {
+    right: -12px;
+  }
+
   .card {
     flex-basis: calc((100% - 20px) / 2);
-    min-height: 470px;
+    min-height: 570px;
   }
 
   .content {
-    padding: 28px 22px 18px;
+    padding: 46px 39px 18px;
   }
 
   .headingBlock {
@@ -256,10 +339,10 @@
   }
 
   .headingBlock::before {
-    left: -30px;
-    top: -48px;
-    width: 170px;
-    height: 170px;
+    left: -28px;
+    top: -23px;
+    width: 130px;
+    height: 130px;
   }
 
   .name {
@@ -275,6 +358,15 @@
   }
 
   .socialButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .bottomArrows {
+    display: flex;
+  }
+
+  .bottomArrowButton {
     width: 40px;
     height: 40px;
   }
@@ -311,13 +403,22 @@
     margin: 0;
   }
 
+  .arrowButton {
+    display: none;
+  }
+
+  .bottomArrows {
+    display: flex;
+    margin-top: 16px;
+  }
+
   .card {
     flex-basis: 100%;
-    min-height: 536px;
+    min-height: 936px;
   }
 
   .content {
-    padding: 32px 22px 18px;
+    padding: 120px 81px 18px;
   }
 
   .headingBlock {
@@ -381,9 +482,24 @@
     gap: 16px;
   }
 
+  .bottomArrows {
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .bottomArrowButton {
+    width: 38px;
+    height: 38px;
+  }
+
+  .bottomArrowButton svg {
+    width: 18px;
+    height: 18px;
+  }
+
   .card {
     flex-basis: calc(100vw - 20px);
-    min-height: 420px;
+    min-height: 550px;
   }
 
   .card {
@@ -391,7 +507,7 @@
   }
 
   .content {
-    padding: 20px 16px 16px;
+    padding: 60px 55px 16px;
   }
 
   .headingBlock {

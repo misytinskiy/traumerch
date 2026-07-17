@@ -83,6 +83,13 @@
         "imageAlt": "Porträt von Yury"
       },
       {
+        "name": "Mathias",
+        "role": "Procurement Manager",
+        "bio": "Verantwortet Sourcing, Lieferanten und Einkauf.",
+        "image": "/ourTeam/mathias.png",
+        "imageAlt": "Porträt von Mathias"
+      },
+      {
         "name": "Anna-Valeriia",
         "role": "Sales Manager",
         "bio": "Macht aus Gesprächen klare Angebote und nächste Schritte.",
@@ -95,13 +102,6 @@
         "bio": "Verantwortet Kampagnen, Content und die Markenstimme.",
         "image": "/ourTeam/lea.png",
         "imageAlt": "Porträt von Lea"
-      },
-      {
-        "name": "Mathias",
-        "role": "Procurement Manager",
-        "bio": "Verantwortet Sourcing, Lieferanten und Einkauf.",
-        "image": "/ourTeam/mathias.png",
-        "imageAlt": "Porträt von Mathias"
       }
     ]
   },

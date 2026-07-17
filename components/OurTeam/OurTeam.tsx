@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import styles from "./OurTeam.module.css";
@@ -91,9 +92,36 @@ const socialIcons = [
   { key: "email", label: "Email", icon: <MailIcon /> },
 ];
 
+function ArrowIcon({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden>
+      <path
+        d={direction === "left" ? "M14.5 5.5 8 12l6.5 6.5" : "M9.5 5.5 16 12l-6.5 6.5"}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function OurTeam() {
   const { t } = useLanguage();
   const members = t.ourTeam.members as TeamMember[];
+  const gridRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollCards = (direction: "left" | "right") => {
+    const element = gridRef.current;
+    if (!element) return;
+
+    const amount = Math.max(element.clientWidth * 0.6, 280);
+    element.scrollBy({
+      left: direction === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section className={styles.section} aria-labelledby="our-team-title">
@@ -102,40 +130,79 @@ export default function OurTeam() {
         <SectionTitle className={styles.title}>{t.ourTeam.title}</SectionTitle>
       </div>
 
-      <div className={styles.grid}>
-        {members.map((member) => (
-          <article key={member.name} className={styles.card}>
-            {member.image ? (
-              <Image
-                src={member.image}
-                alt={member.imageAlt ?? member.name}
-                fill
-                sizes="(max-width: 480px) 88vw, (max-width: 900px) calc(100vw - 58px), (max-width: 1280px) 44vw, 24vw"
-                className={styles.image}
-              />
-            ) : null}
+      <div className={styles.carousel}>
+        <button
+          type="button"
+          className={`${styles.arrowButton} ${styles.arrowLeft}`}
+          aria-label="Scroll team left"
+          onClick={() => scrollCards("left")}
+        >
+          <ArrowIcon direction="left" />
+        </button>
 
-            <div className={styles.content}>
-              <div className={styles.headingBlock}>
-                <p className={styles.role}>{member.role}</p>
-                <h3 className={styles.name}>{member.name}</h3>
-              </div>
+        <div ref={gridRef} className={styles.grid}>
+          {members.map((member) => (
+            <article key={member.name} className={styles.card}>
+              {member.image ? (
+                <Image
+                  src={member.image}
+                  alt={member.imageAlt ?? member.name}
+                  fill
+                  sizes="(max-width: 480px) 88vw, (max-width: 900px) calc(100vw - 58px), (max-width: 1280px) 44vw, 24vw"
+                  className={styles.image}
+                />
+              ) : null}
 
-              <div className={styles.socials} aria-label={t.ourTeam.socialLabel}>
-                {socialIcons.map((social) => (
-                  <span
-                    key={`${member.name}-${social.key}`}
-                    className={styles.socialButton}
-                    aria-hidden
-                    title={`${member.name} ${social.label}`}
-                  >
-                    {social.icon}
-                  </span>
-                ))}
+              <div className={styles.content}>
+                <div className={styles.headingBlock}>
+                  <p className={styles.role}>{member.role}</p>
+                  <h3 className={styles.name}>{member.name}</h3>
+                </div>
+
+                <div className={styles.socials} aria-label={t.ourTeam.socialLabel}>
+                  {socialIcons.map((social) => (
+                    <span
+                      key={`${member.name}-${social.key}`}
+                      className={styles.socialButton}
+                      aria-hidden
+                      title={`${member.name} ${social.label}`}
+                    >
+                      {social.icon}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className={`${styles.arrowButton} ${styles.arrowRight}`}
+          aria-label="Scroll team right"
+          onClick={() => scrollCards("right")}
+        >
+          <ArrowIcon direction="right" />
+        </button>
+
+        <div className={styles.bottomArrows}>
+          <button
+            type="button"
+            className={styles.bottomArrowButton}
+            aria-label="Scroll team left"
+            onClick={() => scrollCards("left")}
+          >
+            <ArrowIcon direction="left" />
+          </button>
+          <button
+            type="button"
+            className={styles.bottomArrowButton}
+            aria-label="Scroll team right"
+            onClick={() => scrollCards("right")}
+          >
+            <ArrowIcon direction="right" />
+          </button>
+        </div>
       </div>
     </section>
   );
