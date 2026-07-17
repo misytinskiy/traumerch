@@ -66,35 +66,42 @@
   "ourTeam": {
     "eyebrow": "Die Menschen hinter dem Merch",
     "title": "Unser Team",
-    "photoPlaceholder": "Foto folgt",
     "socialLabel": "Social-Links des Teammitglieds",
     "members": [
       {
-        "name": "Ihor Konstantinovskyi",
-        "role": "Founder & CEO",
-        "bio": "Gibt die Richtung vor und gibt jedes Sample frei.",
-        "image": "/ourTeam/1.jpg",
+        "name": "Ihor",
+        "role": "Co-Founder & CEO",
+        "bio": "Gibt die Richtung vor und verantwortet die Gesamtvision.",
+        "image": "/ourTeam/ihor.png",
         "imageAlt": "Porträt von Ihor Konstantinovskyi"
       },
       {
-        "name": "Lukas Berger",
-        "role": "Chief Business Dev.",
-        "bio": "Aus dem ersten Hallo macht er konkrete Aufträge.",
-        "image": "/ourTeam/2.jpg",
-        "imageAlt": "Porträt von Lukas Berger"
+        "name": "Yury",
+        "role": "Co-Founder & Head Of Operations",
+        "bio": "Hält Abläufe von der Planung bis zur Lieferung zusammen.",
+        "image": "/ourTeam/yury.png",
+        "imageAlt": "Porträt von Yury"
       },
       {
-        "name": "Sofia Novak",
-        "role": "Head of Production",
-        "bio": "Verwandelt freigegebene Mockups in gelieferte Boxen.",
-        "image": "/ourTeam/3.jpg",
-        "imageAlt": "Porträt von Sofia Novak"
+        "name": "Anna-Valeriia",
+        "role": "Sales Manager",
+        "bio": "Macht aus Gesprächen klare Angebote und nächste Schritte.",
+        "image": "/ourTeam/anna-valeriia.png",
+        "imageAlt": "Porträt von Anna-Valeriia"
       },
       {
-        "name": "Max Huber",
-        "role": "Creative Director",
-        "bio": "Verantwortet Branding, Mockups und den Look jedes Drops.",
-        "imagePending": true
+        "name": "Lea",
+        "role": "Marketing Manager",
+        "bio": "Verantwortet Kampagnen, Content und die Markenstimme.",
+        "image": "/ourTeam/lea.png",
+        "imageAlt": "Porträt von Lea"
+      },
+      {
+        "name": "Mathias",
+        "role": "Procurement Manager",
+        "bio": "Verantwortet Sourcing, Lieferanten und Einkauf.",
+        "image": "/ourTeam/mathias.png",
+        "imageAlt": "Porträt von Mathias"
       }
     ]
   },

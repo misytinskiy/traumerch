@@ -66,35 +66,42 @@
   "ourTeam": {
     "eyebrow": "The people behind the merch",
     "title": "Our Team",
-    "photoPlaceholder": "Drop photo",
     "socialLabel": "Team member social links",
     "members": [
       {
-        "name": "Ihor Konstantinovskyi",
-        "role": "Founder & CEO",
-        "bio": "Sets the direction and signs off every sample.",
-        "image": "/ourTeam/1.jpg",
+        "name": "Ihor",
+        "role": "Co-Founder & CEO",
+        "bio": "Sets the vision and leads the company direction.",
+        "image": "/ourTeam/ihor.png",
         "imageAlt": "Portrait of Ihor Konstantinovskyi"
       },
       {
-        "name": "Lukas Berger",
-        "role": "Chief Business Dev.",
-        "bio": "The back you scanned, turns hellos into orders.",
-        "image": "/ourTeam/2.jpg",
-        "imageAlt": "Portrait of Lukas Berger"
+        "name": "Yury",
+        "role": "Co-Founder & Head Of Operations",
+        "bio": "Keeps operations moving from planning to delivery.",
+        "image": "/ourTeam/yury.png",
+        "imageAlt": "Portrait of Yury"
       },
       {
-        "name": "Sofia Novak",
-        "role": "Head of Production",
-        "bio": "Turns approved mockups into delivered boxes.",
-        "image": "/ourTeam/3.jpg",
-        "imageAlt": "Portrait of Sofia Novak"
+        "name": "Anna-Valeriia",
+        "role": "Sales Manager",
+        "bio": "Turns conversations into clear offers and next steps.",
+        "image": "/ourTeam/anna-valeriia.png",
+        "imageAlt": "Portrait of Anna-Valeriia"
       },
       {
-        "name": "Max Huber",
-        "role": "Creative Director",
-        "bio": "Owns branding, mockups and the look of every drop.",
-        "imagePending": true
+        "name": "Lea",
+        "role": "Marketing Manager",
+        "bio": "Shapes campaigns, content and the brand voice.",
+        "image": "/ourTeam/lea.png",
+        "imageAlt": "Portrait of Lea"
+      },
+      {
+        "name": "Mathias",
+        "role": "Procurement Manager",
+        "bio": "Owns sourcing, supplier coordination and purchasing.",
+        "image": "/ourTeam/mathias.png",
+        "imageAlt": "Portrait of Mathias"
       }
     ]
   },
