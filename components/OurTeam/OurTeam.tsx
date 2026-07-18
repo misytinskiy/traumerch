@@ -39,28 +39,6 @@ function LinkedinIcon() {
   );
 }
 
-function InstagramIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden>
-      <path
-        d="M8 4.8h8A3.2 3.2 0 0 1 19.2 8v8a3.2 3.2 0 0 1-3.2 3.2H8A3.2 3.2 0 0 1 4.8 16V8A3.2 3.2 0 0 1 8 4.8Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-      />
-      <circle
-        cx="12"
-        cy="12"
-        r="3"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-      />
-      <circle cx="16.5" cy="7.5" r="0.8" fill="currentColor" />
-    </svg>
-  );
-}
-
 function MailIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden>
@@ -88,9 +66,10 @@ function MailIcon() {
 
 const socialIcons = [
   { key: "linkedin", label: "LinkedIn", icon: <LinkedinIcon /> },
-  { key: "instagram", label: "Instagram", icon: <InstagramIcon /> },
   { key: "email", label: "Email", icon: <MailIcon /> },
 ];
+
+const linkedinUrl = "https://www.linkedin.com/company/traumerch/";
 
 function ArrowIcon({ direction }: { direction: "left" | "right" }) {
   return (
@@ -183,16 +162,32 @@ export default function OurTeam() {
                 </div>
 
                 <div className={styles.socials} aria-label={t.ourTeam.socialLabel}>
-                  {socialIcons.map((social) => (
-                    <span
+                  {socialIcons.map((social) => {
+                    const href =
+                      social.key === "linkedin"
+                        ? linkedinUrl
+                        : `mailto:${
+                            member.name === "Yury"
+                              ? "operations@traumerch.com"
+                              : "sales@traumerch.com"
+                          }`;
+
+                    return (
+                      <a
                       key={`${member.name}-${social.key}`}
+                      href={href}
                       className={styles.socialButton}
-                      aria-hidden
+                      target={social.key === "linkedin" ? "_blank" : undefined}
+                      rel={
+                        social.key === "linkedin" ? "noreferrer noopener" : undefined
+                      }
+                      aria-label={`${member.name} ${social.label}`}
                       title={`${member.name} ${social.label}`}
                     >
                       {social.icon}
-                    </span>
-                  ))}
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </article>
