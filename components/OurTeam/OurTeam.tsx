@@ -117,7 +117,15 @@ export default function OurTeam() {
     const element = gridRef.current;
     if (!element) return;
 
-    const amount = Math.max(element.clientWidth * 0.6, 280);
+    const firstCard = element.querySelector<HTMLElement>(`.${styles.card}`);
+    const gap = Number.parseFloat(window.getComputedStyle(element).columnGap || window.getComputedStyle(element).gap || "0");
+    const isTabletOrMobile = window.matchMedia("(max-width: 1280px)").matches;
+
+    const amount =
+      isTabletOrMobile && firstCard
+        ? firstCard.getBoundingClientRect().width + gap
+        : Math.max(element.clientWidth * 0.6, 280);
+
     element.scrollBy({
       left: direction === "left" ? -amount : amount,
       behavior: "smooth",
