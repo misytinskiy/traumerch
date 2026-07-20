@@ -146,6 +146,10 @@
     drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
 }
 
+.card:nth-child(2) .image {
+  transform: scale(0.88);
+}
+
 .content {
   position: absolute;
   inset: 0;
@@ -307,6 +311,10 @@
   .socials {
     margin-top: 15px;
   }
+
+  .card:nth-child(2) .image {
+    transform: scale(0.86);
+  }
 }
 
 @media (max-width: 1280px) {
@@ -367,6 +375,10 @@
   .socialButton {
     width: 40px;
     height: 40px;
+  }
+
+  .card:nth-child(2) .image {
+    transform: scale(0.85);
   }
 
 }
@@ -452,6 +464,11 @@
   .socialButton svg {
     width: 21px;
     height: 21px;
+  }
+
+  .card:nth-child(2) .image {
+    object-fit: contain;
+    transform: scale(0.9);
   }
 }
 
@@ -543,6 +560,11 @@
   .socialButton svg {
     width: 17px;
     height: 17px;
+  }
+
+  .card:nth-child(2) .image {
+    object-fit: contain;
+    transform: scale(1);
   }
 
 }
