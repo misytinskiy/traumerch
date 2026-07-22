@@ -23,6 +23,7 @@ const ALLOWED_FIELDS = new Set([
   "[WEB] Name ENG",
   "[WEB] Name DE",
   "Name",
+  "Filter: Item Category",
   "Item Category",
   "Main Product Photo",
   "[WEB] Palette Photos",

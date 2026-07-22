@@ -11,7 +11,12 @@ type AirtableRecord = {
 type PriceTier = "sample" | "bulk";
 
 const NAME_FIELDS = ["[WEB] Name ENG", "[WEB] Name DE", "Name"];
-const CATEGORY_FIELDS = ["Item Category"];
+const CATEGORY_FIELDS = ["Filter: Item Category", "Item Category"];
+const CATEGORY_FIELD_SETS = [
+  ["Filter: Item Category", "Item Category"],
+  ["Filter: Item Category"],
+  ["Item Category"],
+] as const;
 const IMAGE_FIELD = "Main Product Photo";
 const SECONDARY_IMAGE_FIELD = "Secondary Product Photos";
 const OUT_OF_STOCK_FIELD = "Out of Stock";
@@ -183,7 +188,8 @@ const normalizeRecord = (
 export const buildNormalizedFields = (
   priceTier: PriceTier,
   includeOutOfStock = true,
-  catalogFeaturedField?: string
+  catalogFeaturedField?: string,
+  categoryFields: readonly string[] = CATEGORY_FIELD_SETS[0]
 ) => [
   ...NAME_FIELDS,
   ...PRICE_FIELDS_QUERY[priceTier],
@@ -191,12 +197,19 @@ export const buildNormalizedFields = (
   SECONDARY_IMAGE_FIELD,
   ...(catalogFeaturedField ? [catalogFeaturedField] : []),
   ...(includeOutOfStock ? [OUT_OF_STOCK_FIELD] : []),
-  ...CATEGORY_FIELDS,
+  ...categoryFields,
 ];
 
-const buildCategoryFormula = (categoryTerm: string) => {
+const buildCategoryFormula = (
+  categoryTerm: string,
+  categoryFields: readonly string[]
+) => {
   const safe = categoryTerm.replace(/"/g, '\\"');
-  return `FIND("${safe}", LOWER(ARRAYJOIN({Item Category})))`;
+  const clauses = categoryFields.map(
+    (field) => `FIND("${safe}", LOWER(ARRAYJOIN({${field}})))`
+  );
+
+  return clauses.length === 1 ? clauses[0] : `OR(${clauses.join(",")})`;
 };
 
 const fetchNormalizedPage = async ({
@@ -208,16 +221,19 @@ const fetchNormalizedPage = async ({
   filterByFormula,
   includeOutOfStock,
   catalogFeaturedField,
+  categoryFields = CATEGORY_FIELD_SETS[0],
   offset,
 }: FetchNormalizedOptions & {
   includeOutOfStock: boolean;
   catalogFeaturedField?: string;
+  categoryFields?: readonly string[];
   offset?: string;
 }) => {
   const fields = buildNormalizedFields(
     priceTier,
     includeOutOfStock,
-    catalogFeaturedField
+    catalogFeaturedField,
+    categoryFields
   );
   const url = buildAirtableListUrl({
     fields,
@@ -249,20 +265,25 @@ export const fetchNormalizedProducts = async ({
   category,
   filterByFormula,
 }: FetchNormalizedOptions) => {
-  const formula =
-    filterByFormula || (category ? buildCategoryFormula(category) : undefined);
-
   let includeOutOfStock = true;
   let catalogFeaturedFieldIndex = 0;
+  let categoryFieldSetIndex = 0;
+  const getFormula = () =>
+    filterByFormula ||
+    (category
+      ? buildCategoryFormula(category, CATEGORY_FIELD_SETS[categoryFieldSetIndex])
+      : undefined);
+
   let response = await fetchNormalizedPage({
     apiToken,
     priceTier,
     view,
     maxRecords,
     pageSize,
-    filterByFormula: formula,
+    filterByFormula: getFormula(),
     includeOutOfStock,
     catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
+    categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
   });
 
   while (!response.ok) {
@@ -279,9 +300,10 @@ export const fetchNormalizedProducts = async ({
         view,
         maxRecords,
         pageSize,
-        filterByFormula: formula,
+        filterByFormula: getFormula(),
         includeOutOfStock,
         catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
+        categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
       });
       continue;
     }
@@ -299,9 +321,30 @@ export const fetchNormalizedProducts = async ({
         view,
         maxRecords,
         pageSize,
-        filterByFormula: formula,
+        filterByFormula: getFormula(),
         includeOutOfStock,
         catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
+        categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
+      });
+      continue;
+    }
+
+    const activeCategoryFields = CATEGORY_FIELD_SETS[categoryFieldSetIndex];
+    const unknownCategoryField = activeCategoryFields.find((field) =>
+      message.includes(field)
+    );
+    if (unknownCategoryField && categoryFieldSetIndex < CATEGORY_FIELD_SETS.length - 1) {
+      categoryFieldSetIndex += 1;
+      response = await fetchNormalizedPage({
+        apiToken,
+        priceTier,
+        view,
+        maxRecords,
+        pageSize,
+        filterByFormula: getFormula(),
+        includeOutOfStock,
+        catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
+        categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
       });
       continue;
     }
@@ -325,9 +368,10 @@ export const fetchNormalizedProducts = async ({
       view,
       maxRecords,
       pageSize,
-      filterByFormula: formula,
+      filterByFormula: getFormula(),
       includeOutOfStock,
       catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
+      categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
       offset: nextOffset,
     });
 

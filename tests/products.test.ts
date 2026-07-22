@@ -21,6 +21,7 @@ describe("products normalization", () => {
     expect(fields).toContain("1-24 pcs (Sample) | SALES");
     expect(fields).toContain("Out of Stock");
     expect(fields).toContain("[WEB] Catalog Starring");
+    expect(fields).toContain("Filter: Item Category");
     expect(fields).not.toContain("Catalog Starring");
   });
 
@@ -35,7 +36,7 @@ describe("products normalization", () => {
               "[WEB] Name DE": "T-Shirt",
               "1-24 pcs (Sample) | SALES": 6,
               "Out of Stock": "1",
-              "Item Category": ["Basics", "Summer"],
+              "Filter: Item Category": ["Basics", "Summer"],
               "Main Product Photo": [
                 {
                   url: "https://cdn.example.com/full.jpg",
@@ -80,6 +81,40 @@ describe("products normalization", () => {
       hoverImageUrl: "https://cdn.example.com/large-hover.jpg",
       categories: ["Basics", "Summer"],
     });
+  });
+
+  it("retries with legacy category field when renamed field is unavailable", async () => {
+    const first = new Response("UNKNOWN_FIELD_NAME: Filter: Item Category", {
+      status: 422,
+    });
+    const second = new Response(
+      JSON.stringify({
+        records: [
+          {
+            id: "rec123",
+            fields: {
+              "[WEB] Name ENG": "Tee",
+              "Item Category": ["Basics"],
+              "Main Product Photo": [],
+            },
+          },
+        ],
+      }),
+      { status: 200 }
+    );
+
+    (fetchAirtable as ReturnType<typeof vi.fn>)
+      .mockResolvedValueOnce(first)
+      .mockResolvedValueOnce(second);
+
+    const result = await fetchNormalizedProducts({
+      apiToken: "token",
+      priceTier: "sample",
+      category: "basics",
+    });
+
+    expect(result.records).toHaveLength(1);
+    expect(result.records[0]?.categories).toEqual(["Basics"]);
   });
 
   it("retries without out-of-stock field when Airtable rejects it", async () => {
