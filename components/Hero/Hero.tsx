@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
+import HeroSlider from "../HeroSlider/HeroSlider";
 import styles from "./Hero.module.css";
 
 interface HeroProps {
@@ -21,9 +22,21 @@ export default function Hero({
   const { t, language } = useLanguage();
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isMobileHero, setIsMobileHero] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [displayWordIndex, setDisplayWordIndex] = useState(0);
+
+  const trustedCompanies = [
+    "Google",
+    "pwc",
+    "Red Bull",
+    "BOSS",
+    "LBS",
+    "STRABAG",
+    "VIE",
+    "PORSCHE",
+  ];
 
   const rotatingWords = useMemo(() => t.hero.rotatingWords || [], [t]);
   const rotationInterval = 1400; // 0.7 seconds
@@ -32,6 +45,7 @@ export default function Hero({
     const checkScreenSize = () => {
       setIsLargeScreen(window.innerWidth <= 1536);
       setIsSmallScreen(window.innerWidth <= 350);
+      setIsMobileHero(window.innerWidth <= 768);
     };
 
     checkScreenSize();
@@ -65,13 +79,115 @@ export default function Hero({
   return (
     <section className={styles.hero}>
       <div className={styles.heroContainer}>
-        <div className={styles.heroContent}>
-          {isGermanHero ? (
-            <h1 className={`${styles.title} ${styles.titleGerman}`}>
-              <span className={styles.germanLine}>Merchandise, das</span>
-              <span className={styles.germanLine}>Ihre Marke mit</span>
-              <span className={styles.germanLine}>
-                <span className={styles.wordContainerGerman}>
+        {isMobileHero ? (
+          <div className={styles.mobileHeroContent}>
+            <div className={styles.mobileSliderWrap}>
+              <HeroSlider />
+            </div>
+
+            <div className={styles.mobileCopy}>
+              {isGermanHero ? (
+                <h1 className={`${styles.title} ${styles.titleGerman} ${styles.mobileTitle}`}>
+                  <span className={styles.germanLine}>Merchandise, das</span>
+                  <span className={styles.germanLine}>Ihre Marke mit</span>
+                  <span className={styles.germanLine}>
+                    <span className={styles.wordContainerGerman}>
+                      <span
+                        className={`${styles.highlight} ${styles.rotatingWord} ${
+                          isAnimating ? styles.fadeOut : styles.fadeIn
+                        }`}
+                      >
+                        {currentWord}
+                      </span>
+                    </span>
+                  </span>
+                  <span className={styles.germanLine}>{rotatingSuffix}</span>
+                </h1>
+              ) : (
+                <h1
+                  className={`${styles.title} ${styles.mobileTitle} ${styles.mobileTitleStack}`}
+                >
+                  <span className={styles.mobileTitleLine}>MERCHANDISE THAT</span>
+                  <span className={styles.mobileTitleLine}>CONNECTS YOUR</span>
+                  <span className={styles.mobileTitleLine}>BRAND WITH YOUR</span>
+                  <span className={styles.mobileTitleWordLine}>
+                    <span className={styles.wordContainer}>
+                      <span
+                        className={`${styles.highlight} ${styles.rotatingWord} ${
+                          isAnimating ? styles.fadeOut : styles.fadeIn
+                        }`}
+                      >
+                        {currentWord}
+                      </span>
+                    </span>
+                  </span>
+                </h1>
+              )}
+
+              <Button
+                variant="solid"
+                padding="24px 44px"
+                padding480="6px 34px"
+                arrow="white"
+                className={`${styles.ctaButton} ${styles.mobileCtaButton}`}
+                onClick={onScrollClick}
+                fontSize="16px"
+                fontSize480="10px"
+              >
+                {t.hero.cta}
+              </Button>
+            </div>
+
+            <div className={styles.trustedBlock}>
+              <p className={styles.trustedTitle}>{t.hero.trustedTitle}</p>
+              <div className={styles.trustedGrid}>
+                {trustedCompanies.map((company) => (
+                  <span key={company} className={styles.trustedLogo}>
+                    {company}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.heroContent}>
+            {isGermanHero ? (
+              <h1 className={`${styles.title} ${styles.titleGerman}`}>
+                <span className={styles.germanLine}>Merchandise, das</span>
+                <span className={styles.germanLine}>Ihre Marke mit</span>
+                <span className={styles.germanLine}>
+                  <span className={styles.wordContainerGerman}>
+                    <span
+                      className={`${styles.highlight} ${styles.rotatingWord} ${
+                        isAnimating ? styles.fadeOut : styles.fadeIn
+                      }`}
+                    >
+                      {currentWord}
+                    </span>
+                  </span>
+                </span>
+                <span className={styles.germanLine}>{rotatingSuffix}</span>
+              </h1>
+            ) : isSmallScreen ? (
+              <h1 className={styles.title}>
+                {t.hero.titleLine1Small}
+                <br />
+                {t.hero.titleLine2Small}
+                <br />
+                {t.hero.titleLine3Small}
+                <br />
+                {t.hero.titleLine4Small}
+                <br />
+                {t.hero.titleLine5Small}
+                <br />
+                {t.hero.titleLine6Small}
+                <br />
+                {t.hero.titleLine7Small}
+              </h1>
+            ) : (
+              <h1 className={styles.title}>
+                {t.hero.titlePrefix}{" "}
+                <span className={styles.wordContainer}>
                   <span
                     className={`${styles.highlight} ${styles.rotatingWord} ${
                       isAnimating ? styles.fadeOut : styles.fadeIn
@@ -80,53 +196,23 @@ export default function Hero({
                     {currentWord}
                   </span>
                 </span>
-              </span>
-              <span className={styles.germanLine}>{rotatingSuffix}</span>
-            </h1>
-          ) : isSmallScreen ? (
-            <h1 className={styles.title}>
-              {t.hero.titleLine1Small}
-              <br />
-              {t.hero.titleLine2Small}
-              <br />
-              {t.hero.titleLine3Small}
-              <br />
-              {t.hero.titleLine4Small}
-              <br />
-              {t.hero.titleLine5Small}
-              <br />
-              {t.hero.titleLine6Small}
-              <br />
-              {t.hero.titleLine7Small}
-            </h1>
-          ) : (
-            <h1 className={styles.title}>
-              {t.hero.titlePrefix}{" "}
-              <span className={styles.wordContainer}>
-                <span
-                  className={`${styles.highlight} ${styles.rotatingWord} ${
-                    isAnimating ? styles.fadeOut : styles.fadeIn
-                  }`}
-                >
-                  {currentWord}
-                </span>
-              </span>
-            </h1>
-          )}
+              </h1>
+            )}
 
-          <Button
-            variant="solid"
-            padding={isLargeScreen ? "31px 53px" : "31px 41px"}
-            padding480="24px 48px"
-            arrow="white"
-            className={styles.ctaButton}
-            onClick={onScrollClick}
-            fontSize1920="20px 48px"
-            padding1536="20px 48px"
-          >
-            {t.hero.cta}
-          </Button>
-        </div>
+            <Button
+              variant="solid"
+              padding={isLargeScreen ? "31px 53px" : "31px 41px"}
+              padding480="24px 48px"
+              arrow="white"
+              className={styles.ctaButton}
+              onClick={onScrollClick}
+              fontSize1920="20px 48px"
+              padding1536="20px 48px"
+            >
+              {t.hero.cta}
+            </Button>
+          </div>
+        )}
       </div>
       <button
         className={`${styles.scrollButton} ${

@@ -158,6 +158,21 @@ export default function ProductSlider() {
       >
         <RightArrowIcon />
       </button>
+
+      <div className={styles.sliderDots} aria-label="Slider pagination">
+        {IMAGES.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            className={`${styles.sliderDot} ${
+              index === currentSlide ? styles.sliderDotActive : ""
+            }`}
+            onClick={() => goToSlide(index)}
+            aria-label={`Go to slide ${index + 1}`}
+            aria-pressed={index === currentSlide}
+          />
+        ))}
+      </div>
     </div>
   );
 }

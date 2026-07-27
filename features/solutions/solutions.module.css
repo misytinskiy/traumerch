@@ -3,6 +3,10 @@
   min-height: 100vh;
 }
 
+.mobileLayout {
+  display: none;
+}
+
 .hero {
   min-height: 100vh;
   display: flex;
@@ -94,20 +98,185 @@
 
 @media (max-width: 480px) {
   .hero {
-    padding: 60px 0px 40px;
-  }
-
-  .title {
-    font-size: var(--text-27);
-    margin-bottom: 30px;
-  }
-
-  .scrollButton {
     display: none;
   }
 
-  /* .scrollButton svg {
-    width: 36px;
-    height: 36px;
-  } */
+  .desktopServices {
+    display: none;
+  }
+
+  .mobileLayout {
+    display: block;
+    padding: 74px 10px 40px;
+  }
+
+  .mobileIntro {
+    margin-bottom: 15px;
+  }
+
+  .mobileLabel {
+    margin: 7px 0 5px;
+    font-size: 10px;
+    line-height: var(--lh-24);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .mobileTitle {
+    margin: 0;
+    max-width: 300px;
+    font-family: var(--font-eb-garamond);
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    color: var(--color-black);
+  }
+
+  .mobileMedia {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-gray-e5);
+    margin-bottom: 20px;
+  }
+
+  .mobileMediaImage {
+    object-fit: cover;
+  }
+
+
+  .mobileCardsLabel {
+    margin: 0 0 10px;
+    font-size: 10px;
+    line-height: var(--lh-24);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .mobileCardsScroller {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100vw - 62px) / 4);
+    gap: 11px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    padding-bottom: 8px;
+  }
+
+  .mobileCard {
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    height: 191px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 10px;
+    background: #f5f5f5;
+    overflow: hidden;
+  }
+
+  .mobileCardImageWrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--color-gray-e5);
+    height: 105px;
+  }
+
+  .mobileCardImage {
+    object-fit: cover;
+  }
+
+  .mobileCardBody {
+    display: flex;
+    flex-direction: column;
+    height: 86px;
+    padding: 8px 6px 6px;
+  }
+
+  .mobileCardHeading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2px;
+    margin-bottom: 8px;
+  }
+
+  .mobileCardTitle {
+    margin: 0;
+    font-family: var(--font-eb-garamond);
+    font-size: 8px;
+    font-weight: 400;
+    line-height: 0.98;
+    text-transform: uppercase;
+    color: var(--color-black);
+  }
+
+  .mobileCardArrow {
+    flex-shrink: 0;
+    color: var(--color-black);
+  }
+
+  .mobileCardArrow svg {
+    display: block;
+    width: 9px;
+    height: 12px;
+  }
+
+  .mobileCardDescription {
+    margin: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+    font-size: 6.6px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    color: rgba(0, 0, 0, 0.82);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 74px;
+  }
+
+  .mobileTrustedBlock {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .mobileTrustedTitle {
+    margin: 0 0 9px;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.34);
+    text-align: left;
+  }
+
+  .mobileTrustedGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 13px 16px;
+    align-items: center;
+  }
+
+  .mobileTrustedLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 34px;
+    font-family: var(--font-ui);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgba(0, 0, 0, 0.22);
+  }
 }

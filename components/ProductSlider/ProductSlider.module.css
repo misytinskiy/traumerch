@@ -124,6 +124,32 @@
   right: 20px;
 }
 
+.sliderDots {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateX(-50%);
+}
+
+.sliderDot {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: transform 0.25s ease, background-color 0.25s ease, opacity 0.25s ease;
+}
+
+.sliderDotActive {
+  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.1);
+}
+
 @keyframes sliderFadeIn {
   from {
     opacity: 0;
@@ -169,5 +195,74 @@
 @media (max-width: 768px) {
   .sliderContainer {
     height: 400px;
+    border-radius: 28px;
+  }
+
+  .sliderImage,
+  .sliderImageContent {
+    border-radius: 28px;
+  }
+
+  .sliderNav {
+    width: 52px;
+    height: 52px;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+    backdrop-filter: none;
+  }
+
+  .sliderNav svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .sliderNav.prev {
+    left: 18px;
+  }
+
+  .sliderNav.next {
+    right: 18px;
+  }
+
+  .sliderDots {
+    bottom: 16px;
+    gap: 9px;
+  }
+
+  .sliderDot {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sliderContainer {
+    height: 282px;
+    border-radius: 22px;
+  }
+
+  .sliderImage,
+  .sliderImageContent {
+    border-radius: 22px;
+  }
+
+  .sliderNav {
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+  }
+
+  .sliderNav svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .sliderNav.prev {
+    left: 14px;
+  }
+
+  .sliderNav.next {
+    right: 14px;
   }
 }

@@ -149,7 +149,12 @@ export default function Gallery() {
   }, []);
 
   useEffect(() => {
-    if (swiperRef.current) {
+    if (isMobile) {
+      swiperRef.current = null;
+      return;
+    }
+
+    if (swiperRef.current?.params) {
       const navigation = swiperRef.current.params.navigation;
       if (typeof navigation !== "boolean" && navigation) {
         const prevEl = isMobile ? mobilePrevRef.current : prevRef.current;
@@ -205,103 +210,110 @@ export default function Gallery() {
         )}
       </div>
 
-      <div className={styles.swiperContainer}>
-        <Swiper
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-            // Update navigation after Swiper is initialized
-            setTimeout(() => {
-              const navigation = swiper.params.navigation;
-              if (typeof navigation !== "boolean" && navigation) {
-                const prevEl = isMobile
-                  ? mobilePrevRef.current
-                  : prevRef.current;
-                const nextEl = isMobile
-                  ? mobileNextRef.current
-                  : nextRef.current;
+      {isMobile ? (
+        <div className={styles.mobilePlaceholder}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/gallery/placeholder.jpg"
+            alt=""
+            className={styles.mobilePlaceholderImage}
+          />
+        </div>
+      ) : (
+        <div className={styles.swiperContainer}>
+          <Swiper
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+              // Update navigation after Swiper is initialized
+              setTimeout(() => {
+                const navigation = swiper.params.navigation;
+                if (typeof navigation !== "boolean" && navigation) {
+                  const prevEl = isMobile
+                    ? mobilePrevRef.current
+                    : prevRef.current;
+                  const nextEl = isMobile
+                    ? mobileNextRef.current
+                    : nextRef.current;
 
-                if (prevEl && nextEl) {
-                  navigation.prevEl = prevEl;
-                  navigation.nextEl = nextEl;
-                  swiper.navigation.destroy();
-                  swiper.navigation.init();
-                  swiper.navigation.update();
+                  if (prevEl && nextEl) {
+                    navigation.prevEl = prevEl;
+                    navigation.nextEl = nextEl;
+                    swiper.navigation.destroy();
+                    swiper.navigation.init();
+                    swiper.navigation.update();
+                  }
                 }
-              }
-            }, 0);
-          }}
-          modules={[Navigation, Autoplay]}
-          spaceBetween={20}
-          slidesPerView={3}
-          loop={true}
-          speed={500}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          navigation={
-            shouldShowNavigation
-              ? {
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }
-              : false
-          }
-          onBeforeInit={(swiper) => {
-            if (
-              shouldShowNavigation &&
-              typeof swiper.params.navigation !== "boolean"
-            ) {
-              const navigation = swiper.params.navigation;
-              if (navigation) {
-                navigation.prevEl = prevRef.current;
-                navigation.nextEl = nextRef.current;
-              }
+              }, 0);
+            }}
+            modules={[Navigation, Autoplay]}
+            spaceBetween={20}
+            slidesPerView={3}
+            loop={true}
+            speed={500}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            navigation={
+              shouldShowNavigation
+                ? {
+                    prevEl: prevRef.current,
+                    nextEl: nextRef.current,
+                  }
+                : false
             }
-          }}
-          breakpoints={{
-            320: {
-              slidesPerView: 1,
-              spaceBetween: 10,
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 15,
-            },
-            1200: {
-              slidesPerView: 3,
-              spaceBetween: 20,
-            },
-          }}
-          className={styles.swiper}
-        >
-          {images.map((image) => (
-            <SwiperSlide key={image.id} className={styles.swiperSlide}>
-              <div className={styles.imageItem}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={image.src}
-                  alt=""
-                  className={styles.galleryImage}
-                />
-                <div className={styles.imagePlaceholder} aria-hidden />
-                <div className={styles.overlay}>
-                  <div className={styles.quote}>
-                    <p className={styles.quoteText}>
-                      &ldquo;{image.quote}&rdquo;
-                    </p>
-                    <p className={styles.quoteAuthor}>{image.author}</p>
+            onBeforeInit={(swiper) => {
+              if (
+                shouldShowNavigation &&
+                typeof swiper.params.navigation !== "boolean"
+              ) {
+                const navigation = swiper.params.navigation;
+                if (navigation) {
+                  navigation.prevEl = prevRef.current;
+                  navigation.nextEl = nextRef.current;
+                }
+              }
+            }}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+              },
+              1200: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+            }}
+            className={styles.swiper}
+          >
+            {images.map((image) => (
+              <SwiperSlide key={image.id} className={styles.swiperSlide}>
+                <div className={styles.imageItem}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={image.src}
+                    alt=""
+                    className={styles.galleryImage}
+                  />
+                  <div className={styles.imagePlaceholder} aria-hidden />
+                  <div className={styles.overlay}>
+                    <div className={styles.quote}>
+                      <p className={styles.quoteText}>
+                        &ldquo;{image.quote}&rdquo;
+                      </p>
+                      <p className={styles.quoteAuthor}>{image.author}</p>
+                    </div>
                   </div>
                 </div>
-                {/* Commented out: Quotes for removed images (7-10)
-                Previously there were 10 images, now reduced to 6.
-                If needed, individual quotes can be added here for each image.
-                */}
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
 
      
     </section>

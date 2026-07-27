@@ -1,6 +1,8 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import Services from "../../components/Services/Services";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./solutions.module.css";
@@ -8,6 +10,34 @@ import styles from "./solutions.module.css";
 export default function SolutionsPage() {
   const { t } = useLanguage();
   const servicesRef = useRef<HTMLElement>(null);
+  const servicesItems = t.services.items;
+  const mobileCards = t.solutions.mobileCards as Array<{
+    title: string;
+    description: string;
+    image: string;
+    imageAlt?: string;
+  }>;
+  const trustedCompanies = [
+    "Google",
+    "pwc",
+    "Red Bull",
+    "BOSS",
+    "LBS",
+    "STRABAG",
+    "VIE",
+    "PORSCHE",
+  ];
+
+  const getServiceImageSrc = (rawImage: string | undefined, index: number) => {
+    const fallback = `/services/${index + 1}.png`;
+    if (!rawImage) return fallback;
+
+    if (rawImage.startsWith("/services/") && rawImage.endsWith(".jpg")) {
+      return rawImage.replace(/\.jpg$/i, ".png");
+    }
+
+    return rawImage;
+  };
 
   const handleScrollToServices = () => {
     if (servicesRef.current) {
@@ -54,8 +84,72 @@ export default function SolutionsPage() {
           </button>
         </section>
 
-  
-        <section ref={servicesRef}>
+        <section className={styles.mobileLayout}>
+          <div className={styles.mobileIntro}>
+            <p className={styles.mobileLabel}>{t.solutions.hero.titleLine1}</p>
+            <h1 className={styles.mobileTitle}>
+              {t.solutions.hero.mobileTitleLine1}
+              <br />
+              {t.solutions.hero.mobileTitleLine2}
+              <br />
+              {t.solutions.hero.mobileTitleLine3}
+            </h1>
+          </div>
+
+          <div className={styles.mobileMedia}>
+            <Image
+              src="/services/placeholder.png"
+              alt=""
+              fill
+              sizes="(max-width: 480px) calc(100vw - 20px), 640px"
+              className={styles.mobileMediaImage}
+            />
+          </div>
+
+          <div className={styles.mobileCardsSection}>
+            <p className={styles.mobileCardsLabel}>SOLUTIONS FOR EVERY PURPOSE</p>
+            <div className={styles.mobileCardsScroller}>
+              {mobileCards.map((card, index: number) => (
+                <Link key={card.title} href="/catalog" className={styles.mobileCard}>
+                  <div className={styles.mobileCardImageWrap}>
+                    <Image
+                      src={card.image}
+                      alt={card.imageAlt ?? card.title}
+                      fill
+                      sizes="180px"
+                      className={styles.mobileCardImage}
+                    />
+                  </div>
+                  <div className={styles.mobileCardBody}>
+                    <div className={styles.mobileCardHeading}>
+                      <h3 className={styles.mobileCardTitle}>{card.title}</h3>
+                      <span className={styles.mobileCardArrow} aria-hidden>
+                        <svg viewBox="0 0 44 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1 9H38" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                          <path d="M30 1L38 9L30 17" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
+                    </div>
+                    <p className={styles.mobileCardDescription}>{card.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.mobileTrustedBlock}>
+            <p className={styles.mobileTrustedTitle}>{t.hero.trustedTitle}</p>
+            <div className={styles.mobileTrustedGrid}>
+              {trustedCompanies.map((company) => (
+                <span key={company} className={styles.mobileTrustedLogo}>
+                  {company}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section ref={servicesRef} className={styles.desktopServices}>
           <Services showAll={true} />
         </section>
 

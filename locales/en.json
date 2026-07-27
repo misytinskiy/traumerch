@@ -45,7 +45,8 @@
     "titleLine6Small": "WITH YOUR",
     "titleLine7Small": "AUDIENCE",
     "cta": "SEE OUR PROMISE",
-    "scrollAria": "Scroll to next section"
+    "scrollAria": "Scroll to next section",
+    "trustedTitle": "Trusted by companies that inspire"
   },
   "gallery": {
     "title": "Real Experiences. Real Impact."
@@ -307,9 +308,37 @@
       "title": "SOLUTIONS TAILORED TO YOUR BRAND",
       "titleLine1": "SOLUTIONS",
       "titleLine2": "TAILORED",
-      "titleLine3": "TO YOUR BRAND"
-    }
-    ,
+      "titleLine3": "TO YOUR BRAND",
+      "mobileTitleLine1": "Thoughtful merchandise",
+      "mobileTitleLine2": "for every moment",
+      "mobileTitleLine3": "that matters."
+    },
+    "mobileCards": [
+      {
+        "title": "EMPLOYEE KITS",
+        "description": "Welcome your team with premium kits that create connection from day one.",
+        "image": "/services/1.png",
+        "imageAlt": "Employee kits"
+      },
+      {
+        "title": "EVENT MERCH",
+        "description": "Make your events unforgettable with merch that leaves a lasting impression.",
+        "image": "/services/2.png",
+        "imageAlt": "Event merch"
+      },
+      {
+        "title": "CLIENT GIFTS",
+        "description": "Strengthen relationships with curated gifts that show appreciation.",
+        "image": "/services/4.png",
+        "imageAlt": "Client gifts"
+      },
+      {
+        "title": "CUSTOM PROJECTS",
+        "description": "Your idea, our expertise. Fully customized merchandise solutions.",
+        "image": "/services/5.png",
+        "imageAlt": "Custom projects"
+      }
+    ],
     "scrollAria": "Scroll to services section"
   },
   "inspiration": {

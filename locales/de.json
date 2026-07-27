@@ -45,7 +45,8 @@
     "titleLine6Small": "VERBINDET",
     "titleLine7Small": "VERBINDET",
     "cta": "UNSER VERSPRECHEN SEHEN",
-    "scrollAria": "Zum nächsten Abschnitt scrollen"
+    "scrollAria": "Zum nächsten Abschnitt scrollen",
+    "trustedTitle": "Vertraut von Unternehmen, die inspirieren"
   },
   "gallery": {
     "title": "Echte Erfahrungen. Echte Wirkung."
@@ -307,8 +308,37 @@
       "title": "LÖSUNGEN MASSGESCHNEIDERT FÜR IHRE MARKE",
       "titleLine1": "LÖSUNGEN",
       "titleLine2": "MASSGESCHNEIDERT",
-      "titleLine3": "FÜR IHRE MARKE"
+      "titleLine3": "FÜR IHRE MARKE",
+      "mobileTitleLine1": "Durchdachtes Merchandise",
+      "mobileTitleLine2": "für jeden Moment,",
+      "mobileTitleLine3": "der zählt."
     },
+    "mobileCards": [
+      {
+        "title": "EMPLOYEE KITS",
+        "description": "Premium-Kits für Teams, die vom ersten Tag an Verbindung schaffen.",
+        "image": "/services/1.png",
+        "imageAlt": "Employee kits"
+      },
+      {
+        "title": "EVENT MERCH",
+        "description": "Merch für Events, der Eindruck hinterlässt und in Erinnerung bleibt.",
+        "image": "/services/2.png",
+        "imageAlt": "Event merch"
+      },
+      {
+        "title": "CLIENT GIFTS",
+        "description": "Kuratierten Geschenke, die Wertschätzung zeigen und Beziehungen stärken.",
+        "image": "/services/4.png",
+        "imageAlt": "Client gifts"
+      },
+      {
+        "title": "CUSTOM PROJECTS",
+        "description": "Ihre Idee, unsere Expertise. Vollständig individualisierte Merch-Lösungen.",
+        "image": "/services/5.png",
+        "imageAlt": "Custom projects"
+      }
+    ],
     "scrollAria": "Zum Servicebereich scrollen"
   },
   "inspiration": {

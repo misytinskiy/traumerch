@@ -87,6 +87,10 @@
   display: none;
 }
 
+.mobileMosaic {
+  display: none;
+}
+
 @media (max-width: 1920px) and (max-height: 982px) {
   .services {
     padding: 150px 300px;
@@ -239,7 +243,7 @@
 
 @media (max-width: 480px) {
   .services {
-    padding: 72px 10px 30px;
+    padding: 30px 10px 30px;
   }
 
   .badge {
@@ -269,18 +273,83 @@
     line-height: 123%;
   }
 
+  .imageContent {
+    display: none;
+  }
+
   .serviceCard:not(:last-child) {
     margin-bottom: 0;
   }
 
-  .serviceImage {
-    height: 232px;
-    border-radius: 20px;
+  .mobileMosaic {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+    grid-template-rows: 1fr 1fr auto;
+    gap: 10px;
+    width: 100%;
   }
 
-  .mobileDescription {
-    margin-top: 16px;
-    margin-bottom: 0;
-    line-height: 100%;
+  .mobileTextCard,
+  .mobileMosaicImage,
+  .mobileMosaicWide {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #f5f5f5;
+  }
+
+  .mobileTextCard {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding: 24px 18px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  .mobileText {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.42;
+    letter-spacing: 0.01em;
+    color: var(--color-black);
+    opacity: 0.8;
+  }
+
+  .mobileTextArrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-black);
+  }
+
+  .mobileTextArrow svg {
+    display: block;
+    width: 23px;
+    height: 23px;
+  }
+
+  .mobileMosaicImageTop {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 136px;
+  }
+
+  .mobileMosaicImageMiddle {
+    grid-column: 2;
+    grid-row: 2;
+    min-height: 136px;
+  }
+
+  .mobileMosaicWide {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    aspect-ratio: 16 / 9;
+  }
+
+  .mobileMosaicImageImg {
+    object-fit: cover;
   }
 }
