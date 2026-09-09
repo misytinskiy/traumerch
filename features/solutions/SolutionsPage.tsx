@@ -6,6 +6,7 @@ import Link from "next/link";
 import HeroSlider from "../../components/HeroSlider/HeroSlider";
 import Services from "../../components/Services/Services";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { TRUSTED_COMPANIES } from "../../shared/trustedCompanies";
 import styles from "./solutions.module.css";
 
 const SERVICES_SLIDER_IMAGES = [
@@ -23,17 +24,6 @@ export default function SolutionsPage() {
     image: string;
     imageAlt?: string;
   }>;
-  const trustedCompanies = [
-    "Google",
-    "pwc",
-    "Red Bull",
-    "BOSS",
-    "LBS",
-    "STRABAG",
-    "VIE",
-    "PORSCHE",
-  ];
-
   const handleScrollToServices = () => {
     if (servicesRef.current) {
       servicesRef.current.scrollIntoView({
@@ -132,16 +122,23 @@ export default function SolutionsPage() {
           <div className={styles.mobileTrustedBlock}>
             <p className={styles.mobileTrustedTitle}>{t.hero.trustedTitle}</p>
             <div className={styles.mobileTrustedGrid}>
-              {trustedCompanies.map((company, index) => (
-                <span key={company} className={styles.mobileTrustedLogo}>
+              {TRUSTED_COMPANIES.map((company) => (
+                <a
+                  key={company.name}
+                  href={company.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.mobileTrustedLogo}
+                  aria-label={company.name}
+                >
                   <Image
-                    src={`/logo/${index + 1}.webp`}
-                    alt={company}
+                    src={company.logo}
+                    alt={company.name}
                     fill
                     sizes="(max-width: 480px) 20vw, 90px"
                     className={styles.mobileTrustedLogoImage}
                   />
-                </span>
+                </a>
               ))}
             </div>
           </div>

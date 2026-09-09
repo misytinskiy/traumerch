@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import HeroSlider from "../HeroSlider/HeroSlider";
+import { TRUSTED_COMPANIES } from "../../shared/trustedCompanies";
 import styles from "./Hero.module.css";
 
 interface HeroProps {
@@ -27,17 +28,6 @@ export default function Hero({
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [displayWordIndex, setDisplayWordIndex] = useState(0);
-
-  const trustedCompanies = [
-    "Google",
-    "pwc",
-    "Red Bull",
-    "BOSS",
-    "LBS",
-    "STRABAG",
-    "VIE",
-    "PORSCHE",
-  ];
 
   const rotatingWords = useMemo(() => t.hero.rotatingWords || [], [t]);
   const rotationInterval = 1400; // 0.7 seconds
@@ -142,16 +132,23 @@ export default function Hero({
             <div className={styles.trustedBlock}>
               <p className={styles.trustedTitle}>{t.hero.trustedTitle}</p>
               <div className={styles.trustedGrid}>
-                {trustedCompanies.map((company, index) => (
-                  <span key={company} className={styles.trustedLogo}>
+                {TRUSTED_COMPANIES.map((company) => (
+                  <a
+                    key={company.name}
+                    href={company.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.trustedLogo}
+                    aria-label={company.name}
+                  >
                     <Image
-                      src={`/logo/${index + 1}.webp`}
-                      alt={company}
+                      src={company.logo}
+                      alt={company.name}
                       fill
                       sizes="(max-width: 768px) 20vw, 90px"
                       className={styles.trustedLogoImage}
                     />
-                  </span>
+                  </a>
                 ))}
               </div>
             </div>
