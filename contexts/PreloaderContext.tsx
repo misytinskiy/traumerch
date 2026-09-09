@@ -19,12 +19,17 @@ const PreloaderContext = createContext<PreloaderContextType | undefined>(
   undefined
 );
 
+// Temporary global switch. Keep the preloader implementation mounted so it can
+// be restored without changing provider wiring.
+const PRELOADER_ENABLED = false;
+
 export function PreloaderProvider({ children }: { children: ReactNode }) {
-  // Preloader enabled for all devices including mobile/tablet
-  const [isEnabled, setIsEnabled] = useState(true);
-  const [hasShown, setHasShown] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(PRELOADER_ENABLED);
+  const [hasShown, setHasShown] = useState(!PRELOADER_ENABLED);
 
   useEffect(() => {
+    if (!PRELOADER_ENABLED) return;
+
     // Check if preloader has already been shown (persists across sessions)
     // Using localStorage so it shows only once per user, ever
     if (typeof window !== "undefined") {
@@ -37,6 +42,8 @@ export function PreloaderProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const handleSetEnabled = (enabled: boolean) => {
+    if (!PRELOADER_ENABLED) return;
+
     setIsEnabled(enabled);
     if (!enabled) {
       // Save to localStorage so preloader shows only once per user
