@@ -32,7 +32,7 @@ export default function Services({ showAll = false }: ServicesProps) {
     const imageSets = [
       ["/services/1/1.jpg", "/services/1/2.jpg", "/services/1/5.jpg"],
       ["/services/2/1.jpg", "/services/2/2.jpg", "/services/2/3.jpg"],
-      ["/services/3/1.jpg", "/services/3/2.jpg", "/services/3/3.PNG"],
+      ["/services/3/1.jpg", "/services/3/2.jpg", "/services/3/3.JPEG"],
       ["/services/4/1.png", "/services/4/2.png", "/services/4/3.png"],
       ["/services/5/1.png", "/services/5/2.png", "/services/5/3.png"],
     ];

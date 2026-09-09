@@ -8,6 +8,12 @@ import Services from "../../components/Services/Services";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./solutions.module.css";
 
+const SERVICES_SLIDER_IMAGES = [
+  "/servicesSliderPhoto/1.jpg",
+  "/servicesSliderPhoto/2.JPEG",
+  "/servicesSliderPhoto/3.JPEG",
+] as const;
+
 export default function SolutionsPage() {
   const { t } = useLanguage();
   const servicesRef = useRef<HTMLElement>(null);
@@ -86,7 +92,10 @@ export default function SolutionsPage() {
           </div>
 
           <div className={styles.mobileHeroSlider}>
-            <HeroSlider />
+            <HeroSlider
+              images={SERVICES_SLIDER_IMAGES}
+              imageAltPrefix="Services slide"
+            />
           </div>
 
           <div className={styles.mobileCardsSection}>
@@ -123,9 +132,15 @@ export default function SolutionsPage() {
           <div className={styles.mobileTrustedBlock}>
             <p className={styles.mobileTrustedTitle}>{t.hero.trustedTitle}</p>
             <div className={styles.mobileTrustedGrid}>
-              {trustedCompanies.map((company) => (
+              {trustedCompanies.map((company, index) => (
                 <span key={company} className={styles.mobileTrustedLogo}>
-                  {company}
+                  <Image
+                    src={`/logo/${index + 1}.webp`}
+                    alt={company}
+                    fill
+                    sizes="(max-width: 480px) 20vw, 90px"
+                    className={styles.mobileTrustedLogoImage}
+                  />
                 </span>
               ))}
             </div>

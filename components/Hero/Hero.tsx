@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import HeroSlider from "../HeroSlider/HeroSlider";
@@ -141,9 +142,15 @@ export default function Hero({
             <div className={styles.trustedBlock}>
               <p className={styles.trustedTitle}>{t.hero.trustedTitle}</p>
               <div className={styles.trustedGrid}>
-                {trustedCompanies.map((company) => (
+                {trustedCompanies.map((company, index) => (
                   <span key={company} className={styles.trustedLogo}>
-                    {company}
+                    <Image
+                      src={`/logo/${index + 1}.webp`}
+                      alt={company}
+                      fill
+                      sizes="(max-width: 768px) 20vw, 90px"
+                      className={styles.trustedLogoImage}
+                    />
                   </span>
                 ))}
               </div>

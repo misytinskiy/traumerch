@@ -4,20 +4,30 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./HeroSlider.module.css";
 
-const IMAGES = [
+const DEFAULT_IMAGES = [
   "/heroSliderPhoto/1.JPEG",
   "/heroSliderPhoto/2.JPEG",
   "/heroSliderPhoto/3.JPEG",
 ];
 
-export default function HeroSlider() {
+interface HeroSliderProps {
+  images?: readonly string[];
+  imageAltPrefix?: string;
+}
+
+export default function HeroSlider({
+  images = DEFAULT_IMAGES,
+  imageAltPrefix = "Hero slide",
+}: HeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loadedCount, setLoadedCount] = useState(0);
-  const totalSlides = IMAGES.length;
+  const totalSlides = images.length;
   const allLoaded = loadedCount >= totalSlides;
 
   useEffect(() => {
     let isMounted = true;
+    setCurrentSlide(0);
+    setLoadedCount(0);
 
     const preload = (src: string) =>
       new Promise<void>((resolve) => {
@@ -27,14 +37,14 @@ export default function HeroSlider() {
         img.src = src;
       });
 
-    Promise.all(IMAGES.map(preload)).then(() => {
-      if (isMounted) setLoadedCount(IMAGES.length);
+    Promise.all(images.map(preload)).then(() => {
+      if (isMounted) setLoadedCount(images.length);
     });
 
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [images]);
 
   useEffect(() => {
     if (!allLoaded) return;
@@ -54,7 +64,7 @@ export default function HeroSlider() {
   return (
     <div className={styles.slider}>
       <div className={styles.viewport}>
-        {IMAGES.map((src, index) => (
+        {images.map((src, index) => (
           <div
             key={src}
             className={`${styles.slide} ${
@@ -63,7 +73,7 @@ export default function HeroSlider() {
           >
             <Image
               src={src}
-              alt={`Hero slide ${index + 1}`}
+              alt={`${imageAltPrefix} ${index + 1}`}
               fill
               sizes="(max-width: 480px) calc(100vw - 28px), 720px"
               className={styles.image}
@@ -74,7 +84,7 @@ export default function HeroSlider() {
       </div>
 
       <div className={styles.dots} aria-label="Hero slider pagination">
-        {IMAGES.map((_, index) => (
+        {images.map((_, index) => (
           <button
             key={index}
             type="button"

@@ -156,17 +156,15 @@
 }
 
 .trustedLogo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 44px;
-  font-family: var(--font-ui);
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: rgba(0, 0, 0, 0.22);
-  text-transform: none;
+  position: relative;
+  display: block;
+  height: 44px;
+}
+
+.trustedLogoImage {
+  object-fit: contain;
+  filter: brightness(0);
+  opacity: 0.38;
 }
 
 .scrollButton {
@@ -332,9 +330,6 @@
     gap: 24px 18px;
   }
 
-  .trustedLogo {
-    font-size: 22px;
-  }
 }
 
 @media (max-width: 490px) {
@@ -414,12 +409,11 @@
 
   .trustedGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 23px 16px;
+    gap: 13px 16px;
   }
 
   .trustedLogo {
-    min-height: 34px;
-    font-size: 20px;
+    height: 34px;
   }
 
   .scrollButton {
