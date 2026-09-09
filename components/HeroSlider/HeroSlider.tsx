@@ -10,25 +10,6 @@ const IMAGES = [
   "/heroSliderPhoto/3.JPEG",
 ];
 
-function ArrowIcon({ direction }: { direction: "left" | "right" }) {
-  return (
-    <svg viewBox="0 0 18 28" aria-hidden>
-      <path
-        d={
-          direction === "left"
-            ? "M15 3 4 14l11 11"
-            : "M3 3l11 11L3 25"
-        }
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export default function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loadedCount, setLoadedCount] = useState(0);
@@ -55,19 +36,19 @@ export default function HeroSlider() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!allLoaded) return;
+
+    const interval = window.setInterval(() => {
+      setCurrentSlide((current) => (current + 1) % totalSlides);
+    }, 3000);
+
+    return () => window.clearInterval(interval);
+  }, [allLoaded, totalSlides]);
+
   const goToSlide = (index: number) => {
     if (!allLoaded || index === currentSlide) return;
     setCurrentSlide(index);
-  };
-
-  const goPrev = () => {
-    if (!allLoaded) return;
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
-  };
-
-  const goNext = () => {
-    if (!allLoaded) return;
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
 
   return (
@@ -91,26 +72,6 @@ export default function HeroSlider() {
           </div>
         ))}
       </div>
-
-      <button
-        type="button"
-        className={`${styles.arrow} ${styles.arrowLeft}`}
-        onClick={goPrev}
-        disabled={!allLoaded}
-        aria-label="Previous slide"
-      >
-        <ArrowIcon direction="left" />
-      </button>
-
-      <button
-        type="button"
-        className={`${styles.arrow} ${styles.arrowRight}`}
-        onClick={goNext}
-        disabled={!allLoaded}
-        aria-label="Next slide"
-      >
-        <ArrowIcon direction="right" />
-      </button>
 
       <div className={styles.dots} aria-label="Hero slider pagination">
         {IMAGES.map((_, index) => (

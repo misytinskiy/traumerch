@@ -28,42 +28,6 @@
   object-fit: cover;
 }
 
-.arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.96);
-  color: rgba(0, 0, 0, 0.88);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
-.arrow svg {
-  width: 10px;
-  height: 12px;
-}
-
-.arrowLeft {
-  left: 18px;
-}
-
-.arrowRight {
-  right: 18px;
-}
-
-.arrow:disabled {
-  opacity: 0.45;
-  cursor: default;
-}
-
 .dots {
   position: absolute;
   left: 50%;
@@ -91,16 +55,6 @@
 @media (max-width: 480px) {
   .slider {
     height: 240px;
-  }
-
-  .arrow {
-    width: 30px;
-    height: 30px;
-  }
-
-  .arrow svg {
-    width: 10px;
-    height: 12px;
   }
 
   .dots {
