@@ -154,18 +154,19 @@ export default function Gallery() {
       return;
     }
 
-    if (swiperRef.current?.params) {
-      const navigation = swiperRef.current.params.navigation;
+    const swiper = swiperRef.current;
+    if (swiper && !swiper.destroyed && swiper.params) {
+      const navigation = swiper.params.navigation;
       if (typeof navigation !== "boolean" && navigation) {
         const prevEl = isMobile ? mobilePrevRef.current : prevRef.current;
         const nextEl = isMobile ? mobileNextRef.current : nextRef.current;
 
-        if (prevEl && nextEl) {
+        if (prevEl && nextEl && swiper.navigation) {
           navigation.prevEl = prevEl;
           navigation.nextEl = nextEl;
-          swiperRef.current.navigation.destroy();
-          swiperRef.current.navigation.init();
-          swiperRef.current.navigation.update();
+          swiper.navigation.destroy();
+          swiper.navigation.init();
+          swiper.navigation.update();
         }
       }
     }
@@ -226,6 +227,14 @@ export default function Gallery() {
               swiperRef.current = swiper;
               // Update navigation after Swiper is initialized
               setTimeout(() => {
+                if (
+                  swiper.destroyed ||
+                  swiperRef.current !== swiper ||
+                  !swiper.params
+                ) {
+                  return;
+                }
+
                 const navigation = swiper.params.navigation;
                 if (typeof navigation !== "boolean" && navigation) {
                   const prevEl = isMobile
@@ -235,7 +244,7 @@ export default function Gallery() {
                     ? mobileNextRef.current
                     : nextRef.current;
 
-                  if (prevEl && nextEl) {
+                  if (prevEl && nextEl && swiper.navigation) {
                     navigation.prevEl = prevEl;
                     navigation.nextEl = nextEl;
                     swiper.navigation.destroy();
@@ -244,6 +253,11 @@ export default function Gallery() {
                   }
                 }
               }, 0);
+            }}
+            onBeforeDestroy={(swiper) => {
+              if (swiperRef.current === swiper) {
+                swiperRef.current = null;
+              }
             }}
             modules={[Navigation, Autoplay]}
             spaceBetween={20}
