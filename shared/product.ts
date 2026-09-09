@@ -1,10 +1,13 @@
-const MAIN_PHOTO_FIELD = "Main Product Photo";
+import {
+  getCatalogFieldString,
+  getCatalogFieldValue,
+} from "./catalogFields";
 
 /** URL первого вложения "Main Product Photo" из полей Airtable. */
 export function getMainPhotoUrl(
   fields: Record<string, unknown> | undefined
 ): string | null {
-  const raw = fields?.[MAIN_PHOTO_FIELD];
+  const raw = getCatalogFieldValue(fields, "mainProductPhoto");
   if (!Array.isArray(raw) || raw.length === 0) return null;
   const first = raw[0];
   if (
@@ -18,12 +21,6 @@ export function getMainPhotoUrl(
   return null;
 }
 
-const NAME_FIELDS = {
-  en: "[WEB] Name ENG",
-  de: "[WEB] Name DE",
-  fallback: "Name",
-} as const;
-
 /** Локализованное имя товара из Airtable полей. */
 export function getProductNameFromFields(
   fields: Record<string, unknown> | undefined,
@@ -31,16 +28,11 @@ export function getProductNameFromFields(
   fallbackName?: string
 ): string {
   if (!fields) return fallbackName ?? "Product";
-  const nameEn = fields[NAME_FIELDS.en];
-  const nameDe = fields[NAME_FIELDS.de];
-  const base = fields[NAME_FIELDS.fallback];
+  const nameEn = getCatalogFieldString(fields, "nameEn");
+  const nameDe = getCatalogFieldString(fields, "nameDe");
   const resolved =
     language === "de"
-      ? (nameDe as string | undefined) ||
-        (nameEn as string | undefined) ||
-        (base as string | undefined)
-      : (nameEn as string | undefined) ||
-        (nameDe as string | undefined) ||
-        (base as string | undefined);
+      ? nameDe || nameEn
+      : nameEn || nameDe;
   return resolved || fallbackName || "Product";
 }

@@ -1,4 +1,5 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
+import { getQuoteFieldId } from "../shared/quoteFields";
 
 const ORIGINAL_ENV = process.env;
 
@@ -10,8 +11,8 @@ describe("api/airtable-quote", () => {
     process.env = {
       ...ORIGINAL_ENV,
       API_TOKEN: "test-token",
-      AIRTABLE_QUOTE_BASE_ID: "appTest",
-      AIRTABLE_QUOTE_TABLE_ID: "tblTest",
+      QUOTE_BASE_ID: "appTest",
+      QUOTE_TABLE_ID: "tblTest",
     };
     vi.resetModules();
   });
@@ -42,9 +43,9 @@ describe("api/airtable-quote", () => {
     const fetchMock = vi.fn(async (url: string, init?: RequestInit) => {
       expect(url).toContain("https://api.airtable.com/v0/");
       const body = init?.body ? JSON.parse(String(init.body)) : {};
-      expect(body.fields["Name"]).toBe("Ada");
-      expect(body.fields["Preferred Type"]).toBe("WhatsApp");
-      expect(body.fields["Phone"]).toBe("+123");
+      expect(body.fields[getQuoteFieldId("name")]).toBe("Ada");
+      expect(body.fields[getQuoteFieldId("preferredType")]).toBe("WhatsApp");
+      expect(body.fields[getQuoteFieldId("phone")]).toBe("+123");
       return new Response(JSON.stringify({ id: "rec123" }), { status: 200 });
     });
     vi.stubGlobal("fetch", fetchMock);

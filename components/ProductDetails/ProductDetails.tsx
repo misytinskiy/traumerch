@@ -17,6 +17,7 @@ import {
   PRODUCT_SPECIAL_FIELD_TEXT_EN,
   SECONDARY_PHOTOS_FIELD,
 } from "../../shared/productDetails";
+import { getCatalogFieldValue } from "../../shared/catalogFields";
 import { pushDataLayerEvent } from "../../shared/analytics";
 import styles from "./ProductDetails.module.css";
 import ProductGallery from "./ProductGallery";
@@ -59,7 +60,10 @@ function getAttachmentArray(
   fields: Record<string, unknown> | undefined,
   fieldName: string
 ): AirtableAttachment[] {
-  const raw = fields?.[fieldName];
+  const raw = getCatalogFieldValue(
+    fields,
+    fieldName as Parameters<typeof getCatalogFieldValue>[1]
+  );
   if (!Array.isArray(raw)) return [];
   return raw.filter((item): item is AirtableAttachment => item && typeof item === "object");
 }
@@ -118,7 +122,7 @@ export default function ProductDetails({
   const { t, language } = useLanguage();
   const { addItem } = useCart();
   const isLoading = Boolean(productId && !productRecord);
-  const outOfStockRaw = productRecord?.fields?.["Out of stock"] ?? productRecord?.fields?.["Out of Stock"];
+  const outOfStockRaw = getCatalogFieldValue(productRecord?.fields, "outOfStock");
   const isOutOfStock =
     outOfStockRaw === true ||
     outOfStockRaw === "true" ||
@@ -127,8 +131,14 @@ export default function ProductDetails({
   const paletteData = parsePaletteData(productRecord?.fields);
   const paletteColors = paletteData.colors;
   const hasRainbowPalette = paletteData.hasRainbow;
-  const paletteFieldRaw = productRecord?.fields?.[PALETTE_FIELD];
-  const specialFieldEnabledRaw = productRecord?.fields?.[PRODUCT_SPECIAL_FIELD];
+  const paletteFieldRaw = getCatalogFieldValue(
+    productRecord?.fields,
+    PALETTE_FIELD as Parameters<typeof getCatalogFieldValue>[1]
+  );
+  const specialFieldEnabledRaw = getCatalogFieldValue(
+    productRecord?.fields,
+    PRODUCT_SPECIAL_FIELD as Parameters<typeof getCatalogFieldValue>[1]
+  );
   const specialFieldEnabled =
     specialFieldEnabledRaw === true ||
     specialFieldEnabledRaw === "true" ||
@@ -136,8 +146,14 @@ export default function ProductDetails({
     specialFieldEnabledRaw === "1";
   const specialFieldTextRaw =
     language === "de"
-      ? productRecord?.fields?.[PRODUCT_SPECIAL_FIELD_TEXT_DE]
-      : productRecord?.fields?.[PRODUCT_SPECIAL_FIELD_TEXT_EN];
+      ? getCatalogFieldValue(
+          productRecord?.fields,
+          PRODUCT_SPECIAL_FIELD_TEXT_DE as Parameters<typeof getCatalogFieldValue>[1]
+        )
+      : getCatalogFieldValue(
+          productRecord?.fields,
+          PRODUCT_SPECIAL_FIELD_TEXT_EN as Parameters<typeof getCatalogFieldValue>[1]
+        );
   const specialFieldText =
     typeof specialFieldTextRaw === "string" ? specialFieldTextRaw.trim() : "";
   const shouldShowSpecialField = specialFieldEnabled && specialFieldText.length > 0;
@@ -274,9 +290,18 @@ export default function ProductDetails({
     productRecord?.id,
     selectedColor,
     paletteFieldRaw,
-    productRecord?.fields?.[MAIN_PHOTO_FIELD],
-    productRecord?.fields?.[PALETTE_PHOTOS_FIELD],
-    productRecord?.fields?.[SECONDARY_PHOTOS_FIELD],
+    getCatalogFieldValue(
+      productRecord?.fields,
+      MAIN_PHOTO_FIELD as Parameters<typeof getCatalogFieldValue>[1]
+    ),
+    getCatalogFieldValue(
+      productRecord?.fields,
+      PALETTE_PHOTOS_FIELD as Parameters<typeof getCatalogFieldValue>[1]
+    ),
+    getCatalogFieldValue(
+      productRecord?.fields,
+      SECONDARY_PHOTOS_FIELD as Parameters<typeof getCatalogFieldValue>[1]
+    ),
   ]);
 
   // When product/MOQ is set, set quantity to minQuantity so we never show below MOQ
@@ -303,7 +328,7 @@ export default function ProductDetails({
     effectiveQuantity,
     productRecord?.fields
   );
-  const leadTimeRaw = productRecord?.fields?.["Total Time (Days)"];
+  const leadTimeRaw = getCatalogFieldValue(productRecord?.fields, "totalTimeDays");
   const leadTimeDisplay =
     leadTimeRaw !== undefined && leadTimeRaw !== null && leadTimeRaw !== ""
       ? String(leadTimeRaw)

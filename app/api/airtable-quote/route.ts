@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getQuoteFieldId } from "../../../shared/quoteFields";
 
 const BASE_ID = process.env.QUOTE_BASE_ID;
 const TABLE_ID = process.env.QUOTE_TABLE_ID;
 const apiToken = process.env.API_TOKEN;
-const LEAD_SOURCE_FIELD = "Lead Source";
 const WEBSITE_LEAD_SOURCE_VALUE = "Website";
 
 // /conf override — server-side whitelist. We do NOT trust an arbitrary "source"
@@ -15,15 +15,14 @@ const CONF_CAMPAIGN = "ggate26";
 const CONF_LEAD_SOURCE_VALUE = "GGATE26 QR / CBDO Back";
 const CONF_LANDING_PAGE = "/conf";
 
-// Optional extra fields written only when the /conf override matches. They are
-// declared here so we can selectively drop them if Airtable's schema rejects
-// any of them with UNKNOWN_FIELD_NAME.
+// Optional extra fields written only when the /conf override matches. We can
+// selectively drop them if Airtable's schema rejects any of them.
 const CONF_OPTIONAL_FIELDS = [
-  "Source Key",
-  "Campaign",
-  "Landing Page",
-  "Scan ID",
-  "Visitor ID",
+  "sourceKey",
+  "campaign",
+  "landingPage",
+  "scanId",
+  "visitorId",
 ] as const;
 
 const fetchWithTimeout = async (
@@ -41,9 +40,9 @@ const fetchWithTimeout = async (
 };
 
 export async function POST(request: NextRequest) {
-  if (!apiToken) {
+  if (!apiToken || !BASE_ID || !TABLE_ID) {
     return NextResponse.json(
-      { error: "Missing API_TOKEN configuration" },
+      { error: "Missing Airtable configuration" },
       { status: 500 }
     );
   }
@@ -87,7 +86,6 @@ export async function POST(request: NextRequest) {
       requestType,
       service,
       description,
-      // /conf override fields — see CONF_* constants at the top of the file.
       sourceKey,
       campaign,
       landingPage,
@@ -98,9 +96,6 @@ export async function POST(request: NextRequest) {
     const toStringField = (value: unknown) =>
       typeof value === "string" ? value : value == null ? "" : String(value);
 
-    // Map form data to Airtable fields based on actual table structure
-    // Fields: Name, Surname, Email, Phone, Company name, Address, Apartment, Postal code, City, Country, Vat number, Preferred delivery date, Product quantity
-    // Also supports: Preferred Type, Username, Description, Request Type, Services (from QuoteOverlay)
     const airtableFields: Record<
       string,
       | string
@@ -110,70 +105,95 @@ export async function POST(request: NextRequest) {
       | Array<{ url: string; filename?: string }>
     > = {};
 
-    // Default: every submission to this endpoint is a regular website lead.
-    // The /conf landing page sends sourceKey + campaign so the server can
-    // safely opt-in to the conf override below.
     const isConfSubmission =
       toStringField(sourceKey).toLowerCase() === CONF_SOURCE_KEY &&
       toStringField(campaign).toLowerCase() === CONF_CAMPAIGN;
 
-    airtableFields[LEAD_SOURCE_FIELD] = isConfSubmission
+    airtableFields[getQuoteFieldId("leadSource")] = isConfSubmission
       ? CONF_LEAD_SOURCE_VALUE
       : WEBSITE_LEAD_SOURCE_VALUE;
 
     if (isConfSubmission) {
-      airtableFields["Source Key"] = CONF_SOURCE_KEY;
-      airtableFields["Campaign"] = CONF_CAMPAIGN;
+      airtableFields[getQuoteFieldId("sourceKey")] = CONF_SOURCE_KEY;
+      airtableFields[getQuoteFieldId("campaign")] = CONF_CAMPAIGN;
+
       const landingPageStr = toStringField(landingPage);
-      airtableFields["Landing Page"] = landingPageStr || CONF_LANDING_PAGE;
+      airtableFields[getQuoteFieldId("landingPage")] =
+        landingPageStr || CONF_LANDING_PAGE;
+
       const scanIdStr = toStringField(scanId);
-      if (scanIdStr) airtableFields["Scan ID"] = scanIdStr;
+      if (scanIdStr) {
+        airtableFields[getQuoteFieldId("scanId")] = scanIdStr;
+      }
+
       const visitorIdStr = toStringField(visitorId);
-      if (visitorIdStr) airtableFields["Visitor ID"] = visitorIdStr;
-    }
-
-    
-    // Contact form fields (from contact page)
-    const nameStr = toStringField(name);
-    if (nameStr) airtableFields["Name"] = nameStr;
-    const surnameStr = toStringField(surname);
-    if (surnameStr) airtableFields["Surname"] = surnameStr;
-    const emailStr = toStringField(email);
-    if (emailStr) airtableFields["Email"] = emailStr;
-    const phoneStr = toStringField(phone);
-    if (phoneStr) airtableFields["Phone"] = phoneStr;
-    const companyNameStr = toStringField(companyName);
-    if (companyNameStr) airtableFields["Company name"] = companyNameStr;
-    const addressStr = toStringField(address);
-    if (addressStr) airtableFields["Address"] = addressStr;
-    const apartmentStr = toStringField(apartment);
-    if (apartmentStr) airtableFields["Apartment"] = apartmentStr;
-    const postalCodeStr = toStringField(postalCode);
-    if (postalCodeStr) airtableFields["Postal code"] = postalCodeStr;
-    const cityStr = toStringField(city);
-    if (cityStr) airtableFields["City"] = cityStr;
-    const countryStr = toStringField(country);
-    if (countryStr) airtableFields["Country"] = countryStr;
-    const vatNumberStr = toStringField(vatNumber);
-    if (vatNumberStr) airtableFields["Vat number"] = vatNumberStr;
-    const preferredDeliveryDateStr = toStringField(preferredDeliveryDate);
-    if (preferredDeliveryDateStr) {
-      airtableFields["Preferred delivery date"] = preferredDeliveryDateStr;
-    }
-    if (productQuantity !== undefined && productQuantity !== null) {
-      const qtyNum = typeof productQuantity === 'string' 
-        ? parseInt(productQuantity, 10) 
-        : Math.floor(Number(productQuantity));
-
-      if (!Number.isNaN(qtyNum) && qtyNum > 0 && Number.isInteger(qtyNum)) {
-        const qtyStr = String(qtyNum);
-        airtableFields["Product quantity"] = qtyStr;
+      if (visitorIdStr) {
+        airtableFields[getQuoteFieldId("visitorId")] = visitorIdStr;
       }
     }
-    
-    // QuoteOverlay form fields (legacy support)
+
+    const nameStr = toStringField(name);
+    if (nameStr) airtableFields[getQuoteFieldId("name")] = nameStr;
+
+    const surnameStr = toStringField(surname);
+    if (surnameStr) airtableFields[getQuoteFieldId("surname")] = surnameStr;
+
+    const emailStr = toStringField(email);
+    if (emailStr) airtableFields[getQuoteFieldId("email")] = emailStr;
+
+    const phoneStr = toStringField(phone);
+    if (phoneStr) airtableFields[getQuoteFieldId("phone")] = phoneStr;
+
+    const companyNameStr = toStringField(companyName);
+    if (companyNameStr) {
+      airtableFields[getQuoteFieldId("companyName")] = companyNameStr;
+    }
+
+    const addressStr = toStringField(address);
+    if (addressStr) airtableFields[getQuoteFieldId("address")] = addressStr;
+
+    const apartmentStr = toStringField(apartment);
+    if (apartmentStr) {
+      airtableFields[getQuoteFieldId("apartment")] = apartmentStr;
+    }
+
+    const postalCodeStr = toStringField(postalCode);
+    if (postalCodeStr) {
+      airtableFields[getQuoteFieldId("postalCode")] = postalCodeStr;
+    }
+
+    const cityStr = toStringField(city);
+    if (cityStr) airtableFields[getQuoteFieldId("city")] = cityStr;
+
+    const countryStr = toStringField(country);
+    if (countryStr) airtableFields[getQuoteFieldId("country")] = countryStr;
+
+    const vatNumberStr = toStringField(vatNumber);
+    if (vatNumberStr) {
+      airtableFields[getQuoteFieldId("vatNumber")] = vatNumberStr;
+    }
+
+    const preferredDeliveryDateStr = toStringField(preferredDeliveryDate);
+    if (preferredDeliveryDateStr) {
+      airtableFields[getQuoteFieldId("preferredDeliveryDate")] =
+        preferredDeliveryDateStr;
+    }
+
+    if (productQuantity !== undefined && productQuantity !== null) {
+      const qtyNum =
+        typeof productQuantity === "string"
+          ? parseInt(productQuantity, 10)
+          : Math.floor(Number(productQuantity));
+
+      if (!Number.isNaN(qtyNum) && qtyNum > 0 && Number.isInteger(qtyNum)) {
+        airtableFields[getQuoteFieldId("productQuantity")] = String(qtyNum);
+      }
+    }
+
     const descriptionStr = toStringField(description);
-    if (descriptionStr) airtableFields["Description"] = descriptionStr;
+    if (descriptionStr) {
+      airtableFields[getQuoteFieldId("description")] = descriptionStr;
+    }
 
     const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024;
     if (attachments.length > 0) {
@@ -201,7 +221,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Additional request (multi-select) - supports single or multiple selections
     if (Array.isArray(normalizedService) && normalizedService.length > 0) {
       const servicesMap: Record<string, string> = {
         "Private Label": "Private label",
@@ -209,7 +228,7 @@ export async function POST(request: NextRequest) {
         "Influencer Activation": "Influencer activation",
         "Smart Platform": "Smart platform",
       };
-      airtableFields["Additional request"] = normalizedService.map(
+      airtableFields[getQuoteFieldId("additionalRequest")] = normalizedService.map(
         (item) => servicesMap[item] ?? item
       );
     } else {
@@ -221,23 +240,19 @@ export async function POST(request: NextRequest) {
           "Influencer Activation": "Influencer activation",
           "Smart Platform": "Smart platform",
         };
-        const airtableService = servicesMap[serviceStr] ?? serviceStr;
-        airtableFields["Additional request"] = airtableService;
+        airtableFields[getQuoteFieldId("additionalRequest")] =
+          servicesMap[serviceStr] ?? serviceStr;
       }
     }
-    
-    // Request Type - capitalize first letter (Merchandise or Services)
+
     const requestTypeStr = toStringField(requestType);
     if (requestTypeStr) {
-      airtableFields["Request Type"] =
+      airtableFields[getQuoteFieldId("requestType")] =
         requestTypeStr.charAt(0).toUpperCase() + requestTypeStr.slice(1);
     }
-    
-    // Preferred Type (Messenger) - map our messenger names to Airtable select options
-    // Airtable options: Email, WhatsApp, Slack, Teams
+
     const preferredMessengerStr = toStringField(preferredMessenger);
     if (preferredMessengerStr) {
-      // Map form messenger names to Airtable select options (exact match required)
       const messengerMap: Record<string, string> = {
         WhatsApp: "WhatsApp",
         Email: "Email",
@@ -245,34 +260,22 @@ export async function POST(request: NextRequest) {
         Teams: "Teams",
       };
       const mappedMessenger = messengerMap[preferredMessengerStr];
-      
       if (mappedMessenger) {
-        airtableFields["Preferred Type"] = mappedMessenger;
+        airtableFields[getQuoteFieldId("preferredType")] = mappedMessenger;
       }
     }
-    
-    // Username or Phone - depends on messenger type
-    // Airtable has: Phone (for WhatsApp) and Username (for others)
+
     const messengerContactStr = toStringField(messengerContact);
     if (messengerContactStr && !phoneStr) {
-      // Only use messengerContact if phone wasn't provided directly (from contact form)
       const messengerName = preferredMessengerStr.toLowerCase() || "";
 
       if (messengerName === "whatsapp") {
-        // For WhatsApp, use Phone field
-        airtableFields["Phone"] = messengerContactStr;
-      } else if (messengerName === "email") {
-        // Email is already in Email field, skip contact info
-      } else {
-        // Slack, Teams, Telegram, Signal, Other, or unspecified — preserve the
-        // raw handle in the Username field so it is never silently dropped.
-        airtableFields["Username"] = messengerContactStr;
+        airtableFields[getQuoteFieldId("phone")] = messengerContactStr;
+      } else if (messengerName !== "email") {
+        airtableFields[getQuoteFieldId("username")] = messengerContactStr;
       }
     }
 
-    // Create record in Airtable. typecast:true lets Airtable auto-create a
-    // missing single-select option for Lead Source (e.g. when GGATE26 QR /
-    // CBDO Back hasn't been added yet) and lossy-coerces other types.
     const airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}`;
     const createRecord = async (fields: typeof airtableFields) =>
       fetchWithTimeout(airtableUrl, {
@@ -292,23 +295,20 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
-
-      // Drop fields the Airtable schema doesn't have. The conf override may
-      // add fields like "Source Key" / "Campaign" / "Landing Page" / "Scan ID"
-      // / "Visitor ID" that aren't always present. We also keep the legacy
-      // behaviour of dropping Lead Source if it doesn't exist.
-      const dropCandidates = [LEAD_SOURCE_FIELD, ...CONF_OPTIONAL_FIELDS];
-      const fieldsToDrop = dropCandidates.filter(
-        (field) =>
+      const dropCandidates = ["leadSource", ...CONF_OPTIONAL_FIELDS] as const;
+      const fieldsToDrop = dropCandidates.filter((fieldKey) => {
+        const fieldId = getQuoteFieldId(fieldKey);
+        return (
           errorText.includes("UNKNOWN_FIELD_NAME") &&
-          errorText.includes(field) &&
-          field in airtableFields
-      );
+          errorText.includes(fieldId) &&
+          fieldId in airtableFields
+        );
+      });
 
       if (fieldsToDrop.length > 0) {
         const fallbackFields = { ...airtableFields };
-        fieldsToDrop.forEach((field) => {
-          delete fallbackFields[field];
+        fieldsToDrop.forEach((fieldKey) => {
+          delete fallbackFields[getQuoteFieldId(fieldKey)];
         });
         console.warn("Airtable create retrying without unknown fields", {
           status: response.status,
@@ -342,9 +342,8 @@ export async function POST(request: NextRequest) {
 
     if (attachments.length > 0) {
       const recordId = data.id as string;
-      const attachmentFieldName = "Attachments";
       const uploadUrl = `https://content.airtable.com/v0/${BASE_ID}/${recordId}/${encodeURIComponent(
-        attachmentFieldName
+        getQuoteFieldId("attachments")
       )}/uploadAttachment`;
 
       for (const file of attachments) {
@@ -353,18 +352,22 @@ export async function POST(request: NextRequest) {
         const contentType = file.type || "application/octet-stream";
         const filename = file.name || "attachment";
 
-        const uploadResponse = await fetchWithTimeout(uploadUrl, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiToken}`,
-            "Content-Type": "application/json",
+        const uploadResponse = await fetchWithTimeout(
+          uploadUrl,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              file: base64,
+              filename,
+              contentType,
+            }),
           },
-          body: JSON.stringify({
-            file: base64,
-            filename,
-            contentType,
-          }),
-        }, 15000);
+          15000
+        );
 
         if (!uploadResponse.ok) {
           const uploadErrorText = await uploadResponse.text();
@@ -382,7 +385,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       recordId: data.id,
-      data: data,
+      data,
     });
   } catch (error) {
     return NextResponse.json(

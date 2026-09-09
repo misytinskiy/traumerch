@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import HeroSlider from "../../components/HeroSlider/HeroSlider";
 import Services from "../../components/Services/Services";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./solutions.module.css";
@@ -10,7 +11,6 @@ import styles from "./solutions.module.css";
 export default function SolutionsPage() {
   const { t } = useLanguage();
   const servicesRef = useRef<HTMLElement>(null);
-  const servicesItems = t.services.items;
   const mobileCards = t.solutions.mobileCards as Array<{
     title: string;
     description: string;
@@ -27,17 +27,6 @@ export default function SolutionsPage() {
     "VIE",
     "PORSCHE",
   ];
-
-  const getServiceImageSrc = (rawImage: string | undefined, index: number) => {
-    const fallback = `/services/${index + 1}.png`;
-    if (!rawImage) return fallback;
-
-    if (rawImage.startsWith("/services/") && rawImage.endsWith(".jpg")) {
-      return rawImage.replace(/\.jpg$/i, ".png");
-    }
-
-    return rawImage;
-  };
 
   const handleScrollToServices = () => {
     if (servicesRef.current) {
@@ -96,20 +85,14 @@ export default function SolutionsPage() {
             </h1>
           </div>
 
-          <div className={styles.mobileMedia}>
-            <Image
-              src="/services/placeholder.png"
-              alt=""
-              fill
-              sizes="(max-width: 480px) calc(100vw - 20px), 640px"
-              className={styles.mobileMediaImage}
-            />
+          <div className={styles.mobileHeroSlider}>
+            <HeroSlider />
           </div>
 
           <div className={styles.mobileCardsSection}>
             <p className={styles.mobileCardsLabel}>SOLUTIONS FOR EVERY PURPOSE</p>
             <div className={styles.mobileCardsScroller}>
-              {mobileCards.map((card, index: number) => (
+              {mobileCards.map((card) => (
                 <Link key={card.title} href="/catalog" className={styles.mobileCard}>
                   <div className={styles.mobileCardImageWrap}>
                     <Image

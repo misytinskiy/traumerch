@@ -5,6 +5,10 @@ import {
   buildAirtableRecordUrl,
   fetchAirtable,
 } from "../../../server/airtable/airtable";
+import {
+  CATALOG_FIELD_IDS,
+  getCatalogFieldRequestName,
+} from "../../../shared/catalogFields";
 import { fetchNormalizedProducts } from "../../../server/products/products";
 
 const apiToken = process.env.API_TOKEN;
@@ -51,10 +55,13 @@ const ALLOWED_FIELDS = new Set([
   "MOQ | SALES",
   "# MOQ",
   "MOQ",
+  ...Object.values(CATALOG_FIELD_IDS),
 ]);
 
 const sanitizeFields = (fields: string[]) =>
-  fields.filter((field) => ALLOWED_FIELDS.has(field));
+  fields
+    .filter((field) => ALLOWED_FIELDS.has(field))
+    .map((field) => getCatalogFieldRequestName(field));
 
 const toBoundedInt = (value: string | null, min: number, max: number) => {
   if (!value) return undefined;
@@ -108,13 +115,16 @@ export async function GET(request: NextRequest) {
       });
     } else {
       const url = recordId
-        ? buildAirtableRecordUrl(recordId, safeFields)
+        ? buildAirtableRecordUrl(recordId, safeFields, {
+            returnFieldsByFieldId: true,
+          })
         : buildAirtableListUrl({
             fields: safeFields,
             view,
             maxRecords,
             pageSize,
             filterByFormula,
+            returnFieldsByFieldId: true,
           });
       const response = await fetchAirtable(url, apiToken, {
       });

@@ -87,6 +87,7 @@ type AirtableQueryOptions = {
   pageSize?: number;
   filterByFormula?: string;
   offset?: string;
+  returnFieldsByFieldId?: boolean;
 };
 
 export const buildAirtableListUrl = (options: AirtableQueryOptions = {}) => {
@@ -118,13 +119,18 @@ export const buildAirtableListUrl = (options: AirtableQueryOptions = {}) => {
     params.set("filterByFormula", options.filterByFormula);
   }
 
+  if (options.returnFieldsByFieldId) {
+    params.set("returnFieldsByFieldId", "true");
+  }
+
   const query = params.toString();
   return query ? `${baseUrl}?${query}` : baseUrl;
 };
 
 export const buildAirtableRecordUrl = (
   recordId: string,
-  fields?: string[]
+  fields?: string[],
+  options?: { returnFieldsByFieldId?: boolean }
 ) => {
   const { baseUrl, searchParams } = getAirtableLocation();
   const safeId = encodeURIComponent(recordId);
@@ -133,6 +139,10 @@ export const buildAirtableRecordUrl = (
   if (fields?.length) {
     params.delete("fields[]");
     fields.forEach((field) => params.append("fields[]", field));
+  }
+
+  if (options?.returnFieldsByFieldId) {
+    params.set("returnFieldsByFieldId", "true");
   }
 
   const query = params.toString();

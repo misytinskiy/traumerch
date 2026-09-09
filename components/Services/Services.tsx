@@ -30,9 +30,9 @@ export default function Services({ showAll = false }: ServicesProps) {
 
   const getServiceMobileImages = (index: number) => {
     const imageSets = [
-      ["/services/1/1.jpg", "/services/1/2.jpg", "/services/1/3.png"],
-      ["/services/2/1.jpg", "/services/2/2.jpg", "/services/2/3.png"],
-      ["/services/3/1.jpg", "/services/3/2.png", "/services/3/3.PNG"],
+      ["/services/1/1.jpg", "/services/1/2.jpg", "/services/1/5.jpg"],
+      ["/services/2/1.jpg", "/services/2/2.jpg", "/services/2/3.jpg"],
+      ["/services/3/1.jpg", "/services/3/2.jpg", "/services/3/3.PNG"],
       ["/services/4/1.png", "/services/4/2.png", "/services/4/3.png"],
       ["/services/5/1.png", "/services/5/2.png", "/services/5/3.png"],
     ];

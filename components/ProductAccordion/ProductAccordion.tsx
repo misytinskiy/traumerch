@@ -1,15 +1,13 @@
 "use client";
 
 import { useLanguage } from "../../contexts/LanguageContext";
+import { getCatalogFieldValue, type CatalogFieldKey } from "../../shared/catalogFields";
 import Accordion from "../Accordion/Accordion";
 
-/** Base field names (same order as design.accordion). EN/DE suffix added from language. */
-const ACCORDION_FIELD_BASES = [
-  "[WEB] Description",
-  "[WEB] Specifications",
-  "[WEB] Customisation",
-  "[WEB] Production",
-];
+const ACCORDION_FIELDS: Record<"en" | "de", CatalogFieldKey[]> = {
+  en: ["descriptionEn", "specificationsEn", "customisationEn", "productionEn"],
+  de: ["descriptionDe", "specificationsDe", "customisationDe", "productionDe"],
+};
 
 interface ProductAccordionProps {
   productFields?: Record<string, unknown>;
@@ -17,12 +15,12 @@ interface ProductAccordionProps {
 
 export default function ProductAccordion({ productFields }: ProductAccordionProps) {
   const { t, language } = useLanguage();
-  const suffix = language === "de" ? " DE" : " EN";
+  const fieldKeys = language === "de" ? ACCORDION_FIELDS.de : ACCORDION_FIELDS.en;
 
   const accordionItems = t.design.accordion.map((item, index) => {
-    const base = ACCORDION_FIELD_BASES[index];
-    const fieldName = base ? base + suffix : null;
-    const airtableValue = productFields && fieldName ? productFields[fieldName] : undefined;
+    const fieldKey = fieldKeys[index];
+    const airtableValue =
+      productFields && fieldKey ? getCatalogFieldValue(productFields, fieldKey) : undefined;
     const content =
       airtableValue !== undefined && airtableValue !== null && airtableValue !== ""
         ? String(airtableValue)

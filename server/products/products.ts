@@ -1,6 +1,13 @@
 import "server-only";
 
 import { buildAirtableListUrl, fetchAirtable } from "../airtable/airtable";
+import {
+  getCatalogFieldCandidates,
+  getCatalogFieldValue,
+  getCatalogQueryFieldIds,
+  getCatalogQueryFieldNames,
+  type CatalogFieldKey,
+} from "../../shared/catalogFields";
 import type { NormalizedProduct } from "../../shared/types";
 
 type AirtableRecord = {
@@ -10,30 +17,9 @@ type AirtableRecord = {
 
 type PriceTier = "sample" | "bulk";
 
-const NAME_FIELDS = ["[WEB] Name ENG", "[WEB] Name DE", "Name"];
-const CATEGORY_FIELDS = ["Filter: Item Category", "Item Category"];
-const CATEGORY_FIELD_SETS = [
-  ["Filter: Item Category", "Item Category"],
-  ["Filter: Item Category"],
-  ["Item Category"],
-] as const;
-const IMAGE_FIELD = "Main Product Photo";
-const SECONDARY_IMAGE_FIELD = "Secondary Product Photos";
-const OUT_OF_STOCK_FIELD = "Out of Stock";
-const OUT_OF_STOCK_FIELD_FALLBACK = "Out of stock";
-const CATALOG_FEATURED_FIELDS = [
-  "[WEB] Catalog Starring",
-  "Catalog Starring",
-  "Starring",
-];
-const PRICE_FIELDS_BY_TIER: Record<PriceTier, string[]> = {
-  sample: ["1-24 pcs (Sample) | SALES", "Price", "[WEB] Price"],
-  bulk: ["1000+ pcs | SALES", "Price", "[WEB] Price"],
-};
-
-const PRICE_FIELDS_QUERY: Record<PriceTier, string[]> = {
-  sample: ["1-24 pcs (Sample) | SALES"],
-  bulk: ["1000+ pcs | SALES"],
+const PRICE_FIELDS_BY_TIER: Record<PriceTier, CatalogFieldKey[]> = {
+  sample: ["sampleSales"],
+  bulk: ["sales1000Plus"],
 };
 
 const extractStringValues = (value: unknown): string[] => {
@@ -56,18 +42,6 @@ const formatPrice = (value: unknown): string => {
   return "From €6";
 };
 
-const pickFirstField = (
-  fields: Record<string, unknown>,
-  fieldNames: string[]
-) => {
-  for (const field of fieldNames) {
-    if (field in fields && fields[field] !== undefined && fields[field] !== null) {
-      return fields[field];
-    }
-  }
-  return undefined;
-};
-
 const parseBooleanField = (value: unknown) =>
   value === true ||
   value === "true" ||
@@ -80,24 +54,21 @@ const normalizeRecord = (
 ): NormalizedProduct => {
   const fields = record.fields || {};
   const nameEn =
-    (fields["[WEB] Name ENG"] as string | undefined) ||
-    (fields["Name"] as string | undefined) ||
-    "Product";
+    (getCatalogFieldValue(fields, "nameEn") as string | undefined) || "Product";
   const nameDe =
-    (fields["[WEB] Name DE"] as string | undefined) ||
-    (fields["Name"] as string | undefined) ||
-    nameEn;
+    (getCatalogFieldValue(fields, "nameDe") as string | undefined) || nameEn;
 
-  const priceValue = pickFirstField(fields, PRICE_FIELDS_BY_TIER[priceTier]);
+  const priceValue = PRICE_FIELDS_BY_TIER[priceTier]
+    .map((field) => getCatalogFieldValue(fields, field))
+    .find((value) => value !== undefined && value !== null);
   const price = formatPrice(priceValue);
-  const outOfStockRaw =
-    fields[OUT_OF_STOCK_FIELD] ?? fields[OUT_OF_STOCK_FIELD_FALLBACK];
+  const outOfStockRaw = getCatalogFieldValue(fields, "outOfStock");
   const outOfStock = parseBooleanField(outOfStockRaw);
   const catalogFeatured = parseBooleanField(
-    pickFirstField(fields, CATALOG_FEATURED_FIELDS)
+    getCatalogFieldValue(fields, "catalogFeatured")
   );
 
-  const mainPhoto = fields[IMAGE_FIELD];
+  const mainPhoto = getCatalogFieldValue(fields, "mainProductPhoto");
   const mainPhotoArr = Array.isArray(mainPhoto) ? mainPhoto : [];
   const firstAttachment =
     mainPhotoArr[0] && typeof mainPhotoArr[0] === "object"
@@ -126,7 +97,7 @@ const normalizeRecord = (
       : null;
   const imageUrl = imageUrlLarge || imageUrlSmall || imageUrlFull;
 
-  const secondaryPhoto = fields[SECONDARY_IMAGE_FIELD];
+  const secondaryPhoto = getCatalogFieldValue(fields, "secondaryProductPhotos");
   const secondaryPhotoArr = Array.isArray(secondaryPhoto) ? secondaryPhoto : [];
   const hoverAttachment =
     secondaryPhotoArr[0] && typeof secondaryPhotoArr[0] === "object"
@@ -165,9 +136,7 @@ const normalizeRecord = (
   const hoverImageUrl =
     hoverImageUrlLarge || hoverImageUrlSmall || hoverImageUrlFull;
 
-  const categories = CATEGORY_FIELDS.flatMap((field) =>
-    extractStringValues(fields[field])
-  );
+  const categories = extractStringValues(getCatalogFieldValue(fields, "category"));
 
   return {
     id: record.id,
@@ -188,29 +157,15 @@ const normalizeRecord = (
 export const buildNormalizedFields = (
   priceTier: PriceTier,
   includeOutOfStock = true,
-  catalogFeaturedField?: string,
-  categoryFields: readonly string[] = CATEGORY_FIELD_SETS[0]
+  includeCatalogFeatured = true
 ) => [
-  ...NAME_FIELDS,
-  ...PRICE_FIELDS_QUERY[priceTier],
-  IMAGE_FIELD,
-  SECONDARY_IMAGE_FIELD,
-  ...(catalogFeaturedField ? [catalogFeaturedField] : []),
-  ...(includeOutOfStock ? [OUT_OF_STOCK_FIELD] : []),
-  ...categoryFields,
+  ...getCatalogQueryFieldIds(["nameEn", "nameDe"]),
+  ...getCatalogQueryFieldIds(PRICE_FIELDS_BY_TIER[priceTier]),
+  ...getCatalogQueryFieldIds(["mainProductPhoto", "secondaryProductPhotos"]),
+  ...(includeCatalogFeatured ? getCatalogQueryFieldIds(["catalogFeatured"]) : []),
+  ...(includeOutOfStock ? getCatalogQueryFieldIds(["outOfStock"]) : []),
+  ...getCatalogQueryFieldIds(["category"]),
 ];
-
-const buildCategoryFormula = (
-  categoryTerm: string,
-  categoryFields: readonly string[]
-) => {
-  const safe = categoryTerm.replace(/"/g, '\\"');
-  const clauses = categoryFields.map(
-    (field) => `FIND("${safe}", LOWER(ARRAYJOIN({${field}})))`
-  );
-
-  return clauses.length === 1 ? clauses[0] : `OR(${clauses.join(",")})`;
-};
 
 const fetchNormalizedPage = async ({
   apiToken,
@@ -220,21 +175,14 @@ const fetchNormalizedPage = async ({
   pageSize,
   filterByFormula,
   includeOutOfStock,
-  catalogFeaturedField,
-  categoryFields = CATEGORY_FIELD_SETS[0],
+  includeCatalogFeatured,
   offset,
 }: FetchNormalizedOptions & {
   includeOutOfStock: boolean;
-  catalogFeaturedField?: string;
-  categoryFields?: readonly string[];
+  includeCatalogFeatured: boolean;
   offset?: string;
 }) => {
-  const fields = buildNormalizedFields(
-    priceTier,
-    includeOutOfStock,
-    catalogFeaturedField,
-    categoryFields
-  );
+  const fields = buildNormalizedFields(priceTier, includeOutOfStock, includeCatalogFeatured);
   const url = buildAirtableListUrl({
     fields,
     view,
@@ -242,6 +190,7 @@ const fetchNormalizedPage = async ({
     pageSize,
     filterByFormula,
     offset,
+    returnFieldsByFieldId: true,
   });
   return fetchAirtable(url, apiToken, {});
 };
@@ -266,13 +215,8 @@ export const fetchNormalizedProducts = async ({
   filterByFormula,
 }: FetchNormalizedOptions) => {
   let includeOutOfStock = true;
-  let catalogFeaturedFieldIndex = 0;
-  let categoryFieldSetIndex = 0;
-  const getFormula = () =>
-    filterByFormula ||
-    (category
-      ? buildCategoryFormula(category, CATEGORY_FIELD_SETS[categoryFieldSetIndex])
-      : undefined);
+  let includeCatalogFeatured = true;
+  const normalizedCategory = category?.trim().toLowerCase();
 
   let response = await fetchNormalizedPage({
     apiToken,
@@ -280,10 +224,9 @@ export const fetchNormalizedProducts = async ({
     view,
     maxRecords,
     pageSize,
-    filterByFormula: getFormula(),
+    filterByFormula,
     includeOutOfStock,
-    catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
-    categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
+    includeCatalogFeatured,
   });
 
   while (!response.ok) {
@@ -292,7 +235,10 @@ export const fetchNormalizedProducts = async ({
       throw new Error(message);
     }
 
-    if (includeOutOfStock && message.includes(OUT_OF_STOCK_FIELD)) {
+    if (
+      includeOutOfStock &&
+      getCatalogFieldCandidates("outOfStock").some((field) => message.includes(field))
+    ) {
       includeOutOfStock = false;
       response = await fetchNormalizedPage({
         apiToken,
@@ -300,51 +246,29 @@ export const fetchNormalizedProducts = async ({
         view,
         maxRecords,
         pageSize,
-        filterByFormula: getFormula(),
+        filterByFormula,
         includeOutOfStock,
-        catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
-        categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
+        includeCatalogFeatured,
       });
       continue;
     }
 
-    const activeCatalogFeaturedField =
-      CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex];
     if (
-      activeCatalogFeaturedField &&
-      message.includes(activeCatalogFeaturedField)
+      includeCatalogFeatured &&
+      getCatalogFieldCandidates("catalogFeatured").some((field) =>
+        message.includes(field)
+      )
     ) {
-      catalogFeaturedFieldIndex += 1;
+      includeCatalogFeatured = false;
       response = await fetchNormalizedPage({
         apiToken,
         priceTier,
         view,
         maxRecords,
         pageSize,
-        filterByFormula: getFormula(),
+        filterByFormula,
         includeOutOfStock,
-        catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
-        categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
-      });
-      continue;
-    }
-
-    const activeCategoryFields = CATEGORY_FIELD_SETS[categoryFieldSetIndex];
-    const unknownCategoryField = activeCategoryFields.find((field) =>
-      message.includes(field)
-    );
-    if (unknownCategoryField && categoryFieldSetIndex < CATEGORY_FIELD_SETS.length - 1) {
-      categoryFieldSetIndex += 1;
-      response = await fetchNormalizedPage({
-        apiToken,
-        priceTier,
-        view,
-        maxRecords,
-        pageSize,
-        filterByFormula: getFormula(),
-        includeOutOfStock,
-        catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
-        categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
+        includeCatalogFeatured,
       });
       continue;
     }
@@ -368,10 +292,9 @@ export const fetchNormalizedProducts = async ({
       view,
       maxRecords,
       pageSize,
-      filterByFormula: getFormula(),
+      filterByFormula,
       includeOutOfStock,
-      catalogFeaturedField: CATALOG_FEATURED_FIELDS[catalogFeaturedFieldIndex],
-      categoryFields: CATEGORY_FIELD_SETS[categoryFieldSetIndex],
+      includeCatalogFeatured,
       offset: nextOffset,
     });
 
@@ -388,10 +311,19 @@ export const fetchNormalizedProducts = async ({
     nextOffset = nextPage.offset;
   }
 
+  const normalizedRecords = allRecords.map((record) =>
+    normalizeRecord(record, priceTier)
+  );
+  const filteredRecords = normalizedCategory
+    ? normalizedRecords.filter((record) =>
+        record.categories.some((value) =>
+          value.toLowerCase().includes(normalizedCategory)
+        )
+      )
+    : normalizedRecords;
+
   return {
-    records: allRecords.slice(0, limit).map((record) =>
-      normalizeRecord(record, priceTier)
-    ),
+    records: filteredRecords.slice(0, limit),
     offset: nextOffset,
   };
 };

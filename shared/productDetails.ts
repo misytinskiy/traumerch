@@ -1,16 +1,17 @@
-export const PALETTE_FIELD = "[WEB] Palette Hex Colours";
-export const PALETTE_PHOTOS_FIELD = "[WEB] Palette Photos";
-export const MAIN_PHOTO_FIELD = "Main Product Photo";
-export const SECONDARY_PHOTOS_FIELD = "Secondary Product Photos";
-export const PRODUCT_SPECIAL_FIELD = "[WEB] Product Special Field";
-export const PRODUCT_SPECIAL_FIELD_TEXT_EN = "[WEB] Product Special Field Text EN";
-export const PRODUCT_SPECIAL_FIELD_TEXT_DE = "[WEB] Product Special Field Text DE";
+import { getCatalogFieldValue } from "./catalogFields";
+
+export const PALETTE_FIELD = "paletteHexColours";
+export const PALETTE_PHOTOS_FIELD = "palettePhotos";
+export const MAIN_PHOTO_FIELD = "mainProductPhoto";
+export const SECONDARY_PHOTOS_FIELD = "secondaryProductPhotos";
+export const PRODUCT_SPECIAL_FIELD = "productSpecialField";
+export const PRODUCT_SPECIAL_FIELD_TEXT_EN = "productSpecialFieldTextEn";
+export const PRODUCT_SPECIAL_FIELD_TEXT_DE = "productSpecialFieldTextDe";
 
 const PALETTE_RAINBOW_TOKEN = "rainbow";
-const MOQ_KEYS = ["# MOQ | SALES", "MOQ | SALES", "# MOQ", "MOQ"];
 
 export function parsePaletteData(fields: Record<string, unknown> | undefined) {
-  const raw = fields?.[PALETTE_FIELD];
+  const raw = getCatalogFieldValue(fields, PALETTE_FIELD);
   if (typeof raw !== "string" || !raw.trim()) {
     return { colors: [], hasRainbow: false };
   }
@@ -26,13 +27,7 @@ export function parsePaletteData(fields: Record<string, unknown> | undefined) {
 
 export function getMinQuantity(fields: Record<string, unknown> | undefined): number {
   if (!fields) return 1;
-  let raw: unknown;
-  for (const key of MOQ_KEYS) {
-    if (key in fields && fields[key] !== undefined && fields[key] !== null && fields[key] !== "") {
-      raw = fields[key];
-      break;
-    }
-  }
+  const raw = getCatalogFieldValue(fields, "moqSales");
   if (raw === undefined) return 1;
   const n = typeof raw === "number" ? raw : parseInt(String(raw), 10);
   return Number.isNaN(n) || n < 1 ? 1 : Math.min(n, 99999);

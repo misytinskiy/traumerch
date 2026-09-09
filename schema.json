@@ -1,0 +1,3007 @@
+{
+    "tables": [
+        {
+            "id": "tbloVgVsbD3o8J6At",
+            "name": "Orders Hub",
+            "primaryFieldId": "fldlozRgz42HHSrEl",
+            "fields": [
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"A\"\n& IF({fldd2LSbOVP30fFeP} < 10, \"00\", IF({fldd2LSbOVP30fFeP} < 100, \"0\", \"\"))\n& {fldd2LSbOVP30fFeP}\n& \" - \" & {fldFn6x05IR8Uj5NY}\n& IF({fld791xFqiHXlFGNJ}, \" - \" & DATETIME_FORMAT({fld791xFqiHXlFGNJ}, \"MMM YY\"), \"\")",
+                        "referencedFieldIds": [
+                            "fldd2LSbOVP30fFeP",
+                            "fldFn6x05IR8Uj5NY",
+                            "fld791xFqiHXlFGNJ"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldlozRgz42HHSrEl",
+                    "name": "Order ID"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "IF({fld7sJq3pu0rRl3gm} = 0, \"\", IF(FIND(\"OVERDUE\", ARRAYJOIN({fldw4l7pIjb655tB0}, \" \")), \"‼️ OVERDUE\", IF(FIND(\"🔴\", ARRAYJOIN({fldw4l7pIjb655tB0}, \" \")), \"🔴\", IF(FIND(\"🟠\", ARRAYJOIN({fldw4l7pIjb655tB0}, \" \")), \"🟠\", IF(FIND(\"🟢\", ARRAYJOIN({fldw4l7pIjb655tB0}, \" \")), \"🟢\", \"\")))))",
+                        "referencedFieldIds": [
+                            "fld7sJq3pu0rRl3gm",
+                            "fldw4l7pIjb655tB0"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldw7vBPSWEQjqxEC",
+                    "name": "Order Urgency",
+                    "description": "Worst deadline signal across all lines of the order, mirroring the line-level Urgency Signal. ‼️ OVERDUE beats 🔴 CRIT beats 🟠 WATCH beats 🟢 OK. Blank when all lines are delivered or have no deadline."
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblu1V5OGe6DvDKs0",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": true,
+                        "inverseLinkFieldId": "fldEQQNsfmRh9QS7W"
+                    },
+                    "id": "fldj9daBeMy4wlEN6",
+                    "name": "Client"
+                },
+                {
+                    "type": "singleCollaborator",
+                    "id": "fldN5YSmfyzorpKL8",
+                    "name": "Order Owner"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selACFnsUUCCkjMrS",
+                                "name": "🔴 Problem",
+                                "color": "redBright"
+                            },
+                            {
+                                "id": "selYOxUCIP0gYWjsk",
+                                "name": "⏸️ On Hold",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selmedOnTdqMDWP0P",
+                                "name": "⚙️ Preparation",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "sel7JdAbOlCi6UXgn",
+                                "name": "🏭 Production",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "sel0QcQf7rVqrmNTj",
+                                "name": "🚚 Transit",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selr9HfEP8XhqPV35",
+                                "name": "✅ Delivered",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "sel2E0fcjl8xGxKyg",
+                                "name": "🔘 Archived",
+                                "color": "grayBright"
+                            },
+                            {
+                                "id": "selaP3NZwhi7fdfMC",
+                                "name": "▪️ Cancelled",
+                                "color": "grayLight1"
+                            }
+                        ]
+                    },
+                    "id": "fldoCyFHelaHPieqN",
+                    "name": "Order Status",
+                    "description": "Order-level status as a groupable dropdown. Auto-filled by an automation that copies Order Status (auto). Manual override is possible if the computed value is ever wrong. Group the table by this field."
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fld1Tyd2cYdS9a7kG",
+                    "name": "Sales Offer"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fld8hFOIAi5b75v0f",
+                    "name": "Sales Invoice"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selLoAUE30BMr3k9k",
+                                "name": "Awaiting Document",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selvzIEkBqrQhTijl",
+                                "name": "Offered",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selQI1g9dhR9vEvyH",
+                                "name": "Invoiced",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "seldfaa8e6mSZrzzQ",
+                                "name": "Deposit Paid",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selkONHPj6RLfHc35",
+                                "name": "Paid in Full",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selgs49wrqECIuvgF",
+                                "name": "Overdue",
+                                "color": "redBright"
+                            },
+                            {
+                                "id": "selJrJKob0wtNJib6",
+                                "name": "No Invoice",
+                                "color": "grayLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldByQMl8thclrScX",
+                    "name": "Customer Payment Status",
+                    "description": "Customer-side payment state for the whole order. Tracks whether we have invoiced the client and received payment. Relevant for cash visibility and for triggering Sales provision (paid-received trigger)."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fld791xFqiHXlFGNJ",
+                    "name": "Order Date"
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldju1Uh89QKQAyHa",
+                    "name": "Delivery Deadline"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldmkj7SousxSCnrg",
+                    "name": "Attachments"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblIj1buCzlJrNL8w",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldVnE59FVerI4sOU"
+                    },
+                    "id": "fldsUUTQjCLhEr7Po",
+                    "name": "Linked Items"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldEJMLOOtqW9lAtr",
+                    "name": "Customer Delivery Address"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selxswV2NSAiInJFw",
+                                "name": "UNDEFINED",
+                                "color": "redDark1"
+                            },
+                            {
+                                "id": "selSXIk6j4MnKOWCm",
+                                "name": "DHL",
+                                "color": "yellowBright"
+                            },
+                            {
+                                "id": "selSZ0iYTSx0wQ8Ie",
+                                "name": "FedEx",
+                                "color": "purpleBright"
+                            },
+                            {
+                                "id": "selVSbgQ6lBpjp4Cr",
+                                "name": "UPS",
+                                "color": "grayBright"
+                            },
+                            {
+                                "id": "seldBc1hkajRzzxup",
+                                "name": "DPD",
+                                "color": "redBright"
+                            },
+                            {
+                                "id": "selGQq5FXCF8YBp25",
+                                "name": "GLS",
+                                "color": "blueBright"
+                            },
+                            {
+                                "id": "selwRDGxOTGqEMhZR",
+                                "name": "Österreichische Post",
+                                "color": "yellowLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldcbGQuXIjdwEKS6",
+                    "name": "Carrier (Customer leg)"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldfuuf0DVlhlfAE8",
+                    "name": "Track&Trace Customer"
+                },
+                {
+                    "type": "url",
+                    "id": "fldrmrq88MuiBUOD0",
+                    "name": "Track&Trace Customer URL"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldj3SX4xRCv2zrNJ",
+                    "name": "Order Notes"
+                },
+                {
+                    "type": "rollup",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldsUUTQjCLhEr7Po",
+                        "fieldIdInLinkedTable": "fldfINZvhdDuuORdZ",
+                        "referencedFieldIds": [],
+                        "result": {
+                            "type": "currency",
+                            "options": {
+                                "precision": 2,
+                                "symbol": "€"
+                            }
+                        }
+                    },
+                    "id": "fldkh3kcBTLH2Sbav",
+                    "name": "Total Revenue"
+                },
+                {
+                    "type": "rollup",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldsUUTQjCLhEr7Po",
+                        "fieldIdInLinkedTable": "fldxK9jNCv17H5q9P",
+                        "referencedFieldIds": [],
+                        "result": {
+                            "type": "currency",
+                            "options": {
+                                "precision": 2,
+                                "symbol": "€"
+                            }
+                        }
+                    },
+                    "id": "fldXsBiPzRVv7b72Y",
+                    "name": "Total Profit"
+                },
+                {
+                    "type": "count",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldsUUTQjCLhEr7Po"
+                    },
+                    "id": "fld7sJq3pu0rRl3gm",
+                    "name": "Items Count"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "IF({fldkh3kcBTLH2Sbav}>0, {fldXsBiPzRVv7b72Y}/{fldkh3kcBTLH2Sbav})",
+                        "referencedFieldIds": [
+                            "fldkh3kcBTLH2Sbav",
+                            "fldXsBiPzRVv7b72Y"
+                        ],
+                        "result": {
+                            "type": "percent",
+                            "options": {
+                                "precision": 0
+                            }
+                        }
+                    },
+                    "id": "fldhlj7ZvTS3TJx7S",
+                    "name": "Order Margin %"
+                },
+                {
+                    "type": "rollup",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldsUUTQjCLhEr7Po",
+                        "fieldIdInLinkedTable": "fldDcNa0UKQRDcuiy",
+                        "referencedFieldIds": [],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldiPQgYFJUpKEUMd",
+                    "name": "Line Status Rollup (from Order Lines)"
+                },
+                {
+                    "type": "autoNumber",
+                    "id": "fldd2LSbOVP30fFeP",
+                    "name": "Autonumber"
+                },
+                {
+                    "type": "rollup",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldsUUTQjCLhEr7Po",
+                        "fieldIdInLinkedTable": "fldlUdc2BzVXXZgCT",
+                        "referencedFieldIds": [],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldw4l7pIjb655tB0",
+                    "name": "Urgency Rollup"
+                },
+                {
+                    "type": "rollup",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldsUUTQjCLhEr7Po",
+                        "fieldIdInLinkedTable": "fldAi6r7NQ4oXHXQp",
+                        "referencedFieldIds": [],
+                        "result": {
+                            "type": "date",
+                            "options": {
+                                "dateFormat": {
+                                    "name": "friendly",
+                                    "format": "LL"
+                                }
+                            }
+                        }
+                    },
+                    "id": "fld5FNLZ70x9zu5dQ",
+                    "name": "Earliest Delivery Deadline"
+                },
+                {
+                    "type": "rollup",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldsUUTQjCLhEr7Po",
+                        "fieldIdInLinkedTable": "fldbFlh7fm5wHsu0D",
+                        "referencedFieldIds": [],
+                        "result": {
+                            "type": "number",
+                            "options": {
+                                "precision": 0
+                            }
+                        }
+                    },
+                    "id": "fldxKq0HALkUX8Zo1",
+                    "name": "Total Units"
+                },
+                {
+                    "type": "lastModifiedTime",
+                    "options": {
+                        "isValid": true,
+                        "referencedFieldIds": [],
+                        "result": {
+                            "type": "dateTime",
+                            "options": {
+                                "dateFormat": {
+                                    "name": "friendly",
+                                    "format": "LL"
+                                },
+                                "timeFormat": {
+                                    "name": "12hour",
+                                    "format": "h:mma"
+                                },
+                                "timeZone": "client"
+                            }
+                        }
+                    },
+                    "id": "fldOR73uu9VioxtfS",
+                    "name": "Last Change"
+                },
+                {
+                    "type": "lastModifiedBy",
+                    "id": "fld0ZUCTCRzqJ3cyJ",
+                    "name": "Last Contributor"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblIj1buCzlJrNL8w",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fld68YiUXN1rqhZAv"
+                    },
+                    "id": "fldXjGds3ulM0eUgA",
+                    "name": "Procurement Center"
+                },
+                {
+                    "type": "multipleLookupValues",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldj9daBeMy4wlEN6",
+                        "fieldIdInLinkedTable": "fldsufzTNecKmjlzF",
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldi1dB4C6qMkclj9",
+                    "name": "Client Name (from Client)"
+                },
+                {
+                    "type": "multipleLookupValues",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldj9daBeMy4wlEN6",
+                        "fieldIdInLinkedTable": "fldwCRDutKMkOOE6F",
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldFn6x05IR8Uj5NY",
+                    "name": "Client Nickname (from Client)"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwCldbNzatpZeuWj",
+                    "name": "Grid view",
+                    "type": "grid"
+                }
+            ]
+        },
+        {
+            "id": "tblIj1buCzlJrNL8w",
+            "name": "Procurement Center",
+            "primaryFieldId": "fldEgbTNph9gOdaw9",
+            "fields": [
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "TRIM(IF({fldEsWHXXKzTReSCe}, {fldEsWHXXKzTReSCe} & \" - \") & IF({fldzdpU17ofdxIMZG}, {fldzdpU17ofdxIMZG} & \"\") & IF({fldZtcthShllNmLnR}, \" - \" & {fldZtcthShllNmLnR}))",
+                        "referencedFieldIds": [
+                            "fldEsWHXXKzTReSCe",
+                            "fldzdpU17ofdxIMZG",
+                            "fldZtcthShllNmLnR"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldEgbTNph9gOdaw9",
+                    "name": "Item Name",
+                    "description": "Auto-generated line name. Combines parent Order ID, Product, and City / Destination Tag. Marked as primary field for the table."
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "IF({fldDcNa0UKQRDcuiy} = 'Delivered - Customer', '—', IF(NOT({fldAi6r7NQ4oXHXQp}), '', IF({fldFSGiSecyEPfxiH} < 0, '‼️ OVERDUE', IF({fldFSGiSecyEPfxiH} <= 3, '🔴 CRIT', IF({fldFSGiSecyEPfxiH} <= 7, '🟠 WATCH', '🟢 OK')))))",
+                        "referencedFieldIds": [
+                            "fldDcNa0UKQRDcuiy",
+                            "fldAi6r7NQ4oXHXQp",
+                            "fldFSGiSecyEPfxiH"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldlUdc2BzVXXZgCT",
+                    "name": "Urgency Signal",
+                    "description": "Visual deadline signal. ‼️ overdue, 🔴 3 days or less, 🟠 7 days or less, 🟢 more than 7 days. \n\nHides itself once the item reaches Delivered - Customer."
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "IF({fldAi6r7NQ4oXHXQp}, DATETIME_DIFF({fldAi6r7NQ4oXHXQp}, TODAY(), 'days'))",
+                        "referencedFieldIds": [
+                            "fldAi6r7NQ4oXHXQp"
+                        ],
+                        "result": {
+                            "type": "number",
+                            "options": {
+                                "precision": 0
+                            }
+                        }
+                    },
+                    "id": "fldFSGiSecyEPfxiH",
+                    "name": "Remaining Days",
+                    "description": "Days remaining until Delivery Deadline. Negative values mean the deadline has passed."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selvjrVM6ToBPtXT4",
+                                "name": "Problem",
+                                "color": "redBright"
+                            },
+                            {
+                                "id": "selcNJl4F18oachv7",
+                                "name": "On Hold",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selhuVcfzlob5ZsR1",
+                                "name": "Preparation",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selvFXSEuoq3PjUKg",
+                                "name": "Awaiting Payment",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selmOw7UdljWwM5Oe",
+                                "name": "Awaiting Quality",
+                                "color": "pinkLight2"
+                            },
+                            {
+                                "id": "selZNug72HqVw6Bvu",
+                                "name": "Production",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selJRF83AFu9qOiri",
+                                "name": "In Transit - Office",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "sel8jbYc1Q0WW5Els",
+                                "name": "In Transit – Warehouse",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "selYGlzLbL7wu51Kc",
+                                "name": "Warehouse - In Stock",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selFQA2MgMZPR2LoM",
+                                "name": "Warehouse - Awaiting other items",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "selAreJBwLZWNscy3",
+                                "name": "In Transit - Customer",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selnRYynwNrwMzH4U",
+                                "name": "Delivered - Customer",
+                                "color": "greenLight1"
+                            },
+                            {
+                                "id": "seloIBuc9QTaiIxaY",
+                                "name": "Archive",
+                                "color": "grayLight2"
+                            },
+                            {
+                                "id": "sel3eIfRs9rjcOjRm",
+                                "name": "Cancelled",
+                                "color": "grayLight1"
+                            }
+                        ]
+                    },
+                    "id": "fldDcNa0UKQRDcuiy",
+                    "name": "Item Status",
+                    "description": "Production stage of this specific line. Drives the aggregated Order Status on the parent Order via the Line Status Rollup."
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "blueBright"
+                    },
+                    "id": "fldNGtiH969Dcv0Io",
+                    "name": "Status Checked"
+                },
+                {
+                    "type": "dateTime",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        },
+                        "timeFormat": {
+                            "name": "12hour",
+                            "format": "h:mma"
+                        },
+                        "timeZone": "Europe/Vienna"
+                    },
+                    "id": "fldHzrYzYk26ni76F",
+                    "name": "Last Check"
+                },
+                {
+                    "type": "richText",
+                    "id": "fldhCMyZFTJ3De8Hk",
+                    "name": "Procurement Notes"
+                },
+                {
+                    "type": "singleCollaborator",
+                    "id": "fldfSfGdbaLUnmF4s",
+                    "name": "Item Owner",
+                    "description": "Person responsible for executing this particular item (typically the person responsible for the whole order)."
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldeKWoxZNUW1i9yZ",
+                    "name": "Sales Invoice",
+                    "description": "Invoice issued to the customer by the Finance Department. Basis for calculating item sales price and ensuring no sold items are missing/forgotten."
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldZicWNaskDliCRn",
+                    "name": "Procurement Invoice",
+                    "description": "Invoice issued to the procurement department by the supplier. Basis for cost calculation and essential for timely delivery."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selpNbibDyCte6UGg",
+                                "name": "Not Paid",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selczXdRSLvTwosef",
+                                "name": "Deposit Paid",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selPyBXHJyrstkIaX",
+                                "name": "Paid",
+                                "color": "greenLight2"
+                            }
+                        ]
+                    },
+                    "id": "flda90EkDnpTYc4sC",
+                    "name": "Supplier Pay Status",
+                    "description": "Payment state with the supplier for this line."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selqsVD3weVjK8VEX",
+                                "name": "Pending",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selM67J3BhZ2gkhs2",
+                                "name": "Rejected",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selRW48HLArs1tQEW",
+                                "name": "Checked",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selONgvG74G5hYRup",
+                                "name": "Not Required",
+                                "color": "grayLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldbee6faH23HcKGL",
+                    "name": "Quality Status",
+                    "description": "Quality check outcome. Pending until sample or batch QC is performed."
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fld0iGqSJGVWuxkZX",
+                    "name": "Quality Photo",
+                    "description": "Quality Confirmation photo as provided by supplier, latest applicable (approved) version only should be stored."
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldbFlh7fm5wHsu0D",
+                    "name": "Quantity",
+                    "description": "Number of units for the item."
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "€"
+                    },
+                    "id": "fldQ05TlW2g7Vpfbl",
+                    "name": "Sales Price (unit)",
+                    "description": "Sales price charged to the customer per unit, VAT excluded."
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fldjCmP1lgPRVu9Ab",
+                    "name": "Unit Cost",
+                    "description": "Procurement (supplier) price per unit, which is the cost to our company."
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fld09asKw2pdsDurY",
+                    "name": "Logistics Cost",
+                    "description": "Logistics cost for delivery to the warehouse, allocated to this item (total for the row, not per-unit).\n\nExample: if delivering 50 hoodies from the factory to the warehouse costs €1 per unit, enter €50.\n\nIf the Logistics Cost is included and cannot be calculated correctly, set as $0."
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "{fldbFlh7fm5wHsu0D} * {fldQ05TlW2g7Vpfbl}",
+                        "referencedFieldIds": [
+                            "fldbFlh7fm5wHsu0D",
+                            "fldQ05TlW2g7Vpfbl"
+                        ],
+                        "result": {
+                            "type": "currency",
+                            "options": {
+                                "precision": 2,
+                                "symbol": "€"
+                            }
+                        }
+                    },
+                    "id": "fldfINZvhdDuuORdZ",
+                    "name": "Revenue",
+                    "description": "Revenue per item.\nQuantity × Sales Price (unit). \n\nCalculated automatically."
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "{fldbFlh7fm5wHsu0D} * {fldjCmP1lgPRVu9Ab} + {fld09asKw2pdsDurY}",
+                        "referencedFieldIds": [
+                            "fldbFlh7fm5wHsu0D",
+                            "fldjCmP1lgPRVu9Ab",
+                            "fld09asKw2pdsDurY"
+                        ],
+                        "result": {
+                            "type": "currency",
+                            "options": {
+                                "precision": 2,
+                                "symbol": "€"
+                            }
+                        }
+                    },
+                    "id": "fld9h0TbUKj7hW8Km",
+                    "name": "Total Cost",
+                    "description": "Total cost of delivering this item to the warehouse.\nQuantity × Unit Cost + Logistics Cost.\n\nCalculated automatically."
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "{fldfINZvhdDuuORdZ} - {fld9h0TbUKj7hW8Km}",
+                        "referencedFieldIds": [
+                            "fldfINZvhdDuuORdZ",
+                            "fld9h0TbUKj7hW8Km"
+                        ],
+                        "result": {
+                            "type": "currency",
+                            "options": {
+                                "precision": 2,
+                                "symbol": "€"
+                            }
+                        }
+                    },
+                    "id": "fldxK9jNCv17H5q9P",
+                    "name": "Profit",
+                    "description": "Gross profit on the item.\nRevenue − Total Cost.\n\nCalculated automatically."
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "IF({fldfINZvhdDuuORdZ} > 0, {fldxK9jNCv17H5q9P} / {fldfINZvhdDuuORdZ})",
+                        "referencedFieldIds": [
+                            "fldfINZvhdDuuORdZ",
+                            "fldxK9jNCv17H5q9P"
+                        ],
+                        "result": {
+                            "type": "percent",
+                            "options": {
+                                "precision": 0
+                            }
+                        }
+                    },
+                    "id": "fld31IQovbEgJzTOi",
+                    "name": "Profit Margin %",
+                    "description": "Gross Profit on selected item displayed in relative terms.\nProfit ÷ Revenue. \n\nCalculated automatically."
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tbl3Yp2cd5cNYl2hX",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldLYSWteIA7pO9LV"
+                    },
+                    "id": "fldzdpU17ofdxIMZG",
+                    "name": "Product",
+                    "description": "Link to the Products catalogue. Selecting a product pulls its pricing tiers, MOQ, and lead times from the Products table via lookups."
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblvSkPrcnRta5lzH",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": true,
+                        "inverseLinkFieldId": "fldBaW237JLH3YRDG"
+                    },
+                    "id": "fldJ2EWXlSetxCJ9u",
+                    "name": "Supplier Chosen",
+                    "description": "Link to the Suppliers table. Identifies the supplier producing this specific line."
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tbloVgVsbD3o8J6At",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": true,
+                        "inverseLinkFieldId": "fldsUUTQjCLhEr7Po"
+                    },
+                    "id": "fldVnE59FVerI4sOU",
+                    "name": "Orders",
+                    "description": "Link to the parent Order (header). Every line must be attached to exactly one Order."
+                },
+                {
+                    "type": "richText",
+                    "id": "fldhT1X03YKDxk01N",
+                    "name": "Order Information",
+                    "description": "Line-level specification: product details, sizes, colours, customisation, any constraints relevant to procurement."
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldMSeFG6glkztubT",
+                    "name": "Order Files",
+                    "description": "Files attached to this item: mockups, logos and other data that is later provided to the supplier that is necessary for production."
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "star",
+                        "color": "purpleBright"
+                    },
+                    "id": "fldoaJExwBK2zB0UU",
+                    "name": "Integrity Confirmation"
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldCVMGXwI1wzZXlk",
+                    "name": "Order Date",
+                    "description": "Date the line entered procurement (typically the same as the parent Order Date)."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldNsEaxinPpTMIeM",
+                    "name": "Shipping Deadline",
+                    "description": "Hard deadline by which the supplier must ship to keep the order on track."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldAi6r7NQ4oXHXQp",
+                    "name": "Delivery Deadline",
+                    "description": "Final date by which the item must be delivered to the customer. Drives Remaining Days and Urgency Signal."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldnDDdtJhYTG5vi8",
+                    "name": "ETSO",
+                    "description": "Estimated Time of Shipping Out. \n\nPlanned date the supplier ships the goods from their facility."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldrOqQu2Vc0mv714",
+                    "name": "ATSO",
+                    "description": "Actual Time of Shipping Out. \n\nConfirmed date when the supplier actually dispatched the goods.\n\nFilled Automatically."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldKbNVqvjPrVyUcE",
+                    "name": "ETA",
+                    "description": "Estimated Time of Arrival. \n\nPlanned date the shipment reaches its destination (warehouse, office, or customer)."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldcaykThXTZdfzaq",
+                    "name": "ATA",
+                    "description": "Actual Time of Arrival. \n\nConfirmed date the shipment was actually received at destination.\n\nFilled Automatically."
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldA4mezNrVNmfQdR",
+                    "name": "Boxes",
+                    "description": "Number of boxes in the shipment for this line. Used for logistics planning."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "sel9UqkZYkzoE29Eo",
+                                "name": "Client",
+                                "color": "greenLight1"
+                            },
+                            {
+                                "id": "selOndr3Iy8pwnUnc",
+                                "name": "Office (Tuchlauben)",
+                                "color": "yellowLight1"
+                            },
+                            {
+                                "id": "selOpjR6kuzRltL6W",
+                                "name": "Private (Ihor)",
+                                "color": "tealLight1"
+                            },
+                            {
+                                "id": "selSbztZ4j6Xo1uPI",
+                                "name": "Warehouse (N/A)",
+                                "color": "grayLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldW8MRyKNAhVW5UE",
+                    "name": "Logistics Destination",
+                    "description": "Type of Destination for order dispatching from the supplier (factory)"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "sel6zqI5hEOmlafFt",
+                                "name": "DHL",
+                                "color": "yellowLight1"
+                            },
+                            {
+                                "id": "selR6rXMoqQAZRwrY",
+                                "name": "FedEx",
+                                "color": "purpleLight1"
+                            },
+                            {
+                                "id": "selTmvTWs2m17lsGP",
+                                "name": "UPS",
+                                "color": "grayDark1"
+                            },
+                            {
+                                "id": "sel7eoE3T2P3Jd4Gc",
+                                "name": "DPD",
+                                "color": "redBright"
+                            },
+                            {
+                                "id": "seliYXyLHHfKbOjhF",
+                                "name": "GLS",
+                                "color": "blueBright"
+                            },
+                            {
+                                "id": "selLXHfAXeHX2tDQ5",
+                                "name": "Österreichische Post",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "sel3gF7my45ur2CEx",
+                                "name": "Sea Freight",
+                                "color": "tealLight2"
+                            }
+                        ]
+                    },
+                    "id": "fld257EGa6NAuuz4O",
+                    "name": "Carrier (Supplier leg)",
+                    "description": "Carrier on the supplier-to-warehouse leg (or supplier-to-office, depending on destination)."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldZtcthShllNmLnR",
+                    "name": "City / Destination Tag",
+                    "description": "Optional destination tag used to differentiate lines within the same order that ship to different addresses (e.g. \"Vienna\", \"Berlin\"). Appears in the line name.\n\nFill out only when multiple destinations are present."
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldSHrBg5ijTLKDZO",
+                    "name": "Shipping Address"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldDYqcTEJg0PwCXR",
+                    "name": "Track&Trace Supplier",
+                    "description": "Tracking number for the supplier-side leg."
+                },
+                {
+                    "type": "url",
+                    "id": "fldXuyMWVKx8JCkNO",
+                    "name": "Track&Trace Supplier URL",
+                    "description": "Tracking page URL for the supplier-side shipment."
+                },
+                {
+                    "type": "button",
+                    "id": "fldkUxp3r0si7w6CF",
+                    "name": "Track Logistics"
+                },
+                {
+                    "type": "singleCollaborator",
+                    "id": "fldIgqMeIJxwqKb1T",
+                    "name": "Last Check By"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fldHkENbNg9o3agy9",
+                    "name": "[WIP] Send to Supplier",
+                    "description": "WORK IN PROGRESS - INACTIVE\n\nWhen checked - sends an email to the supplier with order details."
+                },
+                {
+                    "type": "multipleLookupValues",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldVnE59FVerI4sOU",
+                        "fieldIdInLinkedTable": "fldlozRgz42HHSrEl",
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldEsWHXXKzTReSCe",
+                    "name": "Order ID (from Orders)",
+                    "description": "Lookup of the parent Order's Order ID. Feeds into Item Name."
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tbloVgVsbD3o8J6At",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldXjGds3ulM0eUgA"
+                    },
+                    "id": "fld68YiUXN1rqhZAv",
+                    "name": "Orders Overview"
+                },
+                {
+                    "type": "multipleLookupValues",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldVnE59FVerI4sOU",
+                        "fieldIdInLinkedTable": "fldEJMLOOtqW9lAtr",
+                        "result": {
+                            "type": "multilineText"
+                        }
+                    },
+                    "id": "fldYPq35gKGEicTKV",
+                    "name": "Shipping Address Import"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwamFzo2xgCa3hta",
+                    "name": "Grid view",
+                    "type": "grid"
+                },
+                {
+                    "id": "viwQmjYA8WhGLtLfN",
+                    "name": "Quality Grid",
+                    "type": "grid"
+                }
+            ]
+        },
+        {
+            "id": "tbl3Yp2cd5cNYl2hX",
+            "name": "Catalogue",
+            "primaryFieldId": "fldpdjnyXG1NgtOis",
+            "fields": [
+                {
+                    "type": "singleLineText",
+                    "id": "fldpdjnyXG1NgtOis",
+                    "name": "Name",
+                    "description": "Purpose: Internal product name used across all catalogues and as the primary identifier for each product entry.\nHow to fill: Enter the full, descriptive product name in English. Use title case (e.g. \"Classic Hoodie\", \"Bucket Hat\"). Avoid abbreviations. This name is used internally only and may differ from the public-facing web name."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldbIFRBwcbmiaeaD",
+                    "name": "[WEB] Name ENG",
+                    "description": "Purpose: Public-facing product name in English, used on the website and customer-facing materials.\nHow to fill: Enter the product name exactly as it should appear on the website. Use title case. If the product has no separate English web name, enter a dash (-). Must be reviewed by the marketing team before publishing ([WEB] Ready must be checked)."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldAWb59hJvpL1QvS",
+                    "name": "[WEB] Name DE",
+                    "description": "Purpose: Public-facing product name in German, used on the German-language version of the website.\nHow to fill: Enter the German translation of the product name as it should appear on the website. Use title case and correct German grammar (including capitalisation of nouns). If no German web name applies, enter a dash (-). Must be reviewed before publishing ([WEB] Ready must be checked)."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selVKN0ylqjX3UjF1",
+                                "name": "Essentials",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selJkcdk2YhBiuNed",
+                                "name": "Industry",
+                                "color": "orangeLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldgHcI5r4VPQ4AXt",
+                    "name": "Group Category",
+                    "description": "Navigation door. Essentials = self-serve, filtered by product type. Industry = curated by client sector, filtered by Branche. One value per product; a product lives in exactly one door. Product families (Standard/Premium variants) inherit the same Group."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selwcwZh9oE2wASDD",
+                                "name": "Apparel",
+                                "color": "pinkLight2"
+                            },
+                            {
+                                "id": "selvNwMrdV2FNgvVm",
+                                "name": "Bags",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "sel6MHYvZrnhbtgNb",
+                                "name": "Drinkware",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "sel3xu1EquLaUHv4w",
+                                "name": "Footwear",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selB7FH6rUbZmcFo2",
+                                "name": "Headwear",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "sel5Ej0bwbXQsdRG9",
+                                "name": "Homeware",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "selXmbJdHY9AHNXQy",
+                                "name": "Office",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "selDw3Hlg8GfRcfOk",
+                                "name": "Outdoor & Leisure",
+                                "color": "tealLight1"
+                            },
+                            {
+                                "id": "seli7lS2j97xgzhk2",
+                                "name": "Packaging",
+                                "color": "orangeLight1"
+                            },
+                            {
+                                "id": "selnYzS8NRzk5ZexV",
+                                "name": "Personal Care & Cosmetics",
+                                "color": "cyanLight1"
+                            },
+                            {
+                                "id": "seleMgkQGCWTcB2cb",
+                                "name": "Tech & Gadgets",
+                                "color": "blueLight1"
+                            },
+                            {
+                                "id": "sell3wIntDRFd0Xcb",
+                                "name": "Toys & Novelty",
+                                "color": "greenLight1"
+                            },
+                            {
+                                "id": "selvoltsFXYD7PFC3",
+                                "name": "Unsorted",
+                                "color": "grayLight2"
+                            },
+                            {
+                                "id": "selHFqeOk4gPZO0Mx",
+                                "name": "Wearable Accessories",
+                                "color": "redLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldUfiLQIyaPl8q9l",
+                    "name": "Filter: Item Category",
+                    "description": "Product type. Drives the Essentials-door filter and the cross-sell engine (Essentials of an adjacent type are surfaced under an Industry product). Assign exactly one type per product. Use 'Unsorted' only as a temporary intake bucket for new/unclear items pending classification; it is not a real category and should be emptied regularly. Do not create new types without approval."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selBlNYPxDgbaQhe1",
+                                "name": "Festivals & Events",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selegkl0nv8XXe5XJ",
+                                "name": "HoReCa",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selnsXvUJX00LIbYu",
+                                "name": "Premium Services",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "selGSvkFdFcFUWjjW",
+                                "name": "Sport & Health",
+                                "color": "redLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldRUMSQkIPPM5okW",
+                    "name": "Filter: Sector"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldOFhusp9P6mCcSp",
+                    "name": "SKU",
+                    "description": "Under DevelopmePurpose: Stock Keeping Unit — a unique alphanumeric code used to identify a product variant in inventory and order management systems.\nHow to fill: Enter the SKU assigned by the supplier or your internal system. If no SKU has been assigned yet, enter \"N/A\". SKUs must be unique per product. Do not leave blank — use \"N/A\" as a placeholder until confirmed.nt"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fldVpXkdidLSfWMDw",
+                    "name": "Master Ready",
+                    "description": "Purpose: Indicates that the product record is complete and approved for inclusion in the Master Catalogue.\nHow to fill: Check this box only when all required fields for this product have been filled, reviewed, and approved by the responsible team. Do not check until pricing, MOQ, category, and all other mandatory fields are confirmed. Unchecked = product is still in progress."
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fldgAyzwS0sVj4A6v",
+                    "name": "Out of Stock",
+                    "description": "Purpose: Flags that the product is currently unavailable for sale or procurement due to stock unavailability.\n\nHow to fill: Check this box when the product cannot be ordered or sold because stock has run out. Uncheck when stock is replenished. \n\nThis flag can be used to filter products for inventory updates and alert the sales team to avoid offering unavailable items."
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fld1EW1Z5DWnfySOy",
+                    "name": "Archived Items",
+                    "description": "Items from old import, single-purchase items or irrelevant items that require additional consideration before being added to the catalogue properly."
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldlqO3E89HCilwMa",
+                    "name": "MOQ | PROC",
+                    "description": "Purpose: Minimum Order Quantity required by the procurement/supplier side (PROC = Procurement). The smallest quantity that can be ordered from the supplier in a single purchase.\nHow to fill: Enter the minimum number of units the supplier requires per order. Use a whole number (e.g. 50). If the supplier has no MOQ, enter 1. Leave blank only if the information is not yet available."
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldTqmDGkdJTKmaYh",
+                    "name": "MOQ | SALES",
+                    "description": "Purpose: Minimum Order Quantity for the sales side (SALES). The minimum quantity a customer must order when purchasing this product.\nHow to fill: Enter the minimum number of units required per customer order. Use a whole number (e.g. 50). This may differ from MOQ | PROC. If no sales minimum applies, enter 1. Leave blank only if not yet determined."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldxs8AtB4k559Wsg",
+                    "name": "Unit of Measure",
+                    "description": "Purpose: Specifies the unit used to count or measure the product for ordering and pricing purposes.\nHow to fill: Enter the unit of measure for this product (e.g. \"pieces\", \"pairs\", \"sets\", \"kg\"). In most cases this will be \"pieces\". Must be consistent with how pricing and MOQ quantities are expressed. Do not leave blank."
+                },
+                {
+                    "type": "multilineText",
+                    "id": "flds18xXppWEOceSO",
+                    "name": "Production Reference",
+                    "description": "Any comments expanding on the production or refePurpose: Identifies the specific product model, catalogue entry, or reference code used by the supplier for production purposes.\nHow to fill: Enter the supplier's reference code, catalogue number, or product specification identifier (e.g. \"Supplier Name | Catalogue: REF12345\"). Use the format: [Supplier Name] | [Catalogue/Reference]: [Code]. Leave blank if no reference is available from the supplier.rencing exact items."
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fldck71dVDj3FUIr1",
+                    "name": "Sample Price | 1pc | PROC",
+                    "description": "Purpose: Procurement (supplier) price for a sample order or small order of 1–24 units. Used to calculate costs when ordering samples or very small quantities.\nHow to fill: Enter the unit price in USD as quoted by the supplier for orders of 1–24 pieces. Use the format $XX.XX (e.g. $19.00). This is the highest per-unit cost tier. Leave blank if no sample pricing has been confirmed."
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fldGTCKnBvn9CWkvs",
+                    "name": "Sample Price | 10-24 pcs | PROC",
+                    "description": "Purpose: Procurement (supplier) price for a sample order or small order of 1–24 units. Used to calculate costs when ordering samples or very small quantities.\nHow to fill: Enter the unit price in USD as quoted by the supplier for orders of 1–24 pieces. Use the format $XX.XX (e.g. $19.00). This is the highest per-unit cost tier. Leave blank if no sample pricing has been confirmed."
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fldkVzJ6HhPbsRl7X",
+                    "name": "25-49 pcs | PROC",
+                    "description": "Purpose: Procurement (supplier) unit price for orders of 25–49 pieces. Part of the tiered pricing structure used to determine costs based on order volume.\nHow to fill: Enter the unit price in USD as quoted by the supplier for this quantity range. Use the format $XX.XX (e.g. $12.00). Leave blank if the supplier has not confirmed pricing for this tier."
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fld6ERIiplxtxjDcb",
+                    "name": "50-99 pcs | PROC",
+                    "description": "Purpose: Procurement (supplier) unit price for orders of 50–99 pieces. Part of the tiered pricing structure used to determine costs based on order volume.\nHow to fill: Enter the unit price in USD as quoted by the supplier for this quantity range. Use the format $XX.XX (e.g. $10.00). Leave blank if the supplier has not confirmed pricing for this tier."
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fldWUjbYK7Uh3dPFk",
+                    "name": "100-249 | PROC"
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fldnH511dGtjBMG37",
+                    "name": "250 - 499 | PROC"
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fld8EuNfFx50D2BI0",
+                    "name": "500 - 999 pcs | PROC"
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "fldDr5tImLDEbUCh8",
+                    "name": "1000+ pcs | PROC"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"€\" & ROUND({fldck71dVDj3FUIr1}*1.3, 2)",
+                        "referencedFieldIds": [
+                            "fldck71dVDj3FUIr1"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldN1ycQTLhliQJMq",
+                    "name": "1pc | SALES",
+                    "description": "Displays the sales price for 1 piece, rounded to two decimal places and prefixed with €."
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"€\" & {fldGTCKnBvn9CWkvs}*2",
+                        "referencedFieldIds": [
+                            "fldGTCKnBvn9CWkvs"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldoogxylwkYg59yy",
+                    "name": "10-24 pcs | SALES"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"€\" & {fldkVzJ6HhPbsRl7X}*2",
+                        "referencedFieldIds": [
+                            "fldkVzJ6HhPbsRl7X"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldg4rmBWhkjJT0QN",
+                    "name": "24-49 pcs | SALES"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"€\" & {fld6ERIiplxtxjDcb}*2",
+                        "referencedFieldIds": [
+                            "fld6ERIiplxtxjDcb"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldEWFdY7jGDK0bjh",
+                    "name": "50-99 pcs | SALES"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"€\" & {fldWUjbYK7Uh3dPFk}*2",
+                        "referencedFieldIds": [
+                            "fldWUjbYK7Uh3dPFk"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldt40xltt8ZqDEIu",
+                    "name": "100-249 | SALES"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"€\" & {fldnH511dGtjBMG37}*2",
+                        "referencedFieldIds": [
+                            "fldnH511dGtjBMG37"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldxsldJcQuyVR5p3",
+                    "name": "250 - 499 | SALES"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"€\" & {fld8EuNfFx50D2BI0}*2",
+                        "referencedFieldIds": [
+                            "fld8EuNfFx50D2BI0"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldve0iKfeDbuIscf",
+                    "name": "500 - 999 pcs | SALES"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"€\" & {fldDr5tImLDEbUCh8}*2",
+                        "referencedFieldIds": [
+                            "fldDr5tImLDEbUCh8"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fldEUQkamZmq1FOjP",
+                    "name": "1000+ pcs | SALES"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldxqk8EXDMRfiwgv",
+                    "name": "Price Notes",
+                    "description": "Special Remarks about pricing when applicable"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fldxsXZXvmVuqcEol",
+                    "name": "Prices AC",
+                    "description": "Internal Procurement Tracker"
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldmpBWkpUcO6MN4F",
+                    "name": "Production Time (Days)"
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldcje797j3iE0goN",
+                    "name": "Transit Time (Days)"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "{fldmpBWkpUcO6MN4F}+{fldcje797j3iE0goN}",
+                        "referencedFieldIds": [
+                            "fldmpBWkpUcO6MN4F",
+                            "fldcje797j3iE0goN"
+                        ],
+                        "result": {
+                            "type": "number",
+                            "options": {
+                                "precision": 0
+                            }
+                        }
+                    },
+                    "id": "fldBJeUFJS3yDwe3P",
+                    "name": "Total Time (Days)"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldI44rRiKZ8UM8DO",
+                    "name": "Time Notes",
+                    "description": "Special Remarks about timing when applicable"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldUKiJPPw5JJ524b",
+                    "name": "Product Input Template",
+                    "description": "Under Development"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fldkeZdoqqtkP5iFQ",
+                    "name": "Size Chart Available"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldsuc5oJfuR7Ax1W",
+                    "name": "Size Description"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldRqEuYMscNxSsrZ",
+                    "name": "Size Chart"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fldpcVjjvotYcyN8F",
+                    "name": "Custom Options Available"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldMbr4S9RS7zbhU3",
+                    "name": "Custom Options Description"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldlVMlFhpUUbKJyS",
+                    "name": "Custom Options"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fld0TX7xcNMtK5Gql",
+                    "name": "Palette Used",
+                    "description": "Palette must be inserted when custom production is used."
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldGYOShoDQbGwNev",
+                    "name": "Palette Annotation"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldkFfAWstTnrKHOJ",
+                    "name": "Print Area"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldKI9Palbduv3q5G",
+                    "name": "Reference Catalogue"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldtar4CcUVWmI9Je",
+                    "name": "[WEB] Palette Photos"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldjoGaw92w2L7FPl",
+                    "name": "[WEB] Palette Hex Colours"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldWlZ9oRHcHdKc3a",
+                    "name": "Main Product Photo"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldzBPrsgjmMJihf0",
+                    "name": "Secondary Product Photos"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fldIsIpW8Ca4mZ9Pp",
+                    "name": "[WEB] Ready",
+                    "description": "Purpose: Indicates that the product is approved and ready to be published on the website (Web Catalogue).\nHow to fill: Check this box only after the [WEB] Name ENG, [WEB] Name DE, and all web-related content have been reviewed and approved. This flag controls whether the product is visible in the Web Catalogue view. Unchecked = product should not be published online."
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldpmOBeX1GGgKYtD",
+                    "name": "Project Photos (Linked)",
+                    "description": "Under Development"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldlxqtXyrnVFnf7d",
+                    "name": "Inspiration Photos"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldMkF6bCfgpXhNu6",
+                    "name": "Mockups"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldosxsw2tHxqtxtL",
+                    "name": "Mockup Instructions"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldl2DRA6A6ymQZUX",
+                    "name": "[WEB] Description EN"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldtJvmCzMZocu0Kt",
+                    "name": "[WEB] Description DE"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldzQrQCCYvi58xn0",
+                    "name": "[WEB] Specifications EN"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldqX9n8r0i9nrXKm",
+                    "name": "[WEB] Specifications DE"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldkoJvoL4UOGshxF",
+                    "name": "[WEB] Customisation EN"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldDyBFX1FDu8rEXJ",
+                    "name": "[WEB] Customisation DE"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldhb7BiuqOdDAzRI",
+                    "name": "[WEB] Production EN"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldMGkJ0TZFu9VXCN",
+                    "name": "[WEB] Production DE"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fld1tn2EiG8tQXvYy",
+                    "name": "Ready Check"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblvSkPrcnRta5lzH",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": true,
+                        "inverseLinkFieldId": "fldiWbNOx0LsBKtQ2"
+                    },
+                    "id": "fldnujcNe5nxyVKQn",
+                    "name": "Primary Supplier"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblvSkPrcnRta5lzH",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fld4kCwlSoqT6s0X7"
+                    },
+                    "id": "fldKdmmhHdesU3Sc3",
+                    "name": "Secondary Suppliers"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fld7FSikQsiDSC09e",
+                    "name": "[WEB] Product Special Field"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldmFcdFRe8jdq8KE",
+                    "name": "[WEB] Product Special Field Text EN"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldevkb7Q3gkh3k0m",
+                    "name": "[WEB] Product Special Field Text DE"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "star",
+                        "color": "greenBright"
+                    },
+                    "id": "fld8rOJL1g5p0eyfe",
+                    "name": "[WEB] Catalog Starring"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fld1MDkmiLmlFI3rN",
+                    "name": "Procurement copy"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblIj1buCzlJrNL8w",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldzdpU17ofdxIMZG"
+                    },
+                    "id": "fldLYSWteIA7pO9LV",
+                    "name": "Order Lines"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tbltGbScyUP4CzYLp",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldrOAuImaKM70x7e"
+                    },
+                    "id": "fldGDUcJk5ZNtEV2o",
+                    "name": "Pricing Requests"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwKQajH4CGujlart",
+                    "name": "General Overview",
+                    "type": "grid"
+                },
+                {
+                    "id": "viwTCd3cIy03MhRrK",
+                    "name": "TODO Items",
+                    "type": "grid"
+                },
+                {
+                    "id": "viwqpvuXskfBPyUIS",
+                    "name": "Master Catalogue",
+                    "type": "grid"
+                },
+                {
+                    "id": "viw1PI5Ays19wmmXE",
+                    "name": "Web Catalogue",
+                    "type": "grid"
+                }
+            ]
+        },
+        {
+            "id": "tblvSkPrcnRta5lzH",
+            "name": "Suppliers",
+            "primaryFieldId": "fldkMHxzE0gzpoxGj",
+            "fields": [
+                {
+                    "type": "multilineText",
+                    "id": "fldkMHxzE0gzpoxGj",
+                    "name": "Name"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "seljmMypn8gihNgwO",
+                                "name": "Accessoires",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "sel9rCbyyQUOt0L4B",
+                                "name": "Textile",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selhXqbNVm0KKqoH4",
+                                "name": "TEST",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "seloupIPPHzoMS3Ad",
+                                "name": "Print",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selv2wdF2241DaEYP",
+                                "name": "Footwear",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "seliIE6Q7bT3wtYwM",
+                                "name": "Glass Products",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selmnioleh8qdBf6w",
+                                "name": "Admin",
+                                "color": "pinkLight2"
+                            },
+                            {
+                                "id": "selPFvHCRJHJZWG81",
+                                "name": "Print Clothing",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "selYcgfx4Kvpvf2gj",
+                                "name": "Headwear",
+                                "color": "grayLight2"
+                            },
+                            {
+                                "id": "selKgKdA6ZG9s2uX3",
+                                "name": "Sourcer",
+                                "color": "blueLight1"
+                            },
+                            {
+                                "id": "seliCLrZqxVQnCni2",
+                                "name": "Mass Supplier",
+                                "color": "redLight1"
+                            }
+                        ]
+                    },
+                    "id": "fldIzCkpEVAwfAMiT",
+                    "name": "Specialisation"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldmvoaw0sEEuYkTo",
+                    "name": "Contact Name"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fld8tRt42QR0xYptm",
+                    "name": "Products"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fld4NsRg15cvEyH9M",
+                    "name": "WeChat"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldVEykc9iiAy3CwH",
+                    "name": "Phone number"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fld12fvfxYJp7f5nl",
+                    "name": "Email"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selcZbF7hvvCG5XaN",
+                                "name": "Hungary",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selKFwUmLBh9aRlAt",
+                                "name": "China",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selQwvEE0VrmHib8u",
+                                "name": "Netherlands",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "seltnoBptCFk6AV9N",
+                                "name": "Spain",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "seldJJA1tBWyvEDUJ",
+                                "name": "Pakistan",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selyjCzX0MJO2xW84",
+                                "name": "Turkey",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "seljG9gvgKCBaG9p5",
+                                "name": "Poland",
+                                "color": "pinkLight2"
+                            },
+                            {
+                                "id": "selBm4I72qYxDUHZn",
+                                "name": "Portugal",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "sel7Dq1j2QQhBj3XE",
+                                "name": "Ukraine",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selvJeNOlY7VFukp2",
+                                "name": "India",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "sel54xVeUmnSk3jpe",
+                                "name": "USA",
+                                "color": "grayLight2"
+                            },
+                            {
+                                "id": "selDPqJrSqhoqxfbL",
+                                "name": "Germany",
+                                "color": "yellowLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldGV322Y03FPyxGA",
+                    "name": "Country"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selZTp17MuVBa2G7q",
+                                "name": "Europe",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selD02ly4Suegu3SX",
+                                "name": "Asia",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selGi4N1FAuB7JIaW",
+                                "name": "North America",
+                                "color": "greenLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldc983h0PttHhfuk",
+                    "name": "Area"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selWyixbN3GRlJp2u",
+                                "name": "WhatsApp",
+                                "color": "greenLight1"
+                            },
+                            {
+                                "id": "selLNGptznrAmTPSU",
+                                "name": "WeChat",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selGBlp2dCFiugm0t",
+                                "name": "Alibaba",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "sel7j4gVyqVMZ1LBf",
+                                "name": "Telegram",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selWuxeHZxo3a6NPy",
+                                "name": "Email",
+                                "color": "yellowLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldT9wlDuAuogXqWg",
+                    "name": "Contact Channel"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldHNXIzEKiHBaBjT",
+                    "name": "WhatsApp "
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldu7csMj8y0gAgi1",
+                    "name": "Info"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldt0XgIoWd5R8KaB",
+                    "name": "[SA] WA/WC Preference"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tbl3Yp2cd5cNYl2hX",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldnujcNe5nxyVKQn"
+                    },
+                    "id": "fldiWbNOx0LsBKtQ2",
+                    "name": "Products - Imported"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tbl3Yp2cd5cNYl2hX",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldKdmmhHdesU3Sc3"
+                    },
+                    "id": "fld4kCwlSoqT6s0X7",
+                    "name": "Products - Imported 2"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selIcr8KVMNcmNKQU",
+                                "name": "UPS Air",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selapIaPd4S06y0PW",
+                                "name": "FedEx Air",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "selqL2swP78YiHDcX",
+                                "name": "DHL Air",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selCS5fc1gOxz5S7w",
+                                "name": "Other Air",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selzGyib625JIHR9K",
+                                "name": "Sea Vessel",
+                                "color": "blueLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldgKKalAkEcbhPdk",
+                    "name": "Preferred Transportation"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fldxIqMr18qZpHcJl",
+                    "name": "Active Supplier"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblIj1buCzlJrNL8w",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldJ2EWXlSetxCJ9u"
+                    },
+                    "id": "fldBaW237JLH3YRDG",
+                    "name": "Order Lines"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwSrguAyO8Ewdn9K",
+                    "name": "Active Suppliers",
+                    "type": "grid"
+                },
+                {
+                    "id": "viwzqU6ic8L3tggGm",
+                    "name": "Supplier Pool",
+                    "type": "grid"
+                }
+            ]
+        },
+        {
+            "id": "tblu1V5OGe6DvDKs0",
+            "name": "Clients Sync",
+            "primaryFieldId": "fldsufzTNecKmjlzF",
+            "fields": [
+                {
+                    "type": "singleLineText",
+                    "id": "fldsufzTNecKmjlzF",
+                    "name": "Client Name"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldwCRDutKMkOOE6F",
+                    "name": "Client Nickname"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selKdzJbl8nVSDn63",
+                                "name": "Active",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selLYxzqSqJxXwdnp",
+                                "name": "Inactive",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selgi9aPRdOFy0Q9P",
+                                "name": "Internal",
+                                "color": "purpleLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldFq6KlI902snhaS",
+                    "name": "Client Status"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldx7iWF1u8QPcUAl",
+                    "name": "Rep First Name"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldiweVUSEWWJleUo",
+                    "name": "Rep Last Name"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldclYJ5rZzoqmKcg",
+                    "name": "Contact First Name"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldITG7ZBi0HjVV5a",
+                    "name": "Contact Last Name"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selGwJWTYyaAX294Y",
+                                "name": "Telegram",
+                                "color": "cyanLight1"
+                            },
+                            {
+                                "id": "selgjrrHOc6XXV1Xf",
+                                "name": "WhatsApp",
+                                "color": "greenLight1"
+                            },
+                            {
+                                "id": "selBo3c1CX8WPTqva",
+                                "name": "Slack",
+                                "color": "yellowLight1"
+                            },
+                            {
+                                "id": "selEXds2aFw3Uh2Y0",
+                                "name": "E-Mail",
+                                "color": "orangeLight1"
+                            }
+                        ]
+                    },
+                    "id": "fldQWZFvQPgw4DBvE",
+                    "name": "Contact Channel"
+                },
+                {
+                    "type": "email",
+                    "id": "fld9FJHYzxWh5RCTG",
+                    "name": "Contact Email"
+                },
+                {
+                    "type": "phoneNumber",
+                    "id": "fldMLX0Irt5BHOu1t",
+                    "name": "Contact Phone"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldN54m47vnPB0EeM",
+                    "name": "Client Notes"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selqZh3N9y2TCOFTs",
+                                "name": "Germany",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selFVrvOi8T3x9dTC",
+                                "name": "Austria",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selwr02IJFByFRd4p",
+                                "name": "Switzerland",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "selK2WICKjNqLBQ5r",
+                                "name": "Slovakia",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selNSolG9OaVUMiZt",
+                                "name": "Czech Repuplic",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selT0OSMaVUMnCept",
+                                "name": "Poland",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selMsVUrBHHwWD3ZG",
+                                "name": "Hungary",
+                                "color": "orangeLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldPHPbjPWIFA9VJ9",
+                    "name": "Country"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fld8nhXWu3vJPi20r",
+                    "name": "Billing Address"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldUblaFd0LF7GVDc",
+                    "name": "Shipping Address"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selFmrBVU1T5ZDAmA",
+                                "name": "Privatperson — Private Individual",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "self2jHuzUOD9OWsJ",
+                                "name": "Einzelunternehmer / e.U. — Sole Proprietor",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selSWkyxyJjYPUobc",
+                                "name": "OG — General Partnership (AT)",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selfrWJOOKNFOku0c",
+                                "name": "KG — Limited Partnership",
+                                "color": "blueLight1"
+                            },
+                            {
+                                "id": "sel2wsWqFTBg7vo2D",
+                                "name": "GmbH & Co KG — Limited Partnership with LLC General Partner",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "selC43sA5qeWx0Ddl",
+                                "name": "GbR — Civil-Law Partnership (DE)",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selzj1TepymTMlbGz",
+                                "name": "FlexCo (FlexKapG) — Flexible Company (AT)",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selkdV865EhuHVOoj",
+                                "name": "GmbH — Limited Liability Company",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selu2ftJHHbOuHmz0",
+                                "name": "UG (haftungsbeschränkt) — Entrepreneurial Company / Mini-LLC (DE)",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selerX1SEcE7z3V7E",
+                                "name": "AG — Stock Corporation",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "selU5A7yecRf1fgCI",
+                                "name": "SE — European Company",
+                                "color": "pinkLight2"
+                            },
+                            {
+                                "id": "selW4odzxMxBLApH8",
+                                "name": "Verein — Association / Non-Profit",
+                                "color": "purpleLight1"
+                            },
+                            {
+                                "id": "selHfQlwP6HsUCl1T",
+                                "name": "Genossenschaft — Cooperative",
+                                "color": "blueLight1"
+                            },
+                            {
+                                "id": "selsW7WZOaB2dehtB",
+                                "name": "Privatstiftung — Private Foundation (AT)",
+                                "color": "cyanLight1"
+                            },
+                            {
+                                "id": "seloA6dHfZFasAbuT",
+                                "name": "Behörde / öffentliche Stelle — Public Body",
+                                "color": "tealLight1"
+                            },
+                            {
+                                "id": "selIWAwcZRiL2E2Lm",
+                                "name": "Other",
+                                "color": "grayLight1"
+                            }
+                        ]
+                    },
+                    "id": "fldB9RjXmOLnnRa13",
+                    "name": "Legal Form"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldZuuSEFjSykt4ER",
+                    "name": "UID/VAT ID"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selxuBsgRscVxXuMM",
+                                "name": "AT — Inland, 20% USt",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selHOSJVpgQeFEGKD",
+                                "name": "EU B2B — innergem. Lieferung, steuerfrei (gültige UID, Ware ab AT)",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "sellezbQpAEVzbQSf",
+                                "name": "EU — ohne gültige UID, 20% USt",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "seltTOieqXXq5xbaW",
+                                "name": "Drittland — Ausfuhr, steuerfrei (напр. CH)",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selwB9YgotJGbaVFU",
+                                "name": "Reverse Charge — nur Dienstleistung / Sonderfall",
+                                "color": "orangeLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldjo2h9Lds6Bq0De",
+                    "name": "VAT Treatment"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selMpjbUzm7ScWdeU",
+                                "name": "[100%] Full Prepayment",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selsLc92N6VtwR5QJ",
+                                "name": "[30%] Limited Provision",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selylMS9PRplqS4VW",
+                                "name": "[0%] No Advance",
+                                "color": "tealLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldxeJydYt9FGZdtE",
+                    "name": "Payment Terms"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selcFPHQlzWBFYKO8",
+                                "name": "To be developed",
+                                "color": "blueLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldp4EiryFtEy7Efy",
+                    "name": "Sales Channel"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldBrFzDhg65Bash9",
+                    "name": "Orders"
+                },
+                {
+                    "type": "singleCollaborator",
+                    "id": "fldhGvB30OGOgUMHi",
+                    "name": "Last Contributor"
+                },
+                {
+                    "type": "dateTime",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        },
+                        "timeFormat": {
+                            "name": "12hour",
+                            "format": "h:mma"
+                        },
+                        "timeZone": "client"
+                    },
+                    "id": "fld3TIua8etEtRc9F",
+                    "name": "Last Contribution"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tbloVgVsbD3o8J6At",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldj9daBeMy4wlEN6"
+                    },
+                    "id": "fldEQQNsfmRh9QS7W",
+                    "name": "Orders Overview"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwLCcpRaSYryTF2Y",
+                    "name": "Grid view",
+                    "type": "grid"
+                }
+            ]
+        },
+        {
+            "id": "tbltGbScyUP4CzYLp",
+            "name": "Pricing Inquiries",
+            "primaryFieldId": "fld2HRWRsoNB4Obzy",
+            "fields": [
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "\"S\" & RIGHT(\"000\" & {fldGE0NjKaiyjVgX0}, 3)\n& \" - \" & {fldekJwugG4gj8UNh}\n& \" - \" & UPPER(DATETIME_FORMAT({fldLAhskqMCoX0mIz}, 'MMMDD'))",
+                        "referencedFieldIds": [
+                            "fldGE0NjKaiyjVgX0",
+                            "fldekJwugG4gj8UNh",
+                            "fldLAhskqMCoX0mIz"
+                        ],
+                        "result": {
+                            "type": "singleLineText"
+                        }
+                    },
+                    "id": "fld2HRWRsoNB4Obzy",
+                    "name": "Ticket Name"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selmJ6TGeadGWbD8r",
+                                "name": "Not Started",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selmJPOFgpCnMioWE",
+                                "name": "In Progress",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selJFrg2J2shFp4QH",
+                                "name": "Completed",
+                                "color": "greenLight2"
+                            }
+                        ]
+                    },
+                    "id": "fld7rOoRJfJDNVmU7",
+                    "name": "Status"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selhfgvMhB5g8NPSV",
+                                "name": "Sourcing",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selbDvBzZxT35W6SL",
+                                "name": "Quotation",
+                                "color": "blueLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldK5laRGEREK7o39",
+                    "name": "Inquiry Type",
+                    "description": "Sourcing - A full research for a product including finding a proper supplier and all specifications (characteristics)\nQuotation - A price proposal for a product without any extra characteristics."
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblplp2iqHZwo0GW2",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldPLIje3elgAkjfQ"
+                    },
+                    "id": "fldiW6XFW5DBU1o2h",
+                    "name": "Sales Rep"
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldVbcPC7RPLORxXK",
+                    "name": "Response Deadline"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldekJwugG4gj8UNh",
+                    "name": "Lead"
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldG9w2aPAtLZInX0",
+                    "name": "Quantity"
+                },
+                {
+                    "type": "richText",
+                    "id": "fld5njxmYXxKcUcIQ",
+                    "name": "Description"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldKBoPibtyfFtOZd",
+                    "name": "Reference Attachment"
+                },
+                {
+                    "type": "richText",
+                    "id": "fldPwXWeib6dKtgfJ",
+                    "name": "Procurement Response"
+                },
+                {
+                    "type": "richText",
+                    "id": "fldrmNiBvvFUiCLgV",
+                    "name": "Procurement Notes"
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "$"
+                    },
+                    "id": "flde5ZPsis6ESOxDD",
+                    "name": "Procurement Price"
+                },
+                {
+                    "type": "percent",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fld1BXu7OI20dfSkT",
+                    "name": "Target Margin"
+                },
+                {
+                    "type": "percent",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fld1HQYbYjSTfGjik",
+                    "name": "Floor Margin"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selWwaJEK66ZuXuI1",
+                                "name": "Relative",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selzYHTvJJVDaSmlO",
+                                "name": "Absolute",
+                                "color": "orangeLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldb2lK0XTaTOHtpw",
+                    "name": "Floor Mode"
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "€"
+                    },
+                    "id": "fldrixpZETW5n4ufO",
+                    "name": "Floor Money"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "IF({flde5ZPsis6ESOxDD}, ROUND({flde5ZPsis6ESOxDD}/(1-{fld1BXu7OI20dfSkT}),2))",
+                        "referencedFieldIds": [
+                            "flde5ZPsis6ESOxDD",
+                            "fld1BXu7OI20dfSkT"
+                        ],
+                        "result": {
+                            "type": "currency",
+                            "options": {
+                                "precision": 2,
+                                "symbol": "€"
+                            }
+                        }
+                    },
+                    "id": "fldIGvT03XdaEsjKN",
+                    "name": "Sales Price"
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "IF({flde5ZPsis6ESOxDD},\n   IF({fldb2lK0XTaTOHtpw}=\"Absolute\",\n      {flde5ZPsis6ESOxDD}+{fldrixpZETW5n4ufO},\n      ROUND({flde5ZPsis6ESOxDD}/(1-{fld1HQYbYjSTfGjik}),2)))",
+                        "referencedFieldIds": [
+                            "flde5ZPsis6ESOxDD",
+                            "fldb2lK0XTaTOHtpw",
+                            "fldrixpZETW5n4ufO",
+                            "fld1HQYbYjSTfGjik"
+                        ],
+                        "result": {
+                            "type": "currency",
+                            "options": {
+                                "precision": 2,
+                                "symbol": "€"
+                            }
+                        }
+                    },
+                    "id": "fldZguhLLIDeefmzO",
+                    "name": "Floor Price"
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldLAhskqMCoX0mIz",
+                    "name": "Date Created"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tbl3Yp2cd5cNYl2hX",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": true,
+                        "inverseLinkFieldId": "fldGDUcJk5ZNtEV2o"
+                    },
+                    "id": "fldrOAuImaKM70x7e",
+                    "name": "Catalogue"
+                },
+                {
+                    "type": "autoNumber",
+                    "id": "fldGE0NjKaiyjVgX0",
+                    "name": "Request ID"
+                },
+                {
+                    "type": "multipleLookupValues",
+                    "options": {
+                        "isValid": true,
+                        "recordLinkFieldId": "fldiW6XFW5DBU1o2h",
+                        "fieldIdInLinkedTable": "fldJ6hQjqyVJEUvel",
+                        "result": {
+                            "type": "email"
+                        }
+                    },
+                    "id": "fldEl4CemPYDp8QcR",
+                    "name": "Corporate Email (from Team)"
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldIWHw3LCdSDDaxC",
+                    "name": "Actual time of Completion"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwLM10p7OGRocFaM",
+                    "name": "Procurement Queue",
+                    "type": "grid"
+                },
+                {
+                    "id": "viwtkZl0n3cYV8khL",
+                    "name": "Sales Output (Anna/Ivan)",
+                    "type": "grid"
+                },
+                {
+                    "id": "viwv9iI8qu1vW0VR9",
+                    "name": "🚨 Escalations",
+                    "type": "grid"
+                }
+            ]
+        },
+        {
+            "id": "tblplp2iqHZwo0GW2",
+            "name": "Team",
+            "primaryFieldId": "fldWSPFoA6Zz73N2N",
+            "fields": [
+                {
+                    "type": "singleLineText",
+                    "id": "fldWSPFoA6Zz73N2N",
+                    "name": "Name"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "sel8ulwtoZVfzJ0DK",
+                                "name": "Sales",
+                                "color": "purpleLight1"
+                            },
+                            {
+                                "id": "sel2tH4QcBPjWNrwF",
+                                "name": "Procurement",
+                                "color": "redLight1"
+                            },
+                            {
+                                "id": "selEmKPbwsnMfvEYs",
+                                "name": "Operations",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "sel9FlAgxzurS85SO",
+                                "name": "Design",
+                                "color": "greenLight2"
+                            }
+                        ]
+                    },
+                    "id": "fld1YnlFoM3KKcs2L",
+                    "name": "Department"
+                },
+                {
+                    "type": "email",
+                    "id": "fldJ6hQjqyVJEUvel",
+                    "name": "Corporate Email"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tbltGbScyUP4CzYLp",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldiW6XFW5DBU1o2h"
+                    },
+                    "id": "fldPLIje3elgAkjfQ",
+                    "name": "Pricing Requests"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwyLkwMtWwds4wdd",
+                    "name": "Grid view",
+                    "type": "grid"
+                }
+            ]
+        }
+    ]
+}

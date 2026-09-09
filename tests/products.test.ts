@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { buildNormalizedFields, fetchNormalizedProducts } from "../server/products/products";
+import { CATALOG_FIELD_IDS } from "../shared/catalogFields";
 
 const airtableMocks = vi.hoisted(() => ({
   buildAirtableListUrl: vi.fn(() => "https://example.com/airtable"),
@@ -15,14 +16,13 @@ describe("products normalization", () => {
     const fields = buildNormalizedFields(
       "sample",
       true,
-      "[WEB] Catalog Starring"
+      true
     );
-    expect(fields).toContain("[WEB] Name ENG");
-    expect(fields).toContain("1-24 pcs (Sample) | SALES");
-    expect(fields).toContain("Out of Stock");
-    expect(fields).toContain("[WEB] Catalog Starring");
-    expect(fields).toContain("Filter: Item Category");
-    expect(fields).not.toContain("Catalog Starring");
+    expect(fields).toContain(CATALOG_FIELD_IDS.nameEn);
+    expect(fields).toContain(CATALOG_FIELD_IDS.sampleSales);
+    expect(fields).toContain(CATALOG_FIELD_IDS.outOfStock);
+    expect(fields).toContain(CATALOG_FIELD_IDS.catalogFeatured);
+    expect(fields).toContain(CATALOG_FIELD_IDS.category);
   });
 
   it("normalizes records into product data", async () => {
@@ -32,12 +32,12 @@ describe("products normalization", () => {
           {
             id: "rec123",
             fields: {
-              "[WEB] Name ENG": "Tee",
-              "[WEB] Name DE": "T-Shirt",
-              "1-24 pcs (Sample) | SALES": 6,
-              "Out of Stock": "1",
-              "Filter: Item Category": ["Basics", "Summer"],
-              "Main Product Photo": [
+              [CATALOG_FIELD_IDS.nameEn]: "Tee",
+              [CATALOG_FIELD_IDS.nameDe]: "T-Shirt",
+              [CATALOG_FIELD_IDS.sampleSales]: 6,
+              [CATALOG_FIELD_IDS.outOfStock]: "1",
+              [CATALOG_FIELD_IDS.category]: ["Basics", "Summer"],
+              [CATALOG_FIELD_IDS.mainProductPhoto]: [
                 {
                   url: "https://cdn.example.com/full.jpg",
                   thumbnails: {
@@ -83,19 +83,24 @@ describe("products normalization", () => {
     });
   });
 
-  it("retries with legacy category field when renamed field is unavailable", async () => {
-    const first = new Response("UNKNOWN_FIELD_NAME: Filter: Item Category", {
-      status: 422,
-    });
-    const second = new Response(
+  it("filters categories after normalization without Airtable formula", async () => {
+    const response = new Response(
       JSON.stringify({
         records: [
           {
             id: "rec123",
             fields: {
-              "[WEB] Name ENG": "Tee",
-              "Item Category": ["Basics"],
-              "Main Product Photo": [],
+              [CATALOG_FIELD_IDS.nameEn]: "Tee",
+              [CATALOG_FIELD_IDS.category]: ["Basics"],
+              [CATALOG_FIELD_IDS.mainProductPhoto]: [],
+            },
+          },
+          {
+            id: "rec456",
+            fields: {
+              [CATALOG_FIELD_IDS.nameEn]: "Bottle",
+              [CATALOG_FIELD_IDS.category]: ["Drinkware"],
+              [CATALOG_FIELD_IDS.mainProductPhoto]: [],
             },
           },
         ],
@@ -103,9 +108,7 @@ describe("products normalization", () => {
       { status: 200 }
     );
 
-    (fetchAirtable as ReturnType<typeof vi.fn>)
-      .mockResolvedValueOnce(first)
-      .mockResolvedValueOnce(second);
+    (fetchAirtable as ReturnType<typeof vi.fn>).mockResolvedValueOnce(response);
 
     const result = await fetchNormalizedProducts({
       apiToken: "token",
@@ -142,22 +145,14 @@ describe("products normalization", () => {
     const first = new Response("UNKNOWN_FIELD_NAME: [WEB] Catalog Starring", {
       status: 422,
     });
-    const second = new Response("UNKNOWN_FIELD_NAME: Catalog Starring", {
-      status: 422,
-    });
-    const third = new Response("UNKNOWN_FIELD_NAME: Starring", {
-      status: 422,
-    });
-    const fourth = new Response(
+    const second = new Response(
       JSON.stringify({ records: [], offset: undefined }),
       { status: 200 }
     );
 
     (fetchAirtable as ReturnType<typeof vi.fn>)
       .mockResolvedValueOnce(first)
-      .mockResolvedValueOnce(second)
-      .mockResolvedValueOnce(third)
-      .mockResolvedValueOnce(fourth);
+      .mockResolvedValueOnce(second);
 
     const result = await fetchNormalizedProducts({
       apiToken: "token",
@@ -174,10 +169,10 @@ describe("products normalization", () => {
           {
             id: "rec1",
             fields: {
-              "[WEB] Name ENG": "Pen One",
-              "[WEB] Name DE": "Stift Eins",
-              "1000+ pcs | SALES": "1.2",
-              "Main Product Photo": [],
+              [CATALOG_FIELD_IDS.nameEn]: "Pen One",
+              [CATALOG_FIELD_IDS.nameDe]: "Stift Eins",
+              [CATALOG_FIELD_IDS.sales1000Plus]: "1.2",
+              [CATALOG_FIELD_IDS.mainProductPhoto]: [],
             },
           },
         ],
@@ -192,10 +187,10 @@ describe("products normalization", () => {
           {
             id: "rec2",
             fields: {
-              "[WEB] Name ENG": "Wooden Pencil",
-              "[WEB] Name DE": "Holzbleistift",
-              "1000+ pcs | SALES": "0.9",
-              "Main Product Photo": [],
+              [CATALOG_FIELD_IDS.nameEn]: "Wooden Pencil",
+              [CATALOG_FIELD_IDS.nameDe]: "Holzbleistift",
+              [CATALOG_FIELD_IDS.sales1000Plus]: "0.9",
+              [CATALOG_FIELD_IDS.mainProductPhoto]: [],
             },
           },
         ],

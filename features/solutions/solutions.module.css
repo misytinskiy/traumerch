@@ -134,19 +134,9 @@
     color: var(--color-black);
   }
 
-  .mobileMedia {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: var(--color-gray-e5);
+  .mobileHeroSlider {
     margin-bottom: 20px;
   }
-
-  .mobileMediaImage {
-    object-fit: cover;
-  }
-
 
   .mobileCardsLabel {
     margin: 0 0 10px;

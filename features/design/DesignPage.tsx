@@ -15,7 +15,9 @@ export default async function DesignPage({
 
   if (productId && apiToken) {
     try {
-      const url = buildAirtableRecordUrl(productId);
+      const url = buildAirtableRecordUrl(productId, undefined, {
+        returnFieldsByFieldId: true,
+      });
       const response = await fetchAirtable(url, apiToken);
       if (response.ok) {
         initialRecord = (await response.json()) as {

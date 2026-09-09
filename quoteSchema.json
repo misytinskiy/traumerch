@@ -1,0 +1,1484 @@
+{
+    "tables": [
+        {
+            "id": "tbl6uwZdrpWZHz9DD",
+            "name": "UserInfo",
+            "primaryFieldId": "fldwVqWkjS6F593gm",
+            "fields": [
+                {
+                    "type": "singleLineText",
+                    "id": "fldwVqWkjS6F593gm",
+                    "name": "Name"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldEi9wfScPzb1zW3",
+                    "name": "Surname"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selSKSlk6apTXd178",
+                                "name": "Todo",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "sel50SNYZKVkXKX7s",
+                                "name": "In progress",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selZqIrigHhz0WCuO",
+                                "name": "Done",
+                                "color": "greenLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldvoEGVOZf6ox6rr",
+                    "name": "Status"
+                },
+                {
+                    "type": "singleCollaborator",
+                    "id": "fldnGFDgJVeHDBlwK",
+                    "name": "Assignee"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldIuu3d0fZQY5okp",
+                    "name": "Email"
+                },
+                {
+                    "type": "phoneNumber",
+                    "id": "fldmpJ0ogDI0c3Mb9",
+                    "name": "Phone"
+                },
+                {
+                    "type": "multipleSelects",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selX16bIg5JPElaez",
+                                "name": "Private label",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selAan2gwv0FGxvmn",
+                                "name": "Influencer activation",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "sela1HoOE1gsZraud",
+                                "name": "Smart platform",
+                                "color": "tealLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldPHwrpNUDzC7A2F",
+                    "name": "Additional request"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selZBerBPh73Epu7d",
+                                "name": "Email",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "sel1QGaqJVcM5RCRX",
+                                "name": "WhatsApp",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selb4mv6vQ5noqcfW",
+                                "name": "Slack",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selMkQ9Gdcldcifhy",
+                                "name": "Teams",
+                                "color": "greenLight2"
+                            }
+                        ]
+                    },
+                    "id": "fld1mVrYYyxPD1L2i",
+                    "name": "Preferred Type"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fld0OyEiAX9rxHaP1",
+                    "name": "Username"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selDHdNTsWhmJy8iM",
+                                "name": "Merchandise",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selYi1tuy7no8QkQi",
+                                "name": "Services",
+                                "color": "cyanLight2"
+                            }
+                        ]
+                    },
+                    "id": "flddIZjqV4rmmfK6E",
+                    "name": "Request Type"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldGodTMkZ8Qky439",
+                    "name": "Description Quote No-Cart"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fld9A6aZ4NcPT062O",
+                    "name": "Attachments"
+                },
+                {
+                    "type": "aiText",
+                    "options": {
+                        "referencedFieldIds": [
+                            "fld9A6aZ4NcPT062O"
+                        ],
+                        "prompt": [
+                            "You are a professional document analyst specializing in summarizing content from various file types. Your task is to extract key points and provide a concise summary of the content found in the attached files. Ensure that the summary captures the main ideas and any important details without including unnecessary information.\n\nAnalyze the content of the attached files to identify the main themes and significant details. Summarize these points clearly and concisely, ensuring that the summary is informative and relevant to the document's purpose.\n\nFormat your response as plain text, keeping it concise and to the point. If you cannot summarize the content, output \"Unable to summarize the content.\" Example: \"The document discusses the impact of climate change on polar bears, highlighting the loss of habitat and food sources.\" (Real examples should be longer and more detailed.)\n\nFiles:\n",
+                            {
+                                "field": {
+                                    "fieldId": "fld9A6aZ4NcPT062O"
+                                }
+                            }
+                        ]
+                    },
+                    "id": "fldKEUzxgJHrkcNIj",
+                    "name": "Attachment Summary",
+                    "description": "An AI generated summary of the Attachments field. Upload files to Attachments to generate a summary."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "sel58go0fG6IE3DfD",
+                                "name": "Private label",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selJu2AW0eAgPi4ZZ",
+                                "name": "Influancer Activation",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selphtRBSMTamJCla",
+                                "name": "Smart Platform",
+                                "color": "tealLight2"
+                            }
+                        ]
+                    },
+                    "id": "flduUc4QDmwfAUral",
+                    "name": "Services"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldCCkiYbEIiEIOzD",
+                    "name": "Description"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldfPZmbGHqrr35K5",
+                    "name": "Company name"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fld4raGgm9uLjx3EV",
+                    "name": "Address"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldpb7JbK2BiAdJdR",
+                    "name": "Apartment"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldirCMquKVWZCBLm",
+                    "name": "Postal code"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldaGb7WW03cJ4FDD",
+                    "name": "City"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldOYBcgz8G7kPmaX",
+                    "name": "Country"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldXolLCaI4K4DCQQ",
+                    "name": "Vat number"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldBRJXSyFX6hOQ9O",
+                    "name": "Preferred delivery date"
+                },
+                {
+                    "type": "checkbox",
+                    "options": {
+                        "icon": "check",
+                        "color": "greenBright"
+                    },
+                    "id": "fldsKifNM8CmblR1Y",
+                    "name": "Use the same address for shipping"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldQ5mSWWfJn7Go4B",
+                    "name": "Product quantity"
+                },
+                {
+                    "type": "createdTime",
+                    "options": {
+                        "result": {
+                            "type": "dateTime",
+                            "options": {
+                                "dateFormat": {
+                                    "name": "local",
+                                    "format": "l"
+                                },
+                                "timeFormat": {
+                                    "name": "12hour",
+                                    "format": "h:mma"
+                                },
+                                "timeZone": "client"
+                            }
+                        }
+                    },
+                    "id": "fldN5VKYAS0VPy5k6",
+                    "name": "Created"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selstutCs2UgHPPyk",
+                                "name": "Website",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selPbwrf5EzVczp1B",
+                                "name": "Manual Outreach",
+                                "color": "redLight1"
+                            },
+                            {
+                                "id": "sel7QWCF1iY3rvOJX",
+                                "name": "GGATE26 QR / CBDO Back",
+                                "color": "blueLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldkuv52DEjxpKLNN",
+                    "name": "Lead Source"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldFhOpUEgzR80Pc2",
+                    "name": "Source Key"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldNIN8dju7PQFfXo",
+                    "name": "Campaign"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldPa0RvFLfYnzZP7",
+                    "name": "Landing Page"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldalrqRjLsZ9kfGm",
+                    "name": "Scan ID"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldZnqfz3MykNWlDr",
+                    "name": "Visitor ID"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viw1C4h3BZ4PTjHEy",
+                    "name": "Grid view",
+                    "type": "grid"
+                }
+            ]
+        },
+        {
+            "id": "tblW8WVCbzg4Pa3b6",
+            "name": "Leads",
+            "description": "Sales leads pipeline. Aligned to the Sales Architecture (Pipeline & Stages) procedure in Notion (Sales & Marketing, Sales Home). Use the Stage field for pipeline position; Lost Reason + Lost Date drive Re-engagement Due automatically.",
+            "primaryFieldId": "fldh4oz1lAoPgshuj",
+            "fields": [
+                {
+                    "type": "singleLineText",
+                    "id": "fldh4oz1lAoPgshuj",
+                    "name": "Name"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fld8uVvziBGCFbxhC",
+                    "name": "Notes"
+                },
+                {
+                    "type": "singleCollaborator",
+                    "id": "fldGAnrWMTovEgzHK",
+                    "name": "Assignee"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fld7bGTi9LUiaUHm5",
+                    "name": "Attachments"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldbgJCKTo2m49Krs",
+                    "name": "Attachment Notes",
+                    "description": "Links or other ways to reach the attachment, if it's not available in an Airtable-readable format"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldvmRHmqUJTF47eV",
+                    "name": "Preferred Items"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selkjAqGLBILux2Gy",
+                                "name": "1: Lead",
+                                "color": "grayLight2"
+                            },
+                            {
+                                "id": "selcqI3UYk9aouBcN",
+                                "name": "1B: Triage",
+                                "color": "grayLight1"
+                            },
+                            {
+                                "id": "selCDwmSCjNSWKuQK",
+                                "name": "2a: 1st Outbound",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "sel9Sw1qUHDAAV8jz",
+                                "name": "2b: 2nd Outbound",
+                                "color": "blueLight1"
+                            },
+                            {
+                                "id": "selsGvg24tTbVWoBk",
+                                "name": "2c: 3rd Outbound",
+                                "color": "blueBright"
+                            },
+                            {
+                                "id": "selP3p1d3QfqiQax1",
+                                "name": "3: Discovery + Pitch",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selB4AcvJNYLtrrPr",
+                                "name": "3.5: Procurement Interface",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "selStjDDrJ7UoXTE3",
+                                "name": "4: Proposal",
+                                "color": "yellowLight1"
+                            },
+                            {
+                                "id": "selER8LzMJzconJgN",
+                                "name": "5: Negotiation",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selWLUjF3f8dBcbaG",
+                                "name": "6a: Operations Handoff (Won)",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selfB6o0n3ArclXFu",
+                                "name": "6b: Lost / Nurture",
+                                "color": "redLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldZS5y5Tme2DnYJm",
+                    "name": "Stage",
+                    "description": "Pipeline stage per Sales Architecture. Entry points: Direct Outreach & Russian Network start at 2a; Marketing Inbound & Cold Email start at 1 then 1B (Cold Email skips to 3)."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "sel7XU7ORC2UcwPbu",
+                                "name": "Direct Outreach",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "sel0xkDyWnhxC2Hy2",
+                                "name": "Marketing Inbound",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selBSeGNGybcFtTD6",
+                                "name": "Cold Email",
+                                "color": "purpleLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldbIMubDDPQiFm9p",
+                    "name": "Channel",
+                    "description": "Lead-generation channel."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selgxoz8MaUKfD90x",
+                                "name": "DACH",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selh50OaY1qgProgf",
+                                "name": "Russian-speaking",
+                                "color": "orangeLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldO6CqjmxahKYMRb",
+                    "name": "Segment",
+                    "description": "Client segment. DACH processed in German; Russian-speaking processed by Ivan."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selg0pZnQWslQNnDc",
+                                "name": "Festivals & Events",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "sellkNsGDizcxjLOX",
+                                "name": "Tech / Corporate",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selxQEBXSlYsyJaeS",
+                                "name": "FMCG (large)",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "sel6E4HntWTgQEofv",
+                                "name": "FMCG (local)",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selh6jVbKZmKMc8LC",
+                                "name": "HoReCA",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selXfBSteXqrecaiu",
+                                "name": "NGOs",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "sel0xn1m1h5NOL1Tc",
+                                "name": "Sports & Health",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selL5pd3HhV91yKdj",
+                                "name": "Premium Hotels",
+                                "color": "pinkLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldVMN32kJa60asI1",
+                    "name": "Vertical",
+                    "description": "Target vertical. Drives the Outbound Pattern."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "sel75eEzEQdUiPDqF",
+                                "name": "A: Email-Heavy",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "sel1Wz8glAWWXAjzD",
+                                "name": "B: Email-Call",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "seljkTdl2V5LiNLTj",
+                                "name": "C: Relational",
+                                "color": "purpleLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldRj4eqxHBuCIBVp",
+                    "name": "Outbound Pattern",
+                    "description": "Stage 2 cadence pattern. A: Tech/Corporate/NGOs/large FMCG. B: HoReCA/local FMCG. C: Festivals/Sports/Premium Hotels."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selzGh3y8roXKDYKX",
+                                "name": "Ivan",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "selKxT6LV0E7RUXrm",
+                                "name": "Anna",
+                                "color": "greenLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldpNFKdpA1UHh4aN",
+                    "name": "Closing Owner",
+                    "description": "Role that owns closing. Sales Rep (DACH) or Ivan (Russian segment)."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selRH2ySzTHRqJhsp",
+                                "name": "No Response",
+                                "color": "grayLight2"
+                            },
+                            {
+                                "id": "sellEbiVud7EDUB6q",
+                                "name": "Budget / Timing",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selT3DmPl12lEV7rb",
+                                "name": "Lost to Competitor",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "seliKF6pMXjLtXCK3",
+                                "name": "Quality / Trust Concerns",
+                                "color": "redLight1"
+                            },
+                            {
+                                "id": "selHAEFrdUfNrTLY6",
+                                "name": "Ghosted after Proposal",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "sel5l6uNvNDpiOJEc",
+                                "name": "Bad Fit",
+                                "color": "grayLight1"
+                            },
+                            {
+                                "id": "selaesa8FQfs63h3E",
+                                "name": "Disqualified (Out of ICP)",
+                                "color": "grayDark1"
+                            },
+                            {
+                                "id": "selCTWpEtpkg4Juhb",
+                                "name": "Disqualified (Discovery)",
+                                "color": "purpleDark1"
+                            }
+                        ]
+                    },
+                    "id": "fld4sDzdBlBWSInhO",
+                    "name": "Lost Reason",
+                    "description": "Set only when Stage is 6b. Drives re-engagement policy."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selVCJUPs1k51czXs",
+                                "name": "Ivan/Anna",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "sel24584EDJtH1VJQ",
+                                "name": "Marketing",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selIpIpbCndH16MYM",
+                                "name": "Cold Email Team",
+                                "color": "purpleLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldVICSsKuZ7Hjv9I",
+                    "name": "Attributed Team",
+                    "description": "Attribution for commission. Locks at record creation for Cold Email leads; does not transfer if the company already exists in the CRM."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "iso",
+                            "format": "YYYY-MM-DD"
+                        }
+                    },
+                    "id": "fldI1dGHt0JAZvcMr",
+                    "name": "Lost Date",
+                    "description": "Date the lead entered Stage 6b. Feeds Re-engagement Due."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "iso",
+                            "format": "YYYY-MM-DD"
+                        }
+                    },
+                    "id": "fldvWGYKusbWyhSbD",
+                    "name": "Trigger Date",
+                    "description": "Client-stated trigger date for Budget / Timing lost reason. Re-engagement fires 1 week after this."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fld719vYI73k93zWA",
+                    "name": "Next Action Date",
+                    "description": "Next scheduled critical date or commitment that must be provided to the lead"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fld3wJL4ZxsB68o5y",
+                    "name": "Next Action Comment",
+                    "description": "Described action for the next action date."
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fld2LSWpaYYSgz83J",
+                    "name": "Next Stage Target",
+                    "description": "Next scheduled touch or step. Stage 2 cadence: 2a Day 0, 2b Day +3 to 4, 2c Day +8 to 10."
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "€"
+                    },
+                    "id": "fld23k2GLtzlbD0bI",
+                    "name": "Exp. Deal Value",
+                    "description": "Estimated deal value for pipeline weighting counted in euros."
+                },
+                {
+                    "type": "formula",
+                    "options": {
+                        "isValid": true,
+                        "formula": "IF({fld4sDzdBlBWSInhO}=\"No Response\",DATEADD({fldI1dGHt0JAZvcMr},3,'months'),IF({fld4sDzdBlBWSInhO}=\"Lost to Competitor\",DATEADD({fldI1dGHt0JAZvcMr},6,'months'),IF({fld4sDzdBlBWSInhO}=\"Quality / Trust Concerns\",DATEADD({fldI1dGHt0JAZvcMr},6,'months'),IF({fld4sDzdBlBWSInhO}=\"Ghosted after Proposal\",DATEADD({fldI1dGHt0JAZvcMr},6,'weeks'),IF({fld4sDzdBlBWSInhO}=\"Budget / Timing\",DATEADD({fldvWGYKusbWyhSbD},1,'weeks'),BLANK())))))",
+                        "referencedFieldIds": [
+                            "fld4sDzdBlBWSInhO",
+                            "fldI1dGHt0JAZvcMr",
+                            "fldvWGYKusbWyhSbD"
+                        ],
+                        "result": {
+                            "type": "date",
+                            "options": {
+                                "dateFormat": {
+                                    "name": "us",
+                                    "format": "M/D/YYYY"
+                                }
+                            }
+                        }
+                    },
+                    "id": "fldxQWvq5Iz2wC9Nw",
+                    "name": "Re-engagement Due",
+                    "description": "Auto-computed date to re-approach a Lost lead, per the Lost Tree policy. Blank for non-revivable reasons (Bad Fit, Disqualified)."
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwO5BruhvyWxRFMq",
+                    "name": "Grid view",
+                    "type": "grid"
+                }
+            ]
+        },
+        {
+            "id": "tblGZbRHnE9hYX1Ak",
+            "name": "Clients",
+            "primaryFieldId": "fldni3JARRNYlEDUs",
+            "fields": [
+                {
+                    "type": "singleLineText",
+                    "id": "fldni3JARRNYlEDUs",
+                    "name": "Client Name",
+                    "description": "Official Name of the company as per legal documents."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldH91KRWAh4BEq7h",
+                    "name": "Client Nickname",
+                    "description": "Nickname used in team communication to refer to the client."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selKdzJbl8nVSDn63",
+                                "name": "Active",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selLYxzqSqJxXwdnp",
+                                "name": "Inactive",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selgi9aPRdOFy0Q9P",
+                                "name": "Internal",
+                                "color": "purpleLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldP8e4ybXSNA1J3z",
+                    "name": "Client Status",
+                    "description": "General Client Status to account for recurring purchases."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldDBZQ2ZT7d4Smx7",
+                    "name": "Rep First Name",
+                    "description": "First Name of the official company manager (the person who is put on the invoice) in latin alphabet letters."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldDAgcQhIotVyYTw",
+                    "name": "Rep Last Name",
+                    "description": "Last Name of the official company manager (the person who is put on the invoice) in latin alphabet letters."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldYo6qz12ripLUPW",
+                    "name": "Contact First Name",
+                    "description": "First Name of the contact person (person who is doing communication with the team) in latin alphabet letters."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldQxXWFX3ipTTbib",
+                    "name": "Contact Last Name",
+                    "description": "Last Name of the contact person (person who is doing communication with the team) in latin alphabet letters."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selGwJWTYyaAX294Y",
+                                "name": "Telegram",
+                                "color": "cyanLight1"
+                            },
+                            {
+                                "id": "selgjrrHOc6XXV1Xf",
+                                "name": "WhatsApp",
+                                "color": "greenLight1"
+                            },
+                            {
+                                "id": "selBo3c1CX8WPTqva",
+                                "name": "Slack",
+                                "color": "yellowLight1"
+                            },
+                            {
+                                "id": "selEXds2aFw3Uh2Y0",
+                                "name": "E-Mail",
+                                "color": "orangeLight1"
+                            }
+                        ]
+                    },
+                    "id": "fldRqjh2XV0k6QWte",
+                    "name": "Contact Channel",
+                    "description": "Default Channel used for communications with the contact person."
+                },
+                {
+                    "type": "email",
+                    "id": "fld4IPClD0qblSDzu",
+                    "name": "Contact Email",
+                    "description": "Primary email used for communications with the client.\n"
+                },
+                {
+                    "type": "phoneNumber",
+                    "id": "fldpDP0WRVyndiI9s",
+                    "name": "Contact Phone",
+                    "description": "Primary phone number used for communications with the client.\n\nMust always begin with the country prefix. Prefix and regional code must always be separated with spaces."
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldJWuGnoXvM1190Y",
+                    "name": "Client Notes",
+                    "description": "Optional. General Notes about the customer left by the sales department for sales flow purposes."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selqZh3N9y2TCOFTs",
+                                "name": "Germany",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selFVrvOi8T3x9dTC",
+                                "name": "Austria",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selwr02IJFByFRd4p",
+                                "name": "Switzerland",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "selK2WICKjNqLBQ5r",
+                                "name": "Slovakia",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selNSolG9OaVUMiZt",
+                                "name": "Czech Repuplic",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selT0OSMaVUMnCept",
+                                "name": "Poland",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selMsVUrBHHwWD3ZG",
+                                "name": "Hungary",
+                                "color": "orangeLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldmcEEkYG4uLuYAJ",
+                    "name": "Country",
+                    "description": "Country where the customer's legal entity is located."
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldXNSn0kGcaQOFLN",
+                    "name": "Billing Address",
+                    "description": "Legal address of the company used for issuing documents."
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldgmMVnxiPuUU0P5",
+                    "name": "Shipping Address",
+                    "description": "Address where the goods should be shipped. If multiple addresses are present, separate using paragraphs (1 paragraph = 1 address)."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selFmrBVU1T5ZDAmA",
+                                "name": "Privatperson — Private Individual",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "self2jHuzUOD9OWsJ",
+                                "name": "Einzelunternehmer / e.U. — Sole Proprietor",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selSWkyxyJjYPUobc",
+                                "name": "OG — General Partnership (AT)",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selfrWJOOKNFOku0c",
+                                "name": "KG — Limited Partnership",
+                                "color": "blueLight1"
+                            },
+                            {
+                                "id": "sel2wsWqFTBg7vo2D",
+                                "name": "GmbH & Co KG — Limited Partnership with LLC General Partner",
+                                "color": "purpleLight2"
+                            },
+                            {
+                                "id": "selC43sA5qeWx0Ddl",
+                                "name": "GbR — Civil-Law Partnership (DE)",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selzj1TepymTMlbGz",
+                                "name": "FlexCo (FlexKapG) — Flexible Company (AT)",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selkdV865EhuHVOoj",
+                                "name": "GmbH — Limited Liability Company",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selu2ftJHHbOuHmz0",
+                                "name": "UG (haftungsbeschränkt) — Entrepreneurial Company / Mini-LLC (DE)",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "selerX1SEcE7z3V7E",
+                                "name": "AG — Stock Corporation",
+                                "color": "orangeLight2"
+                            },
+                            {
+                                "id": "selU5A7yecRf1fgCI",
+                                "name": "SE — European Company",
+                                "color": "pinkLight2"
+                            },
+                            {
+                                "id": "selW4odzxMxBLApH8",
+                                "name": "Verein — Association / Non-Profit",
+                                "color": "purpleLight1"
+                            },
+                            {
+                                "id": "selHfQlwP6HsUCl1T",
+                                "name": "Genossenschaft — Cooperative",
+                                "color": "blueLight1"
+                            },
+                            {
+                                "id": "selsW7WZOaB2dehtB",
+                                "name": "Privatstiftung — Private Foundation (AT)",
+                                "color": "cyanLight1"
+                            },
+                            {
+                                "id": "seloA6dHfZFasAbuT",
+                                "name": "Behörde / öffentliche Stelle — Public Body",
+                                "color": "tealLight1"
+                            },
+                            {
+                                "id": "selIWAwcZRiL2E2Lm",
+                                "name": "Other",
+                                "color": "grayLight1"
+                            }
+                        ]
+                    },
+                    "id": "fldFAaBt6icUFVlyt",
+                    "name": "Legal Form",
+                    "description": "Legal form of the customer. Segmentation only; does not affect invoicing or VAT (those use UID, Country, VAT Treatment). Pick the closest match, use Other if non-DACH or unsure."
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldsozeNicYTxKxqX",
+                    "name": "UID/VAT ID",
+                    "description": "VAT Number of the legal entity of the customer. Must always be present for any customer."
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selxuBsgRscVxXuMM",
+                                "name": "AT — Inland, 20% USt",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selHOSJVpgQeFEGKD",
+                                "name": "EU B2B — innergem. Lieferung, steuerfrei (gültige UID, Ware ab AT)",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "sellezbQpAEVzbQSf",
+                                "name": "EU — ohne gültige UID, 20% USt",
+                                "color": "tealLight2"
+                            },
+                            {
+                                "id": "seltTOieqXXq5xbaW",
+                                "name": "Drittland — Ausfuhr, steuerfrei (напр. CH)",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selwB9YgotJGbaVFU",
+                                "name": "Reverse Charge — nur Dienstleistung / Sonderfall",
+                                "color": "orangeLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldMZb06PWr5qFpO3",
+                    "name": "VAT Treatment",
+                    "description": "Default VAT treatment for this customer, used as a starting point for invoicing. NOT authoritative on its own: the actual treatment is determined per order because it also depends on goods flow (whether goods move from Austria via the warehouse, or ship directly from a third country). Goods to EU B2B customers with a valid UID are normally a tax-exempt intra-Community supply (innergemeinschaftliche Lieferung), NOT reverse charge (reverse charge applies to services). EU customers without a valid UID are charged 20% AT VAT. Exports to third countries (e.g. CH) are exempt. Requires our own UID (pending) and VIES validation + ZM reporting before exempt treatment can be applied. Confirm logic with a tax advisor.\n"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selMpjbUzm7ScWdeU",
+                                "name": "[100%] Full Prepayment",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selsLc92N6VtwR5QJ",
+                                "name": "[30%] Limited Provision",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selylMS9PRplqS4VW",
+                                "name": "[0%] No Advance",
+                                "color": "tealLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldfPpA52QFkDll4a",
+                    "name": "Payment Terms"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selcFPHQlzWBFYKO8",
+                                "name": "To be developed",
+                                "color": "blueLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldaqmUkrJga7aZuL",
+                    "name": "Sales Channel"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblntgs8TBWFWKupS",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldjJvMJoi0aEes3b"
+                    },
+                    "id": "fldQthy7OqY335BrR",
+                    "name": "Orders"
+                },
+                {
+                    "type": "lastModifiedBy",
+                    "id": "fldMjcHk5mQeCV3pd",
+                    "name": "Last Contributor"
+                },
+                {
+                    "type": "lastModifiedTime",
+                    "options": {
+                        "isValid": true,
+                        "referencedFieldIds": [],
+                        "result": {
+                            "type": "dateTime",
+                            "options": {
+                                "dateFormat": {
+                                    "name": "friendly",
+                                    "format": "LL"
+                                },
+                                "timeFormat": {
+                                    "name": "12hour",
+                                    "format": "h:mma"
+                                },
+                                "timeZone": "client"
+                            }
+                        }
+                    },
+                    "id": "fldpLUomfV9zEAMj9",
+                    "name": "Last Contribution"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwLF7jUTdCMNkRWs",
+                    "name": "Grid view",
+                    "type": "grid"
+                }
+            ]
+        },
+        {
+            "id": "tblntgs8TBWFWKupS",
+            "name": "Orders Sync",
+            "primaryFieldId": "fld19OiaM14Vc0j3x",
+            "fields": [
+                {
+                    "type": "multilineText",
+                    "id": "fld19OiaM14Vc0j3x",
+                    "name": "Order ID"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldgrOwFjtW5BeyYy",
+                    "name": "Order Urgency"
+                },
+                {
+                    "type": "singleCollaborator",
+                    "id": "flde4IaQ0G6ofxrB9",
+                    "name": "Order Owner"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selACFnsUUCCkjMrS",
+                                "name": "🔴 Problem",
+                                "color": "redBright"
+                            },
+                            {
+                                "id": "selYOxUCIP0gYWjsk",
+                                "name": "⏸️ On Hold",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selmedOnTdqMDWP0P",
+                                "name": "⚙️ Preparation",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "sel7JdAbOlCi6UXgn",
+                                "name": "🏭 Production",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "sel0QcQf7rVqrmNTj",
+                                "name": "🚚 Transit",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "selr9HfEP8XhqPV35",
+                                "name": "✅ Delivered",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "sel2E0fcjl8xGxKyg",
+                                "name": "🔘 Archived",
+                                "color": "grayBright"
+                            },
+                            {
+                                "id": "selaP3NZwhi7fdfMC",
+                                "name": "▪️ Cancelled",
+                                "color": "grayLight1"
+                            }
+                        ]
+                    },
+                    "id": "fldEmVs2MZmQVN7h3",
+                    "name": "Order Status"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldiKpSZk52VhCejr",
+                    "name": "Sales Invoice"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selLoAUE30BMr3k9k",
+                                "name": "Awaiting Document",
+                                "color": "redLight2"
+                            },
+                            {
+                                "id": "selvzIEkBqrQhTijl",
+                                "name": "Offered",
+                                "color": "cyanLight2"
+                            },
+                            {
+                                "id": "selQI1g9dhR9vEvyH",
+                                "name": "Invoiced",
+                                "color": "blueLight2"
+                            },
+                            {
+                                "id": "seldfaa8e6mSZrzzQ",
+                                "name": "Deposit Paid",
+                                "color": "yellowLight2"
+                            },
+                            {
+                                "id": "selkONHPj6RLfHc35",
+                                "name": "Paid in Full",
+                                "color": "greenLight2"
+                            },
+                            {
+                                "id": "selgs49wrqECIuvgF",
+                                "name": "Overdue",
+                                "color": "redBright"
+                            },
+                            {
+                                "id": "selJrJKob0wtNJib6",
+                                "name": "No Invoice",
+                                "color": "grayLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldRYqaJuI3yt6ysr",
+                    "name": "Customer Payment Status"
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldyfXbnVSoHrgsfG",
+                    "name": "Order Date"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldEk9cFVQuE9UCZQ",
+                    "name": "Attachments"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldwnDVeq1RnWZkco",
+                    "name": "Linked Items"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldvXDxBseZ8tVObC",
+                    "name": "Customer Delivery Address"
+                },
+                {
+                    "type": "singleSelect",
+                    "options": {
+                        "choices": [
+                            {
+                                "id": "selxswV2NSAiInJFw",
+                                "name": "UNDEFINED",
+                                "color": "redDark1"
+                            },
+                            {
+                                "id": "selSXIk6j4MnKOWCm",
+                                "name": "DHL",
+                                "color": "yellowBright"
+                            },
+                            {
+                                "id": "selSZ0iYTSx0wQ8Ie",
+                                "name": "FedEx",
+                                "color": "purpleBright"
+                            },
+                            {
+                                "id": "selVSbgQ6lBpjp4Cr",
+                                "name": "UPS",
+                                "color": "grayBright"
+                            },
+                            {
+                                "id": "seldBc1hkajRzzxup",
+                                "name": "DPD",
+                                "color": "redBright"
+                            },
+                            {
+                                "id": "selGQq5FXCF8YBp25",
+                                "name": "GLS",
+                                "color": "blueBright"
+                            },
+                            {
+                                "id": "selwRDGxOTGqEMhZR",
+                                "name": "Österreichische Post",
+                                "color": "yellowLight2"
+                            }
+                        ]
+                    },
+                    "id": "fldEypz6dKaSv0las",
+                    "name": "Carrier (Customer leg)"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fld0AwKibZD9kwuph",
+                    "name": "Track&Trace Customer"
+                },
+                {
+                    "type": "url",
+                    "id": "fldedtN7a0UwyyP0f",
+                    "name": "Track&Trace Customer URL"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldOjFRh4DyTwd11q",
+                    "name": "Order Notes"
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "€"
+                    },
+                    "id": "fldIJefBkzQM1ST5M",
+                    "name": "Total Revenue"
+                },
+                {
+                    "type": "currency",
+                    "options": {
+                        "precision": 2,
+                        "symbol": "€"
+                    },
+                    "id": "fldrVAybQy06hiql4",
+                    "name": "Total Profit"
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldCYXM5MtPQ1TwMR",
+                    "name": "Items Count"
+                },
+                {
+                    "type": "percent",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldlepw9BxhlehYjt",
+                    "name": "Order Margin %"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldIGrd42drq1bSNo",
+                    "name": "Line Status Rollup (from Order Lines)"
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fld6KzUKQvaJItboE",
+                    "name": "Autonumber"
+                },
+                {
+                    "type": "multilineText",
+                    "id": "fldOTMdWq75mnoKZO",
+                    "name": "Urgency Rollup"
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldGFFxqgqGGmC3s4",
+                    "name": "Earliest Delivery Deadline"
+                },
+                {
+                    "type": "number",
+                    "options": {
+                        "precision": 0
+                    },
+                    "id": "fldAEmLsLIdDh5nom",
+                    "name": "Total Units"
+                },
+                {
+                    "type": "dateTime",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        },
+                        "timeFormat": {
+                            "name": "12hour",
+                            "format": "h:mma"
+                        },
+                        "timeZone": "client"
+                    },
+                    "id": "fldfwAsUqSaqdeIn0",
+                    "name": "Last Change"
+                },
+                {
+                    "type": "singleCollaborator",
+                    "id": "fldunN3K9jcCmlrVK",
+                    "name": "Last Contributor"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fld80FdrNztFILUWN",
+                    "name": "Procurement Center"
+                },
+                {
+                    "type": "date",
+                    "options": {
+                        "dateFormat": {
+                            "name": "friendly",
+                            "format": "LL"
+                        }
+                    },
+                    "id": "fldbSMWAg2WOktG5D",
+                    "name": "Delivery Deadline"
+                },
+                {
+                    "type": "multipleRecordLinks",
+                    "options": {
+                        "linkedTableId": "tblGZbRHnE9hYX1Ak",
+                        "isReversed": false,
+                        "prefersSingleRecordLink": false,
+                        "inverseLinkFieldId": "fldQthy7OqY335BrR"
+                    },
+                    "id": "fldjJvMJoi0aEes3b",
+                    "name": "Clients"
+                },
+                {
+                    "type": "singleLineText",
+                    "id": "fldVE9tyRt0Il2bjZ",
+                    "name": "Client"
+                },
+                {
+                    "type": "multipleAttachments",
+                    "options": {
+                        "isReversed": false
+                    },
+                    "id": "fldR80FUn27TspOOQ",
+                    "name": "Sales Offer"
+                }
+            ],
+            "views": [
+                {
+                    "id": "viwpevVTNNfM5E954",
+                    "name": "Grid view",
+                    "type": "grid"
+                }
+            ]
+        }
+    ]
+}

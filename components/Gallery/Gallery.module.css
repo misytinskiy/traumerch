@@ -298,7 +298,7 @@
 
 @media (max-width: 480px) {
   .gallery {
-    padding: 60px 10px 60px;
+    display: none;
   }
 
   .header {

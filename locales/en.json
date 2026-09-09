@@ -317,25 +317,25 @@
       {
         "title": "EMPLOYEE KITS",
         "description": "Welcome your team with premium kits that create connection from day one.",
-        "image": "/services/1.png",
+        "image": "/services/mobile/1.jpg",
         "imageAlt": "Employee kits"
       },
       {
         "title": "EVENT MERCH",
         "description": "Make your events unforgettable with merch that leaves a lasting impression.",
-        "image": "/services/2.png",
+        "image": "/services/mobile/2.JPG",
         "imageAlt": "Event merch"
       },
       {
         "title": "CLIENT GIFTS",
         "description": "Strengthen relationships with curated gifts that show appreciation.",
-        "image": "/services/4.png",
+        "image": "/services/mobile/3.jpg",
         "imageAlt": "Client gifts"
       },
       {
         "title": "CUSTOM PROJECTS",
         "description": "Your idea, our expertise. Fully customized merchandise solutions.",
-        "image": "/services/5.png",
+        "image": "/services/mobile/4.jpg",
         "imageAlt": "Custom projects"
       }
     ],

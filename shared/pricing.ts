@@ -1,20 +1,22 @@
 
-const PRICE_TIERS: { min: number; max: number; fields: string[] }[] = [
-  { min: 1, max: 24, fields: ["1-24 pcs (Sample) | SALES"] },
-  { min: 25, max: 49, fields: ["24-49 pcs | SALES"] },
-  { min: 50, max: 99, fields: ["50-99 pcs | SALES"] },
-  { min: 100, max: 249, fields: ["100-249 | SALES"] },
+import { getCatalogFieldValue, type CatalogFieldKey } from "./catalogFields";
+
+const PRICE_TIERS: { min: number; max: number; fields: CatalogFieldKey[] }[] = [
+  { min: 1, max: 24, fields: ["sampleSales"] },
+  { min: 25, max: 49, fields: ["sales24to49"] },
+  { min: 50, max: 99, fields: ["sales50to99"] },
+  { min: 100, max: 249, fields: ["sales100to249"] },
   {
     min: 250,
     max: 499,
-    fields: ["250-499 | SALES", "250 - 499 | SALES"],
+    fields: ["sales250to499"],
   },
   {
     min: 500,
     max: 999,
-    fields: ["500-999 pcs | SALES", "500 - 999 pcs | SALES"],
+    fields: ["sales500to999"],
   },
-  { min: 1000, max: Infinity, fields: ["1000+ pcs | SALES"] },
+  { min: 1000, max: Infinity, fields: ["sales1000Plus"] },
 ];
 
 function parsePriceValue(value: unknown): number | null {
@@ -37,9 +39,11 @@ export function getUnitPriceForQuantity(
     (t) => quantity >= t.min && quantity <= t.max
   );
   if (!tier) return null;
-  const rawField = tier.fields.find((field) => field in fields);
-  if (!rawField) return null;
-  const unitPrice = parsePriceValue(fields[rawField]);
+  const rawValue = tier.fields
+    .map((field) => getCatalogFieldValue(fields, field))
+    .find((value) => value !== undefined && value !== null);
+  if (rawValue === undefined) return null;
+  const unitPrice = parsePriceValue(rawValue);
   if (unitPrice === null) return null;
   return `€${unitPrice.toFixed(unitPrice % 1 === 0 ? 0 : 1)}`;
 }
@@ -53,28 +57,21 @@ export function getPriceForQuantity(
     (t) => quantity >= t.min && quantity <= t.max
   );
   if (!tier) return null;
-  const rawField = tier.fields.find((field) => field in fields);
-  if (!rawField) return null;
-  const unitPrice = parsePriceValue(fields[rawField]);
+  const rawValue = tier.fields
+    .map((field) => getCatalogFieldValue(fields, field))
+    .find((value) => value !== undefined && value !== null);
+  if (rawValue === undefined) return null;
+  const unitPrice = parsePriceValue(rawValue);
   if (unitPrice === null) return null;
   const total = unitPrice * quantity;
   return `€${total.toFixed(total % 1 === 0 ? 0 : 1)}`;
 }
 
-const MOQ_KEYS = ["# MOQ | SALES", "MOQ | SALES", "# MOQ", "MOQ"];
-
 export function getMinQuantity(
   fields: Record<string, unknown> | undefined
 ): number {
   if (!fields) return 1;
-  let raw: unknown;
-  for (const key of MOQ_KEYS) {
-    const v = fields[key];
-    if (v !== undefined && v !== null && v !== "") {
-      raw = v;
-      break;
-    }
-  }
+  const raw = getCatalogFieldValue(fields, "moqSales");
   if (raw === undefined) return 1;
   const n = typeof raw === "number" ? raw : parseInt(String(raw), 10);
   return Number.isNaN(n) || n < 1 ? 1 : Math.min(n, 99999);
