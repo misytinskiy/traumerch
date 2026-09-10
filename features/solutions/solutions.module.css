@@ -185,7 +185,7 @@
   .mobileCardBody {
     display: flex;
     flex-direction: column;
-    height: 86px;
+    height: 92px;
     padding: 8px 6px 6px;
   }
 
@@ -205,17 +205,6 @@
     line-height: 0.98;
     text-transform: uppercase;
     color: var(--color-black);
-  }
-
-  .mobileCardArrow {
-    flex-shrink: 0;
-    color: var(--color-black);
-  }
-
-  .mobileCardArrow svg {
-    display: block;
-    width: 9px;
-    height: 12px;
   }
 
   .mobileCardDescription {
