@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import MediaImage from "../Media/MediaImage";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./OurPromisesMobile.module.css";
 
@@ -35,14 +35,11 @@ export default function OurPromisesMobile() {
             {/* Image */}
             <div className={styles.imagePlaceholder}>
               <div className={styles.promiseImage}>
-                <Image
-                  src={promise.image ?? `/promises/${index + 1}.png`}
+                <MediaImage
+                  slot={`promises.${index + 1}`}
                   alt={promise.imageAlt ?? promise.heading}
                   width={400}
                   height={300}
-                  sizes="(max-width: 900px) 100vw, 400px"
-                  quality={100}
-                  unoptimized
                   className={styles.promiseImageTag}
                   priority={index === 0}
                 />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import Image from "next/image";
+import MediaImage from "../Media/MediaImage";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import HeroSlider from "../HeroSlider/HeroSlider";
@@ -141,11 +141,10 @@ export default function Hero({
                     className={styles.trustedLogo}
                     aria-label={company.name}
                   >
-                    <Image
-                      src={company.logo}
+                    <MediaImage
+                      slot={company.slot}
                       alt={company.name}
                       fill
-                      sizes="(max-width: 768px) 20vw, 90px"
                       className={styles.trustedLogoImage}
                     />
                   </a>

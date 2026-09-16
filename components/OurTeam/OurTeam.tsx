@@ -1,15 +1,24 @@
 "use client";
 
-import Image from "next/image";
+import MediaImage from "../Media/MediaImage";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import styles from "./OurTeam.module.css";
 
+/** Порядок совпадает с locales/*.json → ourTeam.members. */
+const TEAM_SLOTS = [
+  "team.ihor",
+  "team.ivan",
+  "team.yury",
+  "team.mathias",
+  "team.anna-valeriia",
+  "team.lea",
+] as const;
+
 type TeamMember = {
   name: string;
   role: string;
-  image?: string;
   imageAlt?: string;
 };
 
@@ -151,17 +160,14 @@ export default function OurTeam() {
         </button>
 
         <div ref={gridRef} className={styles.grid}>
-          {members.map((member) => (
+          {members.map((member, index) => (
             <article key={member.name} className={styles.card}>
-              {member.image ? (
-                <Image
-                  src={member.image}
-                  alt={member.imageAlt ?? member.name}
-                  fill
-                  sizes="(max-width: 480px) 88vw, (max-width: 900px) calc(100vw - 58px), (max-width: 1280px) 44vw, 24vw"
-                  className={styles.image}
-                />
-              ) : null}
+              <MediaImage
+                slot={TEAM_SLOTS[index]}
+                alt={member.imageAlt ?? member.name}
+                fill
+                className={styles.image}
+              />
 
               <div className={styles.content}>
                 <div className={styles.headingBlock}>

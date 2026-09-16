@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import MediaImage, { getMediaSrc } from "../Media/MediaImage";
 import styles from "./ProductSlider.module.css";
 
-const IMAGES = ["/inspiration/1.png", "/inspiration/2.png"];
+const SLOTS = ["product.slider.1", "product.slider.2"];
 
 const LeftArrowIcon = () => (
   <svg
@@ -59,7 +59,7 @@ export default function ProductSlider() {
   const [animationTimer, setAnimationTimer] = useState<ReturnType<
     typeof setTimeout
   > | null>(null);
-  const totalSlides = IMAGES.length;
+  const totalSlides = SLOTS.length;
   const allLoaded = loadedCount >= totalSlides;
 
   useEffect(() => {
@@ -72,8 +72,12 @@ export default function ProductSlider() {
         img.src = src;
       });
 
-    Promise.all(IMAGES.map(preload)).then(() => {
-      if (isMounted) setLoadedCount(IMAGES.length);
+    const sources = SLOTS.map((slot) => getMediaSrc(slot)).filter(
+      (src): src is string => Boolean(src)
+    );
+
+    Promise.all(sources.map(preload)).then(() => {
+      if (isMounted) setLoadedCount(SLOTS.length);
     });
 
     return () => {
@@ -112,13 +116,10 @@ export default function ProductSlider() {
             isAnimating ? styles.fadeOut : ""
           }`}
         >
-          <Image
-            src={IMAGES[prevSlide]}
+          <MediaImage
+            slot={SLOTS[prevSlide]}
             alt="Previous product inspiration"
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 600px"
-            quality={100}
-            unoptimized
             className={styles.sliderImageContent}
             priority={prevSlide === 0}
           />
@@ -128,13 +129,10 @@ export default function ProductSlider() {
             isAnimating ? styles.fadeIn : ""
           }`}
         >
-          <Image
-            src={IMAGES[currentSlide]}
+          <MediaImage
+            slot={SLOTS[currentSlide]}
             alt="Product inspiration"
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 600px"
-            quality={100}
-            unoptimized
             className={styles.sliderImageContent}
             priority={currentSlide === 0}
           />
@@ -160,7 +158,7 @@ export default function ProductSlider() {
       </button>
 
       <div className={styles.sliderDots} aria-label="Slider pagination">
-        {IMAGES.map((_, index) => (
+        {SLOTS.map((_, index) => (
           <button
             key={index}
             type="button"

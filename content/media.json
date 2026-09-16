@@ -1,0 +1,554 @@
+{
+  "version": 1,
+  "slots": {
+    "preloader.1": {
+      "src": "/preloader/1.jpg",
+      "w": 1296,
+      "h": 724
+    },
+    "preloader.2": {
+      "src": "/preloader/2.jpg",
+      "w": 1574,
+      "h": 886
+    },
+    "preloader.3": {
+      "src": "/preloader/3.jpg",
+      "w": 1302,
+      "h": 740
+    },
+    "home.hero.1": {
+      "src": "/heroSliderPhoto/1.JPEG",
+      "w": 1908,
+      "h": 1159
+    },
+    "home.hero.2": {
+      "src": "/heroSliderPhoto/2.JPEG",
+      "w": 1024,
+      "h": 761
+    },
+    "home.hero.3": {
+      "src": "/heroSliderPhoto/3.JPEG",
+      "w": 5568,
+      "h": 3712
+    },
+    "logos.gGateConf": {
+      "src": "/logo/gGateConf.webp",
+      "w": 1332,
+      "h": 501
+    },
+    "logos.kicks": {
+      "src": "/logo/kicks.webp",
+      "w": 796,
+      "h": 893
+    },
+    "logos.retal": {
+      "src": "/logo/retal.webp",
+      "w": 940,
+      "h": 265
+    },
+    "logos.umiz": {
+      "src": "/logo/umiz.webp",
+      "w": 426,
+      "h": 437
+    },
+    "logos.octoClick": {
+      "src": "/logo/octoClick.webp",
+      "w": 1718,
+      "h": 344
+    },
+    "logos.semmering": {
+      "src": "/logo/semmering.webp",
+      "w": 1095,
+      "h": 357
+    },
+    "logos.lisa": {
+      "src": "/logo/lisa.webp",
+      "w": 347,
+      "h": 130
+    },
+    "logos.vic": {
+      "src": "/logo/vic.webp",
+      "w": 772,
+      "h": 422
+    },
+    "home.gallery.1": {
+      "src": "/gallery/1.jpg",
+      "w": 2160,
+      "h": 3872
+    },
+    "home.gallery.2": {
+      "src": "/gallery/2.jpg",
+      "w": 1792,
+      "h": 2400
+    },
+    "home.gallery.3": {
+      "src": "/gallery/3.jpg",
+      "w": 1280,
+      "h": 1280
+    },
+    "home.gallery.4": {
+      "src": "/gallery/4.jpg",
+      "w": 3480,
+      "h": 4350
+    },
+    "home.gallery.5": {
+      "src": "/gallery/5.jpg",
+      "w": 1536,
+      "h": 2752
+    },
+    "home.gallery.placeholder": {
+      "src": "/gallery/placeholder.jpg",
+      "w": 820,
+      "h": 469
+    },
+    "promises.1": {
+      "src": "/promises/1.png",
+      "w": 2400,
+      "h": 1128
+    },
+    "promises.2": {
+      "src": "/promises/2.png",
+      "w": 4672,
+      "h": 3479
+    },
+    "promises.3": {
+      "src": "/promises/3.png",
+      "w": 2400,
+      "h": 1128
+    },
+    "promises.4": {
+      "src": "/promises/4.png",
+      "w": 2400,
+      "h": 1128
+    },
+    "promises.5": {
+      "src": "/promises/5.png",
+      "w": 2400,
+      "h": 1128
+    },
+    "promises.6": {
+      "src": "/promises/6.png",
+      "w": 1200,
+      "h": 1500
+    },
+    "team.ihor": {
+      "src": "/ourTeam/ihor.png",
+      "w": 896,
+      "h": 1200,
+      "focal": {
+        "x": 50,
+        "y": 100
+      }
+    },
+    "team.ivan": {
+      "src": "/ourTeam/ivan.png",
+      "w": 890,
+      "h": 1313,
+      "focal": {
+        "x": 50,
+        "y": 100
+      }
+    },
+    "team.yury": {
+      "src": "/ourTeam/yury.png",
+      "w": 896,
+      "h": 1200,
+      "focal": {
+        "x": 50,
+        "y": 100
+      }
+    },
+    "team.mathias": {
+      "src": "/ourTeam/mathias.png",
+      "w": 896,
+      "h": 1200,
+      "focal": {
+        "x": 50,
+        "y": 100
+      }
+    },
+    "team.anna-valeriia": {
+      "src": "/ourTeam/anna-valeriia.png",
+      "w": 896,
+      "h": 1200,
+      "focal": {
+        "x": 50,
+        "y": 100
+      }
+    },
+    "team.lea": {
+      "src": "/ourTeam/lea.png",
+      "w": 896,
+      "h": 1200,
+      "focal": {
+        "x": 50,
+        "y": 100
+      }
+    },
+    "services.1.main": {
+      "src": "/services/1.png",
+      "w": 2048,
+      "h": 2048
+    },
+    "services.2.main": {
+      "src": "/services/2.png",
+      "w": 1024,
+      "h": 1024
+    },
+    "services.3.main": {
+      "src": "/services/3.png",
+      "w": 1200,
+      "h": 1500
+    },
+    "services.4.main": {
+      "src": "/services/4.png",
+      "w": 2400,
+      "h": 2040
+    },
+    "services.5.main": {
+      "src": "/services/5.png",
+      "w": 2400,
+      "h": 2040
+    },
+    "services.1.mobile.1": {
+      "src": "/services/1/1.jpg",
+      "w": 4672,
+      "h": 3812
+    },
+    "services.1.mobile.2": {
+      "src": "/services/1/2.jpg",
+      "w": 1536,
+      "h": 2752
+    },
+    "services.1.mobile.3": {
+      "src": "/services/1/5.jpg",
+      "w": 960,
+      "h": 1280
+    },
+    "services.2.mobile.1": {
+      "src": "/services/2/1.jpg",
+      "w": 1920,
+      "h": 1324
+    },
+    "services.2.mobile.2": {
+      "src": "/services/2/2.jpg",
+      "w": 3856,
+      "h": 2160
+    },
+    "services.2.mobile.3": {
+      "src": "/services/2/3.jpg",
+      "w": 1792,
+      "h": 2400
+    },
+    "services.3.mobile.1": {
+      "src": "/services/3/1.jpg",
+      "w": 2160,
+      "h": 3872
+    },
+    "services.3.mobile.2": {
+      "src": "/services/3/2.jpg",
+      "w": 1024,
+      "h": 1280
+    },
+    "services.3.mobile.3": {
+      "src": "/services/3/3.JPEG",
+      "w": 4672,
+      "h": 3425
+    },
+    "services.4.mobile.1": {
+      "src": "/services/4/1.png",
+      "w": 1600,
+      "h": 1450
+    },
+    "services.4.mobile.2": {
+      "src": "/services/4/2.png",
+      "w": 780,
+      "h": 700
+    },
+    "services.4.mobile.3": {
+      "src": "/services/4/3.png",
+      "w": 2400,
+      "h": 2040
+    },
+    "services.5.mobile.1": {
+      "src": "/services/5/1.png",
+      "w": 780,
+      "h": 700
+    },
+    "services.5.mobile.2": {
+      "src": "/services/5/2.png",
+      "w": 2420,
+      "h": 1450
+    },
+    "services.5.mobile.3": {
+      "src": "/services/5/3.png",
+      "w": 2400,
+      "h": 2040
+    },
+    "solutions.hero.1": {
+      "src": "/servicesSliderPhoto/1.jpg",
+      "w": 4032,
+      "h": 3024
+    },
+    "solutions.hero.2": {
+      "src": "/servicesSliderPhoto/2.JPEG",
+      "w": 1024,
+      "h": 761
+    },
+    "solutions.hero.3": {
+      "src": "/servicesSliderPhoto/3.JPEG",
+      "w": 1023,
+      "h": 1537
+    },
+    "solutions.card.1": {
+      "src": "/services/mobile/1.jpg",
+      "w": 1024,
+      "h": 1280
+    },
+    "solutions.card.2": {
+      "src": "/services/mobile/2.JPG",
+      "w": 5568,
+      "h": 3712
+    },
+    "solutions.card.3": {
+      "src": "/services/mobile/3.jpg",
+      "w": 1792,
+      "h": 2400
+    },
+    "solutions.card.4": {
+      "src": "/services/mobile/4.jpg",
+      "w": 1920,
+      "h": 2560
+    },
+    "inspiration.tile-01": {
+      "src": "/inspirationPage/1.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-02": {
+      "src": "/inspirationPage/2.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-04": {
+      "src": "/inspirationPage/4.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-03": {
+      "src": "/inspirationPage/3.png",
+      "w": 1600,
+      "h": 1450
+    },
+    "inspiration.tile-05": {
+      "src": "/inspirationPage/5.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-06": {
+      "src": "/inspirationPage/6.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-07": {
+      "src": "/inspirationPage/7.png",
+      "w": 1600,
+      "h": 1450
+    },
+    "inspiration.tile-08": {
+      "src": "/inspirationPage/8.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-09": {
+      "src": "/inspirationPage/9.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-10": {
+      "src": "/inspirationPage/10.png",
+      "w": 1600,
+      "h": 700
+    },
+    "inspiration.tile-11": {
+      "src": "/inspirationPage/11.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-12": {
+      "src": "/inspirationPage/12.png",
+      "w": 1600,
+      "h": 1450
+    },
+    "inspiration.tile-13": {
+      "src": "/inspirationPage/13.png",
+      "w": 1594,
+      "h": 700
+    },
+    "inspiration.tile-14": {
+      "src": "/inspirationPage/14.png",
+      "w": 1600,
+      "h": 700
+    },
+    "inspiration.tile-15": {
+      "src": "/inspirationPage/15.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-16": {
+      "src": "/inspirationPage/16.png",
+      "w": 1596,
+      "h": 700
+    },
+    "inspiration.tile-17": {
+      "src": "/inspirationPage/17.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-18": {
+      "src": "/inspirationPage/18.png",
+      "w": 1600,
+      "h": 700
+    },
+    "inspiration.tile-19": {
+      "src": "/inspirationPage/19.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-20": {
+      "src": "/inspirationPage/20.png",
+      "w": 780,
+      "h": 1450
+    },
+    "inspiration.tile-21": {
+      "src": "/inspirationPage/21.png",
+      "w": 1600,
+      "h": 700
+    },
+    "inspiration.tile-22": {
+      "src": "/inspirationPage/22.png",
+      "w": 780,
+      "h": 1450
+    },
+    "inspiration.tile-23": {
+      "src": "/inspirationPage/23.png",
+      "w": 780,
+      "h": 1450
+    },
+    "inspiration.tile-24": {
+      "src": "/inspirationPage/24.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-25": {
+      "src": "/inspirationPage/25.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-26": {
+      "src": "/inspirationPage/26.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-27": {
+      "src": "/inspirationPage/27.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-28": {
+      "src": "/inspirationPage/28.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-29": {
+      "src": "/inspirationPage/29.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-30": {
+      "src": "/inspirationPage/30.png",
+      "w": 1600,
+      "h": 700
+    },
+    "inspiration.tile-31": {
+      "src": "/inspirationPage/31.png",
+      "w": 1600,
+      "h": 700
+    },
+    "inspiration.tile-32": {
+      "src": "/inspirationPage/32.png",
+      "w": 780,
+      "h": 700
+    },
+    "inspiration.tile-33": {
+      "src": "/inspirationPage/33.png",
+      "w": 780,
+      "h": 1450
+    },
+    "inspiration.tile-34": {
+      "src": "/inspirationPage/34.png",
+      "w": 2420,
+      "h": 1450
+    },
+    "portfolio.1": {
+      "src": "/portfolio/1.png",
+      "w": 496,
+      "h": 507
+    },
+    "portfolio.2": {
+      "src": "/portfolio/2.png",
+      "w": 496,
+      "h": 507
+    },
+    "portfolio.3": {
+      "src": "/portfolio/3.png",
+      "w": 496,
+      "h": 507
+    },
+    "portfolio.4": {
+      "src": "/portfolio/4.png",
+      "w": 496,
+      "h": 507
+    },
+    "portfolio.5": {
+      "src": "/portfolio/5.png",
+      "w": 496,
+      "h": 507
+    },
+    "portfolio.6": {
+      "src": "/portfolio/6.png",
+      "w": 496,
+      "h": 507
+    },
+    "product.slider.1": {
+      "src": "/inspiration/1.png",
+      "w": 2752,
+      "h": 1536
+    },
+    "product.slider.2": {
+      "src": "/inspiration/2.png",
+      "w": 2752,
+      "h": 1536
+    },
+    "conf.hero": {
+      "src": "/inspiration/1.png",
+      "w": 2752,
+      "h": 1536
+    },
+    "conf.row.1": {
+      "src": "/services/1.png",
+      "w": 2048,
+      "h": 2048
+    },
+    "conf.row.2": {
+      "src": "/gallery/4.jpg",
+      "w": 3480,
+      "h": 4350
+    },
+    "conf.row.3": {
+      "src": "/services/3.png",
+      "w": 1200,
+      "h": 1500
+    }
+  }
+}

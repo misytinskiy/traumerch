@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { usePreloader } from "../../contexts/PreloaderContext";
 import { useLanguage } from "../../contexts/LanguageContext";
-import Image from "next/image";
+import MediaImage from "../Media/MediaImage";
 import styles from "./Preloader.module.css";
 
 export default function Preloader() {
@@ -331,8 +331,8 @@ export default function Preloader() {
               className={`${styles.imagesTrack} ${styles.animated}`}
             >
               <div className={styles.imageWrapper}>
-                <Image
-                  src="/preloader/1.jpg"
+                <MediaImage
+                  slot="preloader.1"
                   alt={t.preloader.alt1}
                   width={652}
                   height={420}
@@ -341,8 +341,8 @@ export default function Preloader() {
                 />
               </div>
               <div className={styles.imageWrapper}>
-                <Image
-                  src="/preloader/2.jpg"
+                <MediaImage
+                  slot="preloader.2"
                   alt={t.preloader.alt2}
                   width={652}
                   height={420}
@@ -351,8 +351,8 @@ export default function Preloader() {
                 />
               </div>
               <div ref={lastImageRef} className={styles.imageWrapper}>
-                <Image
-                  src="/preloader/3.jpg"
+                <MediaImage
+                  slot="preloader.3"
                   alt={t.preloader.alt3}
                   width={652}
                   height={420}

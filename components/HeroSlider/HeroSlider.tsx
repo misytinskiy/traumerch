@@ -1,27 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import MediaImage, { getMediaSrc } from "./../Media/MediaImage";
 import styles from "./HeroSlider.module.css";
 
-const DEFAULT_IMAGES = [
-  "/heroSliderPhoto/1.JPEG",
-  "/heroSliderPhoto/2.JPEG",
-  "/heroSliderPhoto/3.JPEG",
-];
+const DEFAULT_SLOTS = ["home.hero.1", "home.hero.2", "home.hero.3"];
 
 interface HeroSliderProps {
-  images?: readonly string[];
+  slots?: readonly string[];
   imageAltPrefix?: string;
 }
 
 export default function HeroSlider({
-  images = DEFAULT_IMAGES,
+  slots = DEFAULT_SLOTS,
   imageAltPrefix = "Hero slide",
 }: HeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loadedCount, setLoadedCount] = useState(0);
-  const totalSlides = images.length;
+  const totalSlides = slots.length;
   const allLoaded = loadedCount >= totalSlides;
 
   useEffect(() => {
@@ -37,14 +33,18 @@ export default function HeroSlider({
         img.src = src;
       });
 
-    Promise.all(images.map(preload)).then(() => {
-      if (isMounted) setLoadedCount(images.length);
+    const sources = slots
+      .map((slot) => getMediaSrc(slot))
+      .filter((src): src is string => Boolean(src));
+
+    Promise.all(sources.map(preload)).then(() => {
+      if (isMounted) setLoadedCount(slots.length);
     });
 
     return () => {
       isMounted = false;
     };
-  }, [images]);
+  }, [slots]);
 
   useEffect(() => {
     if (!allLoaded) return;
@@ -64,18 +64,17 @@ export default function HeroSlider({
   return (
     <div className={styles.slider}>
       <div className={styles.viewport}>
-        {images.map((src, index) => (
+        {slots.map((slot, index) => (
           <div
-            key={src}
+            key={slot}
             className={`${styles.slide} ${
               index === currentSlide ? styles.slideActive : ""
             }`}
           >
-            <Image
-              src={src}
+            <MediaImage
+              slot={slot}
               alt={`${imageAltPrefix} ${index + 1}`}
               fill
-              sizes="(max-width: 480px) calc(100vw - 28px), 720px"
               className={styles.image}
               priority={index === 0}
             />
@@ -84,7 +83,7 @@ export default function HeroSlider({
       </div>
 
       <div className={styles.dots} aria-label="Hero slider pagination">
-        {images.map((_, index) => (
+        {slots.map((_, index) => (
           <button
             key={index}
             type="button"

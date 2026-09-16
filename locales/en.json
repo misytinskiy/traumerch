@@ -73,42 +73,36 @@
         "name": "Ihor",
         "role": "Co-Founder & CEO",
         "bio": "Sets the vision and leads the company direction.",
-        "image": "/ourTeam/ihor.png",
         "imageAlt": "Portrait of Ihor Konstantinovskyi"
       },
       {
         "name": "Ivan",
         "role": "Co-Founder And Head Of Sales",
         "bio": "Leads sales and drives new business growth.",
-        "image": "/ourTeam/ivan.png",
         "imageAlt": "Portrait of Ivan"
       },
       {
         "name": "Yury",
         "role": "Co-Founder & Head Of Operations",
         "bio": "Keeps operations moving from planning to delivery.",
-        "image": "/ourTeam/yury.png",
         "imageAlt": "Portrait of Yury"
       },
       {
         "name": "Mathias",
         "role": "Procurement Manager",
         "bio": "Owns sourcing, supplier coordination and purchasing.",
-        "image": "/ourTeam/mathias.png",
         "imageAlt": "Portrait of Mathias"
       },
       {
         "name": "Anna-Valeriia",
         "role": "Sales Manager",
         "bio": "Turns conversations into clear offers and next steps.",
-        "image": "/ourTeam/anna-valeriia.png",
         "imageAlt": "Portrait of Anna-Valeriia"
       },
       {
         "name": "Lea",
         "role": "Marketing Manager",
         "bio": "Shapes campaigns, content and the brand voice.",
-        "image": "/ourTeam/lea.png",
         "imageAlt": "Portrait of Lea"
       }
     ]
@@ -265,7 +259,6 @@
         "badge": "MERCH THAT UNITES",
         "title": "CORPORATE & EVENT MERCHANDISE",
         "description": "We create branded merchandise for employees and events that brings people together. From welcome kits and team gear to conference giveaways, our solutions ensure every item strengthens connection and brand culture.",
-        "image": "/services/1.jpg",
         "imageAlt": "Corporate & event merchandise",
         "buttonText": "EXPLORE EVENT MERCH"
       },
@@ -273,7 +266,6 @@
         "badge": "GIFTS THAT LAST",
         "title": "BUSINESS GIFTS",
         "description": "We design and deliver thoughtful gifts for clients, partners, and employees. From premium selections to tailored packaging, every gift leaves a lasting impression and builds stronger business relationships.",
-        "image": "/services/2.jpg",
         "imageAlt": "Business gifts",
         "buttonText": "VIEW GIFT IDEAS"
       },
@@ -281,7 +273,6 @@
         "badge": "OWN YOUR BRAND",
         "title": "PRIVATE LABEL COLLECTIONS",
         "description": "We develop exclusive private label products tailored to your brand. From multi-SKU collections and unique designs to secondary packaging, we bring ideas to life and expand your market presence with distinctive merchandise.",
-        "image": "/services/3.jpg",
         "imageAlt": "Private label collections",
         "buttonText": "DISCOVER PRIVATE LABEL"
       },
@@ -289,7 +280,6 @@
         "badge": "PROGRAMS THAT AMPLIFY",
         "title": "INFLUENCER ACTIVATION & SEEDING",
         "description": "We build influencer and brand seeding programs designed for impact. With custom packaging, curated merchandise, and targeted distribution, we help brands spark authentic content and reach the right audiences.",
-        "image": "/services/4.jpg",
         "imageAlt": "Influencer activation & seeding",
         "buttonText": "SEE INFLUENCER PROGRAMS"
       },
@@ -297,7 +287,6 @@
         "badge": "MERCH MADE EASY",
         "title": "SMART PLATFORM",
         "description": "Our digital platform simplifies every step of merchandise management. From ordering and stock control to distribution, it gives brands the tools to scale their merch programs efficiently and transparently.",
-        "image": "/services/5.jpg",
         "imageAlt": "Smart platform",
         "buttonText": "TRY THE PLATFORM"
       }
@@ -317,25 +306,21 @@
       {
         "title": "EMPLOYEE KITS",
         "description": "Welcome your team with premium kits that create connection from day one.",
-        "image": "/services/mobile/1.jpg",
         "imageAlt": "Employee kits"
       },
       {
         "title": "EVENT MERCH",
         "description": "Make your events unforgettable with merch that leaves a lasting impression.",
-        "image": "/services/mobile/2.JPG",
         "imageAlt": "Event merch"
       },
       {
         "title": "CLIENT GIFTS",
         "description": "Strengthen relationships with curated gifts that show appreciation.",
-        "image": "/services/mobile/3.jpg",
         "imageAlt": "Client gifts"
       },
       {
         "title": "CUSTOM PROJECTS",
         "description": "Your idea, our expertise. Fully customized merchandise solutions.",
-        "image": "/services/mobile/4.jpg",
         "imageAlt": "Custom projects"
       }
     ],
@@ -644,42 +629,36 @@
         "heading": "TOTAL CUSTOMISATION",
         "phrase": "Nothing standard, everything yours.",
         "description": "We don't work with off-the-shelf solutions. Every product is adapted to your brand identity, from design details to packaging. You have the freedom to request any element you want—coloured drawstrings on hoodies or a leather strap on caps—everything is possible.",
-        "image": "/promises/1.png",
         "imageAlt": "Total customisation"
       },
       {
         "heading": "END-TO-END SUPPORT",
         "phrase": "Idea. Design. Delivery. Together",
         "description": "We guide you through every step - from idea and design to sampling, production, and delivery. Instead of dealing with multiple suppliers, you work with one reliable partner. That way, things stay simple, and the process runs smoothly without you having to worry about coordination.",
-        "image": "/promises/2.png",
         "imageAlt": "End-to-end support"
       },
       {
         "heading": "LOCAL COMPLIANCE",
         "phrase": "One founder. One giant. Always correct.",
         "description": "Whether you are a solo founder or a multinational, we handle invoices, VAT, and legal details according to EU standards. Our experience with different company structures means we know the challenges and solutions. This ensures that compliance is always clear and correct, no matter your size.",
-        "image": "/promises/3.png",
         "imageAlt": "Local compliance"
       },
       {
         "heading": "QUALITY CONTROL",
         "phrase": "Nothing ships unchecked. Ever.",
         "description": "Every production batch is checked before leaving the factory. Our team reviews samples, materials, and finishing to ensure nothing below standard ever reaches you. This consistent quality makes long-term cooperation reliable and predictable.",
-        "image": "/promises/4.png",
         "imageAlt": "Quality control"
       },
       {
         "heading": "FAST TRACK",
         "phrase": "1 Day Quote. 1 Week Samples. 1 Month Delivery.",
         "description": "We know speed is critical. That's why we commit to quotes in 1 day, samples in 1 week, and deliveries in 1 month. Our streamlined workflows and supplier network make it possible. *Typical lead times under standard conditions. Larger projects may vary.",
-        "image": "/promises/5.png",
         "imageAlt": "Fast track"
       },
       {
         "heading": "SUSTAINABLE OPTIONS",
         "phrase": "Eco isn't extra. It's standard.",
         "description": "Sustainability isn't an add-on, it's part of how we work. We source eco-friendly materials and provide greener production choices on request. This allows you to align merchandise with your brand values and future expectations.",
-        "image": "/promises/6.png",
         "imageAlt": "Sustainable options"
       }
     ]

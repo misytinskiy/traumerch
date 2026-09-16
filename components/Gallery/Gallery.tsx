@@ -6,6 +6,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import type { Swiper as SwiperRef } from "swiper";
 import { useLanguage } from "../../contexts/LanguageContext";
 import SectionTitle from "../SectionTitle/SectionTitle";
+import MediaImage from "../Media/MediaImage";
 import styles from "./Gallery.module.css";
 
 // Import Swiper styles
@@ -113,7 +114,7 @@ export default function Gallery() {
     },
   ];
 
-  // Create array of 5 gallery images (JPG from /gallery/ 1–5)
+  // Create array of 5 gallery images (slots home.gallery.1–5)
   // 6th slide commented out — not used in the gallery carousel yet
   const images = Array.from({ length: 5 }, (_, index) => {
     const quote = quotes[index];
@@ -122,7 +123,7 @@ export default function Gallery() {
 
     return {
       id: index + 1,
-      src: `/gallery/${index + 1}.jpg`,
+      slot: `home.gallery.${index + 1}`,
       quote: quoteText,
       author: quote.author,
     };
@@ -213,9 +214,8 @@ export default function Gallery() {
 
       {isMobile ? (
         <div className={styles.mobilePlaceholder}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/gallery/placeholder.jpg"
+          <MediaImage
+            slot="home.gallery.placeholder"
             alt=""
             className={styles.mobilePlaceholderImage}
           />
@@ -307,9 +307,8 @@ export default function Gallery() {
             {images.map((image) => (
               <SwiperSlide key={image.id} className={styles.swiperSlide}>
                 <div className={styles.imageItem}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={image.src}
+                  <MediaImage
+                    slot={image.slot}
                     alt=""
                     className={styles.galleryImage}
                   />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "../../contexts/LanguageContext";
-import Image from "next/image";
+import MediaImage from "../Media/MediaImage";
 import ServiceTitle from "../ServiceTitle/ServiceTitle";
 import styles from "./Services.module.css";
 
@@ -16,29 +16,6 @@ export default function Services({ showAll = false }: ServicesProps) {
   const servicesToShow = showAll
     ? t.services.items
     : t.services.items.slice(0, 3);
-
-  const getServiceImageSrc = (rawImage: string | undefined, index: number) => {
-    const fallback = `/services/${index + 1}.png`;
-    if (!rawImage) return fallback;
-
-    if (rawImage.startsWith("/services/") && rawImage.endsWith(".jpg")) {
-      return rawImage.replace(/\.jpg$/i, ".png");
-    }
-
-    return rawImage;
-  };
-
-  const getServiceMobileImages = (index: number) => {
-    const imageSets = [
-      ["/services/1/1.jpg", "/services/1/2.jpg", "/services/1/5.jpg"],
-      ["/services/2/1.jpg", "/services/2/2.jpg", "/services/2/3.jpg"],
-      ["/services/3/1.jpg", "/services/3/2.jpg", "/services/3/3.JPEG"],
-      ["/services/4/1.png", "/services/4/2.png", "/services/4/3.png"],
-      ["/services/5/1.png", "/services/5/2.png", "/services/5/3.png"],
-    ];
-
-    return imageSets[index] ?? [];
-  };
 
   return (
     <section className={styles.services}>
@@ -62,13 +39,10 @@ export default function Services({ showAll = false }: ServicesProps) {
 
           <div className={styles.imageContent}>
             <div className={styles.serviceImage}>
-              <Image
-                src={getServiceImageSrc(service.image, index)}
+              <MediaImage
+                slot={`services.${index + 1}.main`}
                 alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
                 fill
-                sizes="(max-width: 900px) 100vw, (max-width: 1280px) 50vw, 40vw"
-                quality={100}
-                unoptimized
                 className={styles.serviceImageImg}
               />
             </div>
@@ -98,39 +72,30 @@ export default function Services({ showAll = false }: ServicesProps) {
                 </svg>
               </span>
             </div>
-            {getServiceMobileImages(index)[0] ? (
-              <div className={`${styles.mobileMosaicImage} ${styles.mobileMosaicImageTop}`}>
-                <Image
-                  src={getServiceMobileImages(index)[0]}
-                  alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
-                  fill
-                  sizes="(max-width: 480px) 58vw, 220px"
-                  className={styles.mobileMosaicImageImg}
-                />
-              </div>
-            ) : null}
-            {getServiceMobileImages(index)[1] ? (
-              <div className={`${styles.mobileMosaicImage} ${styles.mobileMosaicImageMiddle}`}>
-                <Image
-                  src={getServiceMobileImages(index)[1]}
-                  alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
-                  fill
-                  sizes="(max-width: 480px) 58vw, 220px"
-                  className={styles.mobileMosaicImageImg}
-                />
-              </div>
-            ) : null}
-            {getServiceMobileImages(index)[2] ? (
-              <div className={styles.mobileMosaicWide}>
-                <Image
-                  src={getServiceMobileImages(index)[2]}
-                  alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
-                  fill
-                  sizes="(max-width: 480px) calc(100vw - 20px), 420px"
-                  className={styles.mobileMosaicImageImg}
-                />
-              </div>
-            ) : null}
+            <div className={`${styles.mobileMosaicImage} ${styles.mobileMosaicImageTop}`}>
+              <MediaImage
+                slot={`services.${index + 1}.mobile.1`}
+                alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
+                fill
+                className={styles.mobileMosaicImageImg}
+              />
+            </div>
+            <div className={`${styles.mobileMosaicImage} ${styles.mobileMosaicImageMiddle}`}>
+              <MediaImage
+                slot={`services.${index + 1}.mobile.2`}
+                alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
+                fill
+                className={styles.mobileMosaicImageImg}
+              />
+            </div>
+            <div className={styles.mobileMosaicWide}>
+              <MediaImage
+                slot={`services.${index + 1}.mobile.3`}
+                alt={service.imageAlt ?? service.title ?? service.badge ?? ""}
+                fill
+                className={styles.mobileMosaicImageImg}
+              />
+            </div>
           </div>
         </article>
       ))}

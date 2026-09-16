@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
+import MediaImage from "../../components/Media/MediaImage";
 import { useLanguage } from "../../contexts/LanguageContext";
 import {
   QuoteOverlayProvider,
@@ -42,7 +43,7 @@ interface ConfCopy {
     titleLine2?: string;
     description: string;
     imageAlt: string;
-    image: string;
+    slot: string;
   }[];
   finalCtaTitleLine1: string;
   finalCtaTitleLine2: string;
@@ -85,7 +86,7 @@ const COPY: Record<Language, ConfCopy> = {
         description:
           "Stand out on a crowded floor and give people a reason to stop by. Staff apparel, welcome kits and giveaways that outlast the after-party.",
         imageAlt: "Booth & conference merchandise",
-        image: "/services/1.png",
+        slot: "conf.row.1",
       },
       {
         badge: "Gifts that land",
@@ -93,7 +94,7 @@ const COPY: Record<Language, ConfCopy> = {
         description:
           "Premium gifts for partners, affiliates and VIP guests — curated boxes and tailored packaging that match the stakes.",
         imageAlt: "VIP and high-roller gifts",
-        image: "/gallery/4.jpg",
+        slot: "conf.row.2",
       },
       {
         badge: "Wear the brand",
@@ -102,7 +103,7 @@ const COPY: Record<Language, ConfCopy> = {
         description:
           "Custom apparel, headwear and limited drops that turn your team — and your players — into the brand.",
         imageAlt: "Team apparel close-up with branded label",
-        image: "/services/3.png",
+        slot: "conf.row.3",
       },
     ],
     finalCtaTitleLine1: "Need merch for",
@@ -145,7 +146,7 @@ const COPY: Record<Language, ConfCopy> = {
         description:
           "Fallen Sie auf dem vollen Messeboden auf. Team-Bekleidung, Welcome-Kits und Giveaways, die die After-Party überdauern.",
         imageAlt: "Messe- und Konferenz-Merchandise",
-        image: "/services/1.png",
+        slot: "conf.row.1",
       },
       {
         badge: "Geschenke, die ankommen",
@@ -153,7 +154,7 @@ const COPY: Record<Language, ConfCopy> = {
         description:
           "Premium-Geschenke für Partner, Affiliates und VIP-Gäste — kuratierte Boxen und Verpackung, die zum Einsatz passen.",
         imageAlt: "VIP- und High-Roller-Geschenke",
-        image: "/gallery/4.jpg",
+        slot: "conf.row.2",
       },
       {
         badge: "Trag die Marke",
@@ -162,7 +163,7 @@ const COPY: Record<Language, ConfCopy> = {
         description:
           "Individuelle Bekleidung, Caps und Limited Drops, die Ihr Team — und Ihre Spieler — zur Marke machen.",
         imageAlt: "Team-Bekleidung Nahaufnahme mit Marken-Label",
-        image: "/services/3.png",
+        slot: "conf.row.3",
       },
     ],
     finalCtaTitleLine1: "Merch für",
@@ -320,12 +321,11 @@ function ConfLandingPageInner() {
       {/* SCAN BAND */}
       <section className={styles.bandSection}>
         <div className={styles.band}>
-          <Image
-            src="/inspiration/1.png"
+          <MediaImage
+            slot="conf.hero"
             alt={copy.bandImageAlt}
             fill
             className={styles.bandImage}
-            sizes="(max-width: 1320px) 100vw, 1320px"
             priority
           />
           <div className={styles.bandOverlay} aria-hidden />
@@ -370,13 +370,12 @@ function ConfLandingPageInner() {
                   <p className={styles.rowDescription}>{row.description}</p>
                 </div>
                 <div className={styles.rowMedia}>
-                  <Image
-                    src={row.image}
-                    alt={row.imageAlt}
-                    fill
-                    sizes="(max-width: 720px) 100vw, (max-width: 1320px) 50vw, 600px"
-                    className={styles.rowImage}
-                  />
+                <MediaImage
+                  slot={row.slot}
+                  alt={row.imageAlt}
+                  fill
+                  className={styles.rowImage}
+                />
                 </div>
               </div>
             );

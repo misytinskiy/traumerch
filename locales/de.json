@@ -73,42 +73,36 @@
         "name": "Ihor",
         "role": "Co-Founder & CEO",
         "bio": "Gibt die Richtung vor und verantwortet die Gesamtvision.",
-        "image": "/ourTeam/ihor.png",
         "imageAlt": "Porträt von Ihor Konstantinovskyi"
       },
       {
         "name": "Ivan",
         "role": "Co-Founder And Head Of Sales",
         "bio": "Leitet den Vertrieb und treibt neues Geschäft voran.",
-        "image": "/ourTeam/ivan.png",
         "imageAlt": "Porträt von Ivan"
       },
       {
         "name": "Yury",
         "role": "Co-Founder & Head Of Operations",
         "bio": "Hält Abläufe von der Planung bis zur Lieferung zusammen.",
-        "image": "/ourTeam/yury.png",
         "imageAlt": "Porträt von Yury"
       },
       {
         "name": "Mathias",
         "role": "Procurement Manager",
         "bio": "Verantwortet Sourcing, Lieferanten und Einkauf.",
-        "image": "/ourTeam/mathias.png",
         "imageAlt": "Porträt von Mathias"
       },
       {
         "name": "Anna-Valeriia",
         "role": "Sales Manager",
         "bio": "Macht aus Gesprächen klare Angebote und nächste Schritte.",
-        "image": "/ourTeam/anna-valeriia.png",
         "imageAlt": "Porträt von Anna-Valeriia"
       },
       {
         "name": "Lea",
         "role": "Marketing Manager",
         "bio": "Verantwortet Kampagnen, Content und die Markenstimme.",
-        "image": "/ourTeam/lea.png",
         "imageAlt": "Porträt von Lea"
       }
     ]
@@ -265,7 +259,6 @@
         "badge": "MERCH, DAS VERBINDET",
         "title": "Unternehmens- & Event-Merchandise",
         "description": "Wir entwickeln gebrandetes Merchandise für Mitarbeitende und Events, das Menschen verbindet. Von Welcome Kits und Team-Ausstattung bis zu Konferenz-Giveaways – unsere Lösungen stärken Zusammenhalt und Markenkultur mit jedem Produkt.",
-        "image": "/services/1.jpg",
         "imageAlt": "Unternehmens- & Event-Merchandise",
         "buttonText": "Event-Merch entdecken"
       },
@@ -273,7 +266,6 @@
         "badge": "GESCHENKE, DIE BLEIBEN",
         "title": "Geschäftsgeschenke",
         "description": "Wir gestalten und liefern durchdachte Geschenke für Kunden, Partner und Mitarbeitende. Von hochwertigen Produkten bis zu maßgeschneiderter Verpackung – jedes Geschenk hinterlässt Eindruck und baut stärkere Geschäftsbeziehungen auf.",
-        "image": "/services/2.jpg",
         "imageAlt": "Geschäftsgeschenke",
         "buttonText": "Geschenkideen ansehen"
       },
@@ -281,7 +273,6 @@
         "badge": "IHRE EIGENE MARKE",
         "title": "Private-Label-Kollektionen",
         "description": "Wir entwickeln exklusive Private-Label-Produkte, die individuell auf Ihre Marke zugeschnitten sind. Von Multi-SKU-Kollektionen und einzigartigen Designs bis zur Sekundärverpackung bringen wir Ideen zum Leben und erweitern Ihre Marktpräsenz mit unverwechselbarem Merchandise.",
-        "image": "/services/3.jpg",
         "imageAlt": "Private-Label-Kollektionen",
         "buttonText": "Private Label entdecken"
       },
@@ -289,7 +280,6 @@
         "badge": "PROGRAMME, DIE VERSTÄRKEN",
         "title": "Influencer-Aktivierung & Seeding",
         "description": "Wir entwickeln Influencer- und Brand-Seeding-Programme, die Wirkung erzielen. Mit maßgeschneiderter Verpackung, kuratiertem Merchandise und gezielter Distribution unterstützen wir Marken dabei, authentischen Content zu schaffen und die richtigen Zielgruppen zu erreichen.",
-        "image": "/services/4.jpg",
         "imageAlt": "Influencer-Aktivierung & Seeding",
         "buttonText": "Influencer-Programme ansehen"
       },
@@ -297,7 +287,6 @@
         "badge": "MERCH LEICHT GEMACHT",
         "title": "Smarte Plattform",
         "description": "Unsere digitale Plattform vereinfacht jeden Schritt im Merchandise-Management. Von Bestellung und Lagerverwaltung bis zur Distribution erhalten Marken die Werkzeuge, um ihre Programme effizient und transparent zu skalieren.",
-        "image": "/services/5.jpg",
         "imageAlt": "Smarte Plattform",
         "buttonText": "Plattform ausprobieren"
       }
@@ -317,25 +306,21 @@
       {
         "title": "EMPLOYEE KITS",
         "description": "Premium-Kits für Teams, die vom ersten Tag an Verbindung schaffen.",
-        "image": "/services/mobile/1.jpg",
         "imageAlt": "Employee kits"
       },
       {
         "title": "EVENT MERCH",
         "description": "Merch für Events, der Eindruck hinterlässt und in Erinnerung bleibt.",
-        "image": "/services/mobile/2.JPG",
         "imageAlt": "Event merch"
       },
       {
         "title": "CLIENT GIFTS",
         "description": "Kuratierten Geschenke, die Wertschätzung zeigen und Beziehungen stärken.",
-        "image": "/services/mobile/3.jpg",
         "imageAlt": "Client gifts"
       },
       {
         "title": "CUSTOM PROJECTS",
         "description": "Ihre Idee, unsere Expertise. Vollständig individualisierte Merch-Lösungen.",
-        "image": "/services/mobile/4.jpg",
         "imageAlt": "Custom projects"
       }
     ],
@@ -644,42 +629,36 @@
         "heading": "TOTALE INDIVIDUALISIERUNG",
         "phrase": "Nichts von der Stange, alles deins.",
         "description": "Wir arbeiten nicht mit Standardlösungen. Jedes Produkt wird an Ihre Markenidentität angepasst - von Designdetails bis zur Verpackung. Sie haben die Freiheit, jedes gewünschte Detail einzubringen - farbige Kordeln an Hoodies oder ein Lederriemen an Caps - alles ist möglich.",
-        "image": "/promises/1.png",
         "imageAlt": "Totale Individualisierung"
       },
       {
         "heading": "RUNDUM-SUPPORT",
         "phrase": "Idee. Design. Lieferung. Gemeinsam.",
         "description": "Wir begleiten Sie in jedem Schritt - von Idee und Design bis zu Mustern, Produktion und Lieferung. Anstatt mit vielen Lieferanten zu arbeiten, haben Sie einen zuverlässigen Partner. So bleibt alles übersichtlich und der Ablauf läuft reibungslos, ohne dass Sie sich um Koordination kümmern müssen.",
-        "image": "/promises/2.png",
         "imageAlt": "Rundum-Support"
       },
       {
         "heading": "LOKALE KONFORMITÄT",
         "phrase": "Ein Gründer. Ein Konzern. Immer korrekt.",
         "description": "Ob Ein-Personen-Unternehmen oder multinationaler Konzern - wir kümmern uns um Rechnungen, Mehrwertsteuer und rechtliche Details nach EU-Standards. Unsere Erfahrung mit unterschiedlichen Unternehmensstrukturen zeigt, dass wir die Herausforderungen und Lösungen kennen. So ist die Einhaltung der Vorschriften immer klar und korrekt - unabhängig von Ihrer Unternehmensgröße.",
-        "image": "/promises/3.png",
         "imageAlt": "Lokale Konformität"
       },
       {
         "heading": "QUALITÄTSKONTROLLE",
         "phrase": "Nichts wird ungeprüft versendet. Niemals.",
         "description": "Jede Produktionscharge wird geprüft, bevor sie das Werk verlässt. Unser Team kontrolliert Muster, Materialien und Verarbeitung, damit nichts unter Standard jemals bei Ihnen ankommt. Diese konsequente Qualität macht eine langfristige Zusammenarbeit verlässlich und planbar.",
-        "image": "/promises/4.png",
         "imageAlt": "Qualitätskontrolle"
       },
       {
         "heading": "FAST TRACK",
         "phrase": "1 Tag Angebot. 1 Woche Muster. 1 Monat Lieferung.",
         "description": "Wir wissen, dass Geschwindigkeit entscheidend ist. Deshalb garantieren wir Angebote in 1 Tag, Muster in 1 Woche und Lieferungen in 1 Monat. Unsere optimierten Abläufe und unser Lieferantennetzwerk machen das möglich. *Typische Durchlaufzeiten unter Standardbedingungen. Größere Projekte können abweichen.",
-        "image": "/promises/5.png",
         "imageAlt": "Fast Track"
       },
       {
         "heading": "NACHHALTIGE OPTIONEN",
         "phrase": "Eco ist kein Extra. Es ist Standard.",
         "description": "Nachhaltigkeit ist kein Zusatz, sondern Teil unserer Arbeit. Wir beziehen umweltfreundliche Materialien und bieten auf Wunsch umweltfreundlichere Produktionsmöglichkeiten. So können Sie Merchandise an Ihre Markenwerte und zukünftigen Erwartungen anpassen.",
-        "image": "/promises/6.png",
         "imageAlt": "Nachhaltige Optionen"
       }
     ]

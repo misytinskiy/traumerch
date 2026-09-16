@@ -1,29 +1,29 @@
-import Image from "next/image";
+import MediaImage from "../../components/Media/MediaImage";
 import styles from "./portfolio.module.css";
 
 const cards = [
   {
-    image: "/portfolio/1.png",
+    slot: "portfolio.1",
     alt: "TrauMerch socks",
   },
   {
-    image: "/portfolio/2.png",
+    slot: "portfolio.2",
     alt: "TrauMerch sweatshirt",
   },
   {
-    image: "/portfolio/3.png",
+    slot: "portfolio.3",
     alt: "TrauMerch slides",
   },
   {
-    image: "/portfolio/4.png",
+    slot: "portfolio.4",
     alt: "TrauMerch bucket hat",
   },
   {
-    image: "/portfolio/5.png",
+    slot: "portfolio.5",
     alt: "TrauMerch cooler",
   },
   {
-    image: "/portfolio/6.png",
+    slot: "portfolio.6",
     alt: "TrauMerch hoodie",
   },
 ];
@@ -50,13 +50,12 @@ export default function PortfolioPage() {
         <section className={styles.gridSection}>
           <div className={styles.grid}>
             {cards.map((card) => (
-              <article key={card.image} className={styles.card}>
+              <article key={card.slot} className={styles.card}>
                 <div className={styles.cardImageWrap}>
-                  <Image
-                    src={card.image}
+                  <MediaImage
+                    slot={card.slot}
                     alt={card.alt}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     className={styles.cardImage}
                   />
                 </div>

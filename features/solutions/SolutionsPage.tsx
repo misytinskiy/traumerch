@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
+import MediaImage from "../../components/Media/MediaImage";
 import Link from "next/link";
 import HeroSlider from "../../components/HeroSlider/HeroSlider";
 import Services from "../../components/Services/Services";
@@ -9,10 +9,10 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { TRUSTED_COMPANIES } from "../../shared/trustedCompanies";
 import styles from "./solutions.module.css";
 
-const SERVICES_SLIDER_IMAGES = [
-  "/servicesSliderPhoto/1.jpg",
-  "/servicesSliderPhoto/2.JPEG",
-  "/servicesSliderPhoto/3.JPEG",
+const SOLUTIONS_HERO_SLOTS = [
+  "solutions.hero.1",
+  "solutions.hero.2",
+  "solutions.hero.3",
 ] as const;
 
 export default function SolutionsPage() {
@@ -83,7 +83,7 @@ export default function SolutionsPage() {
 
           <div className={styles.mobileHeroSlider}>
             <HeroSlider
-              images={SERVICES_SLIDER_IMAGES}
+              slots={SOLUTIONS_HERO_SLOTS}
               imageAltPrefix="Services slide"
             />
           </div>
@@ -91,14 +91,13 @@ export default function SolutionsPage() {
           <div className={styles.mobileCardsSection}>
             <p className={styles.mobileCardsLabel}>SOLUTIONS FOR EVERY PURPOSE</p>
             <div className={styles.mobileCardsScroller}>
-              {mobileCards.map((card) => (
+              {mobileCards.map((card, index) => (
                 <Link key={card.title} href="/catalog" className={styles.mobileCard}>
                   <div className={styles.mobileCardImageWrap}>
-                    <Image
-                      src={card.image}
+                    <MediaImage
+                      slot={`solutions.card.${index + 1}`}
                       alt={card.imageAlt ?? card.title}
                       fill
-                      sizes="180px"
                       className={styles.mobileCardImage}
                     />
                   </div>
@@ -131,11 +130,10 @@ export default function SolutionsPage() {
                   className={styles.mobileTrustedLogo}
                   aria-label={company.name}
                 >
-                  <Image
-                    src={company.logo}
+                  <MediaImage
+                    slot={company.slot}
                     alt={company.name}
                     fill
-                    sizes="(max-width: 480px) 20vw, 90px"
                     className={styles.mobileTrustedLogoImage}
                   />
                 </a>

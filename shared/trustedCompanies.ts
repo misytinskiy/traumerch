@@ -1,42 +1,42 @@
 export const TRUSTED_COMPANIES = [
   {
     name: "G Gate Conf",
-    logo: "/logo/gGateConf.webp",
+    slot: "logos.gGateConf",
     href: "https://ggateconf.com/en/",
   },
   {
     name: "Kicks Vienna",
-    logo: "/logo/kicks.webp",
+    slot: "logos.kicks",
     href: "https://kicks-vie.com/",
   },
   {
     name: "RETAL",
-    logo: "/logo/retal.webp",
+    slot: "logos.retal",
     href: "https://www.retalgroup.com/",
   },
   {
     name: "UMIZ",
-    logo: "/logo/umiz.webp",
+    slot: "logos.umiz",
     href: "https://event.umiz.eu/",
   },
   {
     name: "OctoClick",
-    logo: "/logo/octoClick.webp",
+    slot: "logos.octoClick",
     href: "https://octoclick.com/",
   },
   {
     name: "Sporthotel am Semmering",
-    logo: "/logo/semmering.webp",
+    slot: "logos.semmering",
     href: "https://www.semmering.com/sporthotel/",
   },
   {
     name: "LISA",
-    logo: "/logo/lisa.webp",
+    slot: "logos.lisa",
     href: "https://aicompany.at/de",
   },
   {
     name: "VIC",
-    logo: "/logo/vic.webp",
+    slot: "logos.vic",
     href: "https://viennaconcierge.com/",
   },
 ] as const;

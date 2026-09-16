@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import MediaImage from "../Media/MediaImage";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./OurPromisesScroll.module.css";
 
@@ -99,14 +99,11 @@ export default function OurPromisesScroll() {
               >
                 <div className={styles.imagePlaceholder}>
                   <div className={styles.promiseImage}>
-                    <Image
-                      src={promise.image ?? `/promises/${index + 1}.png`}
+                    <MediaImage
+                      slot={`promises.${index + 1}`}
                       alt={promise.imageAlt ?? promise.heading}
                       width={400}
                       height={300}
-                      sizes="(max-width: 480px) calc(100vw - 40px), (max-width: 900px) calc(100vw - 80px), (max-width: 1400px) 37vw, 800px"
-                      quality={100}
-                      unoptimized
                       className={styles.promiseImageTag}
                       priority={index === 0}
                     />

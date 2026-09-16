@@ -1,6 +1,6 @@
  "use client";
 
-import Image from "next/image";
+import MediaImage from "../../components/Media/MediaImage";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./inspiration.module.css";
 
@@ -21,25 +21,17 @@ export default function InspirationPage() {
         <section className={styles.gridSection}>
           <div className={styles.grid}>
             <article className={styles.cardOne}>
-              <Image
-                src="/inspirationPage/1.png"
-                alt="Branded cap with pencil"
+              <MediaImage
+                slot="inspiration.tile-01"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardTwo}>
-              <Image
-                src="/inspirationPage/2.png"
-                alt="Branded tag"
+              <MediaImage
+                slot="inspiration.tile-02"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -49,25 +41,17 @@ export default function InspirationPage() {
             </article>
 
             <article className={styles.cardFour}>
-              <Image
-                src="/inspirationPage/4.png"
-                alt="Earbuds case"
+              <MediaImage
+                slot="inspiration.tile-04"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardThree}>
-              <Image
-                src="/inspirationPage/3.png"
-                alt="Branded brush"
+              <MediaImage
+                slot="inspiration.tile-03"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -77,61 +61,41 @@ export default function InspirationPage() {
         <section className={styles.gridSection}>
           <div className={styles.gridSecond}>
             <article className={styles.cardFive}>
-              <Image
-                src="/inspirationPage/5.png"
-                alt="Inspiration photo 5"
+              <MediaImage
+                slot="inspiration.tile-05"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardSix}>
-              <Image
-                src="/inspirationPage/6.png"
-                alt="Inspiration photo 6"
+              <MediaImage
+                slot="inspiration.tile-06"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardSeven}>
-              <Image
-                src="/inspirationPage/7.png"
-                alt="Inspiration photo 7"
+              <MediaImage
+                slot="inspiration.tile-07"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardEight}>
-              <Image
-                src="/inspirationPage/8.png"
-                alt="Inspiration photo 8"
+              <MediaImage
+                slot="inspiration.tile-08"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardNine}>
-              <Image
-                src="/inspirationPage/9.png"
-                alt="Inspiration photo 9"
+              <MediaImage
+                slot="inspiration.tile-09"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -141,25 +105,17 @@ export default function InspirationPage() {
         <section className={styles.gridSection}>
           <div className={styles.gridThird}>
             <article className={styles.cardTen}>
-              <Image
-                src="/inspirationPage/10.png"
-                alt="Inspiration photo 10"
+              <MediaImage
+                slot="inspiration.tile-10"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardEleven}>
-              <Image
-                src="/inspirationPage/11.png"
-                alt="Inspiration photo 11"
+              <MediaImage
+                slot="inspiration.tile-11"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -169,13 +125,9 @@ export default function InspirationPage() {
             </article>
 
             <article className={styles.cardTwelve}>
-              <Image
-                src="/inspirationPage/12.png"
-                alt="Inspiration photo 12"
+              <MediaImage
+                slot="inspiration.tile-12"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -185,61 +137,41 @@ export default function InspirationPage() {
         <section className={styles.gridSection}>
           <div className={styles.gridFourth}>
             <article className={styles.cardThirteen}>
-              <Image
-                src="/inspirationPage/13.png"
-                alt="Inspiration photo 13"
+              <MediaImage
+                slot="inspiration.tile-13"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardFourteen}>
-              <Image
-                src="/inspirationPage/14.png"
-                alt="Inspiration photo 14"
+              <MediaImage
+                slot="inspiration.tile-14"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardFifteen}>
-              <Image
-                src="/inspirationPage/15.png"
-                alt="Inspiration photo 15"
+              <MediaImage
+                slot="inspiration.tile-15"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardSixteen}>
-              <Image
-                src="/inspirationPage/16.png"
-                alt="Inspiration photo 16"
+              <MediaImage
+                slot="inspiration.tile-16"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardSeventeen}>
-              <Image
-                src="/inspirationPage/17.png"
-                alt="Inspiration photo 17"
+              <MediaImage
+                slot="inspiration.tile-17"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -249,49 +181,33 @@ export default function InspirationPage() {
         <section className={styles.gridSection}>
           <div className={styles.gridFifth}>
             <article className={styles.cardEighteen}>
-              <Image
-                src="/inspirationPage/18.png"
-                alt="Inspiration photo 18"
+              <MediaImage
+                slot="inspiration.tile-18"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardNineteen}>
-              <Image
-                src="/inspirationPage/19.png"
-                alt="Inspiration photo 19"
+              <MediaImage
+                slot="inspiration.tile-19"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardTwenty}>
-              <Image
-                src="/inspirationPage/20.png"
-                alt="Inspiration photo 20"
+              <MediaImage
+                slot="inspiration.tile-20"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardTwentyOne}>
-              <Image
-                src="/inspirationPage/21.png"
-                alt="Inspiration photo 21"
+              <MediaImage
+                slot="inspiration.tile-21"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -305,73 +221,49 @@ export default function InspirationPage() {
         <section className={styles.gridSection}>
           <div className={styles.gridSixth}>
             <article className={styles.cardTwentyTwo}>
-              <Image
-                src="/inspirationPage/22.png"
-                alt="Inspiration photo 22"
+              <MediaImage
+                slot="inspiration.tile-22"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardTwentyThree}>
-              <Image
-                src="/inspirationPage/23.png"
-                alt="Inspiration photo 23"
+              <MediaImage
+                slot="inspiration.tile-23"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardTwentyFour}>
-              <Image
-                src="/inspirationPage/24.png"
-                alt="Inspiration photo 24"
+              <MediaImage
+                slot="inspiration.tile-24"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardTwentyFive}>
-              <Image
-                src="/inspirationPage/25.png"
-                alt="Inspiration photo 25"
+              <MediaImage
+                slot="inspiration.tile-25"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardTwentySix}>
-              <Image
-                src="/inspirationPage/26.png"
-                alt="Inspiration photo 26"
+              <MediaImage
+                slot="inspiration.tile-26"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardTwentySeven}>
-              <Image
-                src="/inspirationPage/27.png"
-                alt="Inspiration photo 27"
+              <MediaImage
+                slot="inspiration.tile-27"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -381,37 +273,25 @@ export default function InspirationPage() {
         <section className={styles.gridSection}>
           <div className={styles.gridSeventh}>
             <article className={styles.cardTwentyEight}>
-              <Image
-                src="/inspirationPage/28.png"
-                alt="Inspiration photo 28"
+              <MediaImage
+                slot="inspiration.tile-28"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardTwentyNine}>
-              <Image
-                src="/inspirationPage/29.png"
-                alt="Inspiration photo 29"
+              <MediaImage
+                slot="inspiration.tile-29"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardThirty}>
-              <Image
-                src="/inspirationPage/30.png"
-                alt="Inspiration photo 30"
+              <MediaImage
+                slot="inspiration.tile-30"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -421,25 +301,17 @@ export default function InspirationPage() {
             </article>
 
             <article className={styles.cardThirtyOne}>
-              <Image
-                src="/inspirationPage/31.png"
-                alt="Inspiration photo 31"
+              <MediaImage
+                slot="inspiration.tile-31"
                 fill
-                sizes="(max-width: 900px) 100vw, 50vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardThirtyTwo}>
-              <Image
-                src="/inspirationPage/32.png"
-                alt="Inspiration photo 32"
+              <MediaImage
+                slot="inspiration.tile-32"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
@@ -449,25 +321,17 @@ export default function InspirationPage() {
         <section className={styles.gridSection}>
           <div className={styles.gridEighth}>
             <article className={styles.cardThirtyThree}>
-              <Image
-                src="/inspirationPage/33.png"
-                alt="Inspiration photo 33"
+              <MediaImage
+                slot="inspiration.tile-33"
                 fill
-                sizes="(max-width: 900px) 100vw, 25vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
 
             <article className={styles.cardThirtyFour}>
-              <Image
-                src="/inspirationPage/34.png"
-                alt="Inspiration photo 34"
+              <MediaImage
+                slot="inspiration.tile-34"
                 fill
-                sizes="(max-width: 900px) 100vw, 75vw"
-                quality={100}
-                unoptimized
                 className={styles.image}
               />
             </article>
