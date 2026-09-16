@@ -80,7 +80,7 @@ export default function ThankYouOverlay({
               muted
               playsInline
               preload="metadata"
-              poster="/thankYou.gif"
+              poster="/thankYouPoster.webp"
             >
               <source src="/thankYou.webm" type="video/webm" />
             </video>

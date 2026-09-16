@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest"
+    "test": "vitest",
+    "media:optimize": "node --experimental-strip-types scripts/optimize-media.mjs",
+    "media:verify": "node --experimental-strip-types scripts/verify-slots.mjs",
+    "media:prune": "node --experimental-strip-types scripts/prune-legacy-media.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.16",

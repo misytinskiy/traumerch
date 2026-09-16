@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import MediaImage from "../Media/MediaImage";
 import { useLanguage } from "../../contexts/LanguageContext";
 import styles from "./ProductInfo.module.css";
 
@@ -76,11 +76,11 @@ export default function ProductInfo() {
   };
 
   const slides = [
-    "/inspiration/1.png",
-    "/inspiration/2.png",
-    "/gallery/1.jpg",
-    "/gallery/2.jpg",
-    "/gallery/3.jpg",
+    "product.slider.1",
+    "product.slider.2",
+    "home.gallery.1",
+    "home.gallery.2",
+    "home.gallery.3",
   ];
   const totalSlides = slides.length;
 
@@ -126,11 +126,10 @@ export default function ProductInfo() {
       <div className={styles.sliderSection}>
         <div className={styles.sliderContainer}>
           <div className={styles.sliderImage}>
-            <Image
-              src={slides[currentSlide]}
+            <MediaImage
+              slot={slides[currentSlide]}
               alt={t.design.knowYourProduct}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 50vw"
               className={styles.sliderImageContent}
               priority={currentSlide === 0}
             />
