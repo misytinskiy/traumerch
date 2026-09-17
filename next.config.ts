@@ -23,6 +23,16 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Имена файлов в /media содержат хеш содержимого: замена фотографии
+        // даёт новое имя, поэтому старое можно кешировать неограниченно.
+        // Без этого Next отдаёт всё из public/ с max-age=0, и каждая
+        // страница заново тянет все картинки с origin.
+        source: "/media/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      {
         source: "/(.*)",
         headers: [
           { key: "X-Frame-Options", value: "DENY" },
