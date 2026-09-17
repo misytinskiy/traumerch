@@ -5,7 +5,6 @@ import {
   useEffect,
   useMemo,
   useCallback,
-  useRef,
   useDeferredValue,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -77,7 +76,7 @@ export default function ProductTabs({
   const deferredSearchQuery = useDeferredValue(searchQuery);
 
   const allProductsApiUrl = "/api/airtable-products?format=normalized&priceTier=bulk";
-  const { data: allProductsData, error, isLoading, mutate } = useSWR(
+  const { data: allProductsData, error, isLoading } = useSWR(
     allProductsApiUrl,
     fetcher,
     {
@@ -86,8 +85,8 @@ export default function ProductTabs({
       // этот запрос — снимок общий. Ревалидация на монтировании дублировала
       // рендер и удваивала расход Airtable, а браузеру стоила лишних 333 КБ.
       // Свежесть обеспечивает пятиминутный TTL снимка при следующей загрузке
-      // страницы; принудительно обновиться можно через mutate(), что и делает
-      // обработчик протухших ссылок на фото.
+      // страницы: адреса фотографий теперь вечные, поэтому обновлять их
+      // в открытой вкладке больше незачем.
       revalidateOnMount: false,
       revalidateIfStale: false,
       revalidateOnFocus: false,
@@ -99,7 +98,15 @@ export default function ProductTabs({
     | [];
 
   useEffect(() => {
-    setActivatedHoverImageIds([]);
+    // Возвращаем ту же ссылку, когда чистить нечего.
+    //
+    // Пустой литерал [] создаётся заново на каждый вызов, поэтому React считал
+    // состояние изменившимся всегда. Вместе с зависимостью от allRecords, чья
+    // ссылка приходит из SWR, это замыкается в бесконечный цикл: рендер ->
+    // эффект -> setState -> рендер. Сейчас он не крутится только потому, что
+    // SWR отдаёт стабильный объект, — то есть держится на детали чужой
+    // реализации. С bail-out цикл невозможен в принципе.
+    setActivatedHoverImageIds((current) => (current.length === 0 ? current : []));
   }, [allRecords, activeTab]);
 
   const knownCategoryLabels = useMemo(

@@ -65,3 +65,31 @@ export const productPhotoSrcSet = (
     .map((width) => `${productPhotoUrl(recordId, attachmentId, width)} ${width}w`)
     .join(", ");
 };
+
+/**
+ * Достаёт идентификаторы товара и вложения из адреса картинки.
+ *
+ * Нужно для диагностики: браузер присылает адрес сломавшейся картинки, и по
+ * нему надо понять, о каком товаре речь, чтобы состыковать отчёт с серверным
+ * логом. Понимает и прямой адрес, и обёртку /_next/image?url=...
+ */
+export const parseProductPhotoUrl = (
+  value: string
+): { recordId: string; attachmentId: string } | null => {
+  if (!value) return null;
+
+  const decoded = (() => {
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
+  })();
+
+  const match = decoded.match(
+    /\/api\/product-photo\/(rec[A-Za-z0-9]{1,20})\/(att[A-Za-z0-9]{1,20})\//
+  );
+  if (!match) return null;
+
+  return { recordId: match[1], attachmentId: match[2] };
+};

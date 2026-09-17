@@ -180,6 +180,59 @@ product photos into static storage on a schedule, the way marketing images are
 handled, and drop the runtime hops entirely. That is real work and should only be
 started if the current path stays slow after 2.0.
 
+### 2.1a Diagnostics for the cold-load failure — ADDED
+
+Both halves of the evidence now get recorded, so the next occurrence can be
+attributed instead of guessed at.
+
+**Server side** — `/api/product-photo` writes one JSON line per failure, and per
+success slower than 3000 ms. Fast successes write nothing: the catalog is
+hundreds of photos per page, and a line each would bury the one event that
+matters.
+
+```
+{"tag":"photo","requestId":"3bbb0bda","recordId":"rec...","attachmentId":"att...",
+ "width":"original","stage":"resolve","outcome":"not-found","status":404,
+ "ms":1034,"resolveMs":1034,"fromSnapshot":false}
+```
+
+`stage` says how far it got (`resolve` / `fetch` / `encode`), `outcome`
+separates a timeout from an upstream error, `sourceHost` says where the bytes
+were coming from, and `retry` marks a browser's second attempt so a retry is not
+mistaken for an independent failure. Every response also carries
+`x-photo-request-id`.
+
+**Browser side** — a single capture-phase listener on `window` sees every image
+error on the site, including `next/image`, `MediaImage` and plain tags, without
+touching any call site. It reports `currentSrc`, the page path, timing and
+whether the image recovered, by `sendBeacon` to `/api/image-diagnostics`.
+
+The two halves join on `recordId` / `attachmentId`, which the endpoint parses out
+of the reported URL. Verified end to end against a real product photo.
+
+**Nothing sensitive is written.** Every logged string passes through
+`server/diagnostics/redact.ts`, which strips whole URLs (Airtable's signed links
+are the thing being protected), `pat*` / `key*` tokens, `Bearer` headers, and all
+control characters — the last so a hostile request body cannot forge extra log
+lines. Covered by tests, including one asserting a signed URL never reaches the
+log while its host still does.
+
+### 2.1b One bounded retry — ADDED
+
+A failed image is retried exactly once, after 500-2000 ms of jitter. The jitter
+matters: if thirty images fail together on a cold load, a synchronised retry
+recreates the load that may have caused it.
+
+The retry parameter is appended to the **inner** `url` of `/_next/image`, not to
+`/_next/image` itself, so the optimizer and the proxy both see a new key and the
+retry actually reaches the source instead of returning the same cached failure.
+`srcset` is rewritten alongside `src`, otherwise the browser keeps choosing from
+the old candidates and the new `src` is ignored.
+
+This does not establish the cause and is not meant to. What it gives is the
+distinction the logs were missing: `recovered` means a transient failure,
+`failed` means a persistent one.
+
 ### 2.0d Empty catalog could be baked into the build — FIXED
 
 `/catalog` is prerendered, and `getCatalogSnapshot` deliberately never throws —
@@ -218,21 +271,46 @@ correctness.
 ### 2.4 Pre-existing test failures — NOT caused by this work
 
 `tests/product-info.test.tsx` and `tests/quote-contact-submit.test.tsx` fail, and
-`tests/product-tabs.test.tsx` hangs, blocking `npm test` entirely. All three
-behave identically at `743d030`, verified in a separate worktree.
-`product-info` asserts on a `background-image` div the component has not had for
-a long time.
+both behave identically at `743d030`. `product-info` asserts on a
+`background-image` div the component has not had for a long time.
 
-`product-tabs` does not hang on test logic — the worker process exits. It fails
-the same way under `--pool=threads` and under `jsdom`, while every other DOM test
-in the suite passes, so it is specific to that file. It was not quarantined here:
-disabling somebody else's test is the owner's call. Until then, run the suite as
+`npm test` runs to completion again. Everything below this line is the record of
+how the hang was found, because the earlier entry here was wrong about it.
 
-```bash
-npx vitest run --exclude 'tests/product-tabs.test.tsx'
+### 2.4-a `product-tabs` hang — FIXED, and it was a real defect
+
+Earlier this document claimed the hang was "not test logic — the worker process
+exits", and that it reproduced under `jsdom` and `--pool=threads`. That was
+wrong. It is an infinite render loop, and it is in the component.
+
+`ProductTabs` had:
+
+```tsx
+useEffect(() => {
+  setActivatedHoverImageIds([]);
+}, [allRecords, activeTab]);
 ```
 
-which gives 11 files passing and the 2 known failures above.
+`[]` is a fresh array every call, so React never sees the state as unchanged.
+`allRecords` derives its identity from whatever SWR returns. The moment SWR's
+result is not reference-stable, this becomes render -> effect -> setState ->
+render, forever.
+
+The third test in the file uses `mockImplementation` returning a new object per
+call, while the first two use `mockReturnValue`. That is why only that one hung —
+and why the first faithful-looking reproduction attempt passed in 21 ms and
+nearly led to the wrong conclusion a second time.
+
+In production the loop does not run, because real SWR returns a stable object.
+That is luck, not design: the component was one refactor away from spinning in
+the browser. Fixed by bailing out instead of always allocating:
+
+```tsx
+setActivatedHoverImageIds((current) => (current.length === 0 ? current : []));
+```
+
+Same behaviour, no update when there is nothing to clear. `product-tabs` now
+passes in 51 ms, and `npm test` needs no `--exclude`.
 
 ### 2.4a New coverage
 
@@ -245,6 +323,20 @@ in the default node environment, so they stay out of the DOM trouble above.
 The bounded-fetch logic now lives in `server/http/fetchWithDeadline.ts` and is
 used by both the photo proxy and `fetchAirtable`, so there is one implementation
 to test rather than two copies to keep in step.
+
+`tests/image-diagnostics.test.ts` (21) covers redaction, the retry-URL builder
+and the reporting endpoint. The redaction cases are the important ones: a signed
+Airtable URL must not survive into a log line, and a newline in a request body
+must not be able to forge one.
+
+`tests/product-photo-route.test.ts` (6) drives the proxy end to end with a
+mocked source: request id header, timeout mapped to 504 with stage and timings
+recorded, dropped connection mapped to 502, browser retry marked, and — the
+point of the exercise — the signed URL and the token absent from the log while
+the source host is still present.
+
+The route now reads its query from `request.url` rather than `nextUrl`, so it can
+be called with a plain `Request` and needs no Next wrapper to test.
 
 ### 2.5 Dead code
 
@@ -293,7 +385,22 @@ a fresh edge, no warm cache, many images at once. Worth trying from several
 networks and locations, and with DevTools throttling, since it did not reproduce
 from a warm browser session.
 
-Check: are broken images accompanied by a failed request, and what status?
+Since 2.1a, this no longer depends on catching it live. Open `/catalog` cold,
+then read the Vercel runtime logs and filter:
+
+- `"tag":"photo"` — server-side failures and slow successes. Look at `stage`,
+  `outcome`, `fetchMs`, `sourceStatus`.
+- `"tag":"photo-client"` — what the browser actually saw. `"outcome":"recovered"`
+  means the retry worked (transient); `"outcome":"failed"` means it did not.
+
+The two join on `recordId` / `attachmentId`. **The useful case is a
+`photo-client` line with no matching `photo` line**: that means the request never
+reached the function, which points at the optimizer or the network rather than at
+the proxy — and that is exactly the question three concurrency runs failed to
+settle.
+
+An absence of `photo-client` lines over a period with real traffic is weak
+evidence the problem is gone, and still not proof of what caused it.
 
 ### 4.2 Image quality
 

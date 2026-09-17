@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { LanguageProvider } from "../contexts/LanguageContext";
 import GtmManager from "../components/Analytics/GtmManager";
+import ImageFailureReporter from "../components/Diagnostics/ImageFailureReporter";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -106,6 +107,7 @@ gtag('config', 'G-L0E8LG3KVT');`,
         className={`${geistSans.variable} ${geistMono.variable} ${ebGaramond.variable} ${inter.variable}`}
       >
         <GtmManager />
+        <ImageFailureReporter />
         <LanguageProvider>
           {children}
         </LanguageProvider>
