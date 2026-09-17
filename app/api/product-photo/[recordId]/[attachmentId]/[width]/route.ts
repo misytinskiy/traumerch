@@ -7,6 +7,10 @@ import {
   fetchAirtable,
 } from "../../../../../../server/airtable/airtable";
 import { isProductPhotoWidth } from "../../../../../../shared/productPhoto";
+import {
+  FetchDeadlineError,
+  fetchWithDeadline,
+} from "../../../../../../server/http/fetchWithDeadline";
 
 // sharp требует Node, на Edge не работает.
 export const runtime = "nodejs";
@@ -97,19 +101,13 @@ export async function GET(
     // Байты идут с CDN Airtable (v5.airtableusercontent.com), а не с api.airtable.com,
     // поэтому эта загрузка не расходует месячную квоту вызовов API.
     //
-    // Таймаут держим до конца чтения тела, а не до заголовков. Сначала было
-    // наоборот: clearTimeout стоял сразу после fetch, то есть многомегабайтное
-    // тело читалось уже без всякого ограничения по времени и зависшее
-    // соединение висело до тех пор, пока функцию не убьёт платформа.
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-
+    // fetchWithDeadline держит таймаут до конца чтения тела: иначе
+    // многомегабайтная картинка читается уже без ограничения по времени.
     let original: Buffer;
     let sourceContentType = "image/jpeg";
     try {
-      const source = await fetch(sourceUrl, {
-        signal: controller.signal,
-        cache: "no-store",
+      const source = await fetchWithDeadline(sourceUrl, {
+        timeoutMs: FETCH_TIMEOUT_MS,
       });
 
       if (!source.ok) {
@@ -120,23 +118,21 @@ export async function GET(
       }
 
       sourceContentType = source.headers.get("content-type") || sourceContentType;
-      original = Buffer.from(await source.arrayBuffer());
+      original = source.body;
     } catch (error) {
-      const aborted = error instanceof Error && error.name === "AbortError";
+      // 504 только для настоящего таймаута. Обрыв соединения — это 502:
+      // иначе в логах любая сетевая ошибка выглядит как превышение времени,
+      // и искать будут не там.
+      const timedOut = error instanceof FetchDeadlineError && error.timedOut;
       console.error(
-        `[product-photo] ${aborted ? "таймаут" : "ошибка"} при загрузке исходника ` +
+        `[product-photo] ${timedOut ? "таймаут" : "ошибка"} при загрузке исходника ` +
           `${recordId}/${attachmentId}`,
         error
       );
-      // 504 только для настоящего таймаута. Обрыв соединения — это 502:
-      // иначе в логах и мониторинге любая сетевая ошибка выглядит как
-      // превышение времени, и искать будут не там.
       return NextResponse.json(
-        { error: aborted ? "Source image timed out" : "Failed to fetch source image" },
-        { status: aborted ? 504 : 502 }
+        { error: timedOut ? "Source image timed out" : "Failed to fetch source image" },
+        { status: timedOut ? 504 : 502 }
       );
-    } finally {
-      clearTimeout(timeout);
     }
 
     // Оригинал отдаём как есть: варианты по размерам сделает next/image, и

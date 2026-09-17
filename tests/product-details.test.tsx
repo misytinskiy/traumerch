@@ -29,6 +29,12 @@ vi.mock("next/image", () => ({
   },
 }));
 
+/**
+ * Галерея больше не выводит сырые ссылки Airtable: они протухают примерно за
+ * два часа. Адрес строится из id вложения и ведёт в /api/product-photo, откуда
+ * и берётся картинка. Поэтому фикстуры содержат id, а проверки ждут адрес
+ * прокси вместо ссылки на CDN Airtable.
+ */
 describe("ProductDetails", () => {
   beforeEach(() => {
     addItemMock.mockReset();
@@ -118,14 +124,14 @@ describe("ProductDetails", () => {
     const firstRecord = {
       id: "rec1",
       fields: {
-        "Main Product Photo": [{ url: "https://cdn.example.com/a.jpg" }],
+        "Main Product Photo": [{ id: "atta", url: "https://cdn.example.com/a.jpg" }],
       },
     };
 
     const secondRecord = {
       id: "rec1",
       fields: {
-        "Main Product Photo": [{ url: "https://cdn.example.com/b.jpg" }],
+        "Main Product Photo": [{ id: "attb", url: "https://cdn.example.com/b.jpg" }],
       },
     };
 
@@ -138,7 +144,7 @@ describe("ProductDetails", () => {
     );
 
     const firstImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(firstImg.getAttribute("src")).toContain("https://cdn.example.com/a.jpg");
+    expect(firstImg.getAttribute("src")).toContain("/api/product-photo/rec1/atta/original");
 
     rerender(
       <ProductDetails
@@ -149,7 +155,7 @@ describe("ProductDetails", () => {
     );
 
     const secondImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(secondImg.getAttribute("src")).toContain("https://cdn.example.com/b.jpg");
+    expect(secondImg.getAttribute("src")).toContain("/api/product-photo/rec1/attb/original");
   });
 
   it("uses palette photos for the selected color and switches main photo on color click", () => {
@@ -158,11 +164,11 @@ describe("ProductDetails", () => {
       fields: {
         "[WEB] Palette Hex Colours": "#111111, #00ff00",
         "[WEB] Palette Photos": [
-          { url: "https://cdn.example.com/black.jpg" },
-          { url: "https://cdn.example.com/green.jpg" },
+          { id: "attblack", url: "https://cdn.example.com/black.jpg" },
+          { id: "attgreen", url: "https://cdn.example.com/green.jpg" },
         ],
-        "Main Product Photo": [{ url: "https://cdn.example.com/default.jpg" }],
-        "Secondary Product Photos": [{ url: "https://cdn.example.com/secondary.jpg" }],
+        "Main Product Photo": [{ id: "attdefault", url: "https://cdn.example.com/default.jpg" }],
+        "Secondary Product Photos": [{ id: "attsecondary", url: "https://cdn.example.com/secondary.jpg" }],
       },
     };
 
@@ -175,13 +181,13 @@ describe("ProductDetails", () => {
     );
 
     const defaultMainImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(defaultMainImg.getAttribute("src")).toContain("https://cdn.example.com/black.jpg");
+    expect(defaultMainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attblack/original");
 
     const colorButtons = screen.getAllByLabelText(/Color \d+/);
     fireEvent.click(colorButtons[1]);
 
     const updatedMainImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(updatedMainImg.getAttribute("src")).toContain("https://cdn.example.com/green.jpg");
+    expect(updatedMainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attgreen/original");
   });
 
   it("falls back to main product photo when palette photos field is empty", () => {
@@ -190,7 +196,7 @@ describe("ProductDetails", () => {
       fields: {
         "[WEB] Palette Hex Colours": "#111111, #00ff00",
         "[WEB] Palette Photos": [],
-        "Main Product Photo": [{ url: "https://cdn.example.com/default.jpg" }],
+        "Main Product Photo": [{ id: "attdefault", url: "https://cdn.example.com/default.jpg" }],
       },
     };
 
@@ -203,7 +209,7 @@ describe("ProductDetails", () => {
     );
 
     const mainImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(mainImg.getAttribute("src")).toContain("https://cdn.example.com/default.jpg");
+    expect(mainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attdefault/original");
   });
 
   it("treats main product photo as the first color when palette photos start from the second color", () => {
@@ -212,12 +218,12 @@ describe("ProductDetails", () => {
       fields: {
         "[WEB] Palette Hex Colours": "#1A1A1A, #2E3192, #E60000, #BFBFBF, #F2F2F2",
         "[WEB] Palette Photos": [
-          { url: "https://cdn.example.com/blue.jpg" },
-          { url: "https://cdn.example.com/red.jpg" },
-          { url: "https://cdn.example.com/gray.jpg" },
-          { url: "https://cdn.example.com/white.jpg" },
+          { id: "attblue", url: "https://cdn.example.com/blue.jpg" },
+          { id: "attred", url: "https://cdn.example.com/red.jpg" },
+          { id: "attgray", url: "https://cdn.example.com/gray.jpg" },
+          { id: "attwhite", url: "https://cdn.example.com/white.jpg" },
         ],
-        "Main Product Photo": [{ url: "https://cdn.example.com/black.jpg" }],
+        "Main Product Photo": [{ id: "attblack", url: "https://cdn.example.com/black.jpg" }],
       },
     };
 
@@ -230,22 +236,22 @@ describe("ProductDetails", () => {
     );
 
     const initialMainImg = screen.getAllByAltText("Mints Box")[0] as HTMLImageElement;
-    expect(initialMainImg.getAttribute("src")).toContain("https://cdn.example.com/black.jpg");
+    expect(initialMainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attblack/original");
 
     const colorButtons = screen.getAllByLabelText(/Color \d+/);
     fireEvent.click(colorButtons[1]);
-    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("https://cdn.example.com/blue.jpg");
+    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("/api/product-photo/rec1/attblue/original");
     expect(
       screen
         .getAllByAltText("Mints Box")
-        .some((image) => image.getAttribute("src")?.includes("https://cdn.example.com/black.jpg"))
+        .some((image) => image.getAttribute("src")?.includes("/api/product-photo/rec1/attblack/original"))
     ).toBe(true);
 
     fireEvent.click(colorButtons[2]);
-    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("https://cdn.example.com/red.jpg");
+    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("/api/product-photo/rec1/attred/original");
 
     fireEvent.click(colorButtons[3]);
-    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("https://cdn.example.com/gray.jpg");
+    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("/api/product-photo/rec1/attgray/original");
   });
 
   it("renders special field text only when enabled and uses current language", () => {

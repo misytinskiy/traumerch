@@ -1,5 +1,7 @@
 import "server-only";
 
+import { fetchWithDeadline } from "../http/fetchWithDeadline";
+
 type AirtableLocation = {
   baseId: string;
   tableIdOrName: string;
@@ -50,45 +52,19 @@ export const fetchAirtable = async (
   let attempt = 0;
 
   while (attempt <= retries) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    // Таймаут должен покрывать и чтение тела: раньше здесь наружу уходил живой
+    // Response, а .json() на нём вызывался уже после снятия таймера, то есть
+    // без всякого ограничения по времени.
+    const { status, ok, headers, body } = await fetchWithDeadline(url, {
+      timeoutMs,
+      cache,
+      headers: { Authorization: `Bearer ${apiToken}` },
+    });
 
-    try {
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${apiToken}`,
-        },
-        signal: controller.signal,
-        cache,
-      });
-
-      // Тело вычитываем здесь, пока таймер ещё взведён, и отдаём вызывающему
-      // коду уже буферизованный ответ. Раньше сюда возвращался живой Response,
-      // а .json() на нём вызывался снаружи — то есть уже после clearTimeout,
-      // без всякого ограничения по времени. Зависшее чтение висело до тех пор,
-      // пока функцию не убьёт платформа.
-      const buffered =
-        response.status === 204 || response.status === 304
-          ? new Response(null, {
-              status: response.status,
-              statusText: response.statusText,
-              headers: response.headers,
-            })
-          : new Response(await response.arrayBuffer(), {
-              status: response.status,
-              statusText: response.statusText,
-              headers: response.headers,
-            });
-
-      if (
-        buffered.ok ||
-        attempt >= retries ||
-        (buffered.status !== 429 && buffered.status < 500)
-      ) {
-        return buffered;
-      }
-    } finally {
-      clearTimeout(timeout);
+    if (ok || attempt >= retries || (status !== 429 && status < 500)) {
+      return status === 204 || status === 304
+        ? new Response(null, { status, headers })
+        : new Response(new Uint8Array(body), { status, headers });
     }
 
     attempt += 1;

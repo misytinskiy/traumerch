@@ -98,7 +98,21 @@ export const getCatalogSnapshot = async ({
   const key = snapshotKey(priceTier, view);
 
   try {
-    const snapshot = await cachedSnapshot(priceTier, view)();
+    let snapshot: CatalogSnapshot;
+    try {
+      snapshot = await cachedSnapshot(priceTier, view)();
+    } catch (cacheError) {
+      // unstable_cache работает только внутри рантайма Next и вне его бросает
+      // "Invariant: incrementalCache missing". Раньше это попадало в общий catch
+      // ниже и молча обнуляло каталог — то есть сбой слоя кеширования выглядел
+      // как отсутствие товаров. Правильнее потерять кеш, а не данные.
+      console.warn(
+        "[catalog] кеш недоступен, читаем Airtable напрямую",
+        cacheError
+      );
+      snapshot = await loadSnapshot(priceTier, view);
+    }
+
     if (snapshot.records.length > 0) {
       lastGood.set(key, snapshot);
     }

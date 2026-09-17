@@ -180,6 +180,29 @@ product photos into static storage on a schedule, the way marketing images are
 handled, and drop the runtime hops entirely. That is real work and should only be
 started if the current path stays slow after 2.0.
 
+### 2.0d Empty catalog could be baked into the build — FIXED
+
+`/catalog` is prerendered, and `getCatalogSnapshot` deliberately never throws —
+it returns an empty list when Airtable is unreachable. Together that meant a
+failed fetch during `next build` was baked into a static page: the deploy
+succeeded and shipped an empty catalog, which then served until revalidation.
+
+Observed on roughly every other local build. One build produced a 276 KB
+prerender with products; the next produced 22 KB with none, no error logged.
+
+`CatalogPage` now throws during `phase-production-build` if the snapshot is
+empty. A failed deploy is fixable by retrying; a shipped empty catalog is not.
+Verified by building with deliberately broken credentials — the build stops with
+an explicit message.
+
+### 2.0e Cache-layer failure emptied the catalog — FIXED
+
+`unstable_cache` only works inside the Next runtime and throws
+`Invariant: incrementalCache missing` outside it. That was landing in the outer
+catch, so a failure of the *caching layer* looked exactly like *no products*.
+Now it falls back to loading directly: lose the cache, not the data. This is also
+what made `tests/api-airtable-products.test.ts` fail.
+
 ### 2.2 Cache hit rate is uneven
 
 Repeating one image URL on the dev stand gave `HIT / MISS / HIT`. Vercel warms
@@ -199,6 +222,29 @@ correctness.
 behave identically at `743d030`, verified in a separate worktree.
 `product-info` asserts on a `background-image` div the component has not had for
 a long time.
+
+`product-tabs` does not hang on test logic — the worker process exits. It fails
+the same way under `--pool=threads` and under `jsdom`, while every other DOM test
+in the suite passes, so it is specific to that file. It was not quarantined here:
+disabling somebody else's test is the owner's call. Until then, run the suite as
+
+```bash
+npx vitest run --exclude 'tests/product-tabs.test.tsx'
+```
+
+which gives 11 files passing and the 2 known failures above.
+
+### 2.4a New coverage
+
+`tests/fetch-with-deadline.test.ts` and `tests/airtable-fetch.test.ts` cover the
+defect class that got through twice: successful read, body stalling after
+headers, connection dropped mid-body, 204 with no body, non-2xx passed through,
+Airtable retry after 429, and no retry on a 4xx. Both run against a local server
+in the default node environment, so they stay out of the DOM trouble above.
+
+The bounded-fetch logic now lives in `server/http/fetchWithDeadline.ts` and is
+used by both the photo proxy and `fetchAirtable`, so there is one implementation
+to test rather than two copies to keep in step.
 
 ### 2.5 Dead code
 
