@@ -73,6 +73,7 @@ const normalizeRecord = (
   const firstAttachment =
     mainPhotoArr[0] && typeof mainPhotoArr[0] === "object"
       ? (mainPhotoArr[0] as {
+          id?: string;
           url?: string;
           thumbnails?: {
             small?: { url?: string };
@@ -102,6 +103,7 @@ const normalizeRecord = (
   const hoverAttachment =
     secondaryPhotoArr[0] && typeof secondaryPhotoArr[0] === "object"
       ? (secondaryPhotoArr[0] as {
+          id?: string;
           url?: string;
           thumbnails?: {
             small?: { url?: string };
@@ -111,6 +113,7 @@ const normalizeRecord = (
         })
       : mainPhotoArr[1] && typeof mainPhotoArr[1] === "object"
         ? (mainPhotoArr[1] as {
+            id?: string;
             url?: string;
             thumbnails?: {
               small?: { url?: string };
@@ -136,6 +139,11 @@ const normalizeRecord = (
   const hoverImageUrl =
     hoverImageUrlLarge || hoverImageUrlSmall || hoverImageUrlFull;
 
+  const imageId =
+    typeof firstAttachment?.id === "string" ? firstAttachment.id : null;
+  const hoverImageId =
+    typeof hoverAttachment?.id === "string" ? hoverAttachment.id : null;
+
   const categories = extractStringValues(getCatalogFieldValue(fields, "category"));
 
   return {
@@ -145,6 +153,8 @@ const normalizeRecord = (
     price,
     imageUrl,
     hoverImageUrl,
+    imageId,
+    hoverImageId,
     imageUrlSmall,
     imageUrlLarge,
     imageUrlFull,

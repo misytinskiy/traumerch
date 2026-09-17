@@ -11,10 +11,13 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
-import Image from "next/image";
+import {
+  productPhotoSrcSet,
+  productPhotoUrl,
+} from "../../shared/productPhoto";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
-import type { NormalizedProduct } from "../../shared/types";
+import type { ClientProduct } from "../../shared/types";
 import { pushDataLayerEvent } from "../../shared/analytics";
 import {
   buildDesktopLayoutItems,
@@ -30,8 +33,8 @@ interface Product {
   price: string;
   outOfStock: boolean;
   size: "regular" | "large";
-  imageUrl: string | null;
-  hoverImageUrl: string | null;
+  imageId: string | null;
+  hoverImageId: string | null;
   isSkeleton?: boolean;
 }
 
@@ -39,7 +42,6 @@ const ALL_PRODUCTS_TAB_KEY = "allProducts";
 
 const MOBILE_SKELETON_COUNT = 12;
 const COMPACT_GRID_BREAKPOINT = 900;
-const IMAGE_REFRESH_DEBOUNCE_MS = 3000;
 const INITIAL_DESKTOP_ROW_COUNT = 9;
 const EXPAND_ANIMATION_DURATION = 0.7;
 
@@ -62,7 +64,7 @@ const fetcher = async (url: string) => {
 export default function ProductTabs({
   initialRecords = [],
 }: {
-  initialRecords?: NormalizedProduct[];
+  initialRecords?: ClientProduct[];
 }) {
   const { t, language } = useLanguage();
   const router = useRouter();
@@ -70,12 +72,10 @@ export default function ProductTabs({
   const [isMobile, setIsMobile] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [failedImageUrls, setFailedImageUrls] = useState<string[]>([]);
   const [activatedHoverImageIds, setActivatedHoverImageIds] = useState<string[]>(
     []
   );
   const hasInitial = initialRecords.length > 0;
-  const lastImageRefreshAtRef = useRef(0);
   const deferredSearchQuery = useDeferredValue(searchQuery);
 
   const allProductsApiUrl = "/api/airtable-products?format=normalized&priceTier=bulk";
@@ -97,12 +97,8 @@ export default function ProductTabs({
     }
   );
   const allRecords = (allProductsData?.records ?? initialRecords) as
-    | NormalizedProduct[]
+    | ClientProduct[]
     | [];
-
-  useEffect(() => {
-    setFailedImageUrls([]);
-  }, [allRecords]);
 
   useEffect(() => {
     setActivatedHoverImageIds([]);
@@ -178,31 +174,9 @@ export default function ProductTabs({
     router.push(`/design?product=${productId}`);
   };
 
-  const refreshExpiredImageUrls = useCallback(() => {
-    const now = Date.now();
-    if (now - lastImageRefreshAtRef.current < IMAGE_REFRESH_DEBOUNCE_MS) {
-      return;
-    }
-
-    lastImageRefreshAtRef.current = now;
-    void mutate();
-  }, [mutate]);
-
-  const handleImageError = useCallback(
-    (url: string | null) => {
-      if (!url) return;
-
-      setFailedImageUrls((current) =>
-        current.includes(url) ? current : [...current, url]
-      );
-      refreshExpiredImageUrls();
-    },
-    [refreshExpiredImageUrls]
-  );
-
   const handleProductHoverStart = useCallback(
     (product: Product) => {
-      if (isMobile || !product.hoverImageUrl || product.isSkeleton) {
+      if (isMobile || !product.hoverImageId || product.isSkeleton) {
         return;
       }
 
@@ -269,8 +243,8 @@ export default function ProductTabs({
         price: "",
         outOfStock: false,
         size,
-        imageUrl: null,
-        hoverImageUrl: null,
+        imageId: null,
+        hoverImageId: null,
         isSkeleton: true,
       })),
     []
@@ -284,8 +258,8 @@ export default function ProductTabs({
         price: "",
         outOfStock: false,
         size: "regular" as const,
-        imageUrl: null,
-        hoverImageUrl: null,
+        imageId: null,
+        hoverImageId: null,
         isSkeleton: true,
       })),
     []
@@ -293,37 +267,26 @@ export default function ProductTabs({
 
   const mapRecordToProduct = useCallback(
     (
-      record: NormalizedProduct,
+      record: ClientProduct,
       size: "regular" | "large" = "regular"
     ): Product => {
       const name =
         language === "de" ? record.nameDe : record.nameEn;
-      const imageUrl =
-        size === "large"
-          ? record.imageUrlFull ??
-            record.imageUrlLarge ??
-            record.imageUrlSmall ??
-            record.imageUrl
-          : record.imageUrlLarge ??
-            record.imageUrlSmall ??
-            record.imageUrlFull ??
-            record.imageUrl;
-
       return {
         id: record.id,
         name,
         price: record.price,
         outOfStock: record.outOfStock,
         size,
-        imageUrl,
-        hoverImageUrl: record.hoverImageUrl ?? null,
+        imageId: record.imageId ?? null,
+        hoverImageId: record.hoverImageId ?? null,
       };
     },
     [language]
   );
 
   const buildDesktopProducts = useCallback(
-    (sourceRecords: NormalizedProduct[]) => {
+    (sourceRecords: ClientProduct[]) => {
       return buildDesktopLayoutItems(sourceRecords).map(({ record, size }) =>
         mapRecordToProduct(record, size)
       );
@@ -375,13 +338,11 @@ export default function ProductTabs({
     const isSkeleton = Boolean(product.isSkeleton);
     const hasHoverImage =
       !isMobile &&
-      Boolean(product.hoverImageUrl) &&
-      product.hoverImageUrl !== product.imageUrl;
+      Boolean(product.hoverImageId) &&
+      product.hoverImageId !== product.imageId;
     const shouldRenderHoverImage =
       hasHoverImage && activatedHoverImageIds.includes(product.id);
-    const hasFailedMainImage =
-      product.imageUrl !== null && failedImageUrls.includes(product.imageUrl);
-    const hasRenderableMainImage = Boolean(product.imageUrl) && !hasFailedMainImage;
+    const hasRenderableMainImage = Boolean(product.imageId);
     const priceText = (() => {
       if (product.outOfStock) {
         return "Out of stock";
@@ -415,34 +376,34 @@ export default function ProductTabs({
           />
         ) : hasRenderableMainImage ? (
           <div className={`${styles.productImage} ${styles[product.size]} ${styles.imageWrap}`}>
-            <Image
-              src={product.imageUrl as string}
+            <img
+              src={productPhotoUrl(product.id, product.imageId as string, 640)}
+              srcSet={productPhotoSrcSet(product.id, product.imageId as string)}
               alt={product.name}
-              fill
               sizes={
                 product.size === "large"
                   ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
                   : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
               }
-              quality={85}
               className={styles.productImageContent}
               loading="lazy"
-              onError={() => handleImageError(product.imageUrl)}
+              decoding="async"
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
             />
             {shouldRenderHoverImage && (
-              <Image
-                src={product.hoverImageUrl as string}
+              <img
+                src={productPhotoUrl(product.id, product.hoverImageId as string, 640)}
+                srcSet={productPhotoSrcSet(product.id, product.hoverImageId as string)}
                 alt={product.name}
-                fill
                 sizes={
                   product.size === "large"
                     ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
                     : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
                 }
-                quality={85}
                 className={`${styles.productImageContent} ${styles.productImageHover}`}
                 loading="lazy"
-                onError={() => handleImageError(product.hoverImageUrl)}
+                decoding="async"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
               />
             )}
           </div>

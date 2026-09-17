@@ -3,7 +3,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 
 import { fetchNormalizedProducts } from "./products";
-import type { NormalizedProduct } from "../../shared/types";
+import type { ClientProduct, NormalizedProduct } from "../../shared/types";
 
 /**
  * Снимок каталога.
@@ -114,3 +114,21 @@ export const getCatalogSnapshot = async ({
       : { records: [], fetchedAt: 0, stale: true };
   }
 };
+
+/**
+ * Версия записей для браузера.
+ *
+ * Сырые ссылки Airtable нужны только серверу — по ним /api/product-photo
+ * забирает байты. В разметку они попадать не должны: живут два часа, ничего
+ * не рендерят и тянут за собой лишнюю сотню килобайт на страницу.
+ * Клиенту достаточно id вложений, из которых строятся вечные адреса.
+ */
+export const stripPhotoUrls = (records: NormalizedProduct[]): ClientProduct[] =>
+  records.map(({
+    imageUrl: _imageUrl,
+    hoverImageUrl: _hoverImageUrl,
+    imageUrlSmall: _small,
+    imageUrlLarge: _large,
+    imageUrlFull: _full,
+    ...rest
+  }) => rest);

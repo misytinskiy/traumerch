@@ -12,6 +12,7 @@ import {
 import {
   CATALOG_TTL_SECONDS,
   getCatalogSnapshot,
+  stripPhotoUrls,
 } from "../../../server/products/catalogSnapshot";
 
 const apiToken = process.env.API_TOKEN;
@@ -124,7 +125,7 @@ export async function GET(request: NextRequest) {
       if (typeof maxRecords === "number") {
         records = records.slice(0, maxRecords);
       }
-      data = { records, offset: undefined };
+      data = { records: stripPhotoUrls(records), offset: undefined };
     } else {
       const url = recordId
         ? buildAirtableRecordUrl(recordId, safeFields, {

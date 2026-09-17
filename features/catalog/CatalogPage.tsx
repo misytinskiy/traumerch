@@ -1,6 +1,9 @@
 import ProductTabs from "../../components/ProductTabs/ProductTabs";
 import styles from "./catalog.module.css";
-import { getCatalogSnapshot } from "../../server/products/catalogSnapshot";
+import {
+  getCatalogSnapshot,
+  stripPhotoUrls,
+} from "../../server/products/catalogSnapshot";
 
 export default async function CatalogPage() {
   // Снимок общий для всех посетителей и живёт CATALOG_TTL_SECONDS,
@@ -16,7 +19,7 @@ export default async function CatalogPage() {
     <div className={styles.page}>
       <main>
         {/* Product catalog with tabs and title */}
-        <ProductTabs initialRecords={records} />
+        <ProductTabs initialRecords={stripPhotoUrls(records)} />
       </main>
     </div>
   );

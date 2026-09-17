@@ -1,4 +1,4 @@
-import type { NormalizedProduct } from "../../shared/types";
+import type { ClientProduct } from "../../shared/types";
 
 export type CatalogCardSize = "regular" | "large";
 
@@ -19,7 +19,7 @@ export const DESKTOP_LAYOUT_PATTERN = DESKTOP_ROW_PATTERNS.flatMap(
 );
 
 export type DesktopLayoutItem = {
-  record: NormalizedProduct;
+  record: ClientProduct;
   size: CatalogCardSize;
 };
 
@@ -46,7 +46,7 @@ export const getDesktopLayoutCapacity = (rowCount: number) => {
 };
 
 export const buildDesktopLayoutItems = (
-  sourceRecords: NormalizedProduct[]
+  sourceRecords: ClientProduct[]
 ): DesktopLayoutItem[] => {
   if (!sourceRecords.length) {
     return [];
@@ -73,7 +73,7 @@ export const buildDesktopLayoutItems = (
   const remainingRecords = sourceRecords.filter(
     (record) => !selectedFeaturedIds.has(record.id)
   );
-  const featuredRecordsBySlot = new Map<number, NormalizedProduct>();
+  const featuredRecordsBySlot = new Map<number, ClientProduct>();
 
   featuredSlotIndices.forEach((slotIndex, index) => {
     const record = selectedFeaturedRecords[index];
