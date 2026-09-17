@@ -104,12 +104,6 @@ export default function SolutionsPage() {
                   <div className={styles.mobileCardBody}>
                     <div className={styles.mobileCardHeading}>
                       <h3 className={styles.mobileCardTitle}>{card.title}</h3>
-                      <span className={styles.mobileCardArrow} aria-hidden>
-                        <svg viewBox="0 0 44 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M1 9H38" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                          <path d="M30 1L38 9L30 17" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </span>
                     </div>
                     <p className={styles.mobileCardDescription}>{card.description}</p>
                   </div>

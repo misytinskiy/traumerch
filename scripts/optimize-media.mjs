@@ -29,7 +29,14 @@ const MAX_WIDTH = 2560;
 /** Меньше этого отдельный вариант не нужен. */
 const MIN_VARIANT = 240;
 
-const QUALITY = { photo: 80, logo: 90 };
+const QUALITY = { photo: 88, logo: 92 };
+
+/**
+ * Во сколько раз генерим больше CSS-пикселей. Десктопные экраны обычно 2x,
+ * телефоны почти поголовно 3x — если считать мобильные блоки по 2x, на
+ * телефоне картинка растягивается и выглядит мылом.
+ */
+const DENSITY = { desktop: 2, mobile: 3 };
 
 /** Сохраняем focal, если он уже был выставлен (например, у карточек команды). */
 const previous = existsSync(MEDIA_JSON)
@@ -42,8 +49,11 @@ const previous = existsSync(MEDIA_JSON)
  * и ограничиваем шириной исходника — апскейлить нечего.
  */
 const targetWidths = (slot, sourceWidth) => {
-  const layoutWidth = Math.max(slot.shape.w, slot.mobileShape?.w ?? 0);
-  const needed = Math.min(sourceWidth, layoutWidth * 2, MAX_WIDTH);
+  const layoutWidth = Math.max(
+    slot.shape.w * DENSITY.desktop,
+    (slot.mobileShape?.w ?? 0) * DENSITY.mobile
+  );
+  const needed = Math.min(sourceWidth, layoutWidth, MAX_WIDTH);
   const widths = [needed, Math.round(needed / 2), Math.round(needed / 4)]
     .filter((w) => w >= MIN_VARIANT);
   return [...new Set(widths)].sort((a, b) => a - b);

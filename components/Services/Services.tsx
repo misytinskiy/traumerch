@@ -54,23 +54,6 @@ export default function Services({ showAll = false }: ServicesProps) {
           <div className={styles.mobileMosaic}>
             <div className={styles.mobileTextCard}>
               <p className={styles.mobileText}>{service.description}</p>
-              <span className={styles.mobileTextArrow} aria-hidden>
-                <svg viewBox="0 0 54 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M2 12H48"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M38 3L48 12L38 21"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
             </div>
             <div className={`${styles.mobileMosaicImage} ${styles.mobileMosaicImageTop}`}>
               <MediaImage

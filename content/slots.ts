@@ -223,14 +223,30 @@ const SERVICE_MOSAIC: ReadonlyArray<readonly [number, readonly string[]]> = [
   [5, ["/services/5/1.png", "/services/5/2.png", "/services/5/3.png"]],
 ];
 
+/**
+ * Геометрия мозаики из Services.module.css: сетка 0.9fr / 1.35fr с gap 10px,
+ * верхняя и средняя карточки стоят во второй колонке (~58% ширины),
+ * широкая — grid-column: 1 / -1, то есть во всю ширину, 16/9.
+ * Размеры здесь в CSS-пикселях на телефоне; множитель плотности экрана
+ * применяет scripts/optimize-media.mjs.
+ */
+const MOSAIC_GEOMETRY = [
+  { shape: { w: 250, h: 190 }, sizes: "(max-width: 480px) 58vw, 220px" },
+  { shape: { w: 250, h: 190 }, sizes: "(max-width: 480px) 58vw, 220px" },
+  { shape: { w: 430, h: 242 }, sizes: "(max-width: 480px) calc(100vw - 20px), 420px" },
+];
+
 const servicesMosaic: Slot[] = SERVICE_MOSAIC.flatMap(([n, files]) =>
   files.map((file, i) => ({
     key: `services.${n}.mobile.${i + 1}`,
     label: `Услуга ${n} — мозаика для телефона, фото ${i + 1}`,
     group: "Главная / Решения",
     legacy: file,
-    shape: { w: 400, h: 400 },
-    sizes: "33vw",
+    shape: MOSAIC_GEOMETRY[i].shape,
+    // Мозаика существует только на телефоне, поэтому mobileShape совпадает
+    // с shape — иначе разрешение считалось бы по десктопной плотности.
+    mobileShape: MOSAIC_GEOMETRY[i].shape,
+    sizes: MOSAIC_GEOMETRY[i].sizes,
     alt: `Service ${n} detail ${i + 1}`,
   }))
 );
@@ -260,7 +276,8 @@ const solutionsCards: Slot[] = [
   label: `Решения — карточка для телефона ${n}`,
   group: "Решения",
   legacy: file as string,
-  shape: { w: 700, h: 900 },
+  shape: { w: 430, h: 553 },
+  mobileShape: { w: 430, h: 553 },
   sizes: "100vw",
   alt: alt as string,
 }));
