@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { Geist, Geist_Mono, EB_Garamond, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -38,18 +37,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const cookiebotId = process.env.NEXT_PUBLIC_COOKIEBOT_CBID;
-  const cookieStore = await cookies();
-  const cookieLang = cookieStore.get("language")?.value;
-  const lang = cookieLang === "de" ? "de" : "en";
 
+  // Язык сознательно не читается из куки на сервере.
+  //
+  // cookies() в корневом лейауте делает динамическими вообще все страницы
+  // сайта, включая /faq и /portfolio, где нет никаких данных: каждый заход
+  // поднимал serverless-функцию и отвечал около 1200 мс вместо отдачи
+  // готового HTML с CDN.
+  //
+  // Выигрыш от этого был нулевой. Поисковые роботы куку не присылают и всё
+  // равно видели "en", а LanguageContext выставляет document.documentElement.lang
+  // сразу после гидрации. Единственная разница — вернувшийся немецкий
+  // посетитель видит lang="en" несколько миллисекунд до гидрации.
   return (
-    <html lang={lang}>
+    <html lang="en">
       <head>
         {cookiebotId ? (
           <Script
