@@ -6,8 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../../contexts/CartContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getPriceForQuantity, getMinQuantity } from "../../shared/pricing";
+import Image from "next/image";
 import { getMainPhotoAttachmentId } from "../../shared/product";
-import { productPhotoUrl } from "../../shared/productPhoto";
+import { productPhotoOriginalUrl } from "../../shared/productPhoto";
 import Button from "../Button/Button";
 import styles from "./CartSidebar.module.css";
 
@@ -229,13 +230,13 @@ export default function CartSidebar() {
                     </button>
                     <div className={styles.itemImage} aria-hidden>
                       {itemPhotoId ? (
-                        <img
-                          src={productPhotoUrl(item.productId, itemPhotoId, 320)}
+                        <Image
+                          src={productPhotoOriginalUrl(item.productId, itemPhotoId)}
                           alt={item.productName}
-                          loading="lazy"
-                          decoding="async"
+                          fill
+                          sizes="100px"
+                          quality={85}
                           className={styles.itemImageContent}
-                          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
                         />
                       ) : null}
                     </div>

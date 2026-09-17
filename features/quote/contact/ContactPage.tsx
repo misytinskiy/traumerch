@@ -20,7 +20,7 @@ import {
   getMainPhotoAttachmentId,
   getProductNameFromFields,
 } from "../../../shared/product";
-import { productPhotoUrl } from "../../../shared/productPhoto";
+import { productPhotoOriginalUrl } from "../../../shared/productPhoto";
 import { getMinQuantity, getPriceForQuantity } from "../../../shared/pricing";
 import { getSwatchColor } from "../../../shared/quote";
 import { pushDataLayerEvent } from "../../../shared/analytics";
@@ -838,7 +838,7 @@ export default function QuoteContactPage() {
                 const photoId = getMainPhotoAttachmentId(item.productFields);
                 const photoUrl =
                   photoId && item.productId
-                    ? productPhotoUrl(item.productId, photoId, 320)
+                    ? productPhotoOriginalUrl(item.productId, photoId)
                     : "";
                 const displayName = getProductNameFromFields(
                   item.productFields,

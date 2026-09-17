@@ -11,10 +11,8 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
-import {
-  productPhotoSrcSet,
-  productPhotoUrl,
-} from "../../shared/productPhoto";
+import Image from "next/image";
+import { productPhotoOriginalUrl } from "../../shared/productPhoto";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import type { ClientProduct } from "../../shared/types";
@@ -376,34 +374,32 @@ export default function ProductTabs({
           />
         ) : hasRenderableMainImage ? (
           <div className={`${styles.productImage} ${styles[product.size]} ${styles.imageWrap}`}>
-            <img
-              src={productPhotoUrl(product.id, product.imageId as string, 640)}
-              srcSet={productPhotoSrcSet(product.id, product.imageId as string)}
+            <Image
+              src={productPhotoOriginalUrl(product.id, product.imageId as string)}
               alt={product.name}
+              fill
               sizes={
                 product.size === "large"
                   ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
                   : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
               }
+              quality={90}
               className={styles.productImageContent}
               loading="lazy"
-              decoding="async"
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
             />
             {shouldRenderHoverImage && (
-              <img
-                src={productPhotoUrl(product.id, product.hoverImageId as string, 640)}
-                srcSet={productPhotoSrcSet(product.id, product.hoverImageId as string)}
+              <Image
+                src={productPhotoOriginalUrl(product.id, product.hoverImageId as string)}
                 alt={product.name}
+                fill
                 sizes={
                   product.size === "large"
                     ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
                     : "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
                 }
+                quality={90}
                 className={`${styles.productImageContent} ${styles.productImageHover}`}
                 loading="lazy"
-                decoding="async"
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
               />
             )}
           </div>

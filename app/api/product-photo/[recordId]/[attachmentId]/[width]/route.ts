@@ -37,9 +37,14 @@ const resolveAttachmentUrl = async (
 
   const cached = records.find((record) => record.id === recordId);
   if (cached) {
-    if (cached.imageId === attachmentId && cached.imageUrl) return cached.imageUrl;
-    if (cached.hoverImageId === attachmentId && cached.hoverImageUrl) {
-      return cached.hoverImageUrl;
+    // Берём оригинал вложения. imageUrl/hoverImageUrl — это thumbnails.large
+    // от Airtable, всего 512px по длинной стороне: ресайз из них давал
+    // замыленную картинку на любом месте крупнее превьюшки.
+    if (cached.imageId === attachmentId && cached.imageUrlOriginal) {
+      return cached.imageUrlOriginal;
+    }
+    if (cached.hoverImageId === attachmentId && cached.hoverImageUrlOriginal) {
+      return cached.hoverImageUrlOriginal;
     }
   }
 
@@ -73,12 +78,12 @@ export async function GET(
 ) {
   const { recordId, attachmentId, width: rawWidth } = await params;
 
+  const wantsOriginal = rawWidth === "original";
   const width = Number.parseInt(rawWidth, 10);
   if (
     !RECORD_ID.test(recordId) ||
     !ATTACHMENT_ID.test(attachmentId) ||
-    !Number.isFinite(width) ||
-    !isProductPhotoWidth(width)
+    (!wantsOriginal && (!Number.isFinite(width) || !isProductPhotoWidth(width)))
   ) {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }
@@ -108,6 +113,20 @@ export async function GET(
     }
 
     const original = Buffer.from(await source.arrayBuffer());
+
+    // Оригинал отдаём как есть: варианты по размерам сделает next/image, и
+    // лишнее перекодирование здесь только съело бы качество ещё раз.
+    if (wantsOriginal) {
+      return new NextResponse(new Uint8Array(original), {
+        status: 200,
+        headers: {
+          "Content-Type": source.headers.get("content-type") || "image/jpeg",
+          "Cache-Control": "public, max-age=31536000, immutable",
+          "Content-Length": String(original.byteLength),
+        },
+      });
+    }
+
     const optimized = await sharp(original)
       .rotate()
       .resize({ width, withoutEnlargement: true })

@@ -12,6 +12,16 @@ export type NormalizedProduct = {
    */
   imageId?: string | null;
   hoverImageId?: string | null;
+  /**
+   * Оригиналы вложений в полном разрешении. Именно их читает /api/product-photo:
+   * imageUrl ниже — это thumbnails.large от Airtable, всего 512px, и ресайз
+   * из него давал мыло на любой карточке крупнее превьюшки.
+   */
+  imageUrlOriginal?: string | null;
+  hoverImageUrlOriginal?: string | null;
+  /** Ширина оригинала — чтобы не просить у прокси варианты, которых нет. */
+  imageWidth?: number | null;
+  hoverImageWidth?: number | null;
   imageUrlSmall: string | null;
   imageUrlLarge: string | null;
   imageUrlFull: string | null;

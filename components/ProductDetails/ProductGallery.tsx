@@ -1,10 +1,8 @@
 "use client";
 
 import styles from "./ProductDetails.module.css";
-import {
-  productPhotoSrcSet,
-  productPhotoUrl,
-} from "../../shared/productPhoto";
+import Image from "next/image";
+import { productPhotoOriginalUrl } from "../../shared/productPhoto";
 import type { PhotoVariants } from "./types";
 
 export default function ProductGallery({
@@ -42,14 +40,14 @@ export default function ProductGallery({
             <div className={`${styles.mainImage} ${styles.skeletonBlock}`} />
           ) : productId && mainPhotoId ? (
             <div className={`${styles.mainImage} ${styles.imageWrap}`}>
-              <img
-                src={productPhotoUrl(productId, mainPhotoId, 1280)}
-                srcSet={productPhotoSrcSet(productId, mainPhotoId)}
-                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
+              <Image
+                src={productPhotoOriginalUrl(productId, mainPhotoId)}
                 alt={imageAlt}
-                decoding="async"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
+                quality={90}
                 className={styles.imageContent}
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+                priority
               />
             </div>
           ) : (
@@ -70,23 +68,18 @@ export default function ProductGallery({
           ) : thumbnailPhotos.length > 0 ? (
             thumbnailPhotos.map((photo, index) => (
               <div key={index} className={`${styles.mobileSlide} ${styles.imageWrap}`}>
-                <img
+                <Image
                   src={
                     productId && photo.id
-                      ? productPhotoUrl(productId, photo.id, 960)
-                      : undefined
+                      ? productPhotoOriginalUrl(productId, photo.id)
+                      : ""
                   }
-                  srcSet={
-                    productId && photo.id
-                      ? productPhotoSrcSet(productId, photo.id)
-                      : undefined
-                  }
-                  sizes="100vw"
                   alt={imageAlt}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  decoding="async"
+                  fill
+                  sizes="100vw"
+                  quality={90}
                   className={styles.imageContent}
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+                  priority={index === 0}
                 />
               </div>
             ))
@@ -131,18 +124,18 @@ export default function ProductGallery({
                 onClick={() => onThumbnailClick(index)}
                 aria-label={`Secondary photo ${index + 1}`}
               >
-                <img
+                <Image
                   src={
                     productId && photo.id
-                      ? productPhotoUrl(productId, photo.id, 320)
-                      : undefined
+                      ? productPhotoOriginalUrl(productId, photo.id)
+                      : ""
                   }
-                  sizes="(max-width: 768px) 25vw, 96px"
                   alt={imageAlt}
-                  loading="lazy"
-                  decoding="async"
+                  fill
+                  sizes="(max-width: 768px) 25vw, 96px"
+                  quality={85}
                   className={styles.imageContent}
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+                  loading="lazy"
                 />
               </button>
             ))

@@ -27,10 +27,41 @@ export const productPhotoUrl = (
 ) => `/api/product-photo/${recordId}/${attachmentId}/${width}`;
 
 /**
+ * Оригинал вложения по вечному адресу.
+ *
+ * Именно это отдаётся в next/image как источник. Ресайзить самим оказалось
+ * плохой идеей: при небольшом трафике кеш на 414 фото в пяти ширинах почти
+ * никогда не прогревался, и посетитель ждал 500-1500 мс на каждую картинку.
+ * Оптимизатор Vercel делает то же самое, но кешируется глобально и надолго,
+ * а от протухающих ссылок Airtable нас защищает стабильность этого адреса:
+ * он привязан к id вложения, а не к временной ссылке.
+ */
+export const productPhotoOriginalUrl = (recordId: string, attachmentId: string) =>
+  `/api/product-photo/${recordId}/${attachmentId}/original`;
+
+/**
  * srcset по всем доступным ширинам. Браузер сам выберет нужную по sizes,
  * поэтому отдельная логика под мобильный не нужна.
  */
-export const productPhotoSrcSet = (recordId: string, attachmentId: string) =>
-  PRODUCT_PHOTO_WIDTHS.map(
-    (width) => `${productPhotoUrl(recordId, attachmentId, width)} ${width}w`
-  ).join(", ");
+/**
+ * srcset до ширины исходника включительно.
+ *
+ * Просить вариант шире оригинала бессмысленно: апскейла нет, вернётся тот же
+ * файл под другим адресом. А каждый лишний адрес — отдельная запись в кеше CDN,
+ * которую кто-то должен прогреть, заплатив ресайзом на сервере.
+ */
+export const productPhotoSrcSet = (
+  recordId: string,
+  attachmentId: string,
+  sourceWidth?: number | null
+) => {
+  const widths = PRODUCT_PHOTO_WIDTHS.filter((width, index) => {
+    if (!sourceWidth) return true;
+    if (width <= sourceWidth) return true;
+    // Первую ширину сверх оригинала оставляем — она и есть «оригинал целиком».
+    return PRODUCT_PHOTO_WIDTHS[index - 1] < sourceWidth;
+  });
+  return widths
+    .map((width) => `${productPhotoUrl(recordId, attachmentId, width)} ${width}w`)
+    .join(", ");
+};

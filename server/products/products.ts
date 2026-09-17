@@ -74,6 +74,7 @@ const normalizeRecord = (
     mainPhotoArr[0] && typeof mainPhotoArr[0] === "object"
       ? (mainPhotoArr[0] as {
           id?: string;
+          width?: number;
           url?: string;
           thumbnails?: {
             small?: { url?: string };
@@ -104,6 +105,7 @@ const normalizeRecord = (
     secondaryPhotoArr[0] && typeof secondaryPhotoArr[0] === "object"
       ? (secondaryPhotoArr[0] as {
           id?: string;
+          width?: number;
           url?: string;
           thumbnails?: {
             small?: { url?: string };
@@ -114,6 +116,7 @@ const normalizeRecord = (
       : mainPhotoArr[1] && typeof mainPhotoArr[1] === "object"
         ? (mainPhotoArr[1] as {
             id?: string;
+            width?: number;
             url?: string;
             thumbnails?: {
               small?: { url?: string };
@@ -144,6 +147,14 @@ const normalizeRecord = (
   const hoverImageId =
     typeof hoverAttachment?.id === "string" ? hoverAttachment.id : null;
 
+  // Оригинал, а не thumbnails.large: из превьюшки 512px ресайзить нечего.
+  const imageUrlOriginal = imageUrlFull;
+  const hoverImageUrlOriginal = hoverImageUrlFull;
+  const imageWidth =
+    typeof firstAttachment?.width === "number" ? firstAttachment.width : null;
+  const hoverImageWidth =
+    typeof hoverAttachment?.width === "number" ? hoverAttachment.width : null;
+
   const categories = extractStringValues(getCatalogFieldValue(fields, "category"));
 
   return {
@@ -155,6 +166,10 @@ const normalizeRecord = (
     hoverImageUrl,
     imageId,
     hoverImageId,
+    imageUrlOriginal,
+    hoverImageUrlOriginal,
+    imageWidth,
+    hoverImageWidth,
     imageUrlSmall,
     imageUrlLarge,
     imageUrlFull,
