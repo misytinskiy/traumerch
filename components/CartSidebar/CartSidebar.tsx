@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../../contexts/CartContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { getPriceForQuantity, getMinQuantity } from "../../shared/pricing";
-import { getMainPhotoUrl } from "../../shared/product";
+import { getMainPhotoAttachmentId } from "../../shared/product";
+import { productPhotoUrl } from "../../shared/productPhoto";
 import Button from "../Button/Button";
 import styles from "./CartSidebar.module.css";
 
@@ -215,7 +215,7 @@ export default function CartSidebar() {
                 </p>
               ) : (
                 items.map((item, index) => {
-                  const itemImageUrl = getMainPhotoUrl(item.productFields);
+                  const itemPhotoId = getMainPhotoAttachmentId(item.productFields);
                   const minQty = getMinQtyForItem(item);
                   return (
                   <div key={`${item.productId}-${index}`} className={styles.item}>
@@ -228,13 +228,14 @@ export default function CartSidebar() {
                       <RemoveIcon />
                     </button>
                     <div className={styles.itemImage} aria-hidden>
-                      {itemImageUrl ? (
-                        <Image
-                          src={itemImageUrl}
+                      {itemPhotoId ? (
+                        <img
+                          src={productPhotoUrl(item.productId, itemPhotoId, 320)}
                           alt={item.productName}
-                          fill
-                          sizes="100px"
+                          loading="lazy"
+                          decoding="async"
                           className={styles.itemImageContent}
+                          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
                         />
                       ) : null}
                     </div>

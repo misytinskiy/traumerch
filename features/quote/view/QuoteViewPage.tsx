@@ -6,7 +6,11 @@ import { useRouter } from "next/navigation";
 import Button from "../../../components/Button/Button";
 import { useCart } from "../../../contexts/CartContext";
 import { useLanguage } from "../../../contexts/LanguageContext";
-import { getMainPhotoUrl, getProductNameFromFields } from "../../../shared/product";
+import {
+  getMainPhotoAttachmentId,
+  getProductNameFromFields,
+} from "../../../shared/product";
+import { productPhotoUrl } from "../../../shared/productPhoto";
 import { getMinQuantity } from "../../../shared/pricing";
 import { getSwatchColor, MAX_FILES, MAX_TOTAL_BYTES } from "../../../shared/quote";
 import { pushDataLayerEvent } from "../../../shared/analytics";
@@ -203,7 +207,11 @@ export default function QuoteViewPage() {
           )}
 
           {displayItems.map((item, index) => {
-            const photoUrl = getMainPhotoUrl(item.productFields) ?? "";
+            const photoId = getMainPhotoAttachmentId(item.productFields);
+                const photoUrl =
+                  photoId && item.productId
+                    ? productPhotoUrl(item.productId, photoId, 320)
+                    : "";
             const displayName = getProductNameFromFields(
               item.productFields,
               language,

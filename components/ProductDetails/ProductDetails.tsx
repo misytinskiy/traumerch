@@ -29,6 +29,7 @@ import useProductGallery from "../../hooks/useProductGallery";
 
 
 type AirtableAttachment = {
+  id?: string;
   url?: string;
   thumbnails?: {
     small?: { url?: string };
@@ -53,7 +54,8 @@ function normalizeAttachment(attachment: AirtableAttachment | null): PhotoVarian
       : null;
   const fallback = large || small || full;
   if (!fallback) return null;
-  return { full, large, small, fallback };
+  const id = typeof attachment.id === "string" ? attachment.id : null;
+  return { id, full, large, small, fallback };
 }
 
 function getAttachmentArray(
@@ -335,8 +337,7 @@ export default function ProductDetails({
       : null;
 
   const selectedPhoto = photoState.all[selectedPhotoIndex] ?? null;
-  const mainPhotoUrl =
-    selectedPhoto?.full || selectedPhoto?.large || selectedPhoto?.small || null;
+  const mainPhotoId = selectedPhoto?.id ?? null;
   const thumbnailPhotos = photoState.all;
   const desktopThumbnailPhotos = photoState.desktopThumbnails;
   const imageAlt = productName ?? t.design.productName;
@@ -348,7 +349,8 @@ export default function ProductDetails({
       <div className={styles.customizerSection}>
         <ProductGallery
           isLoading={isLoading}
-          mainPhotoUrl={mainPhotoUrl}
+          productId={productId}
+          mainPhotoId={mainPhotoId}
           thumbnailPhotos={thumbnailPhotos}
           desktopThumbnailPhotos={desktopThumbnailPhotos}
           selectedPhotoIndex={selectedPhotoIndex}

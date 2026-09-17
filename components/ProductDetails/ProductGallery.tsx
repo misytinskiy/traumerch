@@ -1,12 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import styles from "./ProductDetails.module.css";
+import {
+  productPhotoSrcSet,
+  productPhotoUrl,
+} from "../../shared/productPhoto";
 import type { PhotoVariants } from "./types";
 
 export default function ProductGallery({
   isLoading,
-  mainPhotoUrl,
+  productId,
+  mainPhotoId,
   thumbnailPhotos,
   desktopThumbnailPhotos,
   selectedPhotoIndex,
@@ -18,7 +22,8 @@ export default function ProductGallery({
   imageAlt,
 }: {
   isLoading: boolean;
-  mainPhotoUrl: string | null;
+  productId?: string;
+  mainPhotoId: string | null;
   thumbnailPhotos: PhotoVariants[];
   desktopThumbnailPhotos: PhotoVariants[];
   selectedPhotoIndex: number;
@@ -35,17 +40,16 @@ export default function ProductGallery({
         <div className={styles.desktopMainImage}>
           {isLoading ? (
             <div className={`${styles.mainImage} ${styles.skeletonBlock}`} />
-          ) : mainPhotoUrl ? (
+          ) : productId && mainPhotoId ? (
             <div className={`${styles.mainImage} ${styles.imageWrap}`}>
-              <Image
-                src={mainPhotoUrl}
-                alt={imageAlt}
-                fill
+              <img
+                src={productPhotoUrl(productId, mainPhotoId, 1280)}
+                srcSet={productPhotoSrcSet(productId, mainPhotoId)}
                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
-                quality={100}
-                unoptimized
+                alt={imageAlt}
+                decoding="async"
                 className={styles.imageContent}
-                priority
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
               />
             </div>
           ) : (
@@ -66,15 +70,23 @@ export default function ProductGallery({
           ) : thumbnailPhotos.length > 0 ? (
             thumbnailPhotos.map((photo, index) => (
               <div key={index} className={`${styles.mobileSlide} ${styles.imageWrap}`}>
-                <Image
-                  src={photo.full || photo.large || photo.small || ""}
-                  alt={imageAlt}
-                  fill
+                <img
+                  src={
+                    productId && photo.id
+                      ? productPhotoUrl(productId, photo.id, 960)
+                      : undefined
+                  }
+                  srcSet={
+                    productId && photo.id
+                      ? productPhotoSrcSet(productId, photo.id)
+                      : undefined
+                  }
                   sizes="100vw"
-                  quality={100}
-                  unoptimized
+                  alt={imageAlt}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
                   className={styles.imageContent}
-                  priority={index === 0}
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
                 />
               </div>
             ))
@@ -119,15 +131,18 @@ export default function ProductGallery({
                 onClick={() => onThumbnailClick(index)}
                 aria-label={`Secondary photo ${index + 1}`}
               >
-                <Image
-                  src={photo.large || photo.full || photo.small || ""}
-                  alt={imageAlt}
-                  fill
+                <img
+                  src={
+                    productId && photo.id
+                      ? productPhotoUrl(productId, photo.id, 320)
+                      : undefined
+                  }
                   sizes="(max-width: 768px) 25vw, 96px"
-                  quality={100}
-                  unoptimized
-                  className={styles.imageContent}
+                  alt={imageAlt}
                   loading="lazy"
+                  decoding="async"
+                  className={styles.imageContent}
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
                 />
               </button>
             ))
