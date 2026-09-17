@@ -128,9 +128,12 @@ export async function GET(
           `${recordId}/${attachmentId}`,
         error
       );
+      // 504 только для настоящего таймаута. Обрыв соединения — это 502:
+      // иначе в логах и мониторинге любая сетевая ошибка выглядит как
+      // превышение времени, и искать будут не там.
       return NextResponse.json(
         { error: aborted ? "Source image timed out" : "Failed to fetch source image" },
-        { status: 504 }
+        { status: aborted ? 504 : 502 }
       );
     } finally {
       clearTimeout(timeout);

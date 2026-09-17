@@ -130,5 +130,7 @@ export const stripPhotoUrls = (records: NormalizedProduct[]): ClientProduct[] =>
     imageUrlSmall: _small,
     imageUrlLarge: _large,
     imageUrlFull: _full,
+    imageUrlOriginal: _original,
+    hoverImageUrlOriginal: _hoverOriginal,
     ...rest
   }) => rest);

@@ -37,7 +37,13 @@ export type NormalizedProduct = {
  */
 export type ClientProduct = Omit<
   NormalizedProduct,
-  "imageUrl" | "hoverImageUrl" | "imageUrlSmall" | "imageUrlLarge" | "imageUrlFull"
+  | "imageUrl"
+  | "hoverImageUrl"
+  | "imageUrlSmall"
+  | "imageUrlLarge"
+  | "imageUrlFull"
+  | "imageUrlOriginal"
+  | "hoverImageUrlOriginal"
 >;
 
 export type FooterLink = {

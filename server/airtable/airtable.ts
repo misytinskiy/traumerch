@@ -62,12 +62,30 @@ export const fetchAirtable = async (
         cache,
       });
 
+      // Тело вычитываем здесь, пока таймер ещё взведён, и отдаём вызывающему
+      // коду уже буферизованный ответ. Раньше сюда возвращался живой Response,
+      // а .json() на нём вызывался снаружи — то есть уже после clearTimeout,
+      // без всякого ограничения по времени. Зависшее чтение висело до тех пор,
+      // пока функцию не убьёт платформа.
+      const buffered =
+        response.status === 204 || response.status === 304
+          ? new Response(null, {
+              status: response.status,
+              statusText: response.statusText,
+              headers: response.headers,
+            })
+          : new Response(await response.arrayBuffer(), {
+              status: response.status,
+              statusText: response.statusText,
+              headers: response.headers,
+            });
+
       if (
-        response.ok ||
+        buffered.ok ||
         attempt >= retries ||
-        (response.status !== 429 && response.status < 500)
+        (buffered.status !== 429 && buffered.status < 500)
       ) {
-        return response;
+        return buffered;
       }
     } finally {
       clearTimeout(timeout);

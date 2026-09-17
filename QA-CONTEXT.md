@@ -108,6 +108,32 @@ payloads are small enough that the function's own duration limit is the backstop
 so this is latent rather than urgent, but it sits in the catalog snapshot path
 and should be fixed properly rather than left.
 
+### 2.0a Timeout fix returned the wrong status — FIXED
+
+The first version of the fix computed `aborted` for the message but left the
+status hardcoded at 504, so a dropped connection reported a gateway timeout.
+Now `aborted ? 504 : 502`. Verified against a local server that stalls the body
+and one that destroys the socket: 200 / 504 / 502 respectively.
+
+`fetchAirtable` is fixed too — it buffers the response body while its own timer
+is still armed and hands callers an already-read Response, so `.json()` outside
+the function no longer runs unbounded.
+
+### 2.0b Client payload regression — FIXED
+
+Adding `imageUrlOriginal` / `hoverImageUrlOriginal` to the record type put 414
+expiring Airtable URLs back into the catalog HTML, because `ClientProduct` and
+`stripPhotoUrls` were not updated with them. Caught by measuring the served page,
+not by types. Catalog HTML went 270 KB → 145 KB once excluded.
+
+### 2.0c Too many optimizer variants — FIXED
+
+`sizes` on the large cards resolved to `w=3840` against sources around 1000px, so
+the optimizer produced a separate cache entry that returns the same pixels.
+`deviceSizes` trimmed from eight values to `[640, 828, 1080, 1920]` and
+`imageSizes` to `[96, 128, 256, 384]`. Fewer variants means each is warmed more
+often, which is the whole problem in 2.1.
+
 ### 2.1 Images fail on a cold first load  — CONFIRMED, CAUSE UNPROVEN
 
 Reported from a real browser: first load of `/catalog` showed broken image icons
@@ -130,9 +156,19 @@ they were not fully cold either.
 So: the failure is real and was seen in a browser, but its cause is **not
 established**. Heavy sources are a plausible contributor, not a proven one.
 Whether the infrastructure itself was cold is also not controlled for in either
-run. The body-read timeout in 2.0 is a better candidate than source size, since
-it produces exactly this signature — one request out of many hanging — and it is
-now fixed, so the next occurrence is worth re-measuring against.
+run. The body-read timeout in 2.0 is a better candidate than source size, since it
+produces exactly this signature — one request out of many hanging.
+
+**It not recurring will not prove it was the cause.** The fix bounds a hang; it
+does not make a fetch succeed. Closing this needs a browser-side error paired
+with a matching server log for the same request, not an absence of complaints.
+
+A third independent run was inconclusive for a different reason: 21/32 through
+the optimizer and 30/32 direct, with the failures being connection errors,
+client-side timeouts and one closed socket on the tester's own link to Vercel.
+Every response that did arrive was `200`. No 504 was ever observed. Results from
+a run with that much client-side noise cannot be attributed to the proxy or the
+optimizer either way.
 
 A capped WebP master was considered and is **not** clearly a win: it shrinks only
 the proxy→optimizer hop. The original still has to come down from Airtable, a
