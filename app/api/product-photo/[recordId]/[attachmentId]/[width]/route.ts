@@ -96,23 +96,45 @@ export async function GET(
 
     // Байты идут с CDN Airtable (v5.airtableusercontent.com), а не с api.airtable.com,
     // поэтому эта загрузка не расходует месячную квоту вызовов API.
+    //
+    // Таймаут держим до конца чтения тела, а не до заголовков. Сначала было
+    // наоборот: clearTimeout стоял сразу после fetch, то есть многомегабайтное
+    // тело читалось уже без всякого ограничения по времени и зависшее
+    // соединение висело до тех пор, пока функцию не убьёт платформа.
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-    let source: Response;
+
+    let original: Buffer;
+    let sourceContentType = "image/jpeg";
     try {
-      source = await fetch(sourceUrl, { signal: controller.signal, cache: "no-store" });
+      const source = await fetch(sourceUrl, {
+        signal: controller.signal,
+        cache: "no-store",
+      });
+
+      if (!source.ok) {
+        return NextResponse.json(
+          { error: "Failed to fetch source image" },
+          { status: 502 }
+        );
+      }
+
+      sourceContentType = source.headers.get("content-type") || sourceContentType;
+      original = Buffer.from(await source.arrayBuffer());
+    } catch (error) {
+      const aborted = error instanceof Error && error.name === "AbortError";
+      console.error(
+        `[product-photo] ${aborted ? "таймаут" : "ошибка"} при загрузке исходника ` +
+          `${recordId}/${attachmentId}`,
+        error
+      );
+      return NextResponse.json(
+        { error: aborted ? "Source image timed out" : "Failed to fetch source image" },
+        { status: 504 }
+      );
     } finally {
       clearTimeout(timeout);
     }
-
-    if (!source.ok) {
-      return NextResponse.json(
-        { error: "Failed to fetch source image" },
-        { status: 502 }
-      );
-    }
-
-    const original = Buffer.from(await source.arrayBuffer());
 
     // Оригинал отдаём как есть: варианты по размерам сделает next/image, и
     // лишнее перекодирование здесь только съело бы качество ещё раз.
@@ -120,7 +142,7 @@ export async function GET(
       return new NextResponse(new Uint8Array(original), {
         status: 200,
         headers: {
-          "Content-Type": source.headers.get("content-type") || "image/jpeg",
+          "Content-Type": sourceContentType,
           "Cache-Control": "public, max-age=31536000, immutable",
           "Content-Length": String(original.byteLength),
         },

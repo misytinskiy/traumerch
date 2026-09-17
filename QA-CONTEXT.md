@@ -93,7 +93,22 @@ Converted: catalog grid, `/design` gallery, cart sidebar, both quote pages.
 
 ## 2. Known broken / unresolved
 
-### 2.1 Images fail on a cold first load  — CONFIRMED, NOT FIXED
+### 2.0 Body reads had no timeout — FIXED
+
+In `/api/product-photo`, `clearTimeout` sat in a `finally` right after `fetch`
+resolved, which is when headers arrive. The ~888 KB body was then read with no
+time limit at all, so a stalled connection hung until the platform killed the
+function. Found in independent review, not by testing. Now the abort controller
+covers the body read, and a timeout answers 504 instead of hanging.
+
+**The same pattern is still present in `server/airtable/airtable.ts`.**
+`fetchAirtable` clears its timer in a `finally` and hands the `Response` back to
+callers, who call `.json()` on it afterwards — outside any timeout. Airtable
+payloads are small enough that the function's own duration limit is the backstop,
+so this is latent rather than urgent, but it sits in the catalog snapshot path
+and should be fixed properly rather than left.
+
+### 2.1 Images fail on a cold first load  — CONFIRMED, CAUSE UNPROVEN
 
 Reported from a real browser: first load of `/catalog` showed broken image icons
 with alt text; a refresh fixed it.
@@ -106,15 +121,28 @@ through /_next/image : 31 ok, 1 failed (fetch error), median 1256ms, max 2380ms
 direct to the proxy  : 32 ok
 ```
 
-The proxy itself is fine. The failure is the optimizer fetching from it under
-concurrent cold load. Likely cause: the proxy returns the **untouched original**,
-which for a typical product is a 888 KB PNG, and it fetches those same 888 KB
-from Airtable first. Thirty-two of those at once on a cold edge is a lot of work.
+An independent second run did **not** reproduce the failure — 32/32 succeeded,
+all `MISS`, median 2616ms and max 3198ms through the optimizer, using unique
+source URLs to defeat the existing cache. Direct proxy calls in that run peaked
+at 11 seconds, though they ran after the optimizer had already warmed things, so
+they were not fully cold either.
 
-Candidate fix, not implemented: have the proxy return a capped, WebP-encoded
-master (say max 1600px at quality 92, roughly 80 KB) instead of the raw original.
-The optimizer then fetches something small, and nothing visible is lost because
-no slot renders above that width.
+So: the failure is real and was seen in a browser, but its cause is **not
+established**. Heavy sources are a plausible contributor, not a proven one.
+Whether the infrastructure itself was cold is also not controlled for in either
+run. The body-read timeout in 2.0 is a better candidate than source size, since
+it produces exactly this signature — one request out of many hanging — and it is
+now fixed, so the next occurrence is worth re-measuring against.
+
+A capped WebP master was considered and is **not** clearly a win: it shrinks only
+the proxy→optimizer hop. The original still has to come down from Airtable, a
+re-encode is added on every miss, and "no visible loss at quality 92" cannot be
+promised in advance — it has to be looked at.
+
+The structural alternative, if runtime work keeps being the problem: pre-generate
+product photos into static storage on a schedule, the way marketing images are
+handled, and drop the runtime hops entirely. That is real work and should only be
+started if the current path stays slow after 2.0.
 
 ### 2.2 Cache hit rate is uneven
 
