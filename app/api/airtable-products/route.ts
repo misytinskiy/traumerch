@@ -9,7 +9,10 @@ import {
   CATALOG_FIELD_IDS,
   getCatalogFieldRequestName,
 } from "../../../shared/catalogFields";
-import { fetchNormalizedProducts } from "../../../server/products/products";
+import {
+  CATALOG_TTL_SECONDS,
+  getCatalogSnapshot,
+} from "../../../server/products/catalogSnapshot";
 
 const apiToken = process.env.API_TOKEN;
 const catalogViewId = process.env.AIRTABLE_CATALOG_VIEW_ID;
@@ -93,26 +96,35 @@ export async function GET(request: NextRequest) {
   const filterByFormula = undefined;
   const category = (searchParams.get("category") || "").toLowerCase().trim();
 
+  // stale-if-error на сутки — главная защита: если Airtable ответит 429 или
+  // ляжет, CDN продолжит отдавать последний удачный ответ вместо пустого
+  // каталога. Раньше здесь стоял no-store, и каждый посетитель ходил в Airtable.
   const cacheControl =
     format === "normalized"
-      ? "no-store, max-age=0"
+      ? `public, s-maxage=${CATALOG_TTL_SECONDS}, stale-while-revalidate=1800, stale-if-error=86400`
       : recordId
-        ? "s-maxage=600, stale-while-revalidate=30, stale-if-error=60"
-        : "s-maxage=300, stale-while-revalidate=30, stale-if-error=60";
+        ? "public, s-maxage=600, stale-while-revalidate=1800, stale-if-error=86400"
+        : "public, s-maxage=300, stale-while-revalidate=1800, stale-if-error=86400";
 
   try {
     let data: unknown;
 
     if (format === "normalized" && !recordId) {
-      data = await fetchNormalizedProducts({
-        apiToken,
-        priceTier,
-        view,
-        maxRecords,
-        pageSize,
-        category: category || undefined,
-        filterByFormula,
-      });
+      const snapshot = await getCatalogSnapshot({ priceTier, view });
+      // Фильтры и лимиты применяем к снимку, а не отдельным запросом в Airtable:
+      // так любая комбинация параметров обслуживается из одного кеша.
+      let records = snapshot.records;
+      if (category) {
+        records = records.filter((record) =>
+          record.categories.some((value) =>
+            value.toLowerCase().includes(category)
+          )
+        );
+      }
+      if (typeof maxRecords === "number") {
+        records = records.slice(0, maxRecords);
+      }
+      data = { records, offset: undefined };
     } else {
       const url = recordId
         ? buildAirtableRecordUrl(recordId, safeFields, {

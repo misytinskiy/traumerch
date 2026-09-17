@@ -47,9 +47,11 @@ export default function DesignClient({
     fetcher,
     {
       fallbackData: initialRecord ?? undefined,
-      revalidateOnMount: true,
-      revalidateIfStale: true,
-      revalidateOnFocus: true,
+      // Ревалидация нужна только когда сервер ничего не отдал. Прежде запрос
+      // уходил и на монтировании, и на каждом возврате фокуса во вкладку.
+      revalidateOnMount: !initialRecord,
+      revalidateIfStale: !initialRecord,
+      revalidateOnFocus: false,
     }
   );
   const productRecord = swrRecord ?? initialRecord ?? null;

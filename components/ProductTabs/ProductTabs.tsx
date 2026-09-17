@@ -52,7 +52,7 @@ const tokenizeSearchTerm = (value: string) =>
     .filter(Boolean);
 
 const fetcher = async (url: string) => {
-  const response = await fetch(url, { cache: "no-store" });
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Failed to fetch products: ${response.status}`);
   }
@@ -84,8 +84,14 @@ export default function ProductTabs({
     fetcher,
     {
       fallbackData: { records: initialRecords },
-      revalidateOnMount: initialRecords.length > 0,
-      revalidateIfStale: true,
+      // Сервер уже отдал снимок каталога, причём тот же самый, что вернул бы
+      // этот запрос — снимок общий. Ревалидация на монтировании дублировала
+      // рендер и удваивала расход Airtable, а браузеру стоила лишних 333 КБ.
+      // Свежесть обеспечивает пятиминутный TTL снимка при следующей загрузке
+      // страницы; принудительно обновиться можно через mutate(), что и делает
+      // обработчик протухших ссылок на фото.
+      revalidateOnMount: false,
+      revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     }

@@ -1,34 +1,22 @@
 import ProductTabs from "../../components/ProductTabs/ProductTabs";
 import styles from "./catalog.module.css";
-import { fetchNormalizedProducts } from "../../server/products/products";
+import { getCatalogSnapshot } from "../../server/products/catalogSnapshot";
 
 export default async function CatalogPage() {
-  let initialRecords = [] as Awaited<
-    ReturnType<typeof fetchNormalizedProducts>
-  >["records"];
-  try {
-    const apiToken = process.env.API_TOKEN;
-    const catalogViewId = process.env.AIRTABLE_CATALOG_VIEW_ID;
+  // Снимок общий для всех посетителей и живёт CATALOG_TTL_SECONDS,
+  // поэтому Airtable дёргается раз в пять минут, а не на каждый заход.
+  // getCatalogSnapshot не бросает исключений: при недоступности Airtable
+  // вернётся прошлый удачный снимок или пустой список.
+  const { records } = await getCatalogSnapshot({
+    priceTier: "bulk",
+    view: process.env.AIRTABLE_CATALOG_VIEW_ID || undefined,
+  });
 
-    if (apiToken) {
-      initialRecords = (
-        await fetchNormalizedProducts({
-          apiToken,
-          priceTier: "bulk",
-          view: catalogViewId || undefined,
-        })
-      ).records;
-    }
-  } catch (error) {
-    console.error("[CatalogPage] Failed to fetch initial records", error);
-    initialRecords = [];
-  }
   return (
     <div className={styles.page}>
       <main>
         {/* Product catalog with tabs and title */}
-        <ProductTabs initialRecords={initialRecords} />
-
+        <ProductTabs initialRecords={records} />
       </main>
     </div>
   );
