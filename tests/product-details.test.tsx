@@ -144,7 +144,7 @@ describe("ProductDetails", () => {
     );
 
     const firstImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(firstImg.getAttribute("src")).toContain("/api/product-photo/rec1/atta/original");
+    expect(firstImg.getAttribute("src")).toContain("/api/product-photo/rec1/atta/master");
 
     rerender(
       <ProductDetails
@@ -155,7 +155,7 @@ describe("ProductDetails", () => {
     );
 
     const secondImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(secondImg.getAttribute("src")).toContain("/api/product-photo/rec1/attb/original");
+    expect(secondImg.getAttribute("src")).toContain("/api/product-photo/rec1/attb/master");
   });
 
   it("uses palette photos for the selected color and switches main photo on color click", () => {
@@ -181,13 +181,13 @@ describe("ProductDetails", () => {
     );
 
     const defaultMainImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(defaultMainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attblack/original");
+    expect(defaultMainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attblack/master");
 
     const colorButtons = screen.getAllByLabelText(/Color \d+/);
     fireEvent.click(colorButtons[1]);
 
     const updatedMainImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(updatedMainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attgreen/original");
+    expect(updatedMainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attgreen/master");
   });
 
   it("falls back to main product photo when palette photos field is empty", () => {
@@ -209,7 +209,7 @@ describe("ProductDetails", () => {
     );
 
     const mainImg = screen.getAllByAltText("Cap")[0] as HTMLImageElement;
-    expect(mainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attdefault/original");
+    expect(mainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attdefault/master");
   });
 
   it("treats main product photo as the first color when palette photos start from the second color", () => {
@@ -236,22 +236,22 @@ describe("ProductDetails", () => {
     );
 
     const initialMainImg = screen.getAllByAltText("Mints Box")[0] as HTMLImageElement;
-    expect(initialMainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attblack/original");
+    expect(initialMainImg.getAttribute("src")).toContain("/api/product-photo/rec1/attblack/master");
 
     const colorButtons = screen.getAllByLabelText(/Color \d+/);
     fireEvent.click(colorButtons[1]);
-    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("/api/product-photo/rec1/attblue/original");
+    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("/api/product-photo/rec1/attblue/master");
     expect(
       screen
         .getAllByAltText("Mints Box")
-        .some((image) => image.getAttribute("src")?.includes("/api/product-photo/rec1/attblack/original"))
+        .some((image) => image.getAttribute("src")?.includes("/api/product-photo/rec1/attblack/master"))
     ).toBe(true);
 
     fireEvent.click(colorButtons[2]);
-    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("/api/product-photo/rec1/attred/original");
+    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("/api/product-photo/rec1/attred/master");
 
     fireEvent.click(colorButtons[3]);
-    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("/api/product-photo/rec1/attgray/original");
+    expect((screen.getAllByAltText("Mints Box")[0] as HTMLImageElement).getAttribute("src")).toContain("/api/product-photo/rec1/attgray/master");
   });
 
   it("renders special field text only when enabled and uses current language", () => {

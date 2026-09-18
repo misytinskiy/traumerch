@@ -29,6 +29,26 @@ const ATTACHMENT_ID = /^att[A-Za-z0-9]{1,20}$/;
 const FETCH_TIMEOUT_MS = 10_000;
 
 /**
+ * Мастер-копия: то, что забирает оптимизатор Vercel.
+ *
+ * В Airtable лежат PNG 2048x2048 — в среднем 1.4 МБ, отдельные до 4.2 МБ.
+ * На одну холодную загрузку каталога это 41 МБ, которые оптимизатор обязан
+ * протащить через наши функции, прежде чем отдать браузеру пару мегабайт.
+ * WebP того же разрешения весит около 190 КБ.
+ *
+ * Ширина срезается только сверху и заведомо выше нынешних исходников: резать
+ * здесь значит делать передискретизацию дважды — сначала у нас, потом в
+ * оптимизаторе. Ограничение нужно на случай, если когда-нибудь загрузят 4000px.
+ *
+ * Качество 92, а не 88 как у вариантов по ширине: с этой копии оптимизатор
+ * жмёт второй раз, и запас на первом шаге дешевле, чем потери на втором.
+ * Сравнение с прежним путём (PNG сразу в вариант) даёт расхождение 0.85/255 —
+ * на глаз неотличимо, проверено на самом детализированном фото каталога.
+ */
+const MASTER_MAX_WIDTH = 2048;
+const MASTER_QUALITY = 92;
+
+/**
  * Идентификатор запроса уезжает в заголовке ответа и в лог. По нему серверная
  * запись стыкуется с отчётом браузера, когда тот успел ответ получить.
  */
@@ -150,12 +170,18 @@ export async function GET(
     return response;
   };
 
+  const wantsMaster = rawWidth === "master";
+  // Нетронутые байты больше никто не запрашивает, но адрес остаётся: он нужен
+  // как отладочный ход к исходнику и чтобы уже открытая где-то вкладка со
+  // старой разметкой не получила 400.
   const wantsOriginal = rawWidth === "original";
   const width = Number.parseInt(rawWidth, 10);
   if (
     !RECORD_ID.test(recordId) ||
     !ATTACHMENT_ID.test(attachmentId) ||
-    (!wantsOriginal && (!Number.isFinite(width) || !isProductPhotoWidth(width)))
+    (!wantsMaster &&
+      !wantsOriginal &&
+      (!Number.isFinite(width) || !isProductPhotoWidth(width)))
   ) {
     return finish(
       NextResponse.json({ error: "Bad request" }, { status: 400 }),
@@ -222,8 +248,6 @@ export async function GET(
       );
     }
 
-    // Оригинал отдаём как есть: варианты по размерам сделает next/image, и
-    // лишнее перекодирование здесь только съело бы качество ещё раз.
     if (wantsOriginal) {
       stage = "done";
       return finish(
@@ -244,8 +268,11 @@ export async function GET(
     const encodeStartedAt = Date.now();
     const optimized = await sharp(original)
       .rotate()
-      .resize({ width, withoutEnlargement: true })
-      .webp({ quality: 88, effort: 4 })
+      .resize({
+        width: wantsMaster ? MASTER_MAX_WIDTH : width,
+        withoutEnlargement: true,
+      })
+      .webp({ quality: wantsMaster ? MASTER_QUALITY : 88, effort: 4 })
       .toBuffer();
     encodeMs = Date.now() - encodeStartedAt;
 

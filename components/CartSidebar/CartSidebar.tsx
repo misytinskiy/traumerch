@@ -8,7 +8,7 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { getPriceForQuantity, getMinQuantity } from "../../shared/pricing";
 import Image from "next/image";
 import { getMainPhotoAttachmentId } from "../../shared/product";
-import { productPhotoOriginalUrl } from "../../shared/productPhoto";
+import { productPhotoMasterUrl } from "../../shared/productPhoto";
 import Button from "../Button/Button";
 import styles from "./CartSidebar.module.css";
 
@@ -231,7 +231,7 @@ export default function CartSidebar() {
                     <div className={styles.itemImage} aria-hidden>
                       {itemPhotoId ? (
                         <Image
-                          src={productPhotoOriginalUrl(item.productId, itemPhotoId)}
+                          src={productPhotoMasterUrl(item.productId, itemPhotoId)}
                           alt={item.productName}
                           fill
                           sizes="100px"

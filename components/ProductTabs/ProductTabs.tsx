@@ -11,7 +11,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import Image from "next/image";
-import { productPhotoOriginalUrl } from "../../shared/productPhoto";
+import { productPhotoMasterUrl } from "../../shared/productPhoto";
 import { useLanguage } from "../../contexts/LanguageContext";
 import Button from "../Button/Button";
 import type { ClientProduct } from "../../shared/types";
@@ -382,7 +382,7 @@ export default function ProductTabs({
         ) : hasRenderableMainImage ? (
           <div className={`${styles.productImage} ${styles[product.size]} ${styles.imageWrap}`}>
             <Image
-              src={productPhotoOriginalUrl(product.id, product.imageId as string)}
+              src={productPhotoMasterUrl(product.id, product.imageId as string)}
               alt={product.name}
               fill
               sizes={
@@ -396,7 +396,7 @@ export default function ProductTabs({
             />
             {shouldRenderHoverImage && (
               <Image
-                src={productPhotoOriginalUrl(product.id, product.hoverImageId as string)}
+                src={productPhotoMasterUrl(product.id, product.hoverImageId as string)}
                 alt={product.name}
                 fill
                 sizes={

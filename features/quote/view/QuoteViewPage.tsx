@@ -10,7 +10,7 @@ import {
   getMainPhotoAttachmentId,
   getProductNameFromFields,
 } from "../../../shared/product";
-import { productPhotoOriginalUrl } from "../../../shared/productPhoto";
+import { productPhotoMasterUrl } from "../../../shared/productPhoto";
 import { getMinQuantity } from "../../../shared/pricing";
 import { getSwatchColor, MAX_FILES, MAX_TOTAL_BYTES } from "../../../shared/quote";
 import { pushDataLayerEvent } from "../../../shared/analytics";
@@ -210,7 +210,7 @@ export default function QuoteViewPage() {
             const photoId = getMainPhotoAttachmentId(item.productFields);
                 const photoUrl =
                   photoId && item.productId
-                    ? productPhotoOriginalUrl(item.productId, photoId)
+                    ? productPhotoMasterUrl(item.productId, photoId)
                     : "";
             const displayName = getProductNameFromFields(
               item.productFields,

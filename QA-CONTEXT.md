@@ -180,6 +180,14 @@ product photos into static storage on a schedule, the way marketing images are
 handled, and drop the runtime hops entirely. That is real work and should only be
 started if the current path stays slow after 2.0.
 
+**Observed in the wild after 2.1b shipped.** The owner reported seeing a broken
+image, then the photo appearing about half a second later. That is the retry
+firing — `RETRY_DELAY_MS` is 500 — which means the failure happens routinely on
+a cold load, not rarely. It also means the Vercel logs should now contain
+`"tag":"photo-client"` with `"outcome":"recovered"` for each one.
+
+Cause still not proven, but 2.1c gives it a concrete, measured suspect.
+
 ### 2.1a Diagnostics for the cold-load failure — ADDED
 
 Both halves of the evidence now get recorded, so the next occurrence can be
@@ -232,6 +240,57 @@ the old candidates and the new `src` is ignored.
 This does not establish the cause and is not meant to. What it gives is the
 distinction the logs were missing: `recovered` means a transient failure,
 `failed` means a persistent one.
+
+### 2.1c The sources were 2048px PNGs — FIXED
+
+Measured across all 32 photos on `/catalog`, pulled through the proxy:
+
+```
+формат              png, все 32, 2048x2048, без прозрачности
+на фото             медиана 1.4 МБ, максимум 4.2 МБ
+на одну загрузку    41-42 МБ
+```
+
+So on a cold load the Vercel optimizer had to pull ~42 MB through our functions
+to hand the browser a couple of MB of WebP. That is the "первичка берёт время"
+the owner reported, and it is a far better candidate for the intermittent
+failures than anything examined before.
+
+`/original` is replaced by `/master`, which returns WebP instead of the untouched
+bytes:
+
+```
+оптимизатор тащил   42.0 МБ   (1345 KB на фото)
+теперь тащит         6.4 МБ   ( 205 KB на фото)
+```
+
+**Resolution is deliberately not reduced.** Capping width here would resample
+twice — once in the proxy, once in the optimizer. The 2048 cap is a guard against
+a future 4000px upload, not a downscale of what exists. Quality is 92 rather than
+the 88 used for width variants, because the optimizer compresses this a second
+time and headroom on the first pass is cheaper than loss on the second.
+
+Quality was checked before shipping, not assumed. On the most detailed photo in
+the catalog, comparing what a visitor gets now against what they got before:
+
+```
+сейчас, вариант 828px   120 KB
+через мастер 2048 q92   117 KB   расхождение 0.85/255 в среднем, макс 16
+```
+
+0.85/255 is a third of a percent. A four-way side-by-side of the woven texture,
+rope handle and embroidered logo showed nothing distinguishable. The earlier note
+in this document calling a capped WebP master "not clearly a win" was written
+without these numbers and was wrong — the source being PNG is what changes the
+arithmetic.
+
+**The URL had to change.** Serving different bytes from `/original` would have
+left the old PNGs sitting in the optimizer and CDN caches for up to 31 days.
+`/original` still works, as a debugging path to the untouched source and so an
+already-open tab does not get a 400.
+
+One-time cost: the first load after this deploys is cold for every photo, since
+the source URL the optimizer keys on has changed.
 
 ### 2.0d Empty catalog could be baked into the build — FIXED
 

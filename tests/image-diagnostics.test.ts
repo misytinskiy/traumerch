@@ -71,7 +71,7 @@ describe("redact", () => {
 describe("buildRetryUrl", () => {
   it("дописывает параметр во внутренний адрес next/image, а не поверх него", () => {
     const src =
-      "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecA1%2FattB2%2Foriginal&w=1920&q=90";
+      "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecA1%2FattB2%2Fmaster&w=1920&q=90";
 
     const result = buildRetryUrl(src, 1, ORIGIN);
 
@@ -85,7 +85,7 @@ describe("buildRetryUrl", () => {
     // наш роут отдал бы из кеша тот же самый сломанный ответ.
     expect(url.searchParams.get("r")).toBeNull();
     const inner = url.searchParams.get("url") as string;
-    expect(inner).toContain("/api/product-photo/recA1/attB2/original");
+    expect(inner).toContain("/api/product-photo/recA1/attB2/master");
     expect(new URL(inner, ORIGIN).searchParams.get("r")).toBe("1");
   });
 
@@ -114,8 +114,8 @@ describe("buildRetryUrl", () => {
 describe("buildRetrySrcSet", () => {
   it("переписывает каждый вариант и сохраняет дескрипторы", () => {
     const srcSet = [
-      "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecA%2FattB%2Foriginal&w=640&q=90 640w",
-      "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecA%2FattB%2Foriginal&w=1920&q=90 1920w",
+      "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecA%2FattB%2Fmaster&w=640&q=90 640w",
+      "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecA%2FattB%2Fmaster&w=1920&q=90 1920w",
     ].join(", ");
 
     const result = buildRetrySrcSet(srcSet, 1, ORIGIN) as string;
@@ -142,14 +142,14 @@ describe("buildRetrySrcSet", () => {
 describe("parseProductPhotoUrl", () => {
   it("достаёт идентификаторы из прямого адреса", () => {
     expect(
-      parseProductPhotoUrl("/api/product-photo/recAbc123/attXyz789/original")
+      parseProductPhotoUrl("/api/product-photo/recAbc123/attXyz789/master")
     ).toEqual({ recordId: "recAbc123", attachmentId: "attXyz789" });
   });
 
   it("достаёт идентификаторы из обёртки next/image", () => {
     expect(
       parseProductPhotoUrl(
-        "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecAbc123%2FattXyz789%2Foriginal&w=640&q=90"
+        "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecAbc123%2FattXyz789%2Fmaster&w=640&q=90"
       )
     ).toEqual({ recordId: "recAbc123", attachmentId: "attXyz789" });
   });
@@ -181,7 +181,7 @@ describe("api/image-diagnostics", () => {
     const response = await post(
       JSON.stringify({
         outcome: "failed",
-        src: "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecAbc123%2FattXyz789%2Foriginal&w=640&q=90",
+        src: "/_next/image?url=%2Fapi%2Fproduct-photo%2FrecAbc123%2FattXyz789%2Fmaster&w=640&q=90",
         currentSrc: "",
         page: "/catalog",
         attempts: 1,
@@ -203,7 +203,7 @@ describe("api/image-diagnostics", () => {
     await post(
       JSON.stringify({
         outcome: "recovered",
-        src: "/api/product-photo/recAbc123/attXyz789/original?r=1",
+        src: "/api/product-photo/recAbc123/attXyz789/master?r=1",
         page: "/catalog",
         attempts: 1,
       })
@@ -219,7 +219,7 @@ describe("api/image-diagnostics", () => {
     await post(
       JSON.stringify({
         outcome: "failed",
-        src: "/api/product-photo/recAbc123/attXyz789/original",
+        src: "/api/product-photo/recAbc123/attXyz789/master",
         page: '/catalog\n{"tag":"photo","outcome":"ok"}',
         attempts: 1,
       })

@@ -2,7 +2,7 @@
 
 import styles from "./ProductDetails.module.css";
 import Image from "next/image";
-import { productPhotoOriginalUrl } from "../../shared/productPhoto";
+import { productPhotoMasterUrl } from "../../shared/productPhoto";
 import type { PhotoVariants } from "./types";
 
 export default function ProductGallery({
@@ -41,7 +41,7 @@ export default function ProductGallery({
           ) : productId && mainPhotoId ? (
             <div className={`${styles.mainImage} ${styles.imageWrap}`}>
               <Image
-                src={productPhotoOriginalUrl(productId, mainPhotoId)}
+                src={productPhotoMasterUrl(productId, mainPhotoId)}
                 alt={imageAlt}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 50vw"
@@ -71,7 +71,7 @@ export default function ProductGallery({
                 <Image
                   src={
                     productId && photo.id
-                      ? productPhotoOriginalUrl(productId, photo.id)
+                      ? productPhotoMasterUrl(productId, photo.id)
                       : ""
                   }
                   alt={imageAlt}
@@ -127,7 +127,7 @@ export default function ProductGallery({
                 <Image
                   src={
                     productId && photo.id
-                      ? productPhotoOriginalUrl(productId, photo.id)
+                      ? productPhotoMasterUrl(productId, photo.id)
                       : ""
                   }
                   alt={imageAlt}

@@ -67,6 +67,63 @@ describe("api/product-photo", () => {
     vi.restoreAllMocks();
   });
 
+  it("отдаёт мастер-копию в WebP, а не исходный PNG", async () => {
+    const sharp = (await import("sharp")).default;
+    // Тяжёлый PNG того же вида, что лежит в Airtable: 2048x2048 без сжатия.
+    const png = await sharp({
+      create: {
+        width: 2048,
+        height: 2048,
+        channels: 3,
+        noise: { type: "gaussian", mean: 128, sigma: 30 },
+      },
+    })
+      .png()
+      .toBuffer();
+
+    const { fetchWithDeadline } = await import(
+      "../server/http/fetchWithDeadline"
+    );
+    (fetchWithDeadline as ReturnType<typeof vi.fn>).mockResolvedValue({
+      status: 200,
+      ok: true,
+      headers: new Headers({ "content-type": "image/png" }),
+      body: png,
+    });
+
+    const response = await callRoute("master");
+    const body = Buffer.from(await response.arrayBuffer());
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toBe("image/webp");
+
+    const meta = await sharp(body).metadata();
+    expect(meta.format).toBe("webp");
+    // Разрешение не режется: уменьшать должен только оптимизатор, иначе
+    // передискретизация происходит дважды.
+    expect(meta.width).toBe(2048);
+    // Ради этого всё и делалось — оптимизатор тащит на порядок меньше.
+    expect(body.byteLength).toBeLessThan(png.byteLength / 2);
+  });
+
+  it("по-прежнему отдаёт нетронутые байты по адресу original", async () => {
+    const { fetchWithDeadline } = await import(
+      "../server/http/fetchWithDeadline"
+    );
+    const bytes = Buffer.alloc(256, 9);
+    (fetchWithDeadline as ReturnType<typeof vi.fn>).mockResolvedValue({
+      status: 200,
+      ok: true,
+      headers: new Headers({ "content-type": "image/png" }),
+      body: bytes,
+    });
+
+    const response = await callRoute("original");
+
+    expect(response.headers.get("content-type")).toBe("image/png");
+    expect(Buffer.from(await response.arrayBuffer()).equals(bytes)).toBe(true);
+  });
+
   it("отдаёт байты и идентификатор запроса в заголовке", async () => {
     const { fetchWithDeadline } = await import(
       "../server/http/fetchWithDeadline"
