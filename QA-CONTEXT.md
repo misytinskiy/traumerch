@@ -292,6 +292,46 @@ already-open tab does not get a 400.
 One-time cost: the first load after this deploys is cold for every photo, since
 the source URL the optimizer keys on has changed.
 
+### 2.1d The optimizer was doubling the work — REMOVED from the photo path
+
+Measured on the dev deployment, width 640, everything cold, three runs:
+
+```
+                    поштучно              пачкой в 32 (как делает браузер)
+через оптимизатор   847 / 824 / 870 мс    2005 / 1825 / 1950 мс
+напрямую из прокси  385 / 416 / 440 мс     689 /  519 / 1000 мс
+вес на выходе       17-22 КБ              15-20 КБ
+```
+
+The sequential figure is the clean one — no concurrency, no saturated link — and
+it reproduced 3/3. **The optimizer roughly doubles per-image latency and returns
+an image of the same size.** It is a second hop and a second encode: we compress
+the source to WebP, it decompresses that WebP and compresses it again.
+
+`productPhotoLoader` is passed to every product `<Image>`, so next/image still
+builds the srcset and picks the width, but the URLs point straight at the proxy.
+`/_next/image` no longer appears in the catalog markup at all (checked: 0
+occurrences, 220 direct proxy URLs).
+
+The earlier justification for routing through the optimizer — "its cache is
+global and long-lived, ours would need warming" — was wrong. Both are the same
+Vercel CDN with the same number of keys; our responses already carry
+`Cache-Control: immutable`.
+
+**Known imprecision.** Next generates srcset descriptors from its own
+`deviceSizes`/`imageSizes`, and the loader snaps them to the proxy's widths, so
+a `384w` entry can serve a 640px file. Rounding is deliberately upward: the
+image can be larger than the slot, never smaller, so this cannot cause blur. It
+was left alone rather than aligned by changing `deviceSizes`, because that
+setting is global and other components (Footer, QuoteOverlay, ConfLandingPage)
+still use the optimizer.
+
+**Not established: whether this fixes the broken images.** Concurrent runs showed
+2-3 failures through the optimizer and 0 direct on two runs — but the third run
+failed on both paths and took 10s per batch, which means the tester's own link
+was the variable there. Latency is measured; failure attribution is not. The
+`photo-client` counts in the logs are what will answer it.
+
 ### 2.0d Empty catalog could be baked into the build — FIXED
 
 `/catalog` is prerendered, and `getCatalogSnapshot` deliberately never throws —

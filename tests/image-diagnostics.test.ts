@@ -2,7 +2,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { describeError, hostOf, redact } from "../server/diagnostics/redact";
 import { buildRetrySrcSet, buildRetryUrl } from "../shared/imageRetry";
-import { parseProductPhotoUrl } from "../shared/productPhoto";
+import {
+  parseProductPhotoUrl,
+  productPhotoLoader,
+} from "../shared/productPhoto";
 
 const ORIGIN = "https://traumerch.example";
 
@@ -136,6 +139,44 @@ describe("buildRetrySrcSet", () => {
     const srcSet = "/media/a.webp 640w, https://example.com/b.webp 1280w";
 
     expect(buildRetrySrcSet(srcSet, 1, ORIGIN)).toBeNull();
+  });
+});
+
+describe("productPhotoLoader", () => {
+  const src = "/api/product-photo/recAbc123/attXyz789/master";
+
+  it("уводит адрес мимо оптимизатора", () => {
+    expect(productPhotoLoader({ src, width: 640 })).toBe(
+      "/api/product-photo/recAbc123/attXyz789/640"
+    );
+  });
+
+  it("берёт ближайшую ширину не меньше запрошенной", () => {
+    // Next просит из своего списка (828, 1080), прокси отдаёт из своего.
+    // Округление вниз дало бы картинку мельче слота, то есть мыло.
+    expect(productPhotoLoader({ src, width: 828 })).toContain("/960");
+    expect(productPhotoLoader({ src, width: 1080 })).toContain("/1280");
+    expect(productPhotoLoader({ src, width: 320 })).toContain("/320");
+  });
+
+  it("не просит шире, чем прокси умеет", () => {
+    expect(productPhotoLoader({ src, width: 4000 })).toContain("/1920");
+  });
+
+  it("не ломается на адресе, где ширина уже проставлена", () => {
+    expect(
+      productPhotoLoader({
+        src: "/api/product-photo/recAbc123/attXyz789/320",
+        width: 1920,
+      })
+    ).toBe("/api/product-photo/recAbc123/attXyz789/1920");
+  });
+
+  it("оставляет адрес разбираемым для диагностики", () => {
+    expect(parseProductPhotoUrl(productPhotoLoader({ src, width: 640 }))).toEqual({
+      recordId: "recAbc123",
+      attachmentId: "attXyz789",
+    });
   });
 });
 

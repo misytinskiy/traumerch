@@ -10,7 +10,7 @@ import {
   getMainPhotoAttachmentId,
   getProductNameFromFields,
 } from "../../../shared/product";
-import { productPhotoMasterUrl } from "../../../shared/productPhoto";
+import { productPhotoLoader, productPhotoMasterUrl } from "../../../shared/productPhoto";
 import { getMinQuantity } from "../../../shared/pricing";
 import { getSwatchColor, MAX_FILES, MAX_TOTAL_BYTES } from "../../../shared/quote";
 import { pushDataLayerEvent } from "../../../shared/analytics";
@@ -224,6 +224,7 @@ export default function QuoteViewPage() {
                 <div className={styles.media}>
                   {photoUrl ? (
                     <Image
+                      loader={productPhotoLoader}
                       src={photoUrl}
                       alt={displayName}
                       fill

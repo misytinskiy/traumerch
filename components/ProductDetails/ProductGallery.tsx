@@ -2,7 +2,7 @@
 
 import styles from "./ProductDetails.module.css";
 import Image from "next/image";
-import { productPhotoMasterUrl } from "../../shared/productPhoto";
+import { productPhotoLoader, productPhotoMasterUrl } from "../../shared/productPhoto";
 import type { PhotoVariants } from "./types";
 
 export default function ProductGallery({
@@ -41,6 +41,7 @@ export default function ProductGallery({
           ) : productId && mainPhotoId ? (
             <div className={`${styles.mainImage} ${styles.imageWrap}`}>
               <Image
+                loader={productPhotoLoader}
                 src={productPhotoMasterUrl(productId, mainPhotoId)}
                 alt={imageAlt}
                 fill
@@ -69,6 +70,7 @@ export default function ProductGallery({
             thumbnailPhotos.map((photo, index) => (
               <div key={index} className={`${styles.mobileSlide} ${styles.imageWrap}`}>
                 <Image
+                  loader={productPhotoLoader}
                   src={
                     productId && photo.id
                       ? productPhotoMasterUrl(productId, photo.id)
@@ -125,6 +127,7 @@ export default function ProductGallery({
                 aria-label={`Secondary photo ${index + 1}`}
               >
                 <Image
+                  loader={productPhotoLoader}
                   src={
                     productId && photo.id
                       ? productPhotoMasterUrl(productId, photo.id)
