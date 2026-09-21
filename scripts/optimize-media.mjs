@@ -3,40 +3,24 @@
  * и раскладывает в /public/media, после чего перезаписывает content/media.json
  * ссылками на сжатые копии.
  *
- * Тот же конвейер потом используется в админке при загрузке нового файла,
- * поэтому правила качества и ширин живут здесь, в одном месте.
- *
- * Имя файла содержит хеш содержимого: при замене фотографии меняется имя,
- * поэтому раздачу можно кешировать навсегда и протухшего кеша не бывает.
+ * Сам конвейер живёт в server/media/optimize.ts — оттуда же его берёт админка.
+ * Здесь остаётся только работа с файловой системой и отчёт: правила качества
+ * и ширин должны существовать в одном экземпляре, иначе загруженная через
+ * админку фотография перестанет совпадать с остальными на сайте.
  *
  * Запуск: node --experimental-strip-types scripts/optimize-media.mjs
  */
-import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile, rm } from "node:fs/promises";
-import { existsSync, statSync } from "node:fs";
-import { join, dirname } from "node:path";
-import sharp from "sharp";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 
 import { SLOTS } from "../content/slots.ts";
+import { optimizeSlotImage } from "../server/media/optimize.ts";
 
 const root = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const PUBLIC = join(root, "public");
 const MEDIA_DIR = join(PUBLIC, "media");
 const MEDIA_JSON = join(root, "content", "media.json");
-
-/** Больше этого не имеет смысла — даже на 2x ретине. */
-const MAX_WIDTH = 2560;
-/** Меньше этого отдельный вариант не нужен. */
-const MIN_VARIANT = 240;
-
-const QUALITY = { photo: 88, logo: 92 };
-
-/**
- * Во сколько раз генерим больше CSS-пикселей. Десктопные экраны обычно 2x,
- * телефоны почти поголовно 3x — если считать мобильные блоки по 2x, на
- * телефоне картинка растягивается и выглядит мылом.
- */
-const DENSITY = { desktop: 2, mobile: 3 };
 
 /** Сохраняем focal, если он уже был выставлен (например, у карточек команды). */
 const previous = existsSync(MEDIA_JSON)
@@ -44,20 +28,28 @@ const previous = existsSync(MEDIA_JSON)
   : {};
 
 /**
- * Сколько пикселей реально нужно этому месту на странице:
- * берём большую из десктопной и мобильной ширины, умножаем на 2 под ретину
- * и ограничиваем шириной исходника — апскейлить нечего.
+ * Исходники проверяем ДО того, как что-либо удалить.
+ *
+ * После миграции scripts/prune-legacy-media.mjs удаляет исходники из /public —
+ * они больше не нужны, их заменили сжатые копии. Скрипт при этом остаётся
+ * запускаемым, и без этой проверки он сначала сносит public/media, потом
+ * обнаруживает, что сжимать нечего, и оставляет сайт вообще без картинок.
+ * Проверено на себе.
  */
-const targetWidths = (slot, sourceWidth) => {
-  const layoutWidth = Math.max(
-    slot.shape.w * DENSITY.desktop,
-    (slot.mobileShape?.w ?? 0) * DENSITY.mobile
+const missing = SLOTS.filter((slot) => !existsSync(join(PUBLIC, slot.legacy)));
+if (missing.length) {
+  console.error(
+    `Нет исходников для ${missing.length} из ${SLOTS.length} слотов — ` +
+      `похоже, миграция уже прошла и /public почищен прунером.`
   );
-  const needed = Math.min(sourceWidth, layoutWidth, MAX_WIDTH);
-  const widths = [needed, Math.round(needed / 2), Math.round(needed / 4)]
-    .filter((w) => w >= MIN_VARIANT);
-  return [...new Set(widths)].sort((a, b) => a - b);
-};
+  console.error(`Например: ${missing.slice(0, 3).map((s) => s.legacy).join(", ")}`);
+  console.error(
+    `\nЭтот скрипт — разовая миграция, повторно он не запускается. ` +
+      `Пересжать отдельный слот можно через админку, ` +
+      `а сам конвейер лежит в server/media/optimize.ts.`
+  );
+  process.exit(1);
+}
 
 await rm(MEDIA_DIR, { recursive: true, force: true });
 await mkdir(MEDIA_DIR, { recursive: true });
@@ -74,53 +66,26 @@ for (const slot of SLOTS) {
     const source = await readFile(sourcePath);
     sourceBytes += source.length;
 
-    // .rotate() без аргументов применяет EXIF-ориентацию — иначе фото
-    // с телефона легло бы набок после ресайза.
-    const base = sharp(source).rotate();
-    const meta = await base.metadata();
-    if (!meta.width || !meta.height) throw new Error("не читаются размеры");
+    const { files, entry, source: meta } = await optimizeSlotImage(slot, source);
 
-    const quality = QUALITY[slot.kind === "logo" ? "logo" : "photo"];
-    const widths = targetWidths(slot, meta.width);
-
-    const rendered = [];
-    for (const width of widths) {
-      const buffer = await sharp(source)
-        .rotate()
-        .resize({ width, withoutEnlargement: true })
-        .webp({ quality, effort: 5 })
-        .toBuffer();
-      rendered.push({ width, buffer });
-    }
-
-    const largest = rendered[rendered.length - 1];
-    const hash = createHash("sha1").update(largest.buffer).digest("hex").slice(0, 8);
-    const largestMeta = await sharp(largest.buffer).metadata();
-
-    const dir = join(MEDIA_DIR, slot.key);
-    await mkdir(dir, { recursive: true });
-
-    const variants = [];
-    for (const { width, buffer } of rendered) {
-      const name = `${hash}-${width}.webp`;
-      await writeFile(join(dir, name), buffer);
-      outputBytes += buffer.length;
-      variants.push({ w: width, src: `/media/${slot.key}/${name}` });
+    await mkdir(join(MEDIA_DIR, slot.key), { recursive: true });
+    let after = 0;
+    for (const file of files) {
+      await writeFile(join(PUBLIC, file.path), file.buffer);
+      outputBytes += file.buffer.length;
+      after += file.buffer.length;
     }
 
     slots[slot.key] = {
-      src: variants[variants.length - 1].src,
-      w: largestMeta.width,
-      h: largestMeta.height,
+      ...entry,
       ...(previous[slot.key]?.focal ? { focal: previous[slot.key].focal } : null),
-      variants,
     };
 
     rows.push({
       key: slot.key,
       before: source.length,
-      after: rendered.reduce((sum, r) => sum + r.buffer.length, 0),
-      dims: `${meta.width}x${meta.height} -> ${largestMeta.width}px`,
+      after,
+      dims: `${meta.width}x${meta.height} -> ${entry.w}px`,
     });
   } catch (error) {
     console.error(`  ОШИБКА  ${slot.key} (${slot.legacy}): ${error.message}`);
