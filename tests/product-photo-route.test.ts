@@ -75,6 +75,10 @@ describe("api/product-photo", () => {
         width: 2048,
         height: 2048,
         channels: 3,
+        // Шум даёт картинку, которую нечем сжать «в ноль», — иначе проверка
+        // «мастер легче исходника вдвое» прошла бы на любой заливке.
+        // background типам sharp нужен даже вместе с noise.
+        background: { r: 0, g: 0, b: 0 },
         noise: { type: "gaussian", mean: 128, sigma: 30 },
       },
     })

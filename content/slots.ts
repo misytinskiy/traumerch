@@ -29,6 +29,15 @@ export type Slot = {
    * После миграции поле остаётся как справка о происхождении.
    */
   legacy: string;
+  /**
+   * Путь страницы, на которой слот показывается. Нужен превью уровня 2:
+   * админка открывает эту страницу в iframe и подменяет в ней фотографию,
+   * чтобы кадрировку было видно в настоящей вёрстке, а не в рамке рядом.
+   *
+   * Часть слотов встречается на двух страницах. Тогда здесь та, где
+   * фотография крупнее и заметнее, а у группы стоит комментарий с разбором.
+   */
+  page: string;
   /** Пропорции места на десктопе. */
   shape: SlotShape;
   /** Пропорции на мобильном, если заметно отличаются. */
@@ -109,11 +118,15 @@ const INSPIRATION_TILES: ReadonlyArray<[number, number, number, string]> = [
 
 /* ------------------------------------------------------------------ */
 
+// Заставка живёт в лейауте (marketing), но сам компонент рисует её только
+// при pathname === "/" и только до первого показа — увидеть её можно
+// исключительно на главной.
 const preloader: Slot[] = [1, 2, 3].map((n) => ({
   key: `preloader.${n}`,
   label: `Заставка — кадр ${n}`,
   group: "Заставка",
   legacy: `/preloader/${n}.jpg`,
+  page: "/",
   shape: { w: 900, h: 1200 },
   sizes: "(max-width: 900px) 100vw, 33vw",
   alt: `Preloader image ${n}`,
@@ -128,6 +141,9 @@ const homeHero: Slot[] = [
   label: `Главная — первый экран, слайд ${n}`,
   group: "Главная",
   legacy: file,
+  // Слайдер стоит в мобильной ветке Hero (ширина <= 768px); на десктопной
+  // главной этих кадров нет, поэтому превью смотреть в узком iframe.
+  page: "/",
   shape: { w: 1920, h: 1080 },
   mobileShape: { w: 390, h: 620 },
   sizes: "100vw",
@@ -148,6 +164,10 @@ const logos: Slot[] = [
   label: `Логотип клиента — ${name}`,
   group: "Главная",
   legacy: `/logo/${file}.webp`,
+  // Полоса логотипов есть и на главной (Hero, ширина <= 768px), и на
+  // /solutions (мобильная вёрстка, <= 480px). Берём главную: там она
+  // показывается в более широком диапазоне и это основная страница.
+  page: "/",
   shape: { w: 200, h: 80 },
   sizes: "160px",
   alt: name,
@@ -159,6 +179,7 @@ const homeGallery: Slot[] = [1, 2, 3, 4, 5].map((n) => ({
   label: `Главная — отзывы, карточка ${n}`,
   group: "Главная",
   legacy: `/gallery/${n}.jpg`,
+  page: "/",
   shape: { w: 800, h: 1000 },
   sizes: "(max-width: 900px) 80vw, 33vw",
   alt: `Gallery image ${n}`,
@@ -170,6 +191,7 @@ const homeGalleryPlaceholder: Slot[] = [
     label: "Главная — отзывы, заглушка для мобильного",
     group: "Главная",
     legacy: "/gallery/placeholder.jpg",
+    page: "/",
     shape: { w: 800, h: 1000 },
     sizes: "100vw",
     alt: "Gallery placeholder",
@@ -181,6 +203,7 @@ const promises: Slot[] = [1, 2, 3, 4, 5, 6].map((n) => ({
   label: `Главная — преимущества, блок ${n}`,
   group: "Главная",
   legacy: `/promises/${n}.png`,
+  page: "/",
   shape: { w: 1200, h: 564 },
   sizes: "(max-width: 900px) 100vw, 50vw",
   alt: `Promise ${n}`,
@@ -198,17 +221,29 @@ const team: Slot[] = [
   label: `Команда — ${name}`,
   group: "Главная",
   legacy: `/ourTeam/${slug}.png`,
+  page: "/",
   shape: { w: 600, h: 750 },
   sizes: "(max-width: 900px) 50vw, 25vw",
   alt: `Portrait of ${name}`,
 }));
 
-/** Услуги показываются и на главной (первые 3), и на /solutions (все 5). */
+/**
+ * Услуги показываются и на главной (первые 3), и на /solutions (все 5),
+ * и на /design (тоже первые 3). Вёрстка везде одна и та же — Services.
+ *
+ * Поэтому для превью: первые три отправляем на главную (там блок виден и на
+ * десктопе, и на телефоне), четвёртую и пятую — на /solutions, потому что
+ * больше их нигде нет. На /solutions блок услуг спрятан при ширине <= 480px,
+ * так что мобильную кадрировку услуг 4 и 5 в iframe не посмотреть.
+ */
+const servicesPage = (n: number): string => (n <= 3 ? "/" : "/solutions");
+
 const servicesMain: Slot[] = [1, 2, 3, 4, 5].map((n) => ({
   key: `services.${n}.main`,
   label: `Услуга ${n} — крупное фото`,
   group: "Главная / Решения",
   legacy: `/services/${n}.png`,
+  page: servicesPage(n),
   shape: { w: 1200, h: 1020 },
   sizes: "(max-width: 900px) 100vw, (max-width: 1280px) 50vw, 40vw",
   alt: `Service ${n}`,
@@ -242,6 +277,7 @@ const servicesMosaic: Slot[] = SERVICE_MOSAIC.flatMap(([n, files]) =>
     label: `Услуга ${n} — мозаика для телефона, фото ${i + 1}`,
     group: "Главная / Решения",
     legacy: file,
+    page: servicesPage(n),
     shape: MOSAIC_GEOMETRY[i].shape,
     // Мозаика существует только на телефоне, поэтому mobileShape совпадает
     // с shape — иначе разрешение считалось бы по десктопной плотности.
@@ -260,6 +296,8 @@ const solutionsHero: Slot[] = [
   label: `Решения — первый экран, слайд ${n}`,
   group: "Решения",
   legacy: file,
+  // Слайдер стоит в мобильной вёрстке /solutions (<= 480px).
+  page: "/solutions",
   shape: { w: 1920, h: 1080 },
   mobileShape: { w: 390, h: 620 },
   sizes: "100vw",
@@ -276,6 +314,7 @@ const solutionsCards: Slot[] = [
   label: `Решения — карточка для телефона ${n}`,
   group: "Решения",
   legacy: file as string,
+  page: "/solutions",
   shape: { w: 430, h: 553 },
   mobileShape: { w: 430, h: 553 },
   sizes: "100vw",
@@ -287,6 +326,7 @@ const inspiration: Slot[] = INSPIRATION_TILES.map(([n, cols, rows, alt]) => ({
   label: `Inspiration — плитка ${n} (${cols}×${rows})`,
   group: "Inspiration",
   legacy: `/inspirationPage/${n}.png`,
+  page: "/inspiration",
   shape: tileShape(cols, rows),
   mobileShape: { w: 390, h: 390 },
   sizes: `(max-width: 900px) 100vw, ${cols * 25}vw`,
@@ -305,6 +345,7 @@ const portfolio: Slot[] = [
   label: `Portfolio — карточка ${n}`,
   group: "Portfolio",
   legacy: `/portfolio/${n}.png`,
+  page: "/portfolio",
   shape: { w: 800, h: 800 },
   sizes: "(max-width: 900px) 100vw, 33vw",
   alt: alt as string,
@@ -315,6 +356,8 @@ const productSlider: Slot[] = [1, 2].map((n) => ({
   label: `Страница товара — слайдер, фото ${n}`,
   group: "Товар",
   legacy: `/inspiration/${n}.png`,
+  // Слайдер живёт внутри ProductDetails, а тот подключается только на /design.
+  page: "/design",
   shape: { w: 1376, h: 768 },
   sizes: "(max-width: 900px) 100vw, 50vw",
   alt: `Inspiration ${n}`,
@@ -326,6 +369,7 @@ const conf: Slot[] = [
     label: "Лендинг /conf — верхнее фото",
     group: "Лендинг /conf",
     legacy: "/inspiration/1.png",
+    page: "/conf",
     shape: { w: 1376, h: 768 },
     sizes: "100vw",
     alt: "Conference merch",
@@ -335,6 +379,7 @@ const conf: Slot[] = [
     label: "Лендинг /conf — блок 1",
     group: "Лендинг /conf",
     legacy: "/services/1.png",
+    page: "/conf",
     shape: { w: 1200, h: 1020 },
     sizes: "(max-width: 900px) 100vw, 50vw",
     alt: "Corporate merch",
@@ -344,6 +389,7 @@ const conf: Slot[] = [
     label: "Лендинг /conf — блок 2",
     group: "Лендинг /conf",
     legacy: "/gallery/4.jpg",
+    page: "/conf",
     shape: { w: 800, h: 1000 },
     sizes: "(max-width: 900px) 100vw, 50vw",
     alt: "Event merch",
@@ -353,6 +399,7 @@ const conf: Slot[] = [
     label: "Лендинг /conf — блок 3",
     group: "Лендинг /conf",
     legacy: "/services/3.png",
+    page: "/conf",
     shape: { w: 1200, h: 1500 },
     sizes: "(max-width: 900px) 100vw, 50vw",
     alt: "Private label merch",

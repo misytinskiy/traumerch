@@ -34,13 +34,24 @@ export const fetchWithDeadline = async (
     timeoutMs,
     headers,
     cache = "no-store",
-  }: { timeoutMs: number; headers?: HeadersInit; cache?: RequestCache }
+    method,
+    body: requestBody,
+  }: {
+    timeoutMs: number;
+    headers?: HeadersInit;
+    cache?: RequestCache;
+    /** По умолчанию GET. */
+    method?: string;
+    body?: BodyInit;
+  }
 ): Promise<FetchWithDeadlineResult> => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
     const response = await fetch(url, {
+      method,
+      body: requestBody,
       headers,
       cache,
       signal: controller.signal,

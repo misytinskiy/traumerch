@@ -84,6 +84,10 @@ export default function MediaImage({
 
   return (
     <img
+      // По этому атрибуту админка находит картинку в iframe настоящей
+      // страницы и подменяет ей src/srcSet на черновой — без него превью
+      // кадрировки пришлось бы искать по совпадению путей.
+      data-slot={slot}
       src={entry.src}
       srcSet={srcSet}
       sizes={srcSet ? (sizes ?? definition?.sizes) : undefined}
