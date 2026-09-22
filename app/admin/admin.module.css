@@ -1,0 +1,365 @@
+/* Оформление админки продолжает страницу входа: светлый фон, белые карточки,
+   системные шрифты. Витринного стиля сайта здесь сознательно нет — тут важно
+   не впечатление, а то, чтобы с первого взгляда было понятно, где что. */
+
+.screen {
+  min-height: 100vh;
+  background: #f5f5f4;
+  color: #111111;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 20px 96px;
+}
+
+/* ---------------------------------------------------------------- Шапка */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #f5f5f4;
+  padding: 20px 0 16px;
+  border-bottom: 1px solid #e3e3e0;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #6b6b66;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------------- Кнопки */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  color: #ffffff;
+  background: #111111;
+  border: 1px solid #111111;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button:hover:not(:disabled) {
+  background: #2c2c2c;
+}
+
+.button:disabled {
+  background: #b5b5b0;
+  border-color: #b5b5b0;
+  cursor: default;
+}
+
+.secondary {
+  composes: button;
+  color: #111111;
+  background: #ffffff;
+  border-color: #d4d4d0;
+}
+
+.secondary:hover:not(:disabled) {
+  background: #f0f0ee;
+}
+
+.secondary:disabled {
+  color: #9a9a95;
+  background: #ffffff;
+  border-color: #e3e3e0;
+}
+
+.danger {
+  composes: button;
+  color: #b00020;
+  background: #ffffff;
+  border-color: #e7c3c9;
+}
+
+.danger:hover:not(:disabled) {
+  background: #fdf3f4;
+}
+
+.small {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+/* ------------------------------------------------------- Панель черновика */
+
+.draftBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e3e3e0;
+}
+
+.draftBarActive {
+  composes: draftBar;
+  border-color: #c9a227;
+  background: #fffaec;
+}
+
+.draftText {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.draftHint {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #6b6b66;
+}
+
+.search {
+  min-width: 220px;
+  height: 40px;
+  padding: 0 12px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #111111;
+  background: #ffffff;
+  border: 1px solid #d4d4d0;
+  border-radius: 8px;
+}
+
+.search:focus {
+  outline: 2px solid #111111;
+  outline-offset: 1px;
+}
+
+/* -------------------------------------------------------------- Сообщения */
+
+.notice {
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  border: 1px solid #e3e3e0;
+  background: #ffffff;
+}
+
+.error {
+  composes: notice;
+  color: #7a0016;
+  background: #fdf3f4;
+  border-color: #e7c3c9;
+}
+
+.warning {
+  composes: notice;
+  color: #6b4b00;
+  background: #fffaec;
+  border-color: #efdca8;
+}
+
+.success {
+  composes: notice;
+  color: #14532d;
+  background: #f1faf3;
+  border-color: #c2e3cd;
+}
+
+/* --------------------------------------------------------------- Группы */
+
+.group {
+  margin-top: 36px;
+}
+
+.groupTitle {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.groupCount {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: #6b6b66;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 1px solid #e3e3e0;
+  border-radius: 10px;
+  background: #ffffff;
+  overflow: hidden;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.card:hover {
+  border-color: #111111;
+}
+
+.cardChanged {
+  composes: card;
+  border-color: #c9a227;
+  box-shadow: 0 0 0 1px #c9a227;
+}
+
+.thumbBox {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #ebebe8;
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 13px;
+  color: #8a8a85;
+  text-align: center;
+  padding: 12px;
+}
+
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  color: #533f00;
+  background: #ffdf7e;
+}
+
+.cardBody {
+  padding: 12px 12px 14px;
+}
+
+.cardLabel {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.cardMeta {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #6b6b66;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------ Подтверждение */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(17, 17, 17, 0.45);
+}
+
+.dialog {
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow: auto;
+  padding: 24px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
+}
+
+.dialogTitle {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.dialogText {
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #444440;
+}
+
+.dialogList {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  max-height: 220px;
+  overflow: auto;
+  border-radius: 8px;
+  background: #f5f5f4;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.dialogActions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.centered {
+  padding: 64px 20px;
+  text-align: center;
+  font-size: 16px;
+  color: #6b6b66;
+}
